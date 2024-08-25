@@ -4,7 +4,6 @@ import { columns, UserList } from './columns';
 import { DataTable } from '../../_components/DataTable';
 import LayoutSideHead from '@/components/LayoutSideHead';
 
-
 const page = () => {
 
     const [users, setUsers] = useState<UserList[]>([]);
@@ -38,6 +37,7 @@ const page = () => {
 
     return (
         <LayoutSideHead label='Data Table'>
+
             <section className="py-10">
                 <div className="container">
                     <h1 className="text-3xl">

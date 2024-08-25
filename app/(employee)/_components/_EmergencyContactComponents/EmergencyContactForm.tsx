@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
-import { AddressSchema, EmergencyContactSchema } from '@/schemas';
+import { EmergencyContactSchema } from '@/schemas';
 
 import {
     Form,

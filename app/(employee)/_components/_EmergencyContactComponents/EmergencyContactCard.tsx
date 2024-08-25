@@ -53,37 +53,37 @@ const EmergencyContactCard = ({ userId }: { userId: string }) => {
                 ) : (
                     <>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>FIRST NAME:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.firstName}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>MIDDLE NAME:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.middleName}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>LAST NAME:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.lastName}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>RELATION:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.relationship}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>CONTACT NUMBER:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.contactNumber}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
+                            <p className='text-sm font-medium'>EMAIL ADDRESS:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {emergencyContact?.emailAddress}
                             </p>

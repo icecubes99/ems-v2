@@ -18,6 +18,7 @@ interface SidebarProps {
 
 const Sidebar = ({ user }: SidebarProps) => {
     const router = usePathname();
+
     return (
         <div className='flex flex-col w-96 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-300 via-violet-100 to-purple-300 min-h-screen items-center space-y-10'>
             <div className='mt-7 mb-5'>
@@ -46,17 +47,17 @@ const Sidebar = ({ user }: SidebarProps) => {
 
             <div className='w-full'>
 
-                <SidebarButton link='/employee' icon={<FaUser />} label='PROFILE DETAILS' isActive={router === "/employee"} />
-                <SidebarButton link='/' icon={<FaMoneyBill />} label='PAYSLIPS' isActive={router === "/payslips"} />
-                <SidebarButton link='/' icon={<FaAddressBook />} label='LEAVE REQUESTS' isActive={router === "/leaveRequests"} />
+                <SidebarButton link='/employee' icon={<FaUser />} label='PROFILE DETAILS' isActive={router.startsWith("/employee")} />
+                <SidebarButton link='/' icon={<FaMoneyBill />} label='PAYSLIPS' isActive={router.startsWith("/payslips")} />
+                <SidebarButton link='/' icon={<FaAddressBook />} label='LEAVE REQUESTS' isActive={router.startsWith("/leaveRequests")} />
 
                 <RoleGateNull allowedRole='ADMIN' >
-                    <SidebarButton link='/administrator' icon={<FaKey />} label='ADMIN PANEL' isActive={router === "/administrator"} />
+                    <SidebarButton link='/administrator' icon={<FaKey />} label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
                 </RoleGateNull>
 
                 <RoleGateNull allowedRole='SUPERADMIN' >
-                    <SidebarButton link='/administrator' icon={<FaKey />} label='ADMIN PANEL' isActive={router === "/administrator"} />
-                    <SidebarButton link='/' icon={<FaKey />} iconClassname='text-destructive' label='SUPERADMIN PANEL' isActive={router === "/superAdmin"} />
+                    <SidebarButton link='/administrator' icon={<FaKey />} label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
+                    <SidebarButton link='/superadministrator' icon={<FaKey />} iconClassname='text-destructive' label='SUPERADMIN PANEL' isActive={router.startsWith("/superadministrator")} />
                 </RoleGateNull>
 
                 <div className='w-full h-12 items-center hover:bg-destructive/80 inline-block align-bottom'>

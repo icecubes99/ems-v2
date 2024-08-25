@@ -62,7 +62,7 @@ const EmployeeDetails = ({ user, children }: EmployeeDetailsProps) => {
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>GENDER:</p>
+                            <p className='text-sm font-medium'>JOB TITLE:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {user?.jobTitle}
                             </p>
