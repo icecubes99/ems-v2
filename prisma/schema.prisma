@@ -25,6 +25,11 @@ enum Status {
   INACTIVE
 }
 
+enum EmployeeType {
+  REGULAR
+  CONTRACTUAL
+  PROBATIONARY
+}
 
 model User {
   id String @id @default(cuid())
@@ -44,6 +49,12 @@ model User {
   auditLogs               AuditLog[]  
   address                 AddressLine?
   documents               Documents[]
+
+  assignedDesignations    AssignDesignation?
+
+  // Optional if the User is a Department Head or a Designation Head
+  department              Department?
+  designation             Designation?
   
 
   // default
@@ -136,7 +147,7 @@ model AuditLog {
   action String
   createdAt DateTime @default(now())
   
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
 }
 
 model EmergencyContact {
@@ -165,4 +176,59 @@ model Documents {
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+}
+
+model Department {
+  id String @id @default(cuid())
+  departmentName String
+  departmentDescription String
+  status Status
+
+  departmentHeadUserId String
+  departmentHeadUser User @relation(fields: [departmentHeadUserId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  designations Designation[]
+
+  @@unique([departmentHeadUserId])
+}
+
+model Designation {
+  id String @id @default(cuid())
+  designationName String
+  designationDescription String
+  status Status
+
+  departmentId String
+  department Department @relation(fields: [departmentId], references: [id])
+
+  designationHeadUserId String
+  designationHeadUser User @relation(fields: [designationHeadUserId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  AssignDesignation AssignDesignation[]
+
+  @@unique([departmentId])
+  @@unique([designationHeadUserId])
+}
+
+model AssignDesignation {
+  id String @id @default(cuid())
+  employeeType EmployeeType
+  status Status
+
+  designationId String
+  designation Designation @relation(fields: [designationId], references: [id], onDelete: Cascade)
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId])
 }
