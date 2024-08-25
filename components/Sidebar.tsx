@@ -19,29 +19,29 @@ interface SidebarProps {
 const Sidebar = ({ user }: SidebarProps) => {
     const router = usePathname();
     return (
-        <div className='flex flex-col w-96 bg-purple-200 min-h-screen items-center space-y-10'>
+        <div className='flex flex-col w-96 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-300 via-violet-100 to-purple-300 min-h-screen items-center space-y-10'>
             <div className='mt-7 mb-5'>
                 <Link href={"/homepage"}>
                     <Image src={"/kupler.svg"} width={150} height={100} alt='Logo' />
                 </Link>
             </div>
 
-            <div>
-                <Avatar className='w-24 h-24'>
-                    <AvatarImage src={user?.image || undefined} />
+            <div className='items-center flex flex-col gap-4'>
+                <Avatar className='w-32 h-32'>
+                    <AvatarImage className='border-red-500' src={user?.image || undefined} />
                     <AvatarFallback className='bg-neutral-700 text-white'>
                         <FaUser />
                     </AvatarFallback>
                 </Avatar>
-            </div>
 
-            <div className='text-center'>
-                <p className='font-semibold'>
-                    {user?.name}
-                </p>
-                <p className='font-light text-sm'>
-                    {user?.jobTitle}
-                </p>
+                <div className='text-center'>
+                    <p className='font-semibold'>
+                        {user?.name}
+                    </p>
+                    <p className='font-light text-sm'>
+                        {user?.jobTitle}
+                    </p>
+                </div>
             </div>
 
             <div className='w-full'>
@@ -60,7 +60,7 @@ const Sidebar = ({ user }: SidebarProps) => {
                 </RoleGateNull>
 
                 <div className='w-full h-12 items-center hover:bg-destructive/80 inline-block align-bottom'>
-                    <LogoutButton>
+                    <LogoutButton userId={user?.id as string}>
                         <div className='flex flex-row justify-start h-full items-center'>
                             <FaDoorOpen className='mr-10 ml-16' />
                             <p className='text-sm font-medium'>LOG OUT</p>

@@ -7,6 +7,7 @@ import { getPasswordResetTokenByToken } from "@/data/password-token";
 import { getUserByEmail } from "@/data/user";
 import { NewPasswordSchema } from "@/schemas";
 import { db } from "@/lib/db";
+import { auditAction } from "./auditAction";
 
 export const newPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
@@ -43,6 +44,8 @@ export const newPassword = async (
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+
+  await auditAction(existingUser.id, "User Password Reset");
 
   await db.user.update({
     where: { id: existingUser.id },

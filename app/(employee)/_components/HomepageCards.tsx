@@ -1,6 +1,7 @@
 import React from 'react'
 
 const HomepageCards = () => {
+
     return (
         <div className='m-4 grid grid-cols-2 gap-6'>
             <div className='bg-gray-600 h-96'>

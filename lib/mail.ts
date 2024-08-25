@@ -9,7 +9,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
-    to: "aguadojr.emmanueldiaz@gmail.com",
+    to: "eaguado@addu.edu.ph",
     subject: "Reset your password",
     html: `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
@@ -31,7 +31,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
-    to: "aguadojr.emmanueldiaz@gmail.com",
+    to: "eaguado@addu.edu.ph",
     subject: "Confirm your email",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">

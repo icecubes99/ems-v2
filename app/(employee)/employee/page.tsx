@@ -3,10 +3,8 @@ import React from 'react'
 import EmployeeDetails from '../_components/EmployeeDetails'
 import LayoutSideHead from '@/components/LayoutSideHead'
 import { useCurrentUser, useCurrentUserId } from '@/hooks/use-current-user'
-import AddAddressButton from '../_components/AddAddressButton'
-import AddressForm from '@/components/AddressForm'
-import useUserAddress from '@/hooks/use-current-address'
-import AddressCard from '../_components/AddressCard'
+import AddressCard from '../_components/_AddressComponents/AddressCard'
+import EmergencyContactCard from '../_components/_EmergencyContactComponents/EmergencyContactCard'
 
 const Page = () => {
     const user = useCurrentUser();
@@ -16,6 +14,7 @@ const Page = () => {
         <LayoutSideHead label='My Profile'>
             <EmployeeDetails user={user}>
                 <AddressCard userId={userId} />
+                <EmergencyContactCard userId={userId} />
             </EmployeeDetails>
         </LayoutSideHead>
     )

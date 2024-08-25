@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 
 interface LogoutButtonProps {
   children?: React.ReactNode;
+  userId: string;
 }
 
-export const LogoutButton = ({ children }: LogoutButtonProps) => {
+export const LogoutButton = ({ children, userId }: LogoutButtonProps) => {
   const router = useRouter();
 
   const onClick = () => {
-    logout().then(() => {
+    logout(userId).then(() => {
       router.refresh();
     });
   };

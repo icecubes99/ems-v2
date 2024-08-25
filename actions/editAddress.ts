@@ -8,7 +8,7 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 
-export const addAddress = async (values: z.infer<typeof AddressSchema>) => {
+export const editAddress = async (values: z.infer<typeof AddressSchema>) => {
     const user = await currentUser();
     const validatedFields = AddressSchema.safeParse(values);
 
@@ -31,16 +31,16 @@ export const addAddress = async (values: z.infer<typeof AddressSchema>) => {
         where: { userId: dbUser.id },
     });
 
-    if (existingAddress) {
-        return { error: "User already has an address!" };
+    if (!existingAddress) {
+        return { error: "User does not have an address to edit!" };
     }
-
 
     const { street, barangay, city, province, country, zipCode } = validatedFields.data;
 
-    await auditAction(dbUser.id, "User Address Add");
+    await auditAction(dbUser.id, "User Address Update");
 
-    await db.addressLine.create({
+    await db.addressLine.update({
+        where: { userId: dbUser.id },
         data: {
             street,
             barangay,
@@ -48,9 +48,8 @@ export const addAddress = async (values: z.infer<typeof AddressSchema>) => {
             province,
             country,
             zipCode,
-            userId: dbUser?.id,
         },
     });
 
-    return { success: "Address added!" };
+    return { success: "Address updated!" };
 }

@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Address, ExtendedUser } from '@/next-auth';
 import React, { useEffect, useState } from 'react'
-import AddAddressButton from './AddAddressButton';
-import AddressForm from '@/components/AddressForm';
-import AddressDisplay from './AddressCard';
+import AddAddressButton from './_AddressComponents/AddAddressButton';
+import AddressForm from '@/app/(employee)/_components/_AddressComponents/AddressForm';
+
 
 interface EmployeeDetailsProps {
     user?: ExtendedUser;
@@ -61,11 +61,14 @@ const EmployeeDetails = ({ user, children }: EmployeeDetailsProps) => {
                                 {formatDate(user?.birthDate)}
                             </p>
                         </div>
+                        <div className='flex flex-row items-center justify-between'>
+                            <p className='text-sm font-medium'>GENDER:</p>
+                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
+                                {user?.jobTitle}
+                            </p>
+                        </div>
                     </CardContent>
                     <CardFooter className='justify-end items-end'>
-                        <Button>
-                            Edit Details
-                        </Button>
                     </CardFooter>
                 </Card>
                 {children}

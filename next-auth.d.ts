@@ -13,6 +13,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   gender: Gender;
   birthDate: Date;
   jobTitle: string;
+  lastLogin: Date;
 
   email: string;
   emailVerified: Date;

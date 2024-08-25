@@ -16,6 +16,18 @@ import {
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { auditAction } from "./auditAction";
+
+export const updateLastLogin = async (userId: string) => {
+  await db.user.update({
+    where: { id: userId },
+    data: {
+      lastLogin: new Date()
+    },
+  });
+  await auditAction(userId, "User Log-In")
+};
+
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
@@ -99,6 +111,9 @@ export const login = async (
     }
   }
 
+  await updateLastLogin(existingUser.id);
+
+
   try {
     await signIn("credentials", {
       email,
@@ -106,7 +121,8 @@ export const login = async (
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
 
-    // return { success: "Login Sucess!" };
+    return { success: "Login Sucess!" };
+
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAddress } from '@/actions/readAddress';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+import EditAddressButton from './EditAddressButton';
 import AddAddressButton from './AddAddressButton';
 
 const AddressCard = ({ userId }: { userId: string }) => {
@@ -40,11 +41,11 @@ const AddressCard = ({ userId }: { userId: string }) => {
             </CardHeader>
             <CardContent className='space-y-4'>
                 {loading ? (
-                    <p>Loading...</p>
+                    <p className='text-sm font-medium'>Loading...</p>
                 ) : error ? (
                     <div className='flex flex-col gap-4'>
-                        {error}
-                        <AddAddressButton />
+                        <p className='text-sm font-medium'>{error}</p>
+                        {/* <AddAddressButton /> */}
                     </div>
                 ) : (
                     <>
@@ -88,7 +89,13 @@ const AddressCard = ({ userId }: { userId: string }) => {
                 )}
             </CardContent>
             <CardFooter className='justify-end'>
-                <AddAddressButton />
+                {loading ? (
+                    <AddAddressButton />
+                ) : error ? (
+                    <AddAddressButton />
+                ) : (
+                    <EditAddressButton />
+                )}
             </CardFooter>
         </Card>
     );

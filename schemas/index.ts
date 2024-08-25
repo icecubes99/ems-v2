@@ -54,6 +54,40 @@ export const AddressSchema = z.object({
   }),
 })
 
+export const EmergencyContactSchema = z.object({
+  firstName: z.string().min(1, {
+    message: "First Name is required",
+  }),
+  middleName: z.string().min(1, {
+    message: "Middle Name is required",
+  }),
+  lastName: z.string().min(1, {
+    message: "Last Name is required",
+  }),
+  relationship: z.string().min(1, {
+    message: "Relationship is required",
+  }),
+  contactNumber: z.string().min(1, {
+    message: "Contact Number is required",
+  }),
+  emailAddress: z.string().email({
+    message: "Email is required",
+  })
+});
+
+export const DocumentsSchema = z.object({
+  documentName: z.string().min(1, {
+    message: "Document Name is required",
+  }),
+  documentType: z.string().min(1, {
+    message: "Document Type is required",
+  }),
+  documentLink: z.string().min(1, {
+    message: "Document Link is required"
+  })
+})
+
+
 export const ResetSchema = z.object({
   email: z.string().email({
     message: "Email is required",

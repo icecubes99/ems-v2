@@ -17,6 +17,11 @@ const AdminPage = () => {
                         User List
                     </Link>
                 </Button>
+                <Button asChild>
+                    <Link href={"/administrator/dataTable"}>
+                        Data Table
+                    </Link>
+                </Button>
             </LayoutSideHead>
         </RoleGate>
     )

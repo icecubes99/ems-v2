@@ -74,6 +74,8 @@ export const {
         session.user.lastName = token.lastName as string;
         session.user.jobTitle = token.jobTitle as string;
 
+        session.user.lastLogin = token.lastLogin as Date;
+
       }
 
       return session;
@@ -101,6 +103,7 @@ export const {
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.lastLogin = existingUser.lastLogin;
 
       return token;
     },

@@ -20,6 +20,11 @@ enum Gender {
   OTHER
 }
 
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
 
 model User {
   id String @id @default(cuid())
@@ -33,7 +38,14 @@ model User {
 
   createdAt               DateTime?              @default(now())
   updatedAt               DateTime?              @updatedAt
+  lastLogin               DateTime?              @default(now())
+
+  emergencyContact        EmergencyContact?
+  auditLogs               AuditLog[]  
+  address                 AddressLine?
+  documents               Documents[]
   
+
   // default
   emailVerified           DateTime?
   image                   String?
@@ -43,7 +55,6 @@ model User {
   isTwoFactorEnabled      Boolean                @default(false)
   twoFactorConfirmation   TwoFactorConfirmation?
   twoFactorConfirmationId String?    
-  address                 AddressLine?
 }
 
 
@@ -112,7 +123,46 @@ model AddressLine {
   zipCode      String?
 
   createdAt    DateTime? @default(now())  
+  updatedAt    DateTime? @updatedAt
+  
   userId       String
   user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([userId])
+}
+
+model AuditLog {
+  id String @id @default(cuid())
+  userId String
+  action String
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model EmergencyContact {
+  id String @id @default(cuid())
+  firstName String
+  middleName String 
+  lastName String
+  relationship String 
+  contactNumber String 
+  emailAddress String
+
+  userId String
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId])
+}
+
+model Documents {
+  id String @id @default(cuid())
+  documentName String
+  documentType String
+  documentLink String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
 }

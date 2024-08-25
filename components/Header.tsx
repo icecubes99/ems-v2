@@ -16,7 +16,6 @@ interface HeaderProps {
     user?: ExtendedUser;
 }
 const Header = ({ user, employeePic }: HeaderProps) => {
-    console.log(user?.jobTitle)
 
     const userColor =
         user?.role === UserRole.ADMIN ? "text-blue-500" :
@@ -26,7 +25,7 @@ const Header = ({ user, employeePic }: HeaderProps) => {
         <div className='flex w-full h-28 justify-end items-center'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <div className='bg-gray-200 cursor-pointer w-80 rounded-md flex justify-between items-center h-20 mr-6 hover:bg-gray-200/50'>
+                    <div className='bg-purple-100/80 cursor-pointer w-80 rounded-md flex justify-between items-center h-20 mr-6 hover:bg-purple-100/50'>
                         <div className='ml-5 flex flex-row items-center space-x-5'>
                             <Avatar>
                                 <AvatarImage src={user?.image || undefined} />
@@ -35,10 +34,10 @@ const Header = ({ user, employeePic }: HeaderProps) => {
                                 </AvatarFallback>
                             </Avatar>
                             <div className='flex flex-col'>
-                                <p>
+                                <p className='font-semibold text-purple-900'>
                                     {user?.name}
                                 </p>
-                                <p className={cn("font-light text-sm", userColor)}>
+                                <p className={cn("font-normal text-sm", userColor)}>
                                     {user?.jobTitle}
                                 </p>
                             </div>
@@ -47,7 +46,7 @@ const Header = ({ user, employeePic }: HeaderProps) => {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent className='w-80'>
-                    <LogoutButton>
+                    <LogoutButton userId={user?.id as string}>
                         <DropdownMenuItem asChild className=''>
                             <Button variant={"destructive"} className='w-full mt-1'>
                                 <ExitIcon className="h-4 w-4 mr-2" />

@@ -1,6 +1,4 @@
 "use client"
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar'
 import { useCurrentUser } from '@/hooks/use-current-user';
 import React, { use } from 'react'
 import HomepageCards from '../_components/HomepageCards';
