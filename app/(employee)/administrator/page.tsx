@@ -5,6 +5,8 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import LayoutSideHead from '@/components/LayoutSideHead';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import CreateDepartmentButton from '../superadministrator/_components/CreateDepartmentButton';
+import AdminCards from './_components/AdminCards';
 
 const AdminPage = () => {
     const user = useCurrentUser();
@@ -12,16 +14,8 @@ const AdminPage = () => {
     return (
         <RoleGate allowedRoles={["ADMIN", "SUPERADMIN"]}>
             <LayoutSideHead label='ADMIN PAGE'>
-                <Button asChild>
-                    <Link href={"/administrator/userList"}>
-                        User List
-                    </Link>
-                </Button>
-                <Button asChild>
-                    <Link href={"/administrator/dataTable"}>
-                        Data Table
-                    </Link>
-                </Button>
+                <AdminCards />
+                {/* <CreateDepartmentButton /> */}
             </LayoutSideHead>
         </RoleGate>
     )

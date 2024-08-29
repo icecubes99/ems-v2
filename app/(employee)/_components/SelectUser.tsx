@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 
 interface SelectUserProps {
     onUserChange: (userId: string) => void;
+    value?: string; // Add value prop
 }
 
-const SelectUser: React.FC<SelectUserProps> = ({ onUserChange }) => {
+const SelectUser: React.FC<SelectUserProps> = ({ onUserChange, value }) => {
     const [users, setUsers] = useState<ExtendedUser[]>([]);
 
     const makeApiCall = async () => {
@@ -36,12 +37,12 @@ const SelectUser: React.FC<SelectUserProps> = ({ onUserChange }) => {
     }, []);
 
     const handleChange = (value: string) => {
-        console.log(`Selected user ID: ${value}`);
+        // console.log(`Selected user ID: ${value}`);
         onUserChange(value);
     };
 
     return (
-        <Select onValueChange={handleChange}>
+        <Select onValueChange={handleChange} value={value}>
             <SelectTrigger>
                 <SelectValue placeholder="Pick a User"></SelectValue>
             </SelectTrigger>

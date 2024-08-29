@@ -214,7 +214,6 @@ model Designation {
 
   AssignDesignation AssignDesignation[]
 
-  @@unique([departmentId])
   @@unique([designationHeadUserId])
 }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { Account, AddressLine, Gender, TwoFactorConfirmation, UserRole } from "@prisma/client"
+import { Account, AddressLine, Department, Gender, Status, TwoFactorConfirmation, UserRole } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
@@ -15,34 +15,17 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import UpdateDepartmentButton from "../_components/UpdateDepartmentButton"
+import { Badge } from "@/components/ui/badge"
+
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export type UserList = {
-    id: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    gender: Gender;
-    birthDate: Date;
-    jobTitle: string;
-    email: string;
-    role: UserRole;
-    emailVerified: Date;
-    image: string;
-    password: string;
-    accounts: Account[];
-    isTwoFactorEnabled: boolean;
-    twoFactorConfirmation: TwoFactorConfirmation;
-    twoFactorConfirmationId: string;
-    addressLine: AddressLine;
-    name: string;
-    lastLogin: Date;
-}
-export const columns: ColumnDef<UserList>[] = [
+
+export const columns: ColumnDef<Department>[] = [
     {
-        accessorKey: "name",
+        accessorKey: "departmentName",
         header: ({ column }) => {
             return (
                 <Button
@@ -56,36 +39,54 @@ export const columns: ColumnDef<UserList>[] = [
         },
     },
     {
-        accessorKey: "email",
+        accessorKey: "departmentHeadUserName",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Department Head
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "lastLogin",
+        accessorKey: "departmentDescription",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Last Login
+                    Description
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => {
-            const date = new Date(row.getValue("lastLogin"))
-            const formatted = date.toLocaleString()
-            return <div>{formatted}</div>
+            if (row.original.status === Status.ACTIVE) {
+                return (
+                    <Badge variant={"sucess"}>Active</Badge>
+                )
+            } else if (row.original.status === Status.INACTIVE) {
+                return <Badge variant={"destructive"}>Inactive</Badge>
+            }
         }
     },
     {
@@ -97,7 +98,7 @@ export const columns: ColumnDef<UserList>[] = [
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <Button variant="ghost" className="hidden h-8 w-8 p-0">
                             <span className="sr-only">Open menu</span>
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
@@ -110,10 +111,15 @@ export const columns: ColumnDef<UserList>[] = [
                             Copy User ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+
                     </DropdownMenuContent>
+                    <div className="flex flex-col gap-2 p-2">
+                        <UpdateDepartmentButton departmentId={user.id} />
+                        <Button variant={"superadmin"}>View Details</Button>
+
+                    </div>
                 </DropdownMenu>
+
             )
         },
     },

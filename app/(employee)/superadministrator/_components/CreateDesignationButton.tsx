@@ -1,22 +1,23 @@
 "use client"
+
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import EmergencyContactForm from "./EmergencyContactForm";
 
-const AddEmergencyContactButton = () => {
+import CreateDesignationForm from "./CreateDesignationForm";
+
+const CreateDesignationButton = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={"auth"}>
-                    Add Emergency Contact
+                <Button variant={"superadmin"}>
+                    Create Designation
                 </Button>
             </DialogTrigger>
             <DialogContent className="p-0 w-auto bg-transparent border-none">
-                <EmergencyContactForm />
+                <CreateDesignationForm />
             </DialogContent>
         </Dialog>
     )
-
 }
 
-export default AddEmergencyContactButton;
+export default CreateDesignationButton;

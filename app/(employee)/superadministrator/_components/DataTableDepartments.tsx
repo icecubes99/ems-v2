@@ -32,13 +32,14 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import CreateDepartmentButton from "./CreateDepartmentButton"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableDepartments<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
@@ -72,13 +73,17 @@ export function DataTable<TData, TValue>({
             {/* Search Functionality via Email */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    placeholder="Filter Departments..."
+                    value={(table.getColumn("departmentName")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
+                        table.getColumn("departmentName")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />
+                <div className="flex items-center ml-10">
+                    <CreateDepartmentButton />
+                </div>
+
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
@@ -107,6 +112,7 @@ export function DataTable<TData, TValue>({
                             })}
                     </DropdownMenuContent>
                 </DropdownMenu>
+
             </div>
 
             {/* Table */}

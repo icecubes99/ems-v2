@@ -29,7 +29,7 @@ const page = () => {
         })
 
         setUsers(processedUsers);
-        console.log("THIS IS THE RESPONSE" + setUsers)
+        // console.log("THIS IS THE RESPONSE" + setUsers)
     };
 
     useEffect(() => {

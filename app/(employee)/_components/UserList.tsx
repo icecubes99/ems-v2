@@ -46,7 +46,7 @@ const UserList: React.FC = () => {
 
         const users = await response.json();
         setUsers(users);
-        console.log("THIS IS THE RESPONSE" + setUsers)
+        // console.log("THIS IS THE RESPONSE" + setUsers)
     };
 
     useEffect(() => {

@@ -3,6 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/
 import React from 'react'
 import CreateDepartmentButton from './CreateDepartmentButton'
 
+import Link from 'next/link'
+import CreateDesignationButton from './CreateDesignationButton'
+
+
 const SuperAdminCards = () => {
     return (
         <div className='flex flex-col gap-6'>
@@ -25,7 +29,13 @@ const SuperAdminCards = () => {
                         </div>
                         <div className='flex flex-row items-center justify-between'>
                             <p className='text-sm font-medium'>View Departments</p>
-                            <Button>View</Button>
+                            <Button variant={"superadmin"}>
+                                <Link href='/superadministrator/dataTable'>View Departments</Link>
+                            </Button>
+                        </div>
+                        <div className='flex flex-row items-center justify-between'>
+                            <p className='text-sm font-medium'>Create Designation</p>
+                            <CreateDesignationButton />
                         </div>
                     </CardContent>
                 </Card>

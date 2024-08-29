@@ -40,6 +40,7 @@ export type UserList = {
     name: string;
     lastLogin: Date;
 }
+
 export const columns: ColumnDef<UserList>[] = [
     {
         accessorKey: "name",

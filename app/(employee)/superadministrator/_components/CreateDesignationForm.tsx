@@ -6,8 +6,8 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DepartmentSchema } from '@/schemas/superadminIndex';
-import { createDepartment } from '@/actions/superadmin/createDepartment';
+import { DesignationSchema } from '@/schemas/superadminIndex';
+import { createDesignation } from '@/actions/superadmin/createDesignation';
 
 import {
     Form,
@@ -25,30 +25,34 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
+import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
+import { Car } from 'lucide-react';
 
-const CreateDepartmentForm = () => {
+const CreateDesignationForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof DepartmentSchema>>({
-        resolver: zodResolver(DepartmentSchema),
+    const form = useForm<z.infer<typeof DesignationSchema>>({
+        resolver: zodResolver(DesignationSchema),
         defaultValues: {
-            departmentName: "",
-            departmentDescription: "",
-            departmentHeadUserId: "",
+            designationName: "",
+            designationDescription: "",
             status: Status.ACTIVE,
+            departmentId: "",
+            designationHeadUserId: "",
         }
     });
 
-    const onSubmit = (values: z.infer<typeof DepartmentSchema>) => {
+    const onSubmit = (values: z.infer<typeof DesignationSchema>) => {
         setError("");
         setSuccess("");
 
+        console.log("Form Values:", values);
         startTransition(() => {
-            createDepartment(values).then((data) => {
+            createDesignation(values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
             });
@@ -56,11 +60,11 @@ const CreateDepartmentForm = () => {
     }
 
     return (
-        <Card className='bg-red-50'>
+        <Card>
             <CardHeader>
-                Create a New Department
+                Create Designation
                 <CardDescription>
-                    Input the information for this new Department below
+                    Input the details of the new designation
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -69,19 +73,19 @@ const CreateDepartmentForm = () => {
 
                         <div className='space-y-4'>
 
-                            {/* DEPARTMENT NAME */}
+                            {/* DESIGNATION NAME */}
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name='departmentName'
+                                    name='designationName'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Department Name</FormLabel>
+                                            <FormLabel>Designation Name</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
                                                     disabled={isPending}
-                                                    placeholder='Engineering'
+                                                    placeholder='Electrical Engineering'
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -90,19 +94,19 @@ const CreateDepartmentForm = () => {
                                 />
                             </div>
 
-                            {/* DEPARTMENT DESCRIPTION */}
+                            {/* DESIGNATION DESCRIPTION */}
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name='departmentDescription'
+                                    name='designationDescription'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Department Description</FormLabel>
+                                            <FormLabel>Designation Description</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
                                                     disabled={isPending}
-                                                    placeholder='Handles all of the Engineering Teams'
+                                                    placeholder='Team Electric'
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -111,7 +115,7 @@ const CreateDepartmentForm = () => {
                                 />
                             </div>
 
-                            {/* DEPARTMENT STATUS */}
+                            {/* DESIGNATION STATUS */}
                             <div>
                                 <FormField
                                     control={form.control}
@@ -140,15 +144,30 @@ const CreateDepartmentForm = () => {
                                 />
                             </div>
 
-                            {/* DEPARTMENT HEAD */}
+                            {/* DESIGNATION HEAD */}
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name='departmentHeadUserId'
+                                    name='designationHeadUserId'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Department Head</FormLabel>
+                                            <FormLabel>Designation Head</FormLabel>
                                             <SelectUser onUserChange={field.onChange} />
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            {/* DEPARTMENT PARENT */}
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name='departmentId'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Designation Head</FormLabel>
+                                            <SelectDepartments onUserChange={field.onChange} />
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -158,7 +177,7 @@ const CreateDepartmentForm = () => {
                         <FormError message={error} />
                         <FormSucess message={success} />
                         <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
-                            Create Department
+                            Create Designation
                         </Button>
                     </form>
                 </Form>
@@ -167,5 +186,4 @@ const CreateDepartmentForm = () => {
     )
 
 }
-
-export default CreateDepartmentForm;
+export default CreateDesignationForm;

@@ -1,13 +1,12 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as z from 'zod';
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DepartmentSchema } from '@/schemas/superadminIndex';
-import { createDepartment } from '@/actions/superadmin/createDepartment';
 
 import {
     Form,
@@ -26,12 +25,23 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
 import SelectUser from '../../_components/SelectUser';
+import useDepartment from '@/hooks/use-department';
+import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 
-const CreateDepartmentForm = () => {
+interface UpdateDepartmentFormProps {
+    departmentId: string;
+}
+
+const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentId }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
     const [isPending, startTransition] = useTransition();
+
+    const { department, loading } = useDepartment(departmentId);
+
+
+
 
     const form = useForm<z.infer<typeof DepartmentSchema>>({
         resolver: zodResolver(DepartmentSchema),
@@ -43,24 +53,37 @@ const CreateDepartmentForm = () => {
         }
     });
 
+    useEffect(() => {
+        if (department) {
+            form.reset(department);
+        }
+    }, [department, form]);
+
     const onSubmit = (values: z.infer<typeof DepartmentSchema>) => {
-        setError("");
-        setSuccess("");
-
         startTransition(() => {
-            createDepartment(values).then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
-            });
-        });
-    }
+            updateDepartment(departmentId, values)
+                .then((data) => {
+                    if (data.error) {
+                        setError(data.error);
+                    }
 
+                    if (data.success) {
+
+                        setSuccess(data.success);
+                    }
+                })
+                .catch(() => setError("An error what!"));
+        });
+    };
+    if (loading) {
+        return <p>Loading...</p>;
+    }
     return (
         <Card className='bg-red-50'>
             <CardHeader>
-                Create a New Department
+                Update a  Department for Kupler Industries
                 <CardDescription>
-                    Input the information for this new Department below
+                    Input the information for this Department below
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -123,13 +146,14 @@ const CreateDepartmentForm = () => {
                                                 disabled={isPending}
                                                 onValueChange={field.onChange}
                                                 defaultValue={field.value}
+                                                value={field.value}
                                             >
                                                 <FormControl>
                                                     <SelectTrigger>
                                                         <SelectValue placeholder="Pick the status of this Department" />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent>
+                                                <SelectContent >
                                                     <SelectItem value={Status.ACTIVE}>Active</SelectItem>
                                                     <SelectItem value={Status.INACTIVE}>Inactive</SelectItem>
                                                 </SelectContent>
@@ -148,7 +172,7 @@ const CreateDepartmentForm = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Department Head</FormLabel>
-                                            <SelectUser onUserChange={field.onChange} />
+                                            <SelectUser value={field.value} onUserChange={field.onChange} />
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -158,7 +182,7 @@ const CreateDepartmentForm = () => {
                         <FormError message={error} />
                         <FormSucess message={success} />
                         <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
-                            Create Department
+                            Update Department
                         </Button>
                     </form>
                 </Form>
@@ -168,4 +192,4 @@ const CreateDepartmentForm = () => {
 
 }
 
-export default CreateDepartmentForm;
+export default UpdateDepartmentForm;
