@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { getAddress } from '@/actions/readAddress';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import EditAddressButton from './EditAddressButton';
-import AddAddressButton from './AddAddressButton';
+import AddressForm from './AddressForm';
+import EditAddressForm from './EditAddressForm';
 
 const AddressCard = ({ userId }: { userId: string }) => {
     const [address, setAddress] = useState<any>(null);
@@ -90,11 +91,11 @@ const AddressCard = ({ userId }: { userId: string }) => {
             </CardContent>
             <CardFooter className='justify-end'>
                 {loading ? (
-                    <AddAddressButton />
+                    <AddressForm />
                 ) : error ? (
-                    <AddAddressButton />
+                    <AddressForm />
                 ) : (
-                    <EditAddressButton />
+                    <EditAddressForm />
                 )}
             </CardFooter>
         </Card>

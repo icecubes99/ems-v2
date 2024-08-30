@@ -2,9 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Address, ExtendedUser } from '@/next-auth';
 import React, { useEffect, useState } from 'react'
-import AddAddressButton from './_AddressComponents/AddAddressButton';
-import AddressForm from '@/app/(employee)/_components/_AddressComponents/AddressForm';
-
 
 interface EmployeeDetailsProps {
     user?: ExtendedUser;

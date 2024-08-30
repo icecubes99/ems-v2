@@ -20,7 +20,7 @@ const Sidebar = ({ user }: SidebarProps) => {
     const router = usePathname();
 
     return (
-        <div className='flex flex-col w-96 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-300 via-violet-100 to-purple-300 min-h-screen items-center space-y-10'>
+        <div className='flex flex-col w-96 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-300 via-violet-100 to-purple-300 min-h-screen items-center space-y-10 rounded-xl shadow-lg'>
             <div className='mt-7 mb-5'>
                 <Link href={"/homepage"}>
                     <Image src={"/kupler.svg"} width={150} height={100} alt='Logo' />

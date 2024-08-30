@@ -1,3 +1,4 @@
+"use client"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ExtendedUser } from '@/next-auth';
 import React, { useEffect, useState } from 'react';

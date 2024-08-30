@@ -38,3 +38,21 @@ export const getDesignations = async () => {
 
     return { success: "Designations found!", data: designations }
 }
+
+export const getLoneDesignation = async (designationId: string) => {
+    const user = await currentUser();
+
+    if (!user) {
+        return { error: "Unauthorized!" };
+    }
+
+    const designation = await db.designation.findFirst({
+        where: { id: designationId }
+    })
+
+    if (!designation) {
+        return { error: "Designation not found!" }
+    }
+
+    return { success: "Designation found!", data: designation };
+}

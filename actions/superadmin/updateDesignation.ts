@@ -1,16 +1,16 @@
 "use server"
-
-import { DesignationSchema } from "@/schemas/superadminIndex";
 import * as z from "zod";
 
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
+
+import { DesignationSchema } from "@/schemas/superadminIndex";
 import { admin } from "../admin";
 
+export const updateDesignation = async (designationId: string, values: z.infer<typeof DesignationSchema>) => {
 
-export const createDesignation = async (values: z.infer<typeof DesignationSchema>) => {
     const user = await currentUser();
     const validatedFields = DesignationSchema.safeParse(values);
 
@@ -18,14 +18,14 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
         return { error: "Unauthorized!" };
     }
 
-    const dbUser = await getUserById(user?.id);
+    const dbUser = await getUserById(user.id);
 
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }
 
     if (!dbUser) {
-        return { error: "User not found in database!" };
+        return { error: "User not found in database" };
     }
 
     const adminResult = await admin();
@@ -34,23 +34,21 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
     }
 
     const { designationName, designationDescription, status, designationHeadUserId, departmentId } = validatedFields.data;
-    const createdBy = dbUser.id;
 
-    const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
+    const adminName = user.name || dbUser.firstName + " " + dbUser.lastName;
 
+    await auditAction(dbUser.id, `Designation Updated by ${user.role}: ${adminName}`);
 
-    await auditAction(dbUser.id, `Designation Created by Admin: ${adminName}`);
-
-    await db.designation.create({
+    await db.designation.update({
+        where: { id: designationId },
         data: {
             designationName,
             designationDescription,
             status,
-            departmentId,
             designationHeadUserId,
-            createdBy,
+            departmentId,
         },
     });
 
-    return { success: "Designation created!" };
+    return { success: "Designation updated!" };
 }

@@ -1,12 +1,13 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import * as z from 'zod';
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DepartmentSchema } from '@/schemas/superadminIndex';
+import { DesignationSchema } from '@/schemas/superadminIndex';
+import { createDesignation } from '@/actions/superadmin/createDesignation';
 
 import {
     Form,
@@ -24,42 +25,36 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
+import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
-import useDepartment from '@/hooks/use-department';
-import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
+import useDepartment from '@/hooks/use-department';
 
-interface UpdateDepartmentFormProps {
+
+interface CreateDesignationFormWithDeptProps {
     departmentId: string;
 }
 
-const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentId }) => {
+const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps> = ({ departmentId }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
     const [isPending, startTransition] = useTransition();
 
-    const { department, loading } = useDepartment(departmentId);
-
-    const [open, setOpen] = useState(false);
-    const router = useRouter();
-
-    const form = useForm<z.infer<typeof DepartmentSchema>>({
-        resolver: zodResolver(DepartmentSchema),
+    const form = useForm<z.infer<typeof DesignationSchema>>({
+        resolver: zodResolver(DesignationSchema),
         defaultValues: {
-            departmentName: "",
-            departmentDescription: "",
-            departmentHeadUserId: "",
+            designationName: "",
+            designationDescription: "",
             status: Status.ACTIVE,
+            departmentId: departmentId, // Use departmentId prop as default value
+            designationHeadUserId: "",
         }
     });
+    const departmentDetails = useDepartment(departmentId);
+    const departmentName = departmentDetails.departmentName;
 
-    useEffect(() => {
-        if (department) {
-            form.reset(department);
-        }
-    }, [department, form]);
+    const [open, setOpen] = useState(false);
 
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
@@ -68,9 +63,13 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
         }
     }
 
-    const onSubmit = (values: z.infer<typeof DepartmentSchema>) => {
+    const onSubmit = (values: z.infer<typeof DesignationSchema>) => {
+        setError("");
+        setSuccess("");
+
+        console.log("Form Values:", values);
         startTransition(() => {
-            updateDepartment(departmentId, values)
+            createDesignation(values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
@@ -84,25 +83,19 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                 })
                 .catch(() => setError("An error what!"));
         });
-    };
-    if (loading) {
-        return <p>Loading...</p>;
     }
+
     return (
-
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant={"superadmin"}>
-                    Update Department
-                </Button>
+            <DialogTrigger>
+                <Button className='w-full' variant='superadmin'>Create Designation</Button>
             </DialogTrigger>
-            <DialogContent className="p-0 w-auto bg-transparent border-none">
-
-                <Card className='bg-red-50'>
+            <DialogContent className='p-0 w-auto bg-transparent border-none'>
+                <Card className='w-96'>
                     <CardHeader>
-                        Update a  Department for Kupler Industries
+                        Create Designation for {departmentName}
                         <CardDescription>
-                            Input the information for this Department below
+                            Input the details of the new designation
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -111,19 +104,19 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
 
                                 <div className='space-y-4'>
 
-                                    {/* DEPARTMENT NAME */}
+                                    {/* DESIGNATION NAME */}
                                     <div>
                                         <FormField
                                             control={form.control}
-                                            name='departmentName'
+                                            name='designationName'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Department Name</FormLabel>
+                                                    <FormLabel>Designation Name</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             {...field}
                                                             disabled={isPending}
-                                                            placeholder='Engineering'
+                                                            placeholder='Electrical Engineering'
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -132,19 +125,19 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                         />
                                     </div>
 
-                                    {/* DEPARTMENT DESCRIPTION */}
+                                    {/* DESIGNATION DESCRIPTION */}
                                     <div>
                                         <FormField
                                             control={form.control}
-                                            name='departmentDescription'
+                                            name='designationDescription'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Department Description</FormLabel>
+                                                    <FormLabel>Designation Description</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             {...field}
                                                             disabled={isPending}
-                                                            placeholder='Handles all of the Engineering Teams'
+                                                            placeholder='Team Electric'
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -153,7 +146,7 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                         />
                                     </div>
 
-                                    {/* DEPARTMENT STATUS */}
+                                    {/* DESIGNATION STATUS */}
                                     <div>
                                         <FormField
                                             control={form.control}
@@ -165,14 +158,13 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                                         disabled={isPending}
                                                         onValueChange={field.onChange}
                                                         defaultValue={field.value}
-                                                        value={field.value}
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
                                                                 <SelectValue placeholder="Pick the status of this Department" />
                                                             </SelectTrigger>
                                                         </FormControl>
-                                                        <SelectContent >
+                                                        <SelectContent>
                                                             <SelectItem value={Status.ACTIVE}>Active</SelectItem>
                                                             <SelectItem value={Status.INACTIVE}>Inactive</SelectItem>
                                                         </SelectContent>
@@ -183,15 +175,34 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                         />
                                     </div>
 
-                                    {/* DEPARTMENT HEAD */}
+                                    {/* DESIGNATION HEAD */}
                                     <div>
                                         <FormField
                                             control={form.control}
-                                            name='departmentHeadUserId'
+                                            name='designationHeadUserId'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Department Head</FormLabel>
-                                                    <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                    <FormLabel>Designation Head</FormLabel>
+                                                    <SelectUser onUserChange={field.onChange} />
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+
+                                    {/* DEPARTMENT PARENT */}
+                                    <div className='hidden'>
+                                        <FormField
+                                            control={form.control}
+                                            name='departmentId'
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Department</FormLabel>
+                                                    <Input
+                                                        {...field}
+                                                        disabled={true} // Make this field read-only
+                                                        value={departmentId} // Set the value to the departmentId prop
+                                                    />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
@@ -201,7 +212,7 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                 <FormError message={error} />
                                 <FormSucess message={success} />
                                 <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
-                                    Update Department
+                                    Create Designation
                                 </Button>
                             </form>
                         </Form>
@@ -209,11 +220,9 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                 </Card>
 
 
-
             </DialogContent>
         </Dialog>
     )
 
 }
-
-export default UpdateDepartmentForm;
+export default CreateSpecificDesignationForm;

@@ -27,7 +27,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Status } from '@prisma/client';
 import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
-import { Car } from 'lucide-react';
 
 const CreateDesignationForm = () => {
     const [error, setError] = useState<string | undefined>("");

@@ -1,7 +1,6 @@
 "use server"
 import * as z from "zod";
 
-import { AddressSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";

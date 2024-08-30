@@ -1,6 +1,7 @@
 "use server"
 
 import * as z from "zod";
+import { revalidatePath } from 'next/cache'; // Add this import
 
 import { AddressSchema } from "@/schemas";
 import { db } from "@/lib/db";
@@ -50,6 +51,9 @@ export const editAddress = async (values: z.infer<typeof AddressSchema>) => {
             zipCode,
         },
     });
+
+    // Revalidate the path
+    revalidatePath('/employee'); // Replace '/profile' with the actual path where this action is used
 
     return { success: "Address updated!" };
 }

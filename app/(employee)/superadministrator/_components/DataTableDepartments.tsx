@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import CreateDepartmentButton from "./CreateDepartmentButton"
+import CreateDepartmentForm from "./CreateDepartmentForm"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -81,7 +81,7 @@ export function DataTableDepartments<TData, TValue>({
                     className="max-w-sm"
                 />
                 <div className="flex items-center ml-10">
-                    <CreateDepartmentButton />
+                    <CreateDepartmentForm />
                 </div>
 
                 <DropdownMenu>

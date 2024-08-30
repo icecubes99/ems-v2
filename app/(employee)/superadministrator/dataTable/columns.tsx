@@ -15,8 +15,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import UpdateDepartmentButton from "../_components/UpdateDepartmentButton"
+
 import { Badge } from "@/components/ui/badge"
+import ViewDepartmentButton from "../_components/ViewDepartmentButton"
+import UpdateDepartmentForm from "../_components/UpdateDepartmentForm"
+import CreateSpecificDesignationForm from "../_components/create-specific-designation-form"
 
 
 // This type is used to define the shape of our data.
@@ -113,10 +116,10 @@ export const columns: ColumnDef<Department>[] = [
                         <DropdownMenuSeparator />
 
                     </DropdownMenuContent>
-                    <div className="flex flex-col gap-2 p-2">
-                        <UpdateDepartmentButton departmentId={user.id} />
-                        <Button variant={"superadmin"}>View Details</Button>
-
+                    <div className="flex w-full flex-col gap-2 p-2">
+                        <UpdateDepartmentForm departmentId={user.id} />
+                        <ViewDepartmentButton departmentId={user.id} />
+                        <CreateSpecificDesignationForm departmentId={user.id} />
                     </div>
                 </DropdownMenu>
 
