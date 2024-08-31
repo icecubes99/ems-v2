@@ -1,4 +1,4 @@
-import { Gender, Status, UserRole } from "@prisma/client";
+import { EmployeeType, Gender, Status, UserRole } from "@prisma/client";
 import * as z from "zod";
 
 export const DepartmentSchema = z.object({
@@ -29,4 +29,16 @@ export const DesignationSchema = z.object({
     designationHeadUserId: z.string().min(1, {
         message: "Designation Head is required",
     }),
+})
+
+export const AssignedDesignationSchema = z.object({
+    userId: z.string().min(1, {
+        message: "User ID is required",
+    }),
+    employeeType: z.enum([EmployeeType.REGULAR, EmployeeType.CONTRACTUAL, EmployeeType.PROBATIONARY]),
+    status: z.enum([Status.ACTIVE, Status.INACTIVE]),
+    designationId: z.string().min(1, {
+        message: "Designation ID is required",
+    }),
+
 })

@@ -29,6 +29,7 @@ import useDepartment from '@/hooks/use-department';
 import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface UpdateDepartmentFormProps {
     departmentId: string;
@@ -86,7 +87,7 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
         });
     };
     if (loading) {
-        return <p>Loading...</p>;
+        return <Skeleton className="h-9 w-full" />
     }
     return (
 

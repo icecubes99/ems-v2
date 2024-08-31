@@ -1,13 +1,11 @@
 "use client"
 
+
 import React, { useEffect } from 'react'
 import * as z from 'zod';
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { DesignationSchema } from '@/schemas/superadminIndex';
-import { updateDesignation } from '@/actions/superadmin/updateDesignation';
 
 import {
     Form,
@@ -18,51 +16,54 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
+import { AssignedDesignationSchema } from '@/schemas/superadminIndex';
+import { updateAssignedUser } from '@/actions/superadmin/updateAssignedUser';
+import useDesignation from '@/hooks/use-designation';
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Status } from '@prisma/client';
-import SelectDepartments from './SelectDepartments';
+import { EmployeeType, Status } from '@prisma/client';
 import SelectUser from '../../_components/SelectUser';
-import useDesignation from '@/hooks/use-designation';
-import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import useAssignedUser from '@/hooks/use-assigned-users';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface UpdateDesignationFormProps {
+interface UpdateAssignedUserFormProps {
+    assignedUserId: string;
     designationId: string;
 }
 
-const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designationId }) => {
+const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assignedUserId, designationId }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
-
     const [isPending, startTransition] = useTransition();
 
-    const { designation, loading } = useDesignation(designationId)
+    const { assignedUser, loading } = useAssignedUser(assignedUserId);
 
-    const [open, setOpen] = useState(false);
-    const router = useRouter();
-
-    const form = useForm<z.infer<typeof DesignationSchema>>({
-        resolver: zodResolver(DesignationSchema),
+    const form = useForm<z.infer<typeof AssignedDesignationSchema>>({
+        resolver: zodResolver(AssignedDesignationSchema),
         defaultValues: {
-            designationName: "",
-            designationDescription: "",
+            userId: "",
+            employeeType: EmployeeType.REGULAR,
             status: Status.ACTIVE,
-            departmentId: "",
-            designationHeadUserId: "",
+            designationId: designationId
         }
     });
 
     useEffect(() => {
-        if (designation) {
-            form.reset(designation);
+        if (assignedUser) {
+            form.reset(assignedUser);
         }
-    }, [designation, form]);
+    }, [assignedUser, form])
+
+    const designationDetails = useDesignation(designationId);
+    const designationName = designationDetails?.designationName;
+
+    const [open, setOpen] = useState(false);
 
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
@@ -70,9 +71,13 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designati
             window.location.reload();
         }
     }
-    const onSubmit = (values: z.infer<typeof DesignationSchema>) => {
+
+    const onSubmit = (values: z.infer<typeof AssignedDesignationSchema>) => {
+        setError("");
+        setSuccess("");
+
         startTransition(() => {
-            updateDesignation(designationId, values)
+            updateAssignedUser(assignedUserId, values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
@@ -84,79 +89,50 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designati
                         handleOpenChange(false);
                     }
                 })
-                .catch(() => setError("An error occurred. Please try again."))
+                .catch(() => setError("An error occurred!"));
         })
-    };
-
+    }
 
     if (loading) {
         return <Skeleton className="h-9 w-full" />
     }
 
     return (
-
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant={"superadmin"}>Edit Designation</Button>
+            <DialogTrigger>
+                <Button className='w-full' variant='superadmin'>Update Details</Button>
             </DialogTrigger>
-            <DialogContent className='p-0 w-full bg-transparent border-none'>
-                <Card>
+            <DialogContent className='p-0 w-auto bg-transparent border-none'>
+                <Card className=''>
                     <CardHeader>
-                        Create Designation
+                        Assign User for {designationName}
                         <CardDescription>
-                            Input the details of the new designation
+                            Input the User Info Below
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
                                 <div className='space-y-4'>
 
-                                    {/* DESIGNATION NAME */}
-                                    <div>
+                                    <div className='hidden'>
+                                        {/* USER ASSIGNED */}
                                         <FormField
                                             control={form.control}
-                                            name='designationName'
+                                            name='userId'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Designation Name</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            {...field}
-                                                            disabled={isPending}
-                                                            placeholder='Electrical Engineering'
-                                                        />
-                                                    </FormControl>
+                                                    <FormLabel>User to Be Assigned</FormLabel>
+                                                    <SelectUser onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
                                     </div>
 
-                                    {/* DESIGNATION DESCRIPTION */}
                                     <div>
-                                        <FormField
-                                            control={form.control}
-                                            name='designationDescription'
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Designation Description</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            {...field}
-                                                            disabled={isPending}
-                                                            placeholder='Team Electric'
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    {/* DESIGNATION STATUS */}
-                                    <div>
+                                        {/* STATUS */}
                                         <FormField
                                             control={form.control}
                                             name='status'
@@ -167,11 +143,10 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designati
                                                         disabled={isPending}
                                                         onValueChange={field.onChange}
                                                         defaultValue={field.value}
-                                                        value={field.value}
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder="Pick the status of this Department" />
+                                                                <SelectValue placeholder="Pick the status" />
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
@@ -185,40 +160,41 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designati
                                         />
                                     </div>
 
-                                    {/* DESIGNATION HEAD */}
                                     <div>
+                                        {/* EMPLOYEE TYPE */}
                                         <FormField
                                             control={form.control}
-                                            name='designationHeadUserId'
+                                            name='employeeType'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Designation Head</FormLabel>
-                                                    <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                    <FormLabel>Employee Type</FormLabel>
+                                                    <Select
+                                                        disabled={isPending}
+                                                        onValueChange={field.onChange}
+                                                        defaultValue={field.value}
+                                                    >
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Select the Employee Type" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            <SelectItem value={EmployeeType.REGULAR}>Regular</SelectItem>
+                                                            <SelectItem value={EmployeeType.CONTRACTUAL}>Contractual</SelectItem>
+                                                            <SelectItem value={EmployeeType.PROBATIONARY}>Probationary</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
                                     </div>
 
-                                    {/* DEPARTMENT PARENT */}
-                                    <div>
-                                        <FormField
-                                            control={form.control}
-                                            name='departmentId'
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Department</FormLabel>
-                                                    <SelectDepartments value={field.value} onUserChange={field.onChange} />
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
                                 </div>
                                 <FormError message={error} />
                                 <FormSucess message={success} />
                                 <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
-                                    Update Designation
+                                    Assign User
                                 </Button>
                             </form>
                         </Form>
@@ -228,5 +204,4 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ designati
         </Dialog>
     )
 }
-
-export default UpdateDesignationForm
+export default UpdateAssignedUserForm;

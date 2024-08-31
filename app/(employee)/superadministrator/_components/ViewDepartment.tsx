@@ -9,9 +9,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import UpdateDesignationForm from './UpdateDesignationForm'
-import CreateDesignationFormWithDept, { CreateSpecificDesignationFormButton } from './create-specific-designation-form'
+import Link from 'next/link'
+import { Skeleton } from '@/components/ui/skeleton'
+import CreateDesignationForm from './CreateDesignationForm'
+import CreateDesignationButton from './CreateDesignationButton'
+import CreateSpecificDesignationForm from './create-specific-designation-form'
 
 interface ViewDepartmentProps {
     departmentId: string
@@ -23,7 +26,11 @@ export default function ViewDepartment({ departmentId }: ViewDepartmentProps) {
     const { user: departmentHeadUser, loading: userLoading } = useUser(department?.departmentHeadUserId ?? '')
 
     if (departmentLoading || designationLoading || userLoading) {
-        return <div aria-live="polite" aria-busy="true">Loading...</div>
+        return (
+            <div className='min-w-[800px] max-w-[5000px] min-h-[800px]'>
+                <Skeleton className="h-full w-full" />
+            </div>
+        )
     }
 
     if (error) {
@@ -33,7 +40,12 @@ export default function ViewDepartment({ departmentId }: ViewDepartmentProps) {
     return (
         <Card className="min-w-[800px] max-w-[5000px]">
             <CardHeader className="text-lg font-semibold">
-                {department?.departmentName} Department Details
+                <div className='flex flex-row justify-start items-center'>
+                    {department?.departmentName} Department Details
+                    <div className='ml-10'>
+                        <CreateSpecificDesignationForm departmentId={departmentId} />
+                    </div>
+                </div>
             </CardHeader>
             <CardContent className="space-y-4">
                 <DepartmentInfo label="Department Name" value={department?.departmentName} />
@@ -79,22 +91,24 @@ function DesignationsTable({ designations, departmentName, departmentId }: { des
     return (
         <div className="p-5 space-y-4">
             <p className="text-sm font-bold uppercase">{departmentName} DEPARTMENT DESIGNATIONS</p>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Designation Name</TableHead>
-                        <TableHead>Designation Description</TableHead>
-                        <TableHead>Designation Status</TableHead>
-                        <TableHead>Designation Head</TableHead>
-                        <TableHead>Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {designations.map((designation) => (
-                        <DesignationRow key={designation.id} designation={designation} />
-                    ))}
-                </TableBody>
-            </Table>
+            <div className='max-h-96 overflow-y-auto'>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Designation Name</TableHead>
+                            <TableHead>Designation Description</TableHead>
+                            <TableHead>Designation Status</TableHead>
+                            <TableHead>Designation Head</TableHead>
+                            <TableHead>Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {designations.map((designation) => (
+                            <DesignationRow key={designation.id} designation={designation} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     )
 }
@@ -115,7 +129,7 @@ function DesignationRow({ designation }: { designation: Designation }) {
             </TableCell>
             <TableCell>
                 {loading ? (
-                    <span>Loading...</span>
+                    <Skeleton className="h-4" />
                 ) : error ? (
                     <span>Error loading user</span>
                 ) : (
@@ -124,15 +138,11 @@ function DesignationRow({ designation }: { designation: Designation }) {
             </TableCell>
             <TableCell>
                 <div className='flex flex-col gap-2'>
-                    <Button variant={"superadmin"}>View Designation</Button>
-                    {/* <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant={"superadmin"}>Edit Designation</Button>
-                        </DialogTrigger>
-                        <DialogContent className='p-0 w-full bg-transparent border-none'>
-                            <UpdateDesignationForm designationId={designation.id} />
-                        </DialogContent>
-                    </Dialog> */}
+                    <Button asChild variant={"superadmin"}>
+                        <Link href={`/superadministrator/departments/designations/${designation.id}`}>
+                            View Designation
+                        </Link>
+                    </Button>
                     <UpdateDesignationForm designationId={designation.id} />
                 </div>
             </TableCell>

@@ -20,10 +20,10 @@ export default function SuperAdminCards() {
                         <p className='text-sm font-medium'>Create Department</p>
                         <CreateDepartmentForm />
                     </div>
-                    <div className='flex flex-row items-center justify-between'>
+                    <div className='flex flex-row items-center  justify-between'>
                         <p className='text-sm font-medium'>View Departments</p>
                         <Button variant={"superadmin"}>
-                            <Link href='/superadministrator/dataTable'>View Departments</Link>
+                            <Link href='/superadministrator/departments'>View Departments</Link>
                         </Button>
                     </div>
                     <div className='flex flex-row items-center justify-between'>

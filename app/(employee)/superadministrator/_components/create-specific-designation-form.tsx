@@ -29,6 +29,7 @@ import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import useDepartment from '@/hooks/use-department';
+import SelectUserDesignationHead from './select-user-designation-head';
 
 
 interface CreateDesignationFormWithDeptProps {
@@ -67,7 +68,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
         setError("");
         setSuccess("");
 
-        console.log("Form Values:", values);
+        // console.log("Form Values:", values);
         startTransition(() => {
             createDesignation(values)
                 .then((data) => {
@@ -161,7 +162,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder="Pick the status of this Department" />
+                                                                <SelectValue placeholder="Pick the status" />
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
@@ -183,7 +184,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Designation Head</FormLabel>
-                                                    <SelectUser onUserChange={field.onChange} />
+                                                    <SelectUserDesignationHead onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}

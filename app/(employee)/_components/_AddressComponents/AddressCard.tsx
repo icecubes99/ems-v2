@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import EditAddressButton from './EditAddressButton';
 import AddressForm from './AddressForm';
 import EditAddressForm from './EditAddressForm';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const AddressCard = ({ userId }: { userId: string }) => {
     const [address, setAddress] = useState<any>(null);
@@ -42,7 +43,14 @@ const AddressCard = ({ userId }: { userId: string }) => {
             </CardHeader>
             <CardContent className='space-y-4'>
                 {loading ? (
-                    <p className='text-sm font-medium'>Loading...</p>
+                    <div className='flex flex-col gap-4'>
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+
+                    </div>
                 ) : error ? (
                     <div className='flex flex-col gap-4'>
                         <p className='text-sm font-medium'>{error}</p>

@@ -27,6 +27,7 @@ import { useSession } from 'next-auth/react';
 import { useCurrentUserId } from '@/hooks/use-current-user';
 import useEmergencyContact from '@/hooks/use-current-emergencyContact';
 import { editEmergencyContact } from '@/actions/editEmergencyContact';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 
@@ -76,7 +77,7 @@ const EditEmergencyContactForm = () => {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Skeleton className="h-9 w-20" />
     }
 
     return (
@@ -165,6 +166,7 @@ const EditEmergencyContactForm = () => {
                                                 disabled={isPending}
                                                 onValueChange={field.onChange}
                                                 defaultValue={field.value}
+                                                value={field.value}
                                             >
                                                 <FormControl>
                                                     <SelectTrigger>

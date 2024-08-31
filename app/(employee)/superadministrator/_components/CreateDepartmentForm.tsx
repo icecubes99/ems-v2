@@ -25,9 +25,9 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
-import SelectUser from '../../_components/SelectUser';
 import { Dialog } from '@/components/ui/dialog';
 import { DialogContent, DialogTrigger } from '@/components/RefreshDialog';
+import SelectUserDepartmentHead from './select-user-department-head';
 
 const CreateDepartmentForm = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -175,7 +175,7 @@ const CreateDepartmentForm = () => {
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Department Head</FormLabel>
-                                                    <SelectUser onUserChange={field.onChange} />
+                                                    <SelectUserDepartmentHead onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}

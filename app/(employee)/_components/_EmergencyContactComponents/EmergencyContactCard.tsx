@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import AddEmergencyContactButton from './AddEmergencyContactButton';
 import { EmergencyContact } from '@prisma/client';
 import EditEmergencyContactButton from './EditEmergencyContactButton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const EmergencyContactCard = ({ userId }: { userId: string }) => {
     const [emergencyContact, setEmergencyContact] = useState<EmergencyContact>();
@@ -45,7 +46,15 @@ const EmergencyContactCard = ({ userId }: { userId: string }) => {
             </CardHeader>
             <CardContent className='space-y-4'>
                 {loading ? (
-                    <p className='text-sm font-medium'>Loading...</p>
+                    <div className='flex flex-col gap-4'>
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+                        <Skeleton className="h-9" />
+
+
+                    </div>
                 ) : error ? (
                     <div className='flex flex-col gap-4'>
                         <p className='text-sm font font-medium'>{error}</p>

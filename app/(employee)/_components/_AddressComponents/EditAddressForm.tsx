@@ -25,6 +25,7 @@ import { useCurrentUserId } from '@/hooks/use-current-user';
 import useAddress from '@/hooks/use-current-address';
 import { useSession } from 'next-auth/react';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Skeleton } from '@/components/ui/skeleton';
 
 const EditAddressForm = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -83,7 +84,9 @@ const EditAddressForm = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <div className='flex flex-col gap-4'>
+            <Skeleton className="h-9 w-20" />
+        </div>
     }
     return (
         <Dialog open={open} onOpenChange={setOpen}>

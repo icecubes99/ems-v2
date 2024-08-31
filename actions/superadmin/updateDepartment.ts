@@ -8,6 +8,7 @@ import { auditAction } from "../auditAction";
 
 import { DepartmentSchema } from "@/schemas/superadminIndex";
 import { superAdmin } from "./superAdmin";
+import { UserRole } from "@prisma/client";
 
 export const updateDepartment = async (departmentId: string, values: z.infer<typeof DepartmentSchema>) => {
     const user = await currentUser();
@@ -32,6 +33,26 @@ export const updateDepartment = async (departmentId: string, values: z.infer<typ
         return { error: superAdminResult.error };
     }
 
+    // Fetch the current state of the department
+    const previousDepartment = await db.department.findUnique({
+        where: { id: departmentId },
+    });
+
+    if (!previousDepartment) {
+        return { error: "Department not found!" };
+    }
+
+    const previousHeadUserId = previousDepartment.departmentHeadUserId;
+
+    await db.user.update({
+        where: {
+            id: previousHeadUserId,
+        },
+        data: {
+            role: UserRole.USER
+        }
+    })
+
     const { departmentName, departmentDescription, status, departmentHeadUserId } = validatedFields.data;
     // const createdBy = dbUser.id;
 
@@ -42,6 +63,16 @@ export const updateDepartment = async (departmentId: string, values: z.infer<typ
 
     // TODO: Add history of Department and append the changes 
     // TODO: also add updatedby field in the department table to track who updated the department
+
+
+    await db.user.update({
+        where: {
+            id: departmentHeadUserId,
+        },
+        data: {
+            role: UserRole.ADMIN
+        }
+    })
 
 
     await db.department.update({

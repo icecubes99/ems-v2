@@ -5,7 +5,8 @@ import { columns, } from './columns';
 
 import LayoutSideHead from '@/components/LayoutSideHead';
 import { Department } from '@prisma/client';
-import { DataTableDepartments } from '../_components/DataTableDepartments';
+import { DataTableDepartments } from '../_components/DataTable-Departments';
+import { RoleGate } from '@/components/auth/role-gate';
 
 const page = () => {
 
@@ -32,15 +33,18 @@ const page = () => {
     }, [])
 
     return (
-        <LayoutSideHead label='Data Table'>
-            <section className="py-10">
-                <div className="container">
-                    <h1 className="text-3xl">
-                        <DataTableDepartments columns={columns} data={departments} />
-                    </h1>
-                </div>
-            </section>
-        </LayoutSideHead>
+        <RoleGate allowedRoles={["SUPERADMIN"]}>
+            <LayoutSideHead label='Data Table'>
+                <section className="py-10">
+                    <div className="container">
+                        <h1 className="text-3xl">
+                            <DataTableDepartments columns={columns} data={departments} />
+                        </h1>
+                    </div>
+                </section>
+            </LayoutSideHead>
+        </RoleGate>
+
     )
 }
 

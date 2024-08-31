@@ -10,11 +10,18 @@ interface SidebarButtonProps {
     classname?: string;
     iconClassname?: string;
     isActive: boolean;
+    isSuperAdmin?: boolean;
+    isAdmin?: boolean;
 }
 
-const SidebarButton = ({ children, link, icon, label, classname, iconClassname, isActive }: SidebarButtonProps) => {
+const SidebarButton = ({ children, link, icon, label, classname, iconClassname, isActive, isSuperAdmin, isAdmin }: SidebarButtonProps) => {
     return (
-        <div className={cn(`w-full h-12 items-center hover:bg-purple-300 ${isActive ? 'bg-purple-300 shadow-md' : 'hover:bg-purple-300'}`, classname)}>
+        <div className={cn(`w-full h-12 items-center hover:bg-gradient-to-r from-purple-300 to-violet-300 
+        ${isActive ? 'bg-gradient-to-r from-purple-300 to-violet-300 shadow-md' : 'hover:bg-gradient-to-r from-purple-300 to-violet-300'} 
+        ${isSuperAdmin ? "hover:bg-gradient-to-r from-purple-300 to-red-300" : ""}
+        ${isAdmin ? "hover:bg-gradient-to-r from-purple-300 to-indigo-300" : ""}
+        
+        `, classname)}>
             <Link href={link}>
                 <div className='flex flex-row justify-start h-full items-center'>
                     <div className={cn("mr-10 ml-16", iconClassname)}>

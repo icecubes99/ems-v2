@@ -8,6 +8,7 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { superAdmin } from "./superAdmin";
+import { UserRole } from "@prisma/client";
 
 export const createDepartment = async (values: z.infer<typeof DepartmentSchema>) => {
     const user = await currentUser();
@@ -38,6 +39,15 @@ export const createDepartment = async (values: z.infer<typeof DepartmentSchema>)
     const superaAdminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
 
     await auditAction(dbUser.id, `Department Created by SuperAdmin: ${superaAdminName}`);
+
+    await db.user.update({
+        where: {
+            id: departmentHeadUserId,
+        },
+        data: {
+            role: UserRole.ADMIN
+        }
+    })
 
     await db.department.create({
         data: {
