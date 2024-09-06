@@ -49,6 +49,7 @@ model User {
   auditLogs               AuditLog[]  
   address                 AddressLine?
   documents               Documents[]
+  timesheets              Timesheet[]
 
   assignedDesignations    AssignDesignation?
 
@@ -56,7 +57,6 @@ model User {
   department              Department?
   designation             Designation?
   
-
   // default
   emailVerified           DateTime?
   image                   String?
@@ -232,4 +232,44 @@ model AssignDesignation {
   updatedAt DateTime @updatedAt
 
   @@unique([userId])
+}
+model Timesheet {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dayId     String
+  day       WorkingDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  clockIn   DateTime
+  clockOut  DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, dayId])
+}
+
+model WorkingDay {
+  id        String     @id @default(cuid())
+  date      DateTime
+  password  String     // Password for attendance logging
+  monthId   String
+  month     WorkingMonth @relation(fields: [monthId], references: [id], onDelete: Cascade)
+  timesheets Timesheet[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([date, monthId])
+}
+
+model WorkingMonth {
+  id        String       @id @default(cuid())
+  month     Int
+  year      Int
+  workingDays WorkingDay[]
+
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([month, year])
 }

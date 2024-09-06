@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { getAddress } from '@/actions/readAddress';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import EditAddressButton from './EditAddressButton';
 import AddressForm from './AddressForm';
 import EditAddressForm from './EditAddressForm';
@@ -36,7 +36,9 @@ const AddressCard = ({ userId }: { userId: string }) => {
     return (
         <Card>
             <CardHeader>
-                Address Information
+                <CardTitle>
+                    Address Information
+                </CardTitle>
                 <CardDescription>
                     Here is the address information for the user.
                 </CardDescription>

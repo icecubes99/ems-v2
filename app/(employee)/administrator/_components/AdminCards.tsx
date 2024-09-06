@@ -1,9 +1,14 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 import Link from 'next/link'
+import DesignationHeadCard from './designation-head-control-card'
+import DepartmentHeadCard from './department-head-control-card'
 
-const AdminCards = () => {
+interface AdminCardsProps {
+    userId: string
+}
+const AdminCards = ({ userId }: AdminCardsProps) => {
     return (
         <div className='flex flex-col gap-6'>
             <div className='mt-5'>
@@ -13,7 +18,9 @@ const AdminCards = () => {
 
                 <Card className='shadow-sm'>
                     <CardHeader>
-                        User Actions
+                        <CardTitle>
+                            User Actions
+                        </CardTitle>
                         <CardDescription>
                             User management and actions
                         </CardDescription>
@@ -21,41 +28,17 @@ const AdminCards = () => {
                     <CardContent className='space-y-4'>
                         <div className='flex flex-row items-center justify-between'>
                             <p className='text-sm font-medium'>Employees List</p>
-                            <Button variant={"admin"} asChild>
-                                <Link href={"/administrator/dataTable"}>
+                            <Link href={"/administrator/dataTable"} passHref legacyBehavior>
+                                <Button variant={"admin"}>
                                     View Employees
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>
 
-                <Card className='shadow-sm'>
-                    <CardHeader>
-                        Designation Actions
-                        <CardDescription>
-                            Manage Designation details and actions
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className='space-y-4'>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>Designation List</p>
-                            <Button variant={"admin"} asChild>
-                                <Link href={"/administrator"}>
-                                    View Designation
-                                </Link>
-                            </Button>
-                        </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>Designation List</p>
-                            <Button variant={"admin"} asChild>
-                                <Link href={"/administrator"}>
-                                    View Designation
-                                </Link>
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                <DesignationHeadCard userId={userId} />
+                <DepartmentHeadCard userId={userId} />
 
             </div>
         </div>

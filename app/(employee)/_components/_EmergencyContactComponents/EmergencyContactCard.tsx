@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getEmergencyContact } from '@/actions/getEmergencyContact';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 import AddEmergencyContactButton from './AddEmergencyContactButton';
 import { EmergencyContact } from '@prisma/client';
@@ -39,7 +39,9 @@ const EmergencyContactCard = ({ userId }: { userId: string }) => {
     return (
         <Card>
             <CardHeader>
-                Emergency Contact Information
+                <CardTitle>
+                    Emergency Contact Information
+                </CardTitle>
                 <CardDescription>
                     Your Designated Emergency Contact
                 </CardDescription>

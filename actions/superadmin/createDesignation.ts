@@ -8,6 +8,7 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { admin } from "../admin";
+import { UserRole } from "@prisma/client";
 
 
 export const createDesignation = async (values: z.infer<typeof DesignationSchema>) => {
@@ -40,6 +41,17 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
 
 
     await auditAction(dbUser.id, `Designation Created by Admin: ${adminName}`);
+
+    const designationHeadUser = await db.user.findUnique({
+        where: { id: designationHeadUserId }
+    })
+
+    if (designationHeadUser && designationHeadUser.role !== UserRole.SUPERADMIN) {
+        await db.user.update({
+            where: { id: designationHeadUserId },
+            data: { role: UserRole.ADMIN }
+        })
+    }
 
     await db.designation.create({
         data: {

@@ -34,9 +34,10 @@ import SelectUserDesignationHead from './select-user-designation-head';
 
 interface CreateDesignationFormWithDeptProps {
     departmentId: string;
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
 }
 
-const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps> = ({ departmentId }) => {
+const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps> = ({ variant, departmentId }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -89,7 +90,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button className='w-full' variant='superadmin'>Create Designation</Button>
+                <Button className='w-full' variant={variant}>Create Designation</Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card className='w-96'>
@@ -212,7 +213,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
                                 </div>
                                 <FormError message={error} />
                                 <FormSucess message={success} />
-                                <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
+                                <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
                                     Create Designation
                                 </Button>
                             </form>

@@ -22,8 +22,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { AssignDesignationWithUser } from "@/types/types"
 
 import { FilterFn } from "@tanstack/react-table"
-import UpdateAssignedUserForm from "../../../_components/update-assigned-user-form"
-import { RemoveUserDialog } from "../../../_components/remove-assigned-user"
+
+import UpdateAssignedUserForm from "@/app/(employee)/superadministrator/_components/update-assigned-user-form"
+import { RemoveUserDialog } from "@/app/(employee)/superadministrator/_components/remove-assigned-user"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -149,8 +150,8 @@ export const columnsDesignation: ColumnDef<AssignDesignationWithUser>[] = [
                         {/* <UpdateDepartmentForm departmentId={user.id} />
                         <ViewDepartmentButton departmentId={user.id} />
                         <CreateSpecificDesignationForm departmentId={user.id} /> */}
-                        <UpdateAssignedUserForm variant={"superadmin"} assignedUserId={user.id} designationId={user.designationId} />
-                        <RemoveUserDialog variant={"superadmin"} assignedUseId={user.id} />
+                        <UpdateAssignedUserForm variant={"admin"} assignedUserId={user.id} designationId={user.designationId} />
+                        <RemoveUserDialog variant={"admin"} assignedUseId={user.id} />
                     </div>
                 </DropdownMenu>
 

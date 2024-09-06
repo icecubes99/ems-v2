@@ -9,10 +9,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import UpdateDesignationForm from './UpdateDesignationForm'
+import UpdateDesignationForm from '../../superadministrator/_components/UpdateDesignationForm'
 import Link from 'next/link'
 import { Skeleton } from '@/components/ui/skeleton'
-import CreateSpecificDesignationForm from './create-specific-designation-form'
+
+import CreateSpecificDesignationForm from '../../superadministrator/_components/create-specific-designation-form'
 
 interface ViewDepartmentProps {
     departmentId: string
@@ -41,7 +42,7 @@ export default function ViewDepartment({ departmentId }: ViewDepartmentProps) {
                 <div className='flex flex-row justify-start items-center'>
                     {department?.departmentName} Department Details
                     <div className='ml-10'>
-                        <CreateSpecificDesignationForm variant={"superadmin"} departmentId={departmentId} />
+                        <CreateSpecificDesignationForm variant={"admin"} departmentId={departmentId} />
                     </div>
                 </div>
             </CardHeader>
@@ -136,12 +137,12 @@ function DesignationRow({ designation }: { designation: Designation }) {
             </TableCell>
             <TableCell>
                 <div className='flex flex-col gap-2'>
-                    <Link className='h-4' href={`/superadministrator/departments/designations/${designation.id}`} legacyBehavior passHref>
-                        <Button variant={"superadmin"}>
+                    <Link className='h-4' href={`/administrator/designations/${designation.id}`} legacyBehavior passHref>
+                        <Button variant={"admin"}>
                             View Designation
                         </Button>
                     </Link>
-                    <UpdateDesignationForm variant={"superadmin"} designationId={designation.id} />
+                    <UpdateDesignationForm variant={"admin"} designationId={designation.id} />
                 </div>
             </TableCell>
         </TableRow>

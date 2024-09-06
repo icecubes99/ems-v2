@@ -35,9 +35,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface UpdateAssignedUserFormProps {
     assignedUserId: string;
     designationId: string;
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
 }
 
-const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assignedUserId, designationId }) => {
+const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assignedUserId, designationId, variant }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -100,12 +101,12 @@ const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assigne
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button className='w-full' variant='superadmin'>Update Details</Button>
+                <Button className='w-full' variant={variant}>Update Details</Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card className=''>
                     <CardHeader>
-                        Assign User for {designationName}
+                        Update Details for {designationName}
                         <CardDescription>
                             Input the User Info Below
                         </CardDescription>
@@ -193,7 +194,7 @@ const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assigne
                                 </div>
                                 <FormError message={error} />
                                 <FormSucess message={success} />
-                                <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
+                                <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
                                     Assign User
                                 </Button>
                             </form>

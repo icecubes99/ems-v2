@@ -49,11 +49,11 @@ const Sidebar = ({ user }: SidebarProps) => {
             <div className='w-full'>
 
                 <SidebarButton link='/employee' icon={<FaUser />} label='PROFILE DETAILS' isActive={router.startsWith("/employee")} />
-                <SidebarButton link='/' icon={<FaMoneyBill />} label='PAYSLIPS' isActive={router.startsWith("/payslips")} />
-                <SidebarButton link='/' icon={<FaAddressBook />} label='LEAVE REQUESTS' isActive={router.startsWith("/leaveRequests")} />
+                <SidebarButton link='/payslips' icon={<FaMoneyBill />} label='PAYSLIPS' isActive={router.startsWith("/payslips")} />
+                <SidebarButton link='/leaveRequests' icon={<FaAddressBook />} label='LEAVE REQUESTS' isActive={router.startsWith("/leaveRequests")} />
 
                 <RoleGateNull allowedRole='ADMIN' >
-                    <SidebarButton link='/administrator' icon={<FaKey />} isAdmin label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
+                    <SidebarButton link='/administrator' icon={<FaKey />} iconClassname='text-sky-900' isAdmin label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
                 </RoleGateNull>
 
                 <RoleGateNull allowedRole='SUPERADMIN' >

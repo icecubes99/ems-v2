@@ -40,14 +40,16 @@ export const createDepartment = async (values: z.infer<typeof DepartmentSchema>)
 
     await auditAction(dbUser.id, `Department Created by SuperAdmin: ${superaAdminName}`);
 
-    await db.user.update({
-        where: {
-            id: departmentHeadUserId,
-        },
-        data: {
-            role: UserRole.ADMIN
-        }
+    const departmentHeadUser = await db.user.findUnique({
+        where: { id: departmentHeadUserId }
     })
+
+    if (departmentHeadUser && departmentHeadUser.role !== UserRole.SUPERADMIN) {
+        await db.user.update({
+            where: { id: departmentHeadUserId },
+            data: { role: UserRole.ADMIN }
+        })
+    }
 
     await db.department.create({
         data: {

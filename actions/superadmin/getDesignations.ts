@@ -40,13 +40,17 @@ export const getDesignations = async () => {
 }
 
 export const getLoneDesignation = async (designationId: string) => {
+
+    if (!designationId) {
+        return { error: "Invalid designation ID!" };
+    }
     const user = await currentUser();
 
     if (!user) {
         return { error: "Unauthorized!" };
     }
 
-    const designation = await db.designation.findFirst({
+    const designation = await db.designation.findUniqueOrThrow({
         where: { id: designationId }
     })
 

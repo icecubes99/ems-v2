@@ -16,9 +16,10 @@ import { removeAssignedUser } from "@/actions/superadmin/removeAssignedUser";
 
 interface AlertDialogDemoProps {
     assignedUseId: string;
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
 }
 
-export function RemoveUserDialog({ assignedUseId }: AlertDialogDemoProps) {
+export function RemoveUserDialog({ assignedUseId, variant }: AlertDialogDemoProps) {
     const [assignedUserId, setAssignedUserId] = useState(assignedUseId); // Replace with actual user ID
 
     const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ export function RemoveUserDialog({ assignedUseId }: AlertDialogDemoProps) {
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
-                <Button variant="superadmin">Remove User</Button>
+                <Button variant={variant}>Remove User</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

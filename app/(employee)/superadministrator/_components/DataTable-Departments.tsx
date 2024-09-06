@@ -81,7 +81,7 @@ export function DataTableDepartments<TData, TValue>({
                     className="max-w-sm"
                 />
                 <div className="flex items-center ml-10">
-                    <CreateDepartmentForm />
+                    <CreateDepartmentForm variant={"superadmin"} />
                 </div>
 
                 <DropdownMenu>

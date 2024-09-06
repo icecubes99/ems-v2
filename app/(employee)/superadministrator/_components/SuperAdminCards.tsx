@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 
 import Link from 'next/link'
@@ -18,7 +18,7 @@ export default function SuperAdminCards() {
                 <CardLayout header='Departmental Actions' description='Manage Departments'>
                     <div className='flex flex-row items-center justify-between'>
                         <p className='text-sm font-medium'>Create Department</p>
-                        <CreateDepartmentForm />
+                        <CreateDepartmentForm variant={"superadmin"} />
                     </div>
                     <div className='flex flex-row items-center  justify-between'>
                         <p className='text-sm font-medium'>View Departments</p>
@@ -28,7 +28,7 @@ export default function SuperAdminCards() {
                     </div>
                     <div className='flex flex-row items-center justify-between'>
                         <p className='text-sm font-medium'>Create Designation</p>
-                        <CreateDesignationButton />
+                        <CreateDesignationButton variant={"superadmin"} />
                     </div>
                 </CardLayout>
 
@@ -41,7 +41,9 @@ function CardLayout({ header, description, children }: { header: string, descrip
     return (
         <Card className='shadow-md'>
             <CardHeader>
-                {header}
+                <CardTitle>
+                    {header}
+                </CardTitle>
                 <CardDescription>
                     {description}
                 </CardDescription>

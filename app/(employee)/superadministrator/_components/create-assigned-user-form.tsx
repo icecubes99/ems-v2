@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
@@ -31,9 +31,10 @@ import SelectNonAssignedUsers from './select-user-assigned-user';
 
 interface CreateAssignedUserFormProps {
     designationId: string;
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
 }
 
-const CreateAssignedUserForm: React.FC<CreateAssignedUserFormProps> = ({ designationId }) => {
+const CreateAssignedUserForm: React.FC<CreateAssignedUserFormProps> = ({ designationId, variant }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -84,7 +85,7 @@ const CreateAssignedUserForm: React.FC<CreateAssignedUserFormProps> = ({ designa
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button className='w-full' variant='superadmin'>Assign User</Button>
+                <Button className='w-full' variant={variant}>Assign User</Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card className=''>
@@ -177,7 +178,7 @@ const CreateAssignedUserForm: React.FC<CreateAssignedUserFormProps> = ({ designa
                                 </div>
                                 <FormError message={error} />
                                 <FormSucess message={success} />
-                                <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
+                                <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
                                     Assign User
                                 </Button>
                             </form>

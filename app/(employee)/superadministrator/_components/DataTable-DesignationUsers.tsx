@@ -39,12 +39,14 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     designationId: string
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
 }
 
 export function DataTableDesignationUsers<TData, TValue>({
     columns,
     data,
     designationId,
+    variant
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -87,7 +89,7 @@ export function DataTableDesignationUsers<TData, TValue>({
                     className="max-w-sm"
                 />
                 <div className="flex items-center ml-10">
-                    <CreateAssignedUserForm designationId={designationId} />
+                    <CreateAssignedUserForm variant={variant} designationId={designationId} />
                 </div>
 
                 <DropdownMenu>

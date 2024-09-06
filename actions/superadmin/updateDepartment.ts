@@ -1,11 +1,9 @@
 "use server"
 import * as z from "zod";
-
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
-
 import { DepartmentSchema } from "@/schemas/superadminIndex";
 import { superAdmin } from "./superAdmin";
 import { UserRole } from "@prisma/client";
@@ -43,37 +41,38 @@ export const updateDepartment = async (departmentId: string, values: z.infer<typ
     }
 
     const previousHeadUserId = previousDepartment.departmentHeadUserId;
-
-    await db.user.update({
-        where: {
-            id: previousHeadUserId,
-        },
-        data: {
-            role: UserRole.USER
-        }
-    })
-
     const { departmentName, departmentDescription, status, departmentHeadUserId } = validatedFields.data;
-    // const createdBy = dbUser.id;
 
-    const superaAdminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
+    // Check if the previous head user is not a super admin before updating their role
+    const previousHeadUser = await db.user.findUnique({
+        where: { id: previousHeadUserId },
+    });
 
+    if (previousHeadUser && previousHeadUser.role !== UserRole.SUPERADMIN) {
+        await db.user.update({
+            where: { id: previousHeadUserId },
+            data: { role: UserRole.USER }
+        });
+    }
 
-    await auditAction(dbUser.id, `Department Updated by SuperAdmin: ${superaAdminName}`);
+    // Check if the new head user is not a super admin before updating their role
+    const newHeadUser = await db.user.findUnique({
+        where: { id: departmentHeadUserId },
+    });
+
+    if (newHeadUser && newHeadUser.role !== UserRole.SUPERADMIN) {
+        await db.user.update({
+            where: { id: departmentHeadUserId },
+            data: { role: UserRole.ADMIN }
+        });
+    }
+
+    const superAdminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
+
+    await auditAction(dbUser.id, `Department Updated by SuperAdmin: ${superAdminName}`);
 
     // TODO: Add history of Department and append the changes 
     // TODO: also add updatedby field in the department table to track who updated the department
-
-
-    await db.user.update({
-        where: {
-            id: departmentHeadUserId,
-        },
-        data: {
-            role: UserRole.ADMIN
-        }
-    })
-
 
     await db.department.update({
         where: { id: departmentId },

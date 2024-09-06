@@ -119,7 +119,7 @@ export const columns: ColumnDef<Department>[] = [
                     <div className="flex w-full flex-col gap-2 p-2">
                         <UpdateDepartmentForm departmentId={user.id} />
                         <ViewDepartmentButton departmentId={user.id} />
-                        <CreateSpecificDesignationForm departmentId={user.id} />
+                        <CreateSpecificDesignationForm variant={"superadmin"} departmentId={user.id} />
                     </div>
                 </DropdownMenu>
 

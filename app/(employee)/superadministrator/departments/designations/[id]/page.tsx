@@ -3,7 +3,7 @@ import { RoleGate } from '@/components/auth/role-gate'
 import LayoutSideHead from '@/components/LayoutSideHead'
 import React, { useEffect, useState } from 'react'
 import { DataTableDesignationUsers } from '../../../_components/DataTable-DesignationUsers'
-import { columns } from './columns-designations'
+import { columnsDesignation } from './columns-designations'
 import { AssignDesignationWithUser } from '@/types/types'
 import useDesignation from '@/hooks/use-designation'
 
@@ -53,7 +53,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     ) : error ? (
                         <p className="text-red-500">{error}</p>
                     ) : (
-                        <DataTableDesignationUsers columns={columns} data={assignedUsers} designationId={params.id} />
+                        <DataTableDesignationUsers variant={"superadmin"} columns={columnsDesignation} data={assignedUsers} designationId={params.id} />
                     )}
                 </div>
             </LayoutSideHead>

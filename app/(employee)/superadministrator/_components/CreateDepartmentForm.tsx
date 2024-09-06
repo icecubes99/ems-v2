@@ -29,7 +29,11 @@ import { Dialog } from '@/components/ui/dialog';
 import { DialogContent, DialogTrigger } from '@/components/RefreshDialog';
 import SelectUserDepartmentHead from './select-user-department-head';
 
-const CreateDepartmentForm = () => {
+interface CreateDepartmentForm {
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
+}
+
+const CreateDepartmentForm = ({ variant }: CreateDepartmentForm) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -78,7 +82,7 @@ const CreateDepartmentForm = () => {
 
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={"superadmin"}>
+                <Button variant={variant}>
                     Create Department
                 </Button>
             </DialogTrigger>
@@ -184,7 +188,7 @@ const CreateDepartmentForm = () => {
                                 </div>
                                 <FormError message={error} />
                                 <FormSucess message={success} />
-                                <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
+                                <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
                                     Create Department
                                 </Button>
                             </form>

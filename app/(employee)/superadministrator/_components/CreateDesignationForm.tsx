@@ -28,7 +28,11 @@ import { Status } from '@prisma/client';
 import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
 
-const CreateDesignationForm = () => {
+interface CreateDesignationFormProps {
+    variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
+}
+
+const CreateDesignationForm = ({ variant }: CreateDesignationFormProps) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -175,7 +179,7 @@ const CreateDesignationForm = () => {
                         </div>
                         <FormError message={error} />
                         <FormSucess message={success} />
-                        <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
+                        <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
                             Create Designation
                         </Button>
                     </form>
