@@ -42,3 +42,12 @@ export const AssignedDesignationSchema = z.object({
     }),
 
 })
+
+export const HolidaySchema = z.object({
+    date: z.string().min(1, {
+        message: "Date is required",
+    }),
+    name: z.string().min(1, {
+        message: "Name is required",
+    }),
+})

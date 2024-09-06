@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Briefcase, Building, Users } from "lucide-react"
 import { useTotalDepartmentsCount, useTotalDesignationCount, useTotalUserCount } from "@/hooks/use-ModelCounts"
+import WorkingDaysManager from "../superadministrator/_components/create-workingdays-months"
 
 const HomepageCards = () => {
     const { userCount, error, isLoading } = useTotalUserCount()
@@ -60,7 +61,10 @@ const HomepageCards = () => {
                     <div className="text-2xl font-bold">100</div>
                 </CardContent>
             </Card>
+
+            <WorkingDaysManager />
         </div>
+
     )
 }
 

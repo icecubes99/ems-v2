@@ -273,3 +273,13 @@ model WorkingMonth {
 
   @@unique([month, year])
 }
+
+model Holiday {
+  id        String   @id @default(cuid())
+  date      DateTime
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([date])
+}

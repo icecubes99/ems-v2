@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 
 import Link from 'next/link'
 import CreateDesignationButton from './CreateDesignationButton'
 import CreateDepartmentForm from './CreateDepartmentForm'
+import CreateHolidaysCard from './create-holidays'
 
 
 export default function SuperAdminCards() {
@@ -22,9 +23,11 @@ export default function SuperAdminCards() {
                     </div>
                     <div className='flex flex-row items-center  justify-between'>
                         <p className='text-sm font-medium'>View Departments</p>
-                        <Button variant={"superadmin"}>
-                            <Link href='/superadministrator/departments'>View Departments</Link>
-                        </Button>
+                        <Link href='/superadministrator/departments'>
+                            <Button variant={"superadmin"}>
+                                View Departments
+                            </Button>
+                        </Link>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
                         <p className='text-sm font-medium'>Create Designation</p>
@@ -36,8 +39,14 @@ export default function SuperAdminCards() {
         </div>
     )
 }
+interface CardLayoutProps {
+    header: string
+    description: string
+    children?: React.ReactNode
+    footer?: React.ReactNode
+}
 
-function CardLayout({ header, description, children }: { header: string, description: string, children: React.ReactNode }) {
+function CardLayout({ header, description, children, footer }: CardLayoutProps) {
     return (
         <Card className='shadow-md'>
             <CardHeader>
@@ -51,6 +60,9 @@ function CardLayout({ header, description, children }: { header: string, descrip
             <CardContent className='space-y-4'>
                 {children}
             </CardContent>
+            <CardFooter>
+                {footer}
+            </CardFooter>
         </Card>
     )
 }
