@@ -9,7 +9,6 @@ const page = () => {
             <div>Wala pay Unod
 
                 <div>
-                    <RequestLeaveForm />
                 </div>
             </div>
         </LayoutSideHead>

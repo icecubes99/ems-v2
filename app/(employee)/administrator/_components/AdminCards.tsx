@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 import Link from 'next/link'
 import DesignationHeadCard from './designation-head-control-card'
@@ -42,7 +42,22 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                 <DepartmentHeadCard userId={userId} />
                 <PasswordsTable classname='row-span-3' />
 
-
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Leave Requests Panel</CardTitle>
+                        <CardDescription>Manage, Approve and Deny Requests</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Manage Leave Request</p>
+                    </CardContent>
+                    <CardFooter>
+                        <Link href={`/administrator/manageLeaves`} passHref legacyBehavior>
+                            <Button className="w-full" variant="admin">
+                                Manage Leave Requests
+                            </Button>
+                        </Link>
+                    </CardFooter>
+                </Card>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType } from "@prisma/client"
 
 export type AssignDesignation = {
     id: string
@@ -51,3 +51,26 @@ export type AssignDesignationWithUser = {
         lastLogin: Date | null;
     };
 };
+
+export type LeavesWithUser = {
+    id: string
+    userId: string
+    startDate: Date
+    endDate: Date
+    leaveStatus: LeaveStatus
+    reason: string
+    leaveType: LeaveType;
+    user: {
+        id: string;
+        firstName: string | null;
+        middleName: string | null;
+        lastName: string | null;
+        gender: Gender | null;
+        dateOfBirth: Date | null;
+        jobTitle: string | null;
+        email: string | null;
+        createdAt: Date | null;
+        updatedAt: Date | null;
+        lastLogin: Date | null;
+    }
+}

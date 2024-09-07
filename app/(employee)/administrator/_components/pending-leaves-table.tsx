@@ -12,18 +12,22 @@ import {
     TableRow,
     TableFooter
 } from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Calendar } from "lucide-react"
 import { LeaveStatus } from "@prisma/client"
+import { usePendingLeaves } from "@/hooks/use-pending-leaves"
+import { ApproveLeaveDialog, RejectLeaveDialog } from "./update-pending-leaves-buttons"
+import { useRemainingLeaves } from "@/hooks/use-remaining-leaves"
+
 
 interface OwnLeavesTableProps {
     classname?: string
 }
 
-const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
-    const { leaves, isLoading, error } = useOwnLeaves()
+const PendingLeavesTable = ({ classname }: OwnLeavesTableProps) => {
+    const { leaves, isLoading, error } = usePendingLeaves()
+
     return (
         <Table className={cn("w-full", classname)}>
             <TableHeader>
@@ -32,6 +36,7 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                     <TableHead>Type</TableHead>
                     <TableHead>Reason</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -53,7 +58,7 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                                 </div>
                             </TableCell>
                             <TableCell>{leave.leaveType}</TableCell>
-                            <TableCell className="w-1/2 pr-10">{leave.reason}</TableCell>
+                            <TableCell>{leave.reason}</TableCell>
                             <TableCell>
                                 {leave.leaveStatus === LeaveStatus.APPROVED ? (
                                     <Badge variant="sucess">Approved</Badge>
@@ -62,6 +67,12 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                                 ) : (
                                     <Badge variant="destructive">Rejected</Badge>
                                 )}
+                            </TableCell>
+                            <TableCell>
+                                <div className="grid grid-cols-1 gap-2">
+                                    <ApproveLeaveDialog leaveId={leave.id} />
+                                    <RejectLeaveDialog leaveId={leave.id} />
+                                </div>
                             </TableCell>
                         </TableRow>
                     ))
@@ -75,4 +86,4 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
     )
 }
 
-export default OwnLeavesTable
+export default PendingLeavesTable;
