@@ -31,6 +31,22 @@ enum EmployeeType {
   PROBATIONARY
 }
 
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum LeaveType {
+  VACATION
+  SICK
+  EMERGENCY
+  MATERNITY
+  PATERNITY
+  BEREAVEMENT
+  UNPAID
+}
+
 model User {
   id String @id @default(cuid())
   firstName               String?
@@ -50,6 +66,7 @@ model User {
   address                 AddressLine?
   documents               Documents[]
   timesheets              Timesheet[]
+  leaves                  Leaves[]
 
   assignedDesignations    AssignDesignation?
 
@@ -285,4 +302,19 @@ model Holiday {
   updatedAt DateTime @updatedAt
 
   @@unique([date])
+}
+
+model Leaves {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startDate DateTime
+  endDate   DateTime
+  leaveStatus LeaveStatus @default(PENDING)
+  reason    String
+  leaveType LeaveType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, startDate, endDate])
 }

@@ -10,18 +10,16 @@ import { auditAction } from "./auditAction";
 
 export const addEmergencyContact = async (values: z.infer<typeof EmergencyContactSchema>) => {
     const user = await currentUser();
-    const validatedFields = EmergencyContactSchema.safeParse(values);
-
     if (!user) {
         return { error: "Unauthorized!" };
     }
 
-    const dbUser = await getUserById(user?.id);
-
+    const validatedFields = EmergencyContactSchema.safeParse(values);
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }
 
+    const dbUser = await getUserById(user?.id);
     if (!dbUser) {
         return { error: "User not found in database!" };
     }
