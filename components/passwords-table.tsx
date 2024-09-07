@@ -13,12 +13,13 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 
-export function PasswordsTable() {
+export function PasswordsTable({ classname }: { classname?: string }) {
     const { days, isLoading, error } = useAttendancePasswords()
     return (
-        <Card className="w-full">
+        <Card className={cn("w-full", classname)}>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     Upcoming Passwords for {new Date().getFullYear()}

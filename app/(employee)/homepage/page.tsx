@@ -11,7 +11,7 @@ const HomePage = () => {
 
     return (
         <RoleGate allowedRoles={["USER", "ADMIN", "SUPERADMIN"]}>
-            <LayoutSideHead label='HOME PAGE'>
+            <LayoutSideHead label='HOME PAGE' classname=''>
                 <HomepageCards />
 
             </LayoutSideHead>

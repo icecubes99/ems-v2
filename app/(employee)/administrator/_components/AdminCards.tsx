@@ -4,13 +4,14 @@ import React from 'react'
 import Link from 'next/link'
 import DesignationHeadCard from './designation-head-control-card'
 import DepartmentHeadCard from './department-head-control-card'
+import { PasswordsTable } from '@/components/passwords-table'
 
 interface AdminCardsProps {
     userId: string
 }
 const AdminCards = ({ userId }: AdminCardsProps) => {
     return (
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-6 mb-2'>
             <div className='mt-5'>
                 <p className='font-bold text-4xl'>ACTIONS</p>
             </div>
@@ -39,6 +40,8 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
 
                 <DesignationHeadCard userId={userId} />
                 <DepartmentHeadCard userId={userId} />
+                <PasswordsTable classname='row-span-3' />
+
 
             </div>
         </div>

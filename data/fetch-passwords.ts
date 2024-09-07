@@ -5,11 +5,10 @@ import { db } from "@/lib/db"
 export async function getAttendancePasswords() {
 
     const presentDay = new Date()
+    presentDay.setDate(presentDay.getDate() - 1)
 
     const tenDaysLater = new Date(presentDay)
     tenDaysLater.setDate(presentDay.getDate() + 10)
-    const currentYear = new Date().getFullYear()
-    const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59)
 
     try {
         const days = await db.workingDay.findMany({

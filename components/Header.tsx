@@ -34,7 +34,7 @@ const Header = ({ user, employeePic }: HeaderProps) => {
                                 </AvatarFallback>
                             </Avatar>
                             <div className='flex flex-col'>
-                                <p className='font-semibold text-purple-950'>
+                                <p className='font-semibold text-purple-95'>
                                     {user?.name}
                                 </p>
                                 <p className={cn("font-normal text-sm", userColor)}>

@@ -11,12 +11,17 @@ const page = () => {
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='Attendance Control'>
-                <div className='grid grid-cols-2 gap-8'>
+                <div className='flex flex-col gap-6'>
+                    <div className='mt-5'>
+                        <p className='font-bold text-4xl'>TIMESHEET CONTROLS</p>
+                    </div>
+                    <div className='grid grid-cols-2 gap-8'>
 
-                    <WorkingDaysManager />
-                    <HolidayCard />
-                    <HolidayTable />
-                    <PasswordsTable />
+                        <WorkingDaysManager />
+                        <HolidayCard />
+                        <HolidayTable />
+                        <PasswordsTable />
+                    </div>
                 </div>
             </LayoutSideHead>
         </RoleGate>

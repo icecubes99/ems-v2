@@ -19,12 +19,19 @@ interface SidebarProps {
 
 const Sidebar = ({ user }: SidebarProps) => {
     const router = usePathname();
+    const isHomepage = router === "/homepage";
 
     return (
         <div className='flex flex-col w-96 bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen items-center space-y-10 rounded-br-full shadow-xl'>
             <div className='mt-7 mb-5'>
                 <Link href={"/homepage"}>
-                    <Image src={"/kupler.svg"} width={150} height={100} alt='Logo' />
+                    <Image
+                        src={"/kupler.svg"}
+                        className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
+                        width={150}
+                        height={100}
+                        alt='Logo'
+                    />
                 </Link>
             </div>
 

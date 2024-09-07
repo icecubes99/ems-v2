@@ -239,8 +239,11 @@ model Timesheet {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   dayId     String
   day       WorkingDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
-  clockIn   DateTime
+  clockIn   DateTime @default(now())
   clockOut  DateTime?
+
+  isLate       Boolean    @default(false)
+  minutesLate  Int        @default(0)
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

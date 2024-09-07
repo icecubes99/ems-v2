@@ -35,6 +35,15 @@ export default function SuperAdminCards() {
                     </div>
                 </CardLayout>
 
+                <CardLayout header='Attendance Panel' description='Add Holidays, Check Attendances'
+                    footer={
+                        <Link className='w-full' href={"/superadministrator/attendancePanel"}>
+                            <Button className='w-full'>
+                                View Attendance Panel
+                            </Button>
+                        </Link>
+                    }>
+                </CardLayout>
             </div>
         </div>
     )

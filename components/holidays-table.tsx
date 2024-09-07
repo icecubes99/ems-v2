@@ -15,17 +15,21 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { cn } from '@/lib/utils'
 
-export function HolidayTable() {
+interface HolidayTableProps {
+    className?: string
+}
+export function HolidayTable({ className }: HolidayTableProps) {
     const { holidays, isLoading, error } = useHolidays()
 
     return (
-        <Card className="w-full">
-            <CardHeader>
+        <Card className={cn("w-full", className)}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                 <CardTitle className="flex items-center gap-2">
-                    <Calendar className="h-6 w-6" />
                     Upcoming Holidays for {new Date().getFullYear()}
                 </CardTitle>
+                <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
                 <Table>
