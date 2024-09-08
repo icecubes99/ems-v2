@@ -17,19 +17,19 @@ export default function SuperAdminCards() {
             <div className="grid grid-cols-3 gap-8 pr-6">
 
                 <CardLayout header='Departmental Actions' description='Manage Departments'>
-                    <div className='flex flex-row items-center justify-between'>
+                    <div className='grid grid-cols-2 items-center justify-between'>
                         <p className='text-sm font-medium'>Create Department</p>
                         <CreateDepartmentForm variant={"superadmin"} />
                     </div>
-                    <div className='flex flex-row items-center  justify-between'>
+                    <div className='grid grid-cols-2  items-center  justify-between'>
                         <p className='text-sm font-medium'>View Departments</p>
                         <Link href='/superadministrator/departments'>
-                            <Button variant={"superadmin"}>
+                            <Button className='w-full' variant={"superadmin"}>
                                 View Departments
                             </Button>
                         </Link>
                     </div>
-                    <div className='flex flex-row items-center justify-between'>
+                    <div className='grid grid-cols-2  items-center justify-between'>
                         <p className='text-sm font-medium'>Create Designation</p>
                         <CreateDesignationButton variant={"superadmin"} />
                     </div>

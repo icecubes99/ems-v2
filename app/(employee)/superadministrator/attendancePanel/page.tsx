@@ -10,15 +10,17 @@ import { PasswordsTable } from '@/components/passwords-table'
 const page = () => {
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Attendance Control'>
+            <LayoutSideHead label='Attendance Control' classname='mr-6'>
                 <div className='flex flex-col gap-6'>
                     <div className='mt-5'>
                         <p className='font-bold text-4xl'>TIMESHEET CONTROLS</p>
                     </div>
-                    <div className='grid grid-cols-2 gap-8'>
+                    <div className='grid grid-cols-4 gap-8'>
 
-                        <WorkingDaysManager />
+                        <WorkingDaysManager classname='col-span-2' />
                         <HolidayCard />
+                    </div>
+                    <div className='grid grid-cols-2 gap-8'>
                         <HolidayTable />
                         <PasswordsTable />
                     </div>
@@ -30,9 +32,9 @@ const page = () => {
 
 export default page
 
-function HolidayCard() {
+function HolidayCard({ classname }: { classname?: string }) {
     return (
-        <Card>
+        <Card className={classname}>
             <CardHeader>
                 <CardTitle>
                     Add Holidays

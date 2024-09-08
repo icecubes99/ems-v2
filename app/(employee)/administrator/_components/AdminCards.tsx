@@ -27,7 +27,7 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className='space-y-4'>
-                        <div className='flex flex-row items-center justify-between'>
+                        <div className='grid grid-cols-2  items-center justify-between'>
                             <p className='text-sm font-medium'>Employees List</p>
                             <Link href={"/administrator/dataTable"} passHref legacyBehavior>
                                 <Button variant={"admin"}>

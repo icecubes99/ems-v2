@@ -64,7 +64,7 @@ const Sidebar = ({ user }: SidebarProps) => {
                 </RoleGateNull>
 
                 <RoleGateNull allowedRole='SUPERADMIN' >
-                    <SidebarButton link='/administrator' icon={<FaKey />} iconClassname='text-sky-900' isAdmin label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
+                    <SidebarButton link='/administrator' icon={<FaKey />} iconClassname='text-sky-950' isAdmin label='ADMIN PANEL' isActive={router.startsWith("/administrator")} />
                     <SidebarButton link='/superadministrator' icon={<FaShieldAlt />} iconClassname='text-red-900' label='SUPERADMIN PANEL' isSuperAdmin isActive={router.startsWith("/superadministrator")} />
                 </RoleGateNull>
 

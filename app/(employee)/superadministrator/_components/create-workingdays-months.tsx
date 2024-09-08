@@ -8,8 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from '@/hooks/use-toast'
 
 import { generateWorkingMonthsAndDays, checkWorkingDaysExist } from '@/actions/superadmin/generate-working-days-and-months'
+import { cn } from '@/lib/utils'
 
-export default function WorkingDaysManager() {
+export default function WorkingDaysManager({ classname }: { classname: string }) {
     const [isGenerating, setIsGenerating] = useState(false)
     const [workingDaysExist, setWorkingDaysExist] = useState(false)
     const router = useRouter()
@@ -49,7 +50,7 @@ export default function WorkingDaysManager() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className={cn("space-y-6", classname)}>
             <Card>
                 <CardHeader>
                     <CardTitle>Generate Working Days</CardTitle>

@@ -49,7 +49,7 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                             <TableCell className="p-5">
                                 <div className="flex items-center space-x-2">
                                     <Calendar className="w-4 h-4 text-muted-foreground mr-2" />
-                                    {format(new Date(leave.startDate), 'MMMM d, yyyy')} to {format(new Date(leave.endDate), 'MMMM d, yyyy')}
+                                    {format(new Date(leave.startDate), 'MMMM dd')} to {format(new Date(leave.endDate), 'MMMM d, yyyy')}
                                 </div>
                             </TableCell>
                             <TableCell>{leave.leaveType}</TableCell>
