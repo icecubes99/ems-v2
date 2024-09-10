@@ -1,4 +1,4 @@
-import { Gender, LeaveStatus, LeaveType, UserRole } from "@prisma/client";
+import { Gender, LeaveStatus, LeaveType, OvertimeType, UserRole } from "@prisma/client";
 import * as z from "zod";
 
 
@@ -18,4 +18,9 @@ export const LeaveRequestSchema = z.object({
 
 export const PendingLeavesSchema = z.object({
     leaveStatus: z.enum([LeaveStatus.PENDING, LeaveStatus.APPROVED, LeaveStatus.REJECTED])
+})
+
+export const OvertimeSchema = z.object({
+    reason: z.string().min(1, "Reason is Required"),
+    overtimeType: z.enum([OvertimeType.HOLIDAY, OvertimeType.MANDATORY, OvertimeType.REGULAR])
 })

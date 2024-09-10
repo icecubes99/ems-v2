@@ -4,6 +4,7 @@ import { Briefcase, Building, CalendarClock, Users } from "lucide-react"
 import { useTotalDepartmentsCount, useTotalDesignationCount, useTotalUserCount } from "@/hooks/use-ModelCounts"
 import { HolidayTable } from "@/components/holidays-table"
 import { TimesheetDialog } from "@/components/Timesheet"
+import RequestOvertime from "./request-overtime"
 
 
 const HomepageCards = () => {
@@ -17,7 +18,7 @@ const HomepageCards = () => {
     return (
         <>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6 ">
-                <Card>
+                <Card className="hover:shadow-xl transition-shadow duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                         <CardTitle>
                             Total Employees
@@ -29,7 +30,7 @@ const HomepageCards = () => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="hover:shadow-xl transition-shadow duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                         <CardTitle>
                             Departments
@@ -41,7 +42,7 @@ const HomepageCards = () => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="hover:shadow-xl transition-shadow duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                         <CardTitle>
                             Designations
@@ -53,7 +54,7 @@ const HomepageCards = () => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="hover:shadow-xl transition-shadow duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                         <CardTitle>
                             Documents
@@ -71,7 +72,9 @@ const HomepageCards = () => {
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6">
                 <TimesheetDialog classname="col-span-2" />
                 <Button variant={"auth"} size={"lg"}>Upload Documents</Button>
-                <Button variant={"auth"} size={"lg"}>Record Overtime</Button>
+                {/* <Button variant={"auth"} size={"lg"}>Record Overtime</Button>
+                 */}
+                <RequestOvertime />
             </div>
 
 

@@ -27,7 +27,7 @@ const Sidebar = ({ user }: SidebarProps) => {
                 <Link href={"/homepage"}>
                     <Image
                         src={"/kupler.svg"}
-                        className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
+                        className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
                         width={150}
                         height={100}
                         alt='Logo'
@@ -36,7 +36,7 @@ const Sidebar = ({ user }: SidebarProps) => {
             </div>
 
             <div className='items-center flex flex-col gap-4'>
-                <Avatar className='w-36 h-36'>
+                <Avatar className='w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36'>
                     <AvatarImage className='border-red-500' src={user?.image || undefined} />
                     <AvatarFallback className='bg-neutral-700 text-white'>
                         <FaUser />

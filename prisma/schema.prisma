@@ -31,7 +31,7 @@ enum EmployeeType {
   PROBATIONARY
 }
 
-enum LeaveStatus {
+enum LeaveStatus {  //PENDING STATUS
   PENDING
   APPROVED
   REJECTED
@@ -42,6 +42,12 @@ enum LeaveType {
   SICK
   MATERNITY
   INCENTIVE
+}
+
+enum OvertimeType {
+  REGULAR
+  HOLIDAY
+  MANDATORY
 }
 
 model User {
@@ -64,6 +70,7 @@ model User {
   documents               Documents[]
   timesheets              Timesheet[]
   leaves                  Leaves[]
+  overtimes               Overtimes[]
 
   assignedDesignations    AssignDesignation?
 
@@ -319,4 +326,19 @@ model Leaves {
 
   @@unique([userId, startDate, endDate])
   
+}
+
+model Overtimes {
+  id        String   @id @default(cuid())
+  reason    String
+  status    LeaveStatus @default(PENDING)
+  overtimeType OvertimeType
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, createdAt])
 }

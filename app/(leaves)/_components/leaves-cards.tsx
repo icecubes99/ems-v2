@@ -14,7 +14,7 @@ const LeavesCards = () => {
 
 
         <div className='grid grid-cols-3 gap-10 pr-6'>
-            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow">
+            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow  hover:shadow-xl transition-shadow duration-300">
                 <div className="p-3 rounded-full bg-violet-900 ">
                     <Calendar className="h-8 w-8 text-white" />
                 </div>
@@ -28,7 +28,7 @@ const LeavesCards = () => {
                 </div>
             </div>
 
-            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow">
+            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow  hover:shadow-xl transition-shadow duration-300">
                 <div className="p-3 rounded-full bg-violet-900 ">
                     <Calendar className="h-8 w-8 text-white" />
                 </div>
@@ -42,7 +42,7 @@ const LeavesCards = () => {
                 </div>
             </div>
 
-            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow">
+            <div className="flex items-center px-5 py-6 bg-white rounded-xl border bg-card text-card-foreground shadow  hover:shadow-lg transition-shadow duration-300">
                 <div className="p-3 rounded-full bg-violet-900 ">
                     <Calendar className="h-8 w-8 text-white" />
                 </div>
