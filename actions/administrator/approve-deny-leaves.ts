@@ -1,4 +1,5 @@
 "use server"
+
 import * as z from "zod";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
@@ -6,7 +7,7 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { PendingLeavesSchema } from "@/schemas/attendance-index";
 import { admin } from "../admin";
-import { LeaveStatus, UserRole } from "@prisma/client";
+import { LeaveStatus, UserRole, LeaveType } from "@prisma/client";
 
 export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof PendingLeavesSchema>) => {
     const user = await currentUser();
@@ -32,8 +33,9 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
     }
 
     const leave = await db.leaves.findUnique({
-        where: { id: leaveId }
-    })
+        where: { id: leaveId },
+        include: { user: true }
+    });
 
     if (!leave) {
         return { error: "Leave not Found!" }
@@ -41,17 +43,61 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
 
     const { leaveStatus } = validatedFields.data;
 
+    // Calculate the number of days for this leave
+    const startDate = new Date(leave.startDate);
+    const endDate = new Date(leave.endDate);
+    const daysDifference = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
+
     if (leaveStatus === LeaveStatus.APPROVED) {
+        // Check if the user still has enough leave days
+        if (leave.leaveType === LeaveType.VACATION || leave.leaveType === LeaveType.INCENTIVE) {
+            const userWithLeaves = await db.user.findUnique({
+                where: { id: leave.userId },
+                include: {
+                    leaves: {
+                        where: {
+                            leaveType: leave.leaveType,
+                            leaveStatus: { not: LeaveStatus.REJECTED },
+                            NOT: { id: leaveId }
+                        }
+                    }
+                }
+            });
+
+            if (!userWithLeaves) {
+                return { error: "User not found!" };
+            }
+
+            const usedDays = userWithLeaves.leaves.reduce((total, leave) =>
+                total + Math.ceil((leave.endDate.getTime() - leave.startDate.getTime()) / (1000 * 3600 * 24)) + 1, 0
+            );
+
+            const availableDays = leave.leaveType === LeaveType.VACATION
+                ? (userWithLeaves.vacationDays ?? 0)
+                : (userWithLeaves.incentiveDays ?? 0);
+
+            if (availableDays < daysDifference) {
+                return { error: `Not enough ${leave.leaveType.toLowerCase()} days available for approval.` };
+            }
+
+            // Deduct the leave days
+            await db.user.update({
+                where: { id: leave.userId },
+                data: {
+                    [leave.leaveType === LeaveType.VACATION ? 'vacationDays' : 'incentiveDays']: {
+                        decrement: daysDifference
+                    }
+                }
+            });
+        }
+
         await db.leaves.update({
             where: { id: leaveId },
             data: { leaveStatus: LeaveStatus.APPROVED }
         });
 
         // Create timesheets for each day of the approved leave
-        const startDate = new Date(leave.startDate);
-        const endDate = new Date(leave.endDate);
-
-        for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
             const workingDay = await db.workingDay.findFirst({
                 where: {
                     date: {

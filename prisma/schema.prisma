@@ -40,11 +40,8 @@ enum LeaveStatus {
 enum LeaveType {
   VACATION
   SICK
-  EMERGENCY
   MATERNITY
-  PATERNITY
-  BEREAVEMENT
-  UNPAID
+  INCENTIVE
 }
 
 model User {
@@ -69,6 +66,10 @@ model User {
   leaves                  Leaves[]
 
   assignedDesignations    AssignDesignation?
+
+  //Leave subsystem
+  vacationDays            Int? @default(5)
+  incentiveDays           Int? @default(5)
 
   // Optional if the User is a Department Head or a Designation Head
   department              Department?
@@ -317,4 +318,5 @@ model Leaves {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, startDate, endDate])
+  
 }

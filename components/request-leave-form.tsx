@@ -169,12 +169,9 @@ const RequestLeaveForm = () => {
                                                         </FormControl>
                                                         <SelectContent>
                                                             <SelectItem value={LeaveType.VACATION}>Vacation</SelectItem>
-                                                            <SelectItem value={LeaveType.EMERGENCY}>Emergency</SelectItem>
-                                                            <SelectItem value={LeaveType.BEREAVEMENT}>Bereavement</SelectItem>
                                                             <SelectItem value={LeaveType.SICK}>Sick Leave</SelectItem>
                                                             <SelectItem value={LeaveType.MATERNITY}>Maternal Leave</SelectItem>
-                                                            <SelectItem value={LeaveType.PATERNITY}>Paternal Leave</SelectItem>
-                                                            <SelectItem value={LeaveType.UNPAID}>Unpaid</SelectItem>
+                                                            <SelectItem value={LeaveType.INCENTIVE}>Incentive</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                     <FormMessage />

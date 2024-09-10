@@ -9,8 +9,8 @@ export const TimesheetSchema = z.object({
 export const LeaveRequestSchema = z.object({
     startDate: z.string().min(1, "Start date is required"),
     endDate: z.string().min(1, "End date is required"),
-    reason: z.string().min(20, "Reason is required"),
-    leaveType: z.enum([LeaveType.VACATION, LeaveType.EMERGENCY, LeaveType.BEREAVEMENT, LeaveType.MATERNITY, LeaveType.PATERNITY, LeaveType.UNPAID, LeaveType.SICK])
+    reason: z.string().min(1, "Reason is required"),
+    leaveType: z.enum([LeaveType.VACATION, LeaveType.SICK, LeaveType.INCENTIVE, LeaveType.MATERNITY])
 }).refine(data => new Date(data.endDate) >= new Date(data.startDate), {
     message: "End date cannot be before start date",
     path: ["endDate"],

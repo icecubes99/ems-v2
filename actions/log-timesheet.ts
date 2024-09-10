@@ -81,6 +81,7 @@ export const logTimesheet = async (values: z.infer<typeof TimesheetSchema> & { i
 
         return { success: successMessage };
     } else {
+
         // Clocking out
         if (!existingTimesheet) {
             return { error: "You haven't clocked in yet today!" };
@@ -90,10 +91,19 @@ export const logTimesheet = async (values: z.infer<typeof TimesheetSchema> & { i
             return { error: "You have already clocked out for today!" };
         }
 
+        // Determine the clock out time
+        let clockOutTime = new Date();
+        const cutoffClockOutTime = new Date(clockOutTime.getFullYear(), clockOutTime.getMonth(), clockOutTime.getDate(), 17, 45, 0); // 5:45 PM
+        const fixedClockOutTime = new Date(clockOutTime.getFullYear(), clockOutTime.getMonth(), clockOutTime.getDate(), 18, 0, 0); // 6:00 PM
+
+        if (clockOutTime >= cutoffClockOutTime) {
+            clockOutTime = fixedClockOutTime;
+        }
+
         // Update existing timesheet with clock out time
         await db.timesheet.update({
             where: { id: existingTimesheet.id },
-            data: { clockOut: new Date() },
+            data: { clockOut: clockOutTime },
         });
 
         await auditAction(dbUser.id, "User Timesheet Clock Out");
