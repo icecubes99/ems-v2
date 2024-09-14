@@ -24,3 +24,7 @@ export const OvertimeSchema = z.object({
     reason: z.string().min(1, "Reason is Required"),
     overtimeType: z.enum([OvertimeType.HOLIDAY, OvertimeType.MANDATORY, OvertimeType.REGULAR])
 })
+
+export const PendingOvertimesSchema = z.object({
+    status: z.enum([LeaveStatus.PENDING, LeaveStatus.APPROVED, LeaveStatus.REJECTED])
+})

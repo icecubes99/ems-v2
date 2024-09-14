@@ -58,6 +58,23 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         </Link>
                     </CardFooter>
                 </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Overtime Requests Panel</CardTitle>
+                        <CardDescription>Manage, Approve and Deny Overtimes</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Manage Overtime Request</p>
+                    </CardContent>
+                    <CardFooter>
+                        <Link href={`/administrator/manageOvertimes`} passHref legacyBehavior>
+                            <Button className="w-full" variant="admin">
+                                Manage Overtime Requests
+                            </Button>
+                        </Link>
+                    </CardFooter>
+                </Card>
             </div>
         </div>
     )

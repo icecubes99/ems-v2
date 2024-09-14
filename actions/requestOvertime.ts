@@ -24,7 +24,6 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
         return { error: "Please fill in all fields!" }
     }
 
-    // Fetch user
     const dbUser = await db.user.findUnique({
         where: { id: user.id },
     });
@@ -33,7 +32,7 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
         return { error: "User not found in database!" };
     }
 
-    // Check if the user already has an overtime entry for the current day
+    // Check if the user already has an overtime entry for today
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to the start of the day
 
@@ -51,6 +50,21 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
         return { error: "Overtime already requested for today!" };
     }
 
+    // Fetch the timesheet for today
+    const timesheet = await db.timesheet.findFirst({
+        where: {
+            userId: user.id,
+            clockIn: {
+                gte: today,
+                lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) // End of the day
+            }
+        }
+    });
+
+    if (!timesheet) {
+        return { error: "No timesheet found for today. Please ensure you have clocked in." };
+    }
+
     try {
         await db.overtimes.create({
             data: {
@@ -65,11 +79,10 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === "P2002") {
-                return { error: "Overtime request already exists for this day" }
+                return { error: "Overtime request already exists for today" }
             }
         }
         console.error("Error submitting overtime request:", error);
         return { error: "Error submitting overtime request" };
     }
-
 }

@@ -18,7 +18,7 @@ const SidebarButton = ({ children, link, icon, label, classname, iconClassname, 
     return (
         <Link href={link} legacyBehavior passHref>
             <div className={cn(`
-            w-full cursor-pointer h-12 items-center hover:bg-gradient-to-r from-purple-300 to-violet-300 
+            w-full cursor-pointer h-12 items-center hover:bg-gradient-to-r from-purple-300 to-violet-300 overflow-hidden
         ${isActive ? 'bg-gradient-to-r from-purple-300 to-violet-300 shadow-md' : 'hover:bg-gradient-to-r from-purple-300 to-violet-300'} 
         ${isSuperAdmin ? "hover:bg-gradient-to-r from-purple-300 to-red-300" : ""}
         ${isAdmin ? "hover:bg-gradient-to-r from-purple-300 to-indigo-300" : ""}

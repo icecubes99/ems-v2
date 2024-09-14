@@ -51,9 +51,11 @@ const RequestOvertime = () => {
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
         if (!newOpen) {
-            window.location.reload();
+            form.reset();
+            setError("");
+            setSuccess("");
         }
-    };
+    }
 
     const onSubmit = (values: z.infer<typeof OvertimeSchema>) => {
         setError("");
@@ -69,7 +71,7 @@ const RequestOvertime = () => {
                     if (data.success) {
                         setSuccess(data.success);
                         setOpen(false);
-                        handleOpenChange(false);
+                        refreshStatus();
                     }
                 })
                 .catch(() => setError("An error what!"));
@@ -99,7 +101,7 @@ const RequestOvertime = () => {
                     {isLoading ? "Loading..." : getButtonText(status)}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="p-0 w-auto bg-transparent border-none">
+            <DialogContent className="p-0 w-96 bg-transparent border-none">
                 <Card>
                     <CardHeader>
                         <CardTitle>
@@ -122,7 +124,7 @@ const RequestOvertime = () => {
                                             name="overtimeType"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Gender</FormLabel>
+                                                    <FormLabel>Overtime Type</FormLabel>
                                                     <Select
                                                         disabled={isPending}
                                                         onValueChange={field.onChange}
@@ -130,7 +132,7 @@ const RequestOvertime = () => {
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder="Pick your Leave Type" />
+                                                                <SelectValue placeholder="Pick your Overtime Type" />
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>

@@ -156,7 +156,7 @@ const RequestLeaveForm = () => {
                                             name="leaveType"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Gender</FormLabel>
+                                                    <FormLabel>Leave Type</FormLabel>
                                                     <Select
                                                         disabled={isPending}
                                                         onValueChange={field.onChange}
