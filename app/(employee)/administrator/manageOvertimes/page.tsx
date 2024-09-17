@@ -6,6 +6,7 @@ import LayoutSideHead from '@/components/LayoutSideHead'
 import { usePendingOvertimes } from '@/hooks/use-pending-overtimes'
 import React from 'react'
 import { columnsPendingOvertimes } from '../manageLeaves/columns-pending-overtimes'
+import { History } from 'lucide-react'
 
 const Page = () => {
     const { overtimes, isLoading, error } = usePendingOvertimes()
@@ -25,7 +26,18 @@ const Page = () => {
                             <div></div>
                         ) : (
                             <>
-                                <DataTableRemainingLeaves label='PENDING OVERTIMES NEED FOR APPROVAL' columns={columnsPendingOvertimes} data={overtimes || []} />
+                                <div className='bg-card  rounded-xl shadow mr-6'>
+                                    <div className='p-6 border-b border-border'>
+                                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
+                                            <History className='h-6 w-6 text-primary' />
+                                            Pending Overtime Requests
+                                        </h2>
+                                        <p className='text-muted-foreground mt-1'>View Pending Overtime Requests</p>
+                                    </div>
+                                    <div className='p-6'>
+                                        <DataTableRemainingLeaves columns={columnsPendingOvertimes} data={overtimes || []} />
+                                    </div>
+                                </div>
                             </>
                         )
                     }

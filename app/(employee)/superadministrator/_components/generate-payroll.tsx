@@ -6,20 +6,42 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { generatePayroll } from '@/actions/superadmin/generate-payroll'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { FormError } from '@/components/form-error'
+import { FormSucess } from '@/components/form-sucess'
 
 export default function GeneratePayroll({ className }: { className?: string }) {
     const [isLoading, setIsLoading] = useState(false)
     const [result, setResult] = useState<{ success?: string; error?: string } | null>(null)
 
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+
+
     const handleGeneratePayroll = async () => {
         setIsLoading(true)
         setResult(null)
-        try {
-            const response = await generatePayroll()
-            setResult(response)
-        } catch (error) {
-            setResult({ error: 'An unexpected error occurred' })
-        } finally {
+
+        setError("");
+        setSuccess("");
+
+        // try {
+        //     const response = await generatePayroll()
+        //     setResult(response)
+        // } catch (error) {
+        //     setError();
+        //     setResult({ error: 'An unexpected error occurred' })
+        // } finally {
+        //     setIsLoading(false)
+        // }
+
+        const result = await generatePayroll();
+        if (result.error) {
+            console.error(result.error);
+            setError(result.error);
+            setIsLoading(false)
+        } else {
+            console.log(result.success);
+            setSuccess(result.success);
             setIsLoading(false)
         }
     }
@@ -31,6 +53,7 @@ export default function GeneratePayroll({ className }: { className?: string }) {
                 onClick={handleGeneratePayroll}
                 disabled={isLoading}
                 className="w-full"
+                variant={"superadmin"}
             >
                 {isLoading ? (
                     <>
@@ -41,14 +64,10 @@ export default function GeneratePayroll({ className }: { className?: string }) {
                     'Generate Payroll'
                 )}
             </Button>
-            {result && (
-                <Alert className="mt-4" variant={result.success ? "default" : "destructive"}>
-                    <AlertTitle>{result.success ? "Success" : "Error"}</AlertTitle>
-                    <AlertDescription>
-                        {result.success || result.error}
-                    </AlertDescription>
-                </Alert>
-            )}
+            <div className='mt-4'>
+                <FormError message={error} />
+                <FormSucess message={success} />
+            </div>
         </div>
     )
 }

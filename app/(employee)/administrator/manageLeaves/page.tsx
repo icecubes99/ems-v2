@@ -8,6 +8,7 @@ import { useRemainingLeaves } from '@/hooks/use-remaining-leaves'
 import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
 import { usePendingLeaves } from '@/hooks/use-pending-leaves'
 import { columnsPendingLeaves } from '@/app/(leaves)/_components/columns-pending-leaves'
+import { History } from 'lucide-react'
 
 const Page = () => {
     const { leaves, isLoading, error } = useRemainingLeaves()
@@ -27,19 +28,42 @@ const Page = () => {
                         <div></div>
                     ) : (
                         <>
-                            <DataTableRemainingLeaves label='PENDING LEAVES NEED FOR APPROVAL' columns={columnsPendingLeaves} data={pendingLeaves || []} />
+                            <div className='bg-card  rounded-xl shadow mr-6'>
+                                <div className='p-6 border-b border-border'>
+                                    <h2 className='text-2xl font-semibold flex items-center gap-2'>
+                                        <History className='h-6 w-6 text-primary' />
+                                        Pending Leaves History
+                                    </h2>
+                                    <p className='text-muted-foreground mt-1'>View pending leave requests</p>
+                                </div>
+                                <div className='p-6'>
+                                    <DataTableRemainingLeaves columns={columnsPendingLeaves} data={pendingLeaves || []} />
+                                </div>
+                            </div>
                         </>
                     )}
 
-                    <hr className="my-8 border-t-2 border-gray-300/60" />
+                    <hr className="my-8 border-t-2 border-gray-300/60 mr-6" />
 
                     {isLoading ? (
                         <div></div>
                     ) : error ? (
                         <div></div>
                     ) : (
-
-                        <DataTableRemainingLeaves label='REQUEST HISTORY' columns={columnsRemainingLeaves} data={leaves || []} />
+                        <>
+                            <div className='bg-card  rounded-xl shadow mr-6'>
+                                <div className='p-6 border-b border-border'>
+                                    <h2 className='text-2xl font-semibold flex items-center gap-2'>
+                                        <History className='h-6 w-6 text-primary' />
+                                        Leaves History
+                                    </h2>
+                                    <p className='text-muted-foreground mt-1'>View previous leave requests</p>
+                                </div>
+                                <div className='p-6'>
+                                    <DataTableRemainingLeaves columns={columnsRemainingLeaves} data={leaves || []} />
+                                </div>
+                            </div>
+                        </>
                     )}
                 </div>
             </LayoutSideHead>
