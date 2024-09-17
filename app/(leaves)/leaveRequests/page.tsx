@@ -1,8 +1,9 @@
 import LayoutSideHead from '@/components/LayoutSideHead'
 import React from 'react'
 import OwnLeavesTable from '../_components/own-leaves-table'
-import RequestLeaveForm from '@/components/request-leave-form'
+import RequestLeaveButton from '@/components/request-leave-form'
 import LeavesCards from '../_components/leaves-cards'
+import { History } from 'lucide-react'
 
 
 
@@ -11,19 +12,22 @@ const page = () => {
         <LayoutSideHead label='Leave Requests'>
             <div className='flex flex-col gap-6'>
 
-                <div className='mt-5'>
+                <div className='mt-5 justify-between flex flex-row mr-6'>
                     <p className='font-bold text-4xl'>LEAVE MANAGEMENT</p>
+                    <RequestLeaveButton />
                 </div>
 
                 <LeavesCards />
-
-                <div className='grid grid-cols-3 gap-10 pr-6'>
-                    <div className='col-span-3'>
-                        <div className="flex justify-between items-center mb-2">
-                            <h4 className="text-xl font-semibold text-gray-700">Leave Requests History</h4>
-                            <RequestLeaveForm />
-                        </div>
-                        <OwnLeavesTable classname="w-full" />
+                <div className='bg-card  rounded-xl shadow mr-6'>
+                    <div className='p-6 border-b border-border'>
+                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
+                            <History className='h-6 w-6 text-primary' />
+                            Leave Requests History
+                        </h2>
+                        <p className='text-muted-foreground mt-1'>View your past and current leave requests</p>
+                    </div>
+                    <div className='p-6'>
+                        <OwnLeavesTable />
                     </div>
                 </div>
 

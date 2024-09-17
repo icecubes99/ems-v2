@@ -28,7 +28,7 @@ import { Dialog } from '@/components/ui/dialog';
 import { DialogContent, DialogTrigger } from '@/components/RefreshDialog';
 import { Textarea } from './ui/textarea';
 
-const RequestLeaveForm = () => {
+const RequestLeaveButton = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [dateISO, setDateISO] = useState("")
@@ -216,4 +216,4 @@ const RequestLeaveForm = () => {
     )
 
 }
-export default RequestLeaveForm;
+export default RequestLeaveButton;
