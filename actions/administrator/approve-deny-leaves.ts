@@ -8,6 +8,7 @@ import { auditAction } from "../auditAction";
 import { PendingLeavesSchema } from "@/schemas/attendance-index";
 import { admin } from "../admin";
 import { LeaveStatus, UserRole, LeaveType } from "@prisma/client";
+import { PrismaClient, Prisma } from '@prisma/client';
 
 export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof PendingLeavesSchema>) => {
     const user = await currentUser();
@@ -111,16 +112,36 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
                 const clockInTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0, 0);
                 const clockOutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
 
-                await db.timesheet.create({
-                    data: {
-                        userId: leave.userId,
-                        dayId: workingDay.id,
-                        clockIn: clockInTime,
-                        clockOut: clockOutTime,
-                        isLate: false,
-                        minutesLate: 0,
-                    },
-                });
+                // await db.timesheet.create({
+                //     data: {
+                //         userId: leave.userId,
+                //         dayId: workingDay.id,
+                //         clockIn: clockInTime,
+                //         clockOut: clockOutTime,
+                //         isLate: false,
+                //         minutesLate: 0,
+                //     },
+                // });
+
+                try {
+                    await db.timesheet.create({
+                        data: {
+                            userId: leave.userId,
+                            dayId: workingDay.id,
+                            clockIn: clockInTime,
+                            clockOut: clockOutTime,
+                            isLate: false,
+                            minutesLate: 0,
+                        },
+                    });
+                } catch (error) {
+                    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                        if (error.code === 'P2002') {
+                            return { error: `A timesheet entry already exists for this user on ${date.toDateString()}. Cannot create duplicate entries.` };
+                        }
+                    }
+                    throw error; // Re-throw if it's not a unique constraint error
+                }
             }
         }
     } else if (leaveStatus === LeaveStatus.REJECTED) {
