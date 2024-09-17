@@ -6,12 +6,15 @@ import DesignationHeadCard from './designation-head-control-card'
 import DepartmentHeadCard from './department-head-control-card'
 import { PasswordsTable } from '@/components/passwords-table'
 import { Users, FileText, Clock, Building, UserCircle } from 'lucide-react'
+import { useLeavesPendingCount, useOvertimesPendingCount } from '@/hooks/use-ModelCounts'
 
 interface AdminCardsProps {
     userId: string
 }
 
 const AdminCards = ({ userId }: AdminCardsProps) => {
+    const { pendingLeavesCount } = useLeavesPendingCount()
+    const { pendingOvertimesCount } = useOvertimesPendingCount()
     return (
         <div className='flex flex-col gap-6 mb-2'>
             <div className='mt-5'>
@@ -56,7 +59,11 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         <CardDescription>Manage, Approve and Deny Requests</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-gray-600">Review and manage employee leave requests efficiently.</p>
+                        {(pendingLeavesCount ?? 0) > 0 ? (
+                            <p className='text-sm text-gray-600'>You have <span className='text-red-500  font-bold'>{pendingLeavesCount}</span> leave requests to approve or deny!</p>
+                        ) : (
+                            <p></p>
+                        )}
                     </CardContent>
                     <CardFooter>
                         <Link href="/administrator/manageLeaves" passHref legacyBehavior>
@@ -76,7 +83,11 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         <CardDescription>Manage, Approve and Deny Overtimes</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-gray-600">Handle overtime requests and approvals in one place.</p>
+                        {(pendingOvertimesCount ?? 0) > 0 ? (
+                            <p className='text-sm text-gray-600'>You have <span className='text-red-500  font-bold'>{pendingOvertimesCount}</span> overtime requests to approve or deny!</p>
+                        ) : (
+                            <p></p>
+                        )}
                     </CardContent>
                     <CardFooter>
                         <Link href="/administrator/manageOvertimes" passHref legacyBehavior>

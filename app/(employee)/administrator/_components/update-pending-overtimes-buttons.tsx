@@ -15,6 +15,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { approveDenyOvertimes } from "@/actions/administrator/approve-deny-overtimes";
 import { LeaveStatus } from "@prisma/client";
+import { FormError } from "@/components/form-error";
+import { FormSucess } from "@/components/form-sucess";
 
 interface ApproveRejectOvertimeDialogProps {
     overtimeId: string;
@@ -22,6 +24,9 @@ interface ApproveRejectOvertimeDialogProps {
 
 export function ApproveOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialogProps) {
     const [open, setOpen] = useState(false);
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+
 
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
@@ -31,11 +36,16 @@ export function ApproveOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialo
     }
 
     const handleAction = async () => {
+        setError("");
+        setSuccess("");
+
         const result = await approveDenyOvertimes(overtimeId, { status: LeaveStatus.APPROVED });
         if (result.error) {
             console.error(result.error);
+            setError(result.error);
         } else {
             console.log(result.success);
+            setSuccess(result.success);
             handleOpenChange(false);
         }
     };
@@ -56,12 +66,19 @@ export function ApproveOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialo
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <Button onClick={handleAction} variant="superadmin">Approve</Button>
                 </AlertDialogFooter>
+                <div>
+                    <FormError message={error} />
+                    <FormSucess message={success} />
+                </div>
             </AlertDialogContent>
         </AlertDialog>
     );
 }
 
 export function RejectOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialogProps) {
+
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
     const [open, setOpen] = useState(false);
 
     const handleOpenChange = (newOpen: boolean) => {
@@ -71,12 +88,17 @@ export function RejectOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialog
         }
     }
 
+
     const handleAction = async () => {
+        setError("");
+        setSuccess("");
         const result = await approveDenyOvertimes(overtimeId, { status: LeaveStatus.REJECTED });
         if (result.error) {
             console.error(result.error);
+            setError(result.error);
         } else {
             console.log(result.success);
+            setSuccess(result.success);
             handleOpenChange(false);
         }
     };
@@ -97,6 +119,10 @@ export function RejectOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialog
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <Button onClick={handleAction} variant="superadmin">Reject</Button>
                 </AlertDialogFooter>
+                <div>
+                    <FormError message={error} />
+                    <FormSucess message={success} />
+                </div>
             </AlertDialogContent>
         </AlertDialog>
     );

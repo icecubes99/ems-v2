@@ -48,7 +48,12 @@ export async function fetchOvertimesPendingCount() {
 
 export async function fetchLeavesPendingCount() {
     try {
-
+        const pendingLeavesCount = await db.leaves.count({
+            where: {
+                leaveStatus: "PENDING"
+            }
+        })
+        return pendingLeavesCount
     } catch (error) {
         console.error("Error fetching pending leaves count: ", error);
         throw new Error("Failed to fetch Pending Leaves Count")

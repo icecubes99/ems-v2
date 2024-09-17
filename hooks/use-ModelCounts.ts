@@ -1,6 +1,6 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
 
@@ -78,5 +78,56 @@ export function useTotalDesignationCount() {
     }, []);
 
     return { designationCount, isLoading, error };
+}
+
+export function useOvertimesPendingCount() {
+    const [pendingOvertimesCount, setPendingOvertimesCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getPendingOvertimesCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchOvertimesPendingCount();
+                setPendingOvertimesCount(count);
+            } catch (err) {
+                console.error("Error fetching pending Overtimes count: ", err);
+                setError("Failed to fetch Pending Overtimes Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        getPendingOvertimesCount();
+    }, []);
+
+    return { pendingOvertimesCount, isLoading, error };
+}
+
+
+export function useLeavesPendingCount() {
+    const [pendingLeavesCount, setPendingLeavesCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getPendingLeavesCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchLeavesPendingCount();
+                setPendingLeavesCount(count);
+            } catch (err) {
+                console.error("Error fetching pending Leaves count: ", err);
+                setError("Failed to fetch Pending Leaves Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        getPendingLeavesCount();
+    }, []);
+
+    return { pendingLeavesCount, isLoading, error };
 }
 

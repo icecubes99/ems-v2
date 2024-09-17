@@ -14,12 +14,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { approveDenyLeaves } from "@/actions/administrator/approve-deny-leaves";
 import { LeaveStatus } from "@prisma/client";
+import { FormError } from "@/components/form-error";
+import { FormSucess } from "@/components/form-sucess";
 
 interface ApproveRejectLeaveDialogProps {
     leaveId: string;
 }
 
 export function ApproveLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+
     const [open, setOpen] = useState(false);
     const [actionType, setActionType] = useState<LeaveStatus | null>(null);
 
@@ -31,11 +36,16 @@ export function ApproveLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
     }
 
     const handleAction = async (leaveStatus: LeaveStatus) => {
+        setError("");
+        setSuccess("");
+
         const result = await approveDenyLeaves(leaveId, { leaveStatus });
         if (result.error) {
             console.error(result.error);
+            setError(result.error);
         } else {
             console.log(result.success);
+            setSuccess(result.success);
             handleOpenChange(false);
         }
     };
@@ -56,12 +66,19 @@ export function ApproveLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <Button onClick={() => handleAction(LeaveStatus.APPROVED)} variant={"superadmin"}>Approve</Button>
                 </AlertDialogFooter>
+                <div>
+                    <FormError message={error} />
+                    <FormSucess message={success} />
+                </div>
             </AlertDialogContent>
         </AlertDialog>
     );
 }
 
 export function RejectLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+
     const [open, setOpen] = useState(false);
     const [actionType, setActionType] = useState<LeaveStatus | null>(null);
 
@@ -73,11 +90,16 @@ export function RejectLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
     }
 
     const handleAction = async (leaveStatus: LeaveStatus) => {
+        setError("");
+        setSuccess("");
+
         const result = await approveDenyLeaves(leaveId, { leaveStatus });
         if (result.error) {
             console.error(result.error);
+            setError(result.error);
         } else {
             console.log(result.success);
+            setSuccess(result.success);
             handleOpenChange(false);
         }
     };
@@ -99,6 +121,10 @@ export function RejectLeaveDialog({ leaveId }: ApproveRejectLeaveDialogProps) {
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <Button onClick={() => handleAction(LeaveStatus.REJECTED)} variant={"superadmin"}>Reject</Button>
                     </AlertDialogFooter>
+                    <div>
+                        <FormError message={error} />
+                        <FormSucess message={success} />
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
         </>
