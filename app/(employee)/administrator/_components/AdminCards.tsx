@@ -21,11 +21,11 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                 <h1 className='font-bold text-4xl text-primary'>ACTIONS</h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
+                <div className='row-span-3'>
+                    <PasswordsTable classname='w-full' />
+                </div>
 
-                <PasswordsTable classname='w-full row-span-3' />
-
-
-                <Card>
+                <Card className="flex flex-col">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <UserCircle className="h-6 w-6" />
@@ -35,22 +35,24 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                             User management and actions
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className='space-y-4'>
+                    <CardContent className='flex-grow'>
                         <div className='flex items-center justify-between'>
                             <p className='text-sm font-medium'>Employees List</p>
-                            <Link href="/administrator/dataTable" passHref legacyBehavior>
-                                <Button variant="admin">
-                                    View Employees
-                                </Button>
-                            </Link>
                         </div>
                     </CardContent>
+                    <CardFooter className="mt-auto">
+                        <Link href="/administrator/dataTable" passHref legacyBehavior className="w-full">
+                            <Button variant="admin" className="w-full">
+                                View Employees
+                            </Button>
+                        </Link>
+                    </CardFooter>
                 </Card>
 
                 <DesignationHeadCard userId={userId} />
                 <DepartmentHeadCard userId={userId} />
 
-                <Card>
+                <Card className="flex flex-col">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <FileText className="h-6 w-6" />
@@ -58,15 +60,15 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         </CardTitle>
                         <CardDescription>Manage, Approve and Deny Requests</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className='flex-grow'>
                         {(pendingLeavesCount ?? 0) > 0 ? (
-                            <p className='text-sm text-gray-600'>You have <span className='text-red-500  font-bold'>{pendingLeavesCount}</span> leave requests to approve or deny!</p>
+                            <p className='text-sm text-gray-600'>You have <span className='text-red-500 font-bold'>{pendingLeavesCount}</span> leave requests to approve or deny!</p>
                         ) : (
-                            <p></p>
+                            <p className='text-sm text-gray-600'>No pending leave requests.</p>
                         )}
                     </CardContent>
-                    <CardFooter>
-                        <Link href="/administrator/manageLeaves" passHref legacyBehavior>
+                    <CardFooter className="mt-auto">
+                        <Link href="/administrator/manageLeaves" passHref legacyBehavior className="w-full">
                             <Button className="w-full" variant="admin">
                                 Manage Leave Requests
                             </Button>
@@ -74,7 +76,7 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                     </CardFooter>
                 </Card>
 
-                <Card>
+                <Card className="flex flex-col">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Clock className="h-6 w-6" />
@@ -82,15 +84,15 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         </CardTitle>
                         <CardDescription>Manage, Approve and Deny Overtimes</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className='flex-grow'>
                         {(pendingOvertimesCount ?? 0) > 0 ? (
-                            <p className='text-sm text-gray-600'>You have <span className='text-red-500  font-bold'>{pendingOvertimesCount}</span> overtime requests to approve or deny!</p>
+                            <p className='text-sm text-gray-600'>You have <span className='text-red-500 font-bold'>{pendingOvertimesCount}</span> overtime requests to approve or deny!</p>
                         ) : (
-                            <p></p>
+                            <p className='text-sm text-gray-600'>No pending overtime requests.</p>
                         )}
                     </CardContent>
-                    <CardFooter>
-                        <Link href="/administrator/manageOvertimes" passHref legacyBehavior>
+                    <CardFooter className="mt-auto">
+                        <Link href="/administrator/manageOvertimes" passHref legacyBehavior className="w-full">
                             <Button className="w-full" variant="admin">
                                 Manage Overtime Requests
                             </Button>

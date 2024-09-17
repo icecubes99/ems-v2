@@ -35,7 +35,7 @@ export default function DepartmentHeadCard({ userId }: DepartmentHeadCardProps) 
     }
 
     return (
-        <Card>
+        <Card className="flex flex-col">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Building className="h-6 w-6" />
@@ -43,10 +43,10 @@ export default function DepartmentHeadCard({ userId }: DepartmentHeadCardProps) 
                 </CardTitle>
                 <CardDescription>You are a department head</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-grow">
                 <p className="text-sm text-gray-600">Your department is: <span className="font-semibold">{department.departmentName}</span></p>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="mt-auto">
                 <Dialog>
                     <DialogTrigger className="w-full" asChild>
                         <Button variant="admin">

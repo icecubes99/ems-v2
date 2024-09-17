@@ -33,7 +33,7 @@ export default function DesignationHeadCard({ userId }: DesignationHeadCardProps
     }
 
     return (
-        <Card>
+        <Card className="flex flex-col">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Award className="h-6 w-6" />
@@ -41,10 +41,12 @@ export default function DesignationHeadCard({ userId }: DesignationHeadCardProps
                 </CardTitle>
                 <CardDescription>You are a designation head</CardDescription>
             </CardHeader>
-            <CardContent>
-                <p className="text-sm text-gray-600">Your designation is: <span className="font-semibold">{designation.designationName}</span></p>
+            <CardContent className="flex-grow">
+                <div className="flex items-center justify-between">
+                    <p className="text-sm text-gray-600">Your designation is: <span className="font-semibold">{designation.designationName}</span></p>
+                </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="mt-auto">
                 <Link href={`/administrator/designations/${designation.id}`} passHref legacyBehavior>
                     <Button className="w-full" variant="admin">
                         View Designation
