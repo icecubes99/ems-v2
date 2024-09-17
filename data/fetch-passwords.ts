@@ -8,7 +8,7 @@ export async function getAttendancePasswords() {
     presentDay.setDate(presentDay.getDate() - 1)
 
     const tenDaysLater = new Date(presentDay)
-    tenDaysLater.setDate(presentDay.getDate() + 10)
+    tenDaysLater.setDate(presentDay.getDate() + 20)
 
     try {
         const days = await db.workingDay.findMany({

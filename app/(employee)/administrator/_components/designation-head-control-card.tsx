@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import Link from "next/link"
+import { Award } from 'lucide-react'
 
 interface DesignationHeadCardProps {
     userId: string
@@ -13,7 +14,7 @@ export default function DesignationHeadCard({ userId }: DesignationHeadCardProps
 
     if (isLoading) {
         return (
-            <Card>
+            <Card className="shadow-md">
                 <CardHeader>
                     <Skeleton className="h-6 w-3/4" />
                 </CardHeader>
@@ -34,11 +35,14 @@ export default function DesignationHeadCard({ userId }: DesignationHeadCardProps
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Designation Head</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                    <Award className="h-6 w-6" />
+                    Designation Head
+                </CardTitle>
                 <CardDescription>You are a designation head</CardDescription>
             </CardHeader>
             <CardContent>
-                <p>Your designation is: {designation.designationName}</p>
+                <p className="text-sm text-gray-600">Your designation is: <span className="font-semibold">{designation.designationName}</span></p>
             </CardContent>
             <CardFooter>
                 <Link href={`/administrator/designations/${designation.id}`} passHref legacyBehavior>

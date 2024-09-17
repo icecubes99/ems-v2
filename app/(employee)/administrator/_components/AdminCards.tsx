@@ -5,21 +5,27 @@ import Link from 'next/link'
 import DesignationHeadCard from './designation-head-control-card'
 import DepartmentHeadCard from './department-head-control-card'
 import { PasswordsTable } from '@/components/passwords-table'
+import { Users, FileText, Clock, Building, UserCircle } from 'lucide-react'
 
 interface AdminCardsProps {
     userId: string
 }
+
 const AdminCards = ({ userId }: AdminCardsProps) => {
     return (
         <div className='flex flex-col gap-6 mb-2'>
             <div className='mt-5'>
-                <p className='font-bold text-4xl'>ACTIONS</p>
+                <h1 className='font-bold text-4xl text-primary'>ACTIONS</h1>
             </div>
-            <div className="grid grid-cols-3 gap-8 pr-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
 
-                <Card className='shadow-sm'>
+                <PasswordsTable classname='w-full row-span-3' />
+
+
+                <Card>
                     <CardHeader>
-                        <CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <UserCircle className="h-6 w-6" />
                             User Actions
                         </CardTitle>
                         <CardDescription>
@@ -27,10 +33,10 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className='space-y-4'>
-                        <div className='grid grid-cols-2  items-center justify-between'>
+                        <div className='flex items-center justify-between'>
                             <p className='text-sm font-medium'>Employees List</p>
-                            <Link href={"/administrator/dataTable"} passHref legacyBehavior>
-                                <Button variant={"admin"}>
+                            <Link href="/administrator/dataTable" passHref legacyBehavior>
+                                <Button variant="admin">
                                     View Employees
                                 </Button>
                             </Link>
@@ -40,18 +46,20 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
 
                 <DesignationHeadCard userId={userId} />
                 <DepartmentHeadCard userId={userId} />
-                <PasswordsTable classname='row-span-3' />
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Leave Requests Panel</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <FileText className="h-6 w-6" />
+                            Leave Requests Panel
+                        </CardTitle>
                         <CardDescription>Manage, Approve and Deny Requests</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p>Manage Leave Request</p>
+                        <p className="text-sm text-gray-600">Review and manage employee leave requests efficiently.</p>
                     </CardContent>
                     <CardFooter>
-                        <Link href={`/administrator/manageLeaves`} passHref legacyBehavior>
+                        <Link href="/administrator/manageLeaves" passHref legacyBehavior>
                             <Button className="w-full" variant="admin">
                                 Manage Leave Requests
                             </Button>
@@ -61,14 +69,17 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Overtime Requests Panel</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <Clock className="h-6 w-6" />
+                            Overtime Requests Panel
+                        </CardTitle>
                         <CardDescription>Manage, Approve and Deny Overtimes</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p>Manage Overtime Request</p>
+                        <p className="text-sm text-gray-600">Handle overtime requests and approvals in one place.</p>
                     </CardContent>
                     <CardFooter>
-                        <Link href={`/administrator/manageOvertimes`} passHref legacyBehavior>
+                        <Link href="/administrator/manageOvertimes" passHref legacyBehavior>
                             <Button className="w-full" variant="admin">
                                 Manage Overtime Requests
                             </Button>

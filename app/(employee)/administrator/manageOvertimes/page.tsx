@@ -25,7 +25,7 @@ const Page = () => {
                             <div></div>
                         ) : (
                             <>
-                                <DataTableRemainingLeaves label='PENDING OVERTIMES NEED FOR APPROBAL' columns={columnsPendingOvertimes} data={overtimes || []} />
+                                <DataTableRemainingLeaves label='PENDING OVERTIMES NEED FOR APPROVAL' columns={columnsPendingOvertimes} data={overtimes || []} />
                             </>
                         )
                     }

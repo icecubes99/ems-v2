@@ -26,7 +26,7 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
-const CreateHolidayCard = () => {
+const CreateHolidayCard = ({ className }: { className?: string }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [dateISO, setDateISO] = useState("")

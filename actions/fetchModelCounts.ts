@@ -32,3 +32,25 @@ export async function fetchDesignationsCount() {
     }
 }
 
+export async function fetchOvertimesPendingCount() {
+    try {
+        const pendingOvertimesCount = await db.overtimes.count({
+            where: {
+                status: "PENDING"
+            }
+        })
+        return pendingOvertimesCount
+    } catch (error) {
+        console.error("Error fetching pending overtimes count: ", error);
+        throw new Error("Failed to fetch Pending Overtimes Count")
+    }
+}
+
+export async function fetchLeavesPendingCount() {
+    try {
+
+    } catch (error) {
+        console.error("Error fetching pending leaves count: ", error);
+        throw new Error("Failed to fetch Pending Leaves Count")
+    }
+}

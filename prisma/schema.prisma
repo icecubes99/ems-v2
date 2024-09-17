@@ -81,6 +81,14 @@ model User {
   // Optional if the User is a Department Head or a Designation Head
   department              Department?
   designation             Designation?
+
+  // Payroll Subsystem
+  deductions              Deductions[]
+  additionalEarnings      AdditionalEarnings[]
+  userSalary              UserSalary?
+  governmentId            GovernmentId?
+  payrollItems            PayrollItem[]
+  salaryHistories         SalaryHistory[]
   
   // default
   emailVerified           DateTime?
@@ -342,3 +350,117 @@ model Overtimes {
 
   @@unique([userId, createdAt])
 }
+
+// Payroll subsystem
+model Deductions {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  deductionType String
+  amount        Float
+  description   String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model AdditionalEarnings {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  earningType String
+  amount      Float
+  description String
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UserSalary {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  basicSalary Float
+  hourlyRate  Float?
+  minuteRate  Float?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId])
+}
+
+model SalaryHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  salary    Float
+  effectiveDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GovernmentId {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sssNumber         String?
+  tinNumber         String?
+  philHealthNumber  String?
+  pagIbigNumber     String?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId])
+}
+
+model Payroll {
+  id        String   @id @default(cuid())
+  payPeriodStart  DateTime
+  payPeriodEnd    DateTime
+
+  payrollStatus   LeaveStatus @default(PENDING)
+  totalAmount     Float
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  payrollItems    PayrollItem[]
+
+  @@unique([payPeriodStart, payPeriodEnd])
+}
+
+model PayrollItem {
+  id           String   @id @default(cuid())
+
+  payrollId    String
+  payroll      Payroll  @relation(fields: [payrollId], references: [id], onDelete: Cascade)
+
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  basicSalary  Float
+  overtimeSalary Float @default(0)
+  additionalEarnings Float @default(0)
+  totalDeductions Float @default(0)
+  netSalary    Float
+
+  daysWorked   Int
+  minutesWorked Int
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([payrollId, userId])
+}
+
+// sample server actions

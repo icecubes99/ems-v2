@@ -14,6 +14,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { Key, Users } from "lucide-react"
 
 
 export function PasswordsTable({ classname }: { classname?: string }) {
@@ -22,6 +23,7 @@ export function PasswordsTable({ classname }: { classname?: string }) {
         <Card className={cn("w-full", classname)}>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
+                    <Key className="h-6 w-6" />
                     Upcoming Passwords for {new Date().getFullYear()}
                 </CardTitle>
             </CardHeader>

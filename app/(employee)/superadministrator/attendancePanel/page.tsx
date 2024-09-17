@@ -18,7 +18,7 @@ const page = () => {
                     <div className='grid grid-cols-4 gap-8'>
 
                         <WorkingDaysManager classname='col-span-2' />
-                        <HolidayCard />
+                        <HolidayCard classname='col-span-2' />
                     </div>
                     <div className='grid grid-cols-2 gap-8'>
                         <HolidayTable />
