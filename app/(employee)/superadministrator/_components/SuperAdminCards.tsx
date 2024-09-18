@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import CreateDesignationButton from './CreateDesignationButton'
 import CreateDepartmentForm from './CreateDepartmentForm'
-import { Calendar, DollarSign, Building2 } from 'lucide-react'
+import { Calendar, DollarSign, Building2, UserPlusIcon } from 'lucide-react'
 
 export default function SuperAdminCards() {
     return (
@@ -59,6 +59,18 @@ export default function SuperAdminCards() {
                     buttonLink="/superadministrator/payrollPanel"
                 >
                     <p className='text-sm'>Streamline payroll processes and generate reports. Automate salary calculations, tax deductions, and payment distributions with ease.</p>
+                </CardLayout>
+
+                <CardLayout
+                    header='Employee Actions'
+                    description='Add Employees, View Employees'
+                    icon={<UserPlusIcon className="h-6 w-6 text-primary" />}
+                    buttonText="View Employee Panel"
+                    buttonLink="/superadministrator/employeePanel"
+                >
+                    <p className='text-sm'>
+                        Add new employees to the system. Manage employee information, roles, and permissions. View and update employee profiles with ease.
+                    </p>
                 </CardLayout>
             </div>
         </div>

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react'
 
 interface SidebarButtonProps {
-    children?: React.ReactNode;
     link: string;
     icon: React.ReactNode;
     label: string;
@@ -14,7 +13,7 @@ interface SidebarButtonProps {
     isAdmin?: boolean;
 }
 
-const SidebarButton = ({ children, link, icon, label, classname, iconClassname, isActive, isSuperAdmin, isAdmin }: SidebarButtonProps) => {
+const SidebarButton = ({ link, icon, label, classname, iconClassname, isActive, isSuperAdmin, isAdmin }: SidebarButtonProps) => {
     return (
         <Link href={link} legacyBehavior passHref>
             <div className={cn(`

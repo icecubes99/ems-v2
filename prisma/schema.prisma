@@ -462,5 +462,3 @@ model PayrollItem {
 
   @@unique([payrollId, userId])
 }
-
-// sample server actions

@@ -12,27 +12,33 @@ import { FormSucess } from "@/components/form-sucess";
 const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const onSubmit = useCallback(() => {
-    if (success || error) return;
-
     if (!token) {
       setError("Missing token!");
+      setIsLoading(false);
       return;
     }
 
     newVerification(token)
       .then((data) => {
-        setSuccess(data.success);
-        setError(data.error);
+        if (data.success) {
+          setSuccess(data.success);
+        } else if (data.error) {
+          setError(data.error);
+        }
       })
       .catch(() => {
         setError("Something went wrong!");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [token, success, error]);
+  }, [token]);
 
   useEffect(() => {
     onSubmit();
@@ -45,9 +51,9 @@ const NewVerificationForm = () => {
       backButtonHref="/auth/login"
     >
       <div className="flex items-center justify-center w-full">
-        {!success && !error && <BeatLoader />}
-        <FormSucess message={success} />
-        {!success && <FormError message={error} />}
+        {isLoading && <BeatLoader />}
+        {!isLoading && success && <FormSucess message={success} />}
+        {!isLoading && error && <FormError message={error} />}
       </div>
     </CardWrapper>
   );

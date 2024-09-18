@@ -112,17 +112,6 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
                 const clockInTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0, 0);
                 const clockOutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
 
-                // await db.timesheet.create({
-                //     data: {
-                //         userId: leave.userId,
-                //         dayId: workingDay.id,
-                //         clockIn: clockInTime,
-                //         clockOut: clockOutTime,
-                //         isLate: false,
-                //         minutesLate: 0,
-                //     },
-                // });
-
                 try {
                     await db.timesheet.create({
                         data: {

@@ -228,6 +228,8 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
+
+
             </div>
           </div>
           <FormError message={error} />
