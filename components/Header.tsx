@@ -25,7 +25,7 @@ const Header = ({ user, employeePic }: HeaderProps) => {
         <div className='flex w-full h-28 justify-end items-center'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <div className='bg-gradient-to-r from-purple-100 cursor-pointer w-80 shadow-md rounded-l-full flex justify-between items-center h-20 mr-6 hover:bg-purple-200/50 focus:bg-purple-200/50 transition-all duration-1000 ease-in-out'>
+                    <div className='bg-gradient-to-r from-purple-200 via-purple-100 cursor-pointer w-80 shadow-md rounded-full flex justify-between items-center h-20 mr-6 hover:bg-purple-200/50 focus:bg-purple-200/50 transition-all duration-1000 ease-in-out'>
 
                         <div className='ml-5 flex flex-row items-center space-x-5'>
                             <Avatar>

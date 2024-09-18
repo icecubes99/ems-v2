@@ -15,11 +15,13 @@ const LayoutSideHead = ({ children, label, classname }: LayoutSideHeadProps) => 
     return (
         <div className='flex flex-row'>
             <Sidebar user={user} />
-            <div className='flex flex-col w-full'>
-                <Header user={user} />
-                <div className={cn('ml-4', classname)}>
-                    <p className={cn('font-semibold text-lg')}>{label}</p>
-                    {children}
+            <div className='flex flex-col w-full pl-2'>
+                <div className='max-h-screen overflow-y-auto'>
+                    <Header user={user} />
+                    <div className={cn('ml-4', classname)}>
+                        <p className={cn('font-semibold text-lg')}>{label}</p>
+                        {children}
+                    </div>
                 </div>
             </div>
 
