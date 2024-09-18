@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,7 +31,10 @@ const NewRegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    // const [birthDateISO, setBirthDateISO] = useState('');
+
+    const [formattedSalary, setFormattedSalary] = useState("")
+    const inputRef = useRef<HTMLInputElement>(null)
+
 
     const form = useForm<z.infer<typeof newRegisterSchema>>({
         resolver: zodResolver(newRegisterSchema),
@@ -41,7 +44,7 @@ const NewRegisterForm = () => {
             firstName: "",
             middleName: "",
             lastName: "",
-            gender: Gender.OTHER,
+            // gender: Gender.OTHER,
             birthDate: "",
             role: UserRole.USER,
             jobTitle: "",
@@ -56,23 +59,45 @@ const NewRegisterForm = () => {
         },
     });
 
-    const onSubmit = (values: z.infer<typeof newRegisterSchema>) => {
-        setError("");
-        setSuccess("");
+    const formatNumber = (num: number) => {
+        return "₱" + num.toLocaleString('en-US')
+    }
 
-        // Format the birthDate to ISO-8601 DateTime string
+
+    const onSubmit = (values: z.infer<typeof newRegisterSchema>) => {
+        setError("")
+        setSuccess("")
+
         const formattedValues = {
             ...values,
             birthDate: new Date(values.birthDate).toISOString(),
-        };
+        }
 
         startTransition(() => {
             newRegister(formattedValues).then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
-            });
-        });
-    };
+                setError(data.error)
+                setSuccess(data.success)
+            })
+        })
+    }
+
+    useEffect(() => {
+        const handleClick = () => {
+            if (inputRef.current) {
+                const input = inputRef.current
+                setTimeout(() => {
+                    input.setSelectionRange(input.value.length, input.value.length)
+                }, 0)
+            }
+        }
+
+        const input = inputRef.current
+        input?.addEventListener('click', handleClick)
+
+        return () => {
+            input?.removeEventListener('click', handleClick)
+        }
+    }, [])
 
     return (
         <Form {...form}>
@@ -302,17 +327,32 @@ const NewRegisterForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        ref={inputRef}
                                         disabled={isPending}
-                                        type="number"
-                                        placeholder="0.00"
-                                        onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                                        type="text"
+                                        placeholder="₱0"
+                                        value={formattedSalary}
+                                        onChange={(e) => {
+                                            const value = e.target.value.replace(/[^0-9]/g, '')
+                                            const numberValue = parseInt(value, 10)
+                                            const formatted = formatNumber(numberValue || 0)
+                                            setFormattedSalary(formatted)
+                                            field.onChange(numberValue || 0)
+
+                                            // Move cursor to end
+                                            setTimeout(() => {
+                                                e.target.setSelectionRange(formatted.length, formatted.length)
+                                            }, 0)
+                                        }}
+                                        onFocus={(e) => {
+                                            e.target.setSelectionRange(e.target.value.length, e.target.value.length)
+                                        }}
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-
                     {/* Government IDs */}
                     <div className="grid grid-cols-2 gap-4">
                         <FormField

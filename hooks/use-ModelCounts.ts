@@ -1,6 +1,6 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchActiveUsersCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
 
@@ -129,5 +129,58 @@ export function useLeavesPendingCount() {
     }, []);
 
     return { pendingLeavesCount, isLoading, error };
+}
+
+
+
+export function useTotalActiveUserCount() {
+    const [activeUsersCount, setUserCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getUsersCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchActiveUsersCount();
+                setUserCount(count);
+            } catch (err) {
+                console.error("Error fetching Active User count: ", err);
+                setError("Failed to fetch Active Users Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        getUsersCount();
+    }, []);
+
+    return { activeUsersCount, isLoading, error };
+}
+
+
+export function useTotalInactiveUserCount() {
+    const [inactiveUsersCount, setUserCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getUsersCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchInactiveUsersCount();
+                setUserCount(count);
+            } catch (err) {
+                console.error("Error fetching InActive User count: ", err);
+                setError("Failed to fetch InActive Users Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        getUsersCount();
+    }, []);
+
+    return { inactiveUsersCount, isLoading, error };
 }
 

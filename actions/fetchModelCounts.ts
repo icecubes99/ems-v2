@@ -59,3 +59,41 @@ export async function fetchLeavesPendingCount() {
         throw new Error("Failed to fetch Pending Leaves Count")
     }
 }
+
+export async function fetchActiveUsersCount() {
+    try {
+        const userCount = await db.user.count({
+            where: {
+                assignedDesignations: {
+                    status: "ACTIVE"
+                }
+            }
+        })
+        return userCount
+    } catch (error) {
+        console.error("Error fetching user count: ", error);
+        throw new Error("Failed to fetch Users Count")
+    }
+}
+export async function fetchInactiveUsersCount() {
+    try {
+        const userCount = await db.user.count({
+            where: {
+                OR: [
+                    {
+                        assignedDesignations: null
+                    },
+                    {
+                        assignedDesignations: {
+                            status: "INACTIVE"
+                        }
+                    }
+                ]
+            }
+        });
+        return userCount;
+    } catch (error) {
+        console.error("Error fetching user count: ", error);
+        throw new Error("Failed to fetch Users Count");
+    }
+}

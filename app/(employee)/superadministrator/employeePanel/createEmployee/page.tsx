@@ -9,8 +9,8 @@ const page = () => {
             <LayoutSideHead classname='' label='Create Employee'>
                 <div className='mt-5'>
                     <p className='font-bold text-4xl'>EMPLOYEE REGISTRATION</p>
-                    <div className='grid grid-cols-4'>
-                        <div className='col-span-3'>
+                    <div className='flex items-center'>
+                        <div className='mr-6 w-10/12'>
                             <NewRegisterForm />
 
                         </div>

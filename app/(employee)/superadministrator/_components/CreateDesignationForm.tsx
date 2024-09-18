@@ -63,7 +63,7 @@ const CreateDesignationForm = ({ variant }: CreateDesignationFormProps) => {
     }
 
     return (
-        <Card>
+        <Card className='w-fit'>
             <CardHeader>
                 Create Designation
                 <CardDescription>
@@ -169,7 +169,7 @@ const CreateDesignationForm = ({ variant }: CreateDesignationFormProps) => {
                                     name='departmentId'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Designation Head</FormLabel>
+                                            <FormLabel>Department</FormLabel>
                                             <SelectDepartments onUserChange={field.onChange} />
                                             <FormMessage />
                                         </FormItem>
