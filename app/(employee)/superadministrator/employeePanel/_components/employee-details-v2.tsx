@@ -3,21 +3,18 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import useUserAssignment from '@/hooks/use-current-assignment';
 import { useCurrentUser, useCurrentUserId } from '@/hooks/use-current-user';
+import useUser from '@/hooks/use-user';
 import { Address, ExtendedUser } from '@/next-auth';
 import { EmployeeType, Status } from '@prisma/client';
 import React, { useEffect, useState } from 'react'
 
 interface EmployeeDetailsProps {
-    user?: ExtendedUser;
+    userId: string
     children?: React.ReactNode;
-    designationName?: string;
-    status?: string;
-    employeeType?: string;
-
 }
-const EmployeeDetails = ({ children }: EmployeeDetailsProps) => {
-    const user = useCurrentUser();
-    const userId = useCurrentUserId() as string;
+const EmployeeDetailsV2 = ({ children, userId }: EmployeeDetailsProps) => {
+
+    const user = useUser(userId);
 
     const { status, employeeType, loading, designationName, error } = useUserAssignment(userId);
 
@@ -29,7 +26,7 @@ const EmployeeDetails = ({ children }: EmployeeDetailsProps) => {
     return (
         <div className='flex flex-col  gap-6'>
             <div className='mt-5 flex flex-col items-center justify-start'>
-                <p className='font-bold text-4xl text-violet-950'>{user?.name}</p>
+                <p className='font-bold text-4xl text-violet-950'>{`${user?.firstName} ${user.middleName} ${user.lastName}`}</p>
 
                 <div className='text-sm mt-2'>
                     <div className='flex flex-row gap-2 items-center'>
@@ -93,7 +90,7 @@ const EmployeeDetails = ({ children }: EmployeeDetailsProps) => {
                             <p className='text-sm font-medium'>DATE OF BIRTH:</p>
                             <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
                                 {/* @ts-ignore */}
-                                {formatDate(user?.birthDate)}
+                                {formatDate(user.dateOfBirth)}
                             </p>
                         </div>
                         <div className='flex flex-row items-center justify-between'>
@@ -112,4 +109,4 @@ const EmployeeDetails = ({ children }: EmployeeDetailsProps) => {
     )
 }
 
-export default EmployeeDetails
+export default EmployeeDetailsV2

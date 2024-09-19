@@ -29,7 +29,6 @@ const page = () => {
         })
 
         setUsers(processedUsers);
-        // console.log("THIS IS THE RESPONSE" + setUsers)
     };
 
     useEffect(() => {
