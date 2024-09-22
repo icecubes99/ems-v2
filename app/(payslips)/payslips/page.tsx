@@ -1,15 +1,35 @@
+"use client"
 import LayoutSideHead from '@/components/LayoutSideHead'
-import LayoutSideHeadServer from '@/components/LayoutSideHeadServer'
-import RequestLeaveForm from '@/components/request-leave-form'
 import React from 'react'
+import { FaMoneyBillWaveAlt } from 'react-icons/fa'
+import { DataTablePayslips } from './_components/data-table-payslips'
+import { columnsPayslips } from './_components/columns-payslips'
+import { useOwnPayslips } from '@/hooks/use-payslips'
 
 const page = () => {
+    const { payslips } = useOwnPayslips()
     return (
         <LayoutSideHead label='Payslips'>
-            <div>Wala pay Unod
+            <div className='flex flex-col gap-6'>
 
-                <div>
+                <div className='mt-5 justify-between flex flex-row mr-6'>
+                    <p className='font-bold text-4xl'>LEAVE MANAGEMENT</p>
                 </div>
+
+                {/* <LeavesCards /> */}
+                <div className='bg-card  rounded-xl shadow mr-6'>
+                    <div className='p-6 border-b border-border'>
+                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
+                            <FaMoneyBillWaveAlt className='h-6 w-6 text-primary' />
+                            Payslips History
+                        </h2>
+                        <p className='text-muted-foreground mt-1'>View your past and current payslips</p>
+                    </div>
+                    <div className='p-6'>
+                        <DataTablePayslips columns={columnsPayslips} data={payslips || []} />
+                    </div>
+                </div>
+
             </div>
         </LayoutSideHead>
     )

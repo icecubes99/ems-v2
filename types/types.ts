@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll } from "@prisma/client"
 import { User as PrismaUser } from "@prisma/client"
 export type AssignDesignation = {
     id: string
@@ -96,4 +96,29 @@ export type OvertimesWithUser = {
     //     lastLogin: Date | null;
     // }
     user: PrismaUser
+}
+
+export type PayrollItemWithUser = {
+    id: string;
+    payrollId: string;
+    payroll: Payroll; // Assuming Payroll is another type defined elsewhere
+    userId: string;
+    user: PrismaUser; // Assuming User is another type defined elsewhere
+    basicSalary: number;
+    overtimeSalary: number;
+    dailyRate: number;
+    additionalEarnings: number;
+    lateDeductions: number;
+    earlyClockOutDeductions: number;
+    totalDeductions: number;
+    netSalary: number;
+    daysWorked: number;
+    daysNotWorked: number;
+    minutesWorked: number;
+    minutesNotWorked: number;
+    minutesEarlyOut: number;
+    minutesLate: number;
+    minutesOvertime: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
