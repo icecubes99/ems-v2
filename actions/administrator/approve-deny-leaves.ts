@@ -92,27 +92,22 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
             });
         }
 
-        await db.leaves.update({
-            where: { id: leaveId },
-            data: { leaveStatus: LeaveStatus.APPROVED }
-        });
-
         // Create timesheets for each day of the approved leave
-        for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
-            const workingDay = await db.workingDay.findFirst({
-                where: {
-                    date: {
-                        gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
-                        lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+        try {
+            for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+                const workingDay = await db.workingDay.findFirst({
+                    where: {
+                        date: {
+                            gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+                            lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+                        },
                     },
-                },
-            });
+                });
 
-            if (workingDay) {
-                const clockInTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0, 0);
-                const clockOutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
+                if (workingDay) {
+                    const clockInTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0, 0);
+                    const clockOutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 18, 0, 0);
 
-                try {
                     await db.timesheet.create({
                         data: {
                             userId: leave.userId,
@@ -123,15 +118,21 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
                             minutesLate: 0,
                         },
                     });
-                } catch (error) {
-                    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                        if (error.code === 'P2002') {
-                            return { error: `A timesheet entry already exists for this user on ${date.toDateString()}. Cannot create duplicate entries.` };
-                        }
-                    }
-                    throw error; // Re-throw if it's not a unique constraint error
                 }
             }
+
+            // Only update the leave status if all timesheet entries were created successfully
+            await db.leaves.update({
+                where: { id: leaveId },
+                data: { leaveStatus: LeaveStatus.APPROVED }
+            });
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    return { error: `A timesheet entry already exists for this leave period. Cannot create duplicate entries.` };
+                }
+            }
+            throw error; // Re-throw if it's not a unique constraint error
         }
     } else if (leaveStatus === LeaveStatus.REJECTED) {
         await db.leaves.update({

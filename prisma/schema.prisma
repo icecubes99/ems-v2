@@ -276,6 +276,11 @@ model Timesheet {
   clockOut  DateTime?
 
   isLate       Boolean    @default(false)
+  isOvertime   Boolean    @default(false)
+  forgotClockOut Boolean    @default(false)
+  clockOutEarly Boolean    @default(false)
+
+  clockOutEarlyMinutes Int        @default(0)
   minutesLate  Int        @default(0)
   
   createdAt DateTime @default(now())
@@ -382,19 +387,17 @@ model AdditionalEarnings {
 
 model UserSalary {
   id        String   @id @default(cuid())
-
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   basicSalary Float
   hourlyRate  Float?
   minuteRate  Float?
-
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@unique([userId])
 }
+
 
 model SalaryHistory {
   id        String   @id @default(cuid())
@@ -450,12 +453,24 @@ model PayrollItem {
 
   basicSalary  Float
   overtimeSalary Float @default(0)
+  dailyRate    Float
+
   additionalEarnings Float @default(0)
+
+  lateDeductions Float @default(0)
+  earlyClockOutDeductions Float @default(0)
+
   totalDeductions Float @default(0)
   netSalary    Float
 
   daysWorked   Int
+  daysNotWorked Int
+
   minutesWorked Int
+  minutesNotWorked Int
+  minutesEarlyOut Int @default(0)
+  minutesLate Int
+  minutesOvertime Int
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

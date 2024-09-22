@@ -8,6 +8,7 @@ import { auditAction } from "../auditAction";
 import { PendingOvertimesSchema } from "@/schemas/attendance-index";
 import { admin } from "../admin";
 import { LeaveStatus, UserRole, OvertimeType } from "@prisma/client";
+import { startOfDay, endOfDay } from "date-fns";
 
 export const approveDenyOvertimes = async (overtimeId: string, action: z.infer<typeof PendingOvertimesSchema>) => {
     const user = await currentUser();
@@ -44,42 +45,47 @@ export const approveDenyOvertimes = async (overtimeId: string, action: z.infer<t
     const { status } = validatedFields.data;
 
     if (status === LeaveStatus.APPROVED) {
-        // Update the overtime status
-        await db.overtimes.update({
-            where: { id: overtimeId },
-            data: { status: LeaveStatus.APPROVED }
-        });
-
         // Find the timesheet for the day of the overtime
         const timesheet = await db.timesheet.findFirst({
             where: {
                 userId: overtime.userId,
-                createdAt: {
-                    gte: new Date(overtime.createdAt.getFullYear(), overtime.createdAt.getMonth(), overtime.createdAt.getDate()),
-                    lt: new Date(overtime.createdAt.getFullYear(), overtime.createdAt.getMonth(), overtime.createdAt.getDate() + 1),
+                day: {
+                    date: {
+                        gte: startOfDay(overtime.createdAt),
+                        lte: endOfDay(overtime.createdAt),
+                    },
                 },
             },
         });
 
         if (timesheet) {
-            // Update the timesheet's clock out time to 6:00 PM
-            const clockOutTime = new Date(timesheet.createdAt);
-            clockOutTime.setHours(19, 0, 0, 0); // Set to 7:00 PM
+            // Update the overtime status
+            await db.overtimes.update({
+                where: { id: overtimeId },
+                data: { status: LeaveStatus.APPROVED }
+            });
 
+            // Update the timesheet
             await db.timesheet.update({
                 where: { id: timesheet.id },
-                data: { clockOut: clockOutTime },
+                data: { isOvertime: true },
             });
+
+            await auditAction(dbUser.id, `Overtime Approved by ${user.role}: ${user.name}`)
+            return { success: "Overtime Request Approved" };
         } else {
-            return { error: "Timesheet not found for the overtime date" };
+            // If no timesheet is found, don't approve the overtime
+            return { error: "Cannot approve overtime: No timesheet found for the overtime date" };
         }
     } else if (status === LeaveStatus.REJECTED) {
         await db.overtimes.update({
             where: { id: overtimeId },
             data: { status: LeaveStatus.REJECTED }
         });
+
+        await auditAction(dbUser.id, `Overtime Rejected by ${user.role}: ${user.name}`)
+        return { success: "Overtime Request Rejected" };
     }
 
-    await auditAction(dbUser.id, `Overtime ${status} by ${user.role}: ${user.name}`)
-    return { success: `Overtime Request ${status}` };
+    return { error: "Invalid action" };
 }
