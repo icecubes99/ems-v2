@@ -367,6 +367,9 @@ model Deductions {
   amount        Float
   description   String
 
+  payrollItemId String?
+  payrollItem   PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: SetNull)
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -380,6 +383,9 @@ model AdditionalEarnings {
   earningType String
   amount      Float
   description String
+
+  payrollItemId String?
+  payrollItem  PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: SetNull)
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -471,6 +477,10 @@ model PayrollItem {
   minutesEarlyOut Int @default(0)
   minutesLate Int
   minutesOvertime Int
+
+  // additional earnings and deductions
+  additionalEarningsArray AdditionalEarnings[]
+  deductions              Deductions[]
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

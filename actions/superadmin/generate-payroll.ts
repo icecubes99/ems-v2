@@ -199,26 +199,60 @@ export async function generatePayroll() {
                 continue;
             }
 
-            await prisma.payrollItem.create({
-                data: {
-                    payrollId: newPayroll.id,
-                    userId: employee.id,
-                    basicSalary,
-                    overtimeSalary,
-                    dailyRate,
-                    additionalEarnings: totalAdditionalEarnings,
-                    lateDeductions: totalLateMinutes * minuteRate,
-                    earlyClockOutDeductions: totalEarlyOutMinutes * minuteRate,
-                    totalDeductions,
-                    netSalary,
-                    daysWorked,
-                    daysNotWorked,
-                    minutesWorked: totalMinutesWorked,
-                    minutesNotWorked,
-                    minutesLate: totalLateMinutes,
-                    minutesOvertime: overtimeMinutes,
-                    minutesEarlyOut: totalEarlyOutMinutes
-                }
+            // Use a transaction to ensure data consistency
+            await prisma.$transaction(async (prisma) => {
+                // Create the PayrollItem
+                const payrollItem = await prisma.payrollItem.create({
+                    data: {
+                        payrollId: newPayroll.id,
+                        userId: employee.id,
+                        basicSalary,
+                        overtimeSalary,
+                        dailyRate,
+                        additionalEarnings: totalAdditionalEarnings,
+                        lateDeductions: totalLateMinutes * minuteRate,
+                        earlyClockOutDeductions: totalEarlyOutMinutes * minuteRate,
+                        totalDeductions,
+                        netSalary,
+                        daysWorked,
+                        daysNotWorked,
+                        minutesWorked: totalMinutesWorked,
+                        minutesNotWorked,
+                        minutesLate: totalLateMinutes,
+                        minutesOvertime: overtimeMinutes,
+                        minutesEarlyOut: totalEarlyOutMinutes
+                    }
+                });
+
+                // Update AdditionalEarnings with the new payrollItemId
+                await prisma.additionalEarnings.updateMany({
+                    where: {
+                        userId: employee.id,
+                        createdAt: {
+                            gte: payPeriodStart,
+                            lte: payPeriodEnd
+                        },
+                        payrollItemId: null // Only update if not already assigned
+                    },
+                    data: {
+                        payrollItemId: payrollItem.id
+                    }
+                });
+
+                // Update Deductions with the new payrollItemId
+                await prisma.deductions.updateMany({
+                    where: {
+                        userId: employee.id,
+                        createdAt: {
+                            gte: payPeriodStart,
+                            lte: payPeriodEnd
+                        },
+                        payrollItemId: null // Only update if not already assigned
+                    },
+                    data: {
+                        payrollItemId: payrollItem.id
+                    }
+                });
             });
 
             totalPayrollAmount += netSalary;
