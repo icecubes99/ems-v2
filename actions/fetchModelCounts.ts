@@ -125,3 +125,58 @@ export async function fetchUserBasicSalary(userId: string) {
         throw new Error("Failed to fetch User Basic Salary")
     }
 }
+
+export async function fetchTotalPayrollCount() {
+    try {
+        const payrollCount = await db.payroll.count({})
+        return payrollCount
+    } catch (error) {
+        console.error("Error fetching payroll count: ", error);
+        throw new Error("Failed to fetch Payroll Count")
+    }
+}
+
+export async function fetchApprovedPayrollCount() {
+    try {
+        const payrollCount = await db.payroll.count({
+            where: {
+                payrollStatus: "APPROVED"
+            }
+        })
+        return payrollCount
+    } catch (error) {
+        console.error("Error fetching payroll count: ", error);
+        throw new Error("Failed to fetch Payroll Count")
+    }
+}
+
+export async function fetchRejectedPayrollCount() {
+    try {
+        const payrollCount = await db.payroll.count({
+            where: {
+                payrollStatus: "REJECTED"
+            }
+        })
+        return payrollCount
+    } catch (error) {
+        console.error("Error fetching payroll count: ", error);
+        throw new Error("Failed to fetch Payroll Count")
+    }
+}
+
+export async function fetchTotalPayslipCount() {
+    try {
+        const payslipCount = await db.payrollItem.count({
+            where: {
+                payroll: {
+                    payrollStatus: "APPROVED"
+                }
+            }
+        })
+        return payslipCount
+    } catch (error) {
+        console.error("Error fetching payslip count: ", error);
+        throw new Error("Failed to fetch Payslip Count")
+    }
+}
+

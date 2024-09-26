@@ -1,8 +1,9 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchActiveUsersCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchActiveUsersCount, fetchApprovedPayrollCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchRejectedPayrollCount, fetchTotalPayrollCount, fetchTotalPayslipCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
+import { set } from 'date-fns';
 
 export function useTotalUserCount() {
     const [userCount, setUserCount] = useState<number | null>(null);
@@ -230,4 +231,103 @@ export function useUserBasicSalary(userId: string) {
     }, [userId]);
 
     return { basicSalary, isLoading, error };
+}
+
+export function useTotalPayrollCount() {
+    const [payrollCount, setPayrollCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalPayrollCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchTotalPayrollCount();
+                setPayrollCount(count);
+
+            } catch (error) {
+                console.error("Error fetching Total Payroll Count: ", error);
+                setError("Failed to fetch Total Payroll Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getTotalPayrollCount();
+    }, [])
+
+    return { payrollCount, isLoading, error };
+}
+
+export function useApprovedPayrollCount() {
+    const [payrollCount, setPayrollCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalPayrollCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchApprovedPayrollCount();
+                setPayrollCount(count);
+
+            } catch (error) {
+                console.error("Error fetching Approved Payroll Count: ", error);
+                setError("Failed to fetch Approved Payroll Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getTotalPayrollCount();
+    }, [])
+
+    return { payrollCount, isLoading, error };
+}
+
+export function useRejectedPayrollCount() {
+    const [payrollCount, setPayrollCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalPayrollCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchRejectedPayrollCount();
+                setPayrollCount(count);
+
+            } catch (error) {
+                console.error("Error fetching Rejected Payroll Count: ", error);
+                setError("Failed to fetch Reject Payroll Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getTotalPayrollCount();
+    }, [])
+
+    return { payrollCount, isLoading, error };
+}
+
+export function useTotalApprovedPayslipCount() {
+    const [payslipCount, setPayslipCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalApprovedPayslipCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchTotalPayslipCount()
+                setPayslipCount(count)
+            } catch (error) {
+                console.error("Error fetching User Payslip Count: ", error);
+                setError("Failed to fetch User Payslip Count")
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        getTotalApprovedPayslipCount()
+    }, [])
+    return { payslipCount, isLoading, error }
 }

@@ -18,7 +18,10 @@ export async function fetchOwnPayslips() {
     try {
         const payslips = await db.payrollItem.findMany({
             where: {
-                userId: dbUser.id
+                userId: dbUser.id,
+                payroll: {
+                    payrollStatus: "APPROVED"
+                }
             },
             orderBy: {
                 createdAt: "desc"
@@ -52,7 +55,10 @@ export async function fetchOtherPayslips(userId: string) {
     try {
         const payslips = await db.payrollItem.findMany({
             where: {
-                userId: dbUser.id
+                userId: dbUser.id,
+                payroll: {
+                    payrollStatus: "APPROVED"
+                }
             },
             orderBy: {
                 createdAt: "desc"

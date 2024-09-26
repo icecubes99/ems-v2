@@ -5,66 +5,32 @@ import { useTotalDepartmentsCount, useTotalDesignationCount, useTotalUserCount }
 import { HolidayTable } from "@/components/holidays-table"
 import { TimesheetDialog } from "@/components/Timesheet"
 import RequestOvertime from "./request-overtime"
+import HeadingCard from "@/components/heading-card"
+import { Head } from "react-day-picker"
+import { IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
+import { CgSpinnerTwoAlt } from "react-icons/cg";
 
 
 const HomepageCards = () => {
     const { userCount, error, isLoading } = useTotalUserCount()
-    const { departmentCount } = useTotalDepartmentsCount()
-    const { designationCount } = useTotalDesignationCount()
-
-    // if (error) return <div>{error.message}</div>
-
+    const { departmentCount, isLoading: depLoading } = useTotalDepartmentsCount()
+    const { designationCount, isLoading: desLoading } = useTotalDesignationCount()
 
     return (
         <>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6 ">
-                <Card className="hover:shadow-xl transition-shadow duration-300">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
-                        <CardTitle>
-                            Total Employees
-                        </CardTitle>
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{userCount}</div>
-                    </CardContent>
-                </Card>
+                <HeadingCard
+                    title='Total Employees'
+                    count={userCount}
+                    icon={<Users />}
+                    isLoading={isLoading}
+                />
 
-                <Card className="hover:shadow-xl transition-shadow duration-300">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
-                        <CardTitle>
-                            Departments
-                        </CardTitle>
-                        <Building className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{departmentCount}</div>
-                    </CardContent>
-                </Card>
+                <HeadingCard title='Departments' count={departmentCount} icon={<Building />} isLoading={depLoading} />
 
-                <Card className="hover:shadow-xl transition-shadow duration-300">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
-                        <CardTitle>
-                            Designations
-                        </CardTitle>
-                        <Briefcase className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{designationCount}</div>
-                    </CardContent>
-                </Card>
+                <HeadingCard title='Designations' count={designationCount} icon={<Briefcase />} isLoading={desLoading} />
 
-                <Card className="hover:shadow-xl transition-shadow duration-300">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
-                        <CardTitle>
-                            Documents
-                        </CardTitle>
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">100</div>
-                    </CardContent>
-                </Card>
+                <HeadingCard title='Documents' count={21} icon={<IoDocumentAttach />} isLoading={isLoading} />
 
 
             </div>
