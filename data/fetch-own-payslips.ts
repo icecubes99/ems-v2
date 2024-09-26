@@ -25,7 +25,9 @@ export async function fetchOwnPayslips() {
             },
             include: {
                 user: true,
-                payroll: true
+                payroll: true,
+                additionalEarningsArray: true,
+                deductions: true
             }
 
         })
