@@ -73,34 +73,35 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         doc.text('Kupler Industries Incorporated', 14, 40)
         doc.setFontSize(10)
         doc.setTextColor(52, 73, 94) // Dark gray
-        doc.text('Door 4 & 5, Don Pedro Building, Lapu-Lapu St, Agdao, Davao City, 8000 Davao del Sur, Philippines', 14, 46,)
-        doc.text('Phone: 221-0323 / 221-0520', 14, 51)
-        doc.text("Email: info@kuplerindustries.com", 14, 56)
+        doc.text('Door 4 & 5, Don Pedro Building, Lapu-Lapu St,', 14, 46)
+        doc.text('Agdao, Davao City, 8000 Davao del Sur, Philippines', 14, 51)
+        doc.text('Phone: 221-0323 / 221-0520', 14, 56)
+        doc.text("Email: info@kuplerindustries.com", 14, 61)
 
         // Add PAYSLIP title
         doc.setFontSize(24)
         doc.setTextColor(66, 44, 141) // Purple color
-        doc.text('PAYSLIP', doc.internal.pageSize.width - 14, 18, { align: 'right' })
+        doc.text('PAYSLIP', doc.internal.pageSize.width - 16, 18, { align: 'right' })
 
         // Add employee info
         doc.setFontSize(12);
         doc.setTextColor(52, 73, 94); // Dark gray
         doc.setFont('helvetica', 'bold');
-        doc.text('EMPLOYEE INFORMATION', 14, 65);
+        doc.text('EMPLOYEE INFORMATION', 14, 70);
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(10);
-        doc.text(`Full Name: ${payslip.user.firstName} ${payslip.user.middleName || ''} ${payslip.user.lastName}`, 14, 72);
-        doc.text(`Job Title: ${payslip.user.jobTitle || 'N/A'}`, 14, 78);
-        doc.text(`Email: ${payslip.user.email || 'N/A'}`, 14, 84);
+        doc.text(`Full Name: ${payslip.user.firstName} ${payslip.user.middleName || ''} ${payslip.user.lastName}`, 14, 77);
+        doc.text(`Job Title: ${payslip.user.jobTitle || 'N/A'}`, 14, 83);
+        doc.text(`Email: ${payslip.user.email || 'N/A'}`, 14, 89);
         // Add pay information
         doc.setFontSize(12)
         doc.setFont('helvetica', 'bold');
-        doc.text('PAY INFORMATION', 120, 65)
+        doc.text('PAY INFORMATION', 120, 70)
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(10)
-        doc.text(`Pay Period: ${new Date(payslip.payroll.payPeriodStart).toLocaleDateString()} - ${new Date(payslip.payroll.payPeriodEnd).toLocaleDateString()}`, 120, 72)
-        doc.text(`Payroll #: ${payslip.payrollId}`, 120, 78)
-        doc.text(`Payment Method: Direct Deposit`, 120, 84)
+        doc.text(`Pay Period: ${new Date(payslip.payroll.payPeriodStart).toLocaleDateString()} - ${new Date(payslip.payroll.payPeriodEnd).toLocaleDateString()}`, 120, 77)
+        doc.text(`Payroll #: ${payslip.payrollId}`, 120, 83)
+        doc.text(`Payment Method: Direct Deposit`, 120, 89)
 
         // Add earnings table
         const earningsBody = [
@@ -115,14 +116,12 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
             })
         }
 
-        // Add total additional earnings
-
         // Add gross pay
         earningsBody.push(['', '', '', ''])
         earningsBody.push(['GROSS PAY', '', '', (payslip.basicSalary + payslip.overtimeSalary + payslip.additionalEarnings).toFixed(2)])
 
         doc.autoTable({
-            startY: 95,
+            startY: 100,
             head: [['EARNINGS', 'HOURS', 'RATE', 'CURRENT']],
             body: earningsBody,
             styles: { fontSize: 9, cellPadding: 2 },
@@ -141,16 +140,17 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         });
 
         // Add deductions table
-        const finalY = (doc as any).lastAutoTable.finalY || 95;
+        const finalY = (doc as any).lastAutoTable.finalY || 100;
         const deductionsBody = [
             ['Late Deductions', payslip.lateDeductions.toFixed(2)],
             ['Early Clock Out Deductions', payslip.earlyClockOutDeductions.toFixed(2)],
+            ['Additional Deductions', '-'],
         ]
 
         // Add additional deductions
         if (payslip.deductions && payslip.deductions.length > 0) {
             payslip.deductions.forEach((deduction: Deductions) => {
-                deductionsBody.push([deduction.deductionType, deduction.amount.toFixed(2)])
+                deductionsBody.push(['\t' + deduction.deductionType, deduction.amount.toFixed(2)])
             })
         }
 
@@ -179,10 +179,10 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         });
 
         // Add net pay
-        const finalY2 = (doc as any).lastAutoTable.finalY || finalY + 10
-        doc.setFillColor(236, 240, 241) // Light gray
+        const finalY2 = (doc as any).lastAutoTable.finalY || finalY + 8
+        doc.setFillColor(220, 31, 25) // Red
         doc.rect(14, finalY2 + 10, 180, 10, 'F')
-        doc.setTextColor(52, 73, 94) // Dark gray
+        doc.setTextColor(255, 255, 255) // White
         doc.setFontSize(11)
         doc.text('NET PAY', 16, finalY2 + 17)
         doc.text(`PHP ${payslip.netSalary.toFixed(2)}`, 190, finalY2 + 17, { align: 'right' })

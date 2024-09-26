@@ -24,16 +24,6 @@ export default function GeneratePayroll({ className }: { className?: string }) {
         setError("");
         setSuccess("");
 
-        // try {
-        //     const response = await generatePayroll()
-        //     setResult(response)
-        // } catch (error) {
-        //     setError();
-        //     setResult({ error: 'An unexpected error occurred' })
-        // } finally {
-        //     setIsLoading(false)
-        // }
-
         const result = await generatePayroll();
         if (result.error) {
             console.error(result.error);
