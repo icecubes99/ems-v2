@@ -5,6 +5,7 @@ import { FaMoneyBillWaveAlt } from 'react-icons/fa'
 import { DataTablePayslips } from './_components/data-table-payslips'
 import { columnsPayslips } from './_components/columns-payslips'
 import { useOwnPayslips } from '@/hooks/use-payslips'
+import PayslipCards from './_components/payslip-cards'
 
 const page = () => {
     const { payslips } = useOwnPayslips()
@@ -13,10 +14,9 @@ const page = () => {
             <div className='flex flex-col gap-6'>
 
                 <div className='mt-5 justify-between flex flex-row mr-6'>
-                    <p className='font-bold text-4xl'>LEAVE MANAGEMENT</p>
+                    <p className='font-bold text-4xl'>PAYSLIPS MANAGEMENT</p>
                 </div>
-
-                {/* <LeavesCards /> */}
+                <PayslipCards />
                 <div className='bg-card  rounded-xl shadow mr-6'>
                     <div className='p-6 border-b border-border'>
                         <h2 className='text-2xl font-semibold flex items-center gap-2'>

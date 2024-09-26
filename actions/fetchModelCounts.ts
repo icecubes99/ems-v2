@@ -97,3 +97,31 @@ export async function fetchInactiveUsersCount() {
         throw new Error("Failed to fetch Users Count");
     }
 }
+
+export async function fetchUserPayslipCount(userId: string) {
+    try {
+        const payslipCount = await db.payrollItem.count({
+            where: {
+                userId: userId
+            }
+        })
+        return payslipCount
+    } catch (error) {
+        console.error("Error fetching user payslip count: ", error);
+        throw new Error("Failed to fetch User Payslip Count")
+    }
+}
+
+export async function fetchUserBasicSalary(userId: string) {
+    try {
+        const basicSalary = await db.userSalary.findFirst({
+            where: {
+                userId: userId
+            }
+        })
+        return basicSalary?.basicSalary
+    } catch (error) {
+        console.error("Error fetching user basic salary: ", error);
+        throw new Error("Failed to fetch User Basic Salary")
+    }
+}

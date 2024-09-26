@@ -1,6 +1,6 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchActiveUsersCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchActiveUsersCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
 
@@ -184,3 +184,50 @@ export function useTotalInactiveUserCount() {
     return { inactiveUsersCount, isLoading, error };
 }
 
+export function useUserPayslip(userId: string) {
+    const [payslipCount, setPayslipCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getUserPayslipCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchUserPayslipCount(userId);
+                setPayslipCount(count);
+            } catch (error) {
+                console.error("Error fetching User Payslip Count: ", error);
+                setError("Failed to fetch User Payslip Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getUserPayslipCount();
+    }, [userId]);
+
+    return { payslipCount, isLoading, error };
+}
+
+export function useUserBasicSalary(userId: string) {
+    const [basicSalary, setBasicSalary] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getUserPayslipCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchUserBasicSalary(userId);
+                setBasicSalary(count as number);
+            } catch (error) {
+                console.error("Error fetching User Basic Salary: ", error);
+                setError("Failed to fetch Basic Salary Count");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getUserPayslipCount();
+    }, [userId]);
+
+    return { basicSalary, isLoading, error };
+}
