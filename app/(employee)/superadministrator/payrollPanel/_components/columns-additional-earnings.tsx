@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import { DeductionsWithUser } from "@/types/types"
+import { AdditionalEarningsWithUser } from "@/types/types"
 import UpdateDeductionsForm from "@/app/(employee)/administrator/_components/update-deductions-form"
 import {
     DropdownMenu,
@@ -14,9 +14,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { DeleteDeductionsDialog } from '@/app/(employee)/administrator/_components/delete-deductions-dialog'
+import UpdateAdditionalEarningsForm from '@/app/(employee)/administrator/_components/update-additional-earnings-form'
+import { DeleteAdditionalEarningsDialog } from '@/app/(employee)/administrator/_components/delete-additional-earnings-dialog'
 
-export const columnsDeduction: ColumnDef<DeductionsWithUser>[] = [
+export const columnsAdditionalEarnings: ColumnDef<AdditionalEarningsWithUser>[] = [
     {
         accessorKey: "userId",
         header: ({ column }) => {
@@ -36,7 +37,7 @@ export const columnsDeduction: ColumnDef<DeductionsWithUser>[] = [
         }
     },
     {
-        accessorKey: "deductionType",
+        accessorKey: "earningType",
         header: ({ column }) => {
             return (
                 <div
@@ -133,33 +134,35 @@ export const columnsDeduction: ColumnDef<DeductionsWithUser>[] = [
                             <DropdownMenuItem
                                 onClick={() => navigator.clipboard.writeText(user.id)}
                             >
-                                Copy Deduction ID
+                                Copy Earning ID
                             </DropdownMenuItem>
+
                             <DropdownMenuSeparator />
+
                             <DropdownMenuItem onSelect={(event) => {
                                 event.preventDefault()
                                 setIsUpdateOpen(true)
                             }}>
-                                Update Deduction
+                                Update Earning
                             </DropdownMenuItem>
                             <DropdownMenuItem onSelect={(event) => {
                                 event.preventDefault()
                                 setIsDeleteOpen(true)
                             }}>
-                                Delete Deduction
+                                Delete Earning
                             </DropdownMenuItem>
-
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <UpdateDeductionsForm
-                        deductionId={user.id}
+
+                    <UpdateAdditionalEarningsForm
+                        additionalEarningsId={user.id}
                         variant="superadmin"
                         isOpen={isUpdateOpen}
                         onOpenChange={setIsUpdateOpen}
                     />
-                    <DeleteDeductionsDialog
-                        variant="superadmin"
-                        deductionsId={user.id}
+                    <DeleteAdditionalEarningsDialog
+                        additionalEarningsId={user.id}
+                        variant={"superadmin"}
                         isOpen={isDeleteOpen}
                         onOpenChange={setIsDeleteOpen}
                     />

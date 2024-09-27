@@ -5,8 +5,8 @@ import * as z from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DeductionsSchema } from '@/schemas/payroll-index';
-import { updateDeductionsToUser } from '@/actions/superadmin/update-deductions-to-user';
+import { AdditionalEarningsSchema } from '@/schemas/payroll-index';
+import { addAdditionalEarningsToUser } from '@/actions/superadmin/add-additional-earnings-to-user';
 
 import {
     Form,
@@ -21,28 +21,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSucess } from "@/components/form-sucess";
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
-import { useDeduction } from '@/hooks/use-deductions';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import SelectUser from '../../_components/SelectUser';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 
-interface DeductionsFormProps {
+interface AdditionalEarningsProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
-    deductionId: string;
-    isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
 }
 
-const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductionId, isOpen, onOpenChange }) => {
+const AddAdditionalEarningsForm: React.FC<AdditionalEarningsProps> = ({ variant }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const { deduction, isLoading } = useDeduction(deductionId);
+    const [open, setOpen] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     const [formattedSalary, setFormattedSalary] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
@@ -52,36 +48,28 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
     }
 
     const handleOpenChange = (newOpen: boolean) => {
-        onOpenChange(newOpen);
+        setOpen(newOpen);
+        if (!newOpen) {
+            window.location.reload();
+        }
     }
 
-    const form = useForm<z.infer<typeof DeductionsSchema>>({
-        resolver: zodResolver(DeductionsSchema),
+    const form = useForm<z.infer<typeof AdditionalEarningsSchema>>({
+        resolver: zodResolver(AdditionalEarningsSchema),
         defaultValues: {
             userId: "",
-            deductionType: "",
+            earningType: "",
             amount: 0,
             description: "",
         },
     })
 
-    useEffect(() => {
-        if (deduction) {
-            const formattedDeduction = {
-                ...deduction,
-                amount: deduction.amount // Keep amount as number for form reset
-            };
-            form.reset(formattedDeduction);
-            setFormattedSalary(formatNumber(deduction.amount)); // Format amount for display
-        }
-    }, [deduction, form]);
-
-    const onSubmit = (values: z.infer<typeof DeductionsSchema>) => {
+    const onSubmit = (values: z.infer<typeof AdditionalEarningsSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            updateDeductionsToUser(values, deductionId)
+            addAdditionalEarningsToUser(values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
@@ -89,15 +77,17 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
 
                     if (data.success) {
                         setSuccess(data.success);
+                        setOpen(false);
                         handleOpenChange(false);
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 300);
                     }
                 })
                 .catch(() => setError("An error occurred!"));
         });
     }
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleClick = () => {
@@ -118,12 +108,17 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
     }, [])
 
     return (
-        <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <Dialog open={open} onOpenChange={setOpen}>
+            {isMounted && (
+                <DialogTrigger>
+                    <Button className='w-full' variant={variant}>Add Additional Earning</Button>
+                </DialogTrigger>
+            )}
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card className='w-96'>
                     <CardHeader>
                         <CardTitle>
-                            Update Existing Deduction
+                            Add Additional Earnings to An Employee
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -136,11 +131,10 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
                                         <FormField
                                             control={form.control}
                                             name='userId'
-
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Employee to be Deducted</FormLabel>
-                                                    <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                    <FormLabel>Employee</FormLabel>
+                                                    <SelectUser onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
@@ -152,15 +146,14 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
                                     <div>
                                         <FormField
                                             control={form.control}
-                                            name='deductionType'
+                                            name='earningType'
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Deduction Type</FormLabel>
+                                                    <FormLabel>Additional Earning Type</FormLabel>
                                                     <Select
                                                         disabled={isPending}
                                                         onValueChange={field.onChange}
                                                         defaultValue={field.value}
-                                                        value={field.value}
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
@@ -168,9 +161,9 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
-                                                            <SelectItem value={"Disbursement"}>Disbursement</SelectItem>
-                                                            <SelectItem value={"Salary Advance"}>Salary Advance</SelectItem>
-                                                            <SelectItem value={"Loan"}>Loan</SelectItem>
+                                                            <SelectItem value={"Reimbursement"}>Reimbursement</SelectItem>
+                                                            <SelectItem value={"Bonus"}>Bonus</SelectItem>
+                                                            <SelectItem value={"Allowance"}>Allowance</SelectItem>
                                                             <SelectItem value={"Others"}>Others</SelectItem>
                                                         </SelectContent>
                                                     </Select>
@@ -187,7 +180,7 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
                                             name="amount"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Amount Deducted</FormLabel>
+                                                    <FormLabel>Amount Added</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             {...field}
@@ -253,4 +246,4 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
     )
 }
 
-export default UpdateDeductionsForm;
+export default AddAdditionalEarningsForm;

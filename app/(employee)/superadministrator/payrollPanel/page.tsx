@@ -13,9 +13,13 @@ import { useDeductions } from '@/hooks/use-deductions'
 import { columnsDeduction } from './_components/columns-deductions'
 import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
 import { usePendingLeaves } from '@/hooks/use-pending-leaves'
+import AddAdditionalEarningsForm from '../../administrator/_components/additional-earnings-form'
+import { useAdditionalEarnings } from '@/hooks/use-additional-earnings'
+import { columnsAdditionalEarnings } from './_components/columns-additional-earnings'
 
 const page = () => {
     const { deductions } = useDeductions()
+    const { additionalEarnings } = useAdditionalEarnings()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='Payroll Panel'>
@@ -25,6 +29,7 @@ const page = () => {
                 <PayrollPanelCards />
                 <QuickActions>
                     <AddDeductionsForm variant={"superadmin"} />
+                    <AddAdditionalEarningsForm variant={"superadmin"} />
                 </QuickActions>
                 <div>
                     <GeneratePayroll />
@@ -33,6 +38,10 @@ const page = () => {
                 <div className='grid grid-cols-2'>
                     <TableWrapper title='Deductions' description='Deductions for the Upcoming Payroll Period' icon={<DollarSign />}>
                         <DataTableRemainingLeaves columns={columnsDeduction} data={deductions || []} />
+                    </TableWrapper>
+
+                    <TableWrapper title='Additional Earnings' description='Additional Earnings for the Upcoming Payroll Period' icon={<DollarSign />}>
+                        <DataTableRemainingLeaves columns={columnsAdditionalEarnings} data={additionalEarnings || []} />
                     </TableWrapper>
                 </div>
 

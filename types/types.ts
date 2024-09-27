@@ -111,6 +111,22 @@ export type DeductionsWithUser = {
 
     // payrollItem: PayrollItem;
 }
+
+export type AdditionalEarningsWithUser = {
+    id: string;
+    userId: string;
+    earningType: string;
+    amount: number;
+    description: string;
+    payrollItemId?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    user: PrismaUser;
+
+    // payrollItem: PayrollItem;
+}
+
+
 export type PayrollItemWithUser = {
     id: string;
     payrollId: string;
