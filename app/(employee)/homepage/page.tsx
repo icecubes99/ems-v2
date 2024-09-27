@@ -15,6 +15,7 @@ const HomePage = () => {
         <RoleGate allowedRoles={["USER", "ADMIN", "SUPERADMIN"]}>
             <LayoutSideHead label='HOME PAGE' classname=''>
 
+
                 <HeadingTitle title={greeting + ", " + user?.firstName + "!"} />
                 <HomepageCards />
 
