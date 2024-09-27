@@ -28,7 +28,6 @@ import SelectUser from '../../_components/SelectUser';
 import useDepartment from '@/hooks/use-department';
 import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface UpdateDepartmentFormProps {
@@ -44,7 +43,6 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
     const { department, loading } = useDepartment(departmentId);
 
     const [open, setOpen] = useState(false);
-    const router = useRouter();
 
     const form = useForm<z.infer<typeof DepartmentSchema>>({
         resolver: zodResolver(DepartmentSchema),

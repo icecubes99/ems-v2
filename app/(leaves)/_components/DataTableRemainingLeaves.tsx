@@ -49,7 +49,9 @@ export function DataTableRemainingLeaves<TData, TValue>({
         []
     )
     const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
+        React.useState<VisibilityState>({
+            hiddenInfo: false
+        })
 
     const table = useReactTable({
         data,

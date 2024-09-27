@@ -9,6 +9,7 @@ import HeadingCard from "@/components/heading-card"
 import { Head } from "react-day-picker"
 import { IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import QuickActions from "@/components/quick-actions"
 
 
 const HomepageCards = () => {
@@ -32,17 +33,13 @@ const HomepageCards = () => {
 
                 <HeadingCard title='Documents' count={21} icon={<IoDocumentAttach />} isLoading={isLoading} />
 
-
             </div>
-            <p className="col-span-4 font-bold  text-lg">QUICK ACTIONS</p>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6">
+
+            <QuickActions>
                 <TimesheetDialog classname="col-span-2" />
                 <Button variant={"auth"} size={"lg"}>Upload Documents</Button>
-                {/* <Button variant={"auth"} size={"lg"}>Record Overtime</Button>
-                 */}
                 <RequestOvertime />
-            </div>
-
+            </QuickActions>
 
             <p className="col-span-4 font-bold  text-lg">MISC</p>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6">
