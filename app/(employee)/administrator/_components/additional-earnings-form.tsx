@@ -111,7 +111,7 @@ const AddAdditionalEarningsForm: React.FC<AdditionalEarningsProps> = ({ variant 
         <Dialog open={open} onOpenChange={setOpen}>
             {isMounted && (
                 <DialogTrigger>
-                    <Button className='w-full' variant={variant}>Add Additional Earning</Button>
+                    <Button size={"lg"} className='w-full' variant={variant}>Add Additional Earning</Button>
                 </DialogTrigger>
             )}
             <DialogContent className='p-0 w-auto bg-transparent border-none'>

@@ -37,7 +37,7 @@ export default function GeneratePayroll({ className }: { className?: string }) {
     }
 
     return (
-        <div className={cn("max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md", className)}>
+        <div className={cn("mt-10 p-6 bg-white rounded-lg border border-red-50 shadow-md hover:shadow-lg hover:border-red-200 transition duration-300", className)}>
             <h1 className="text-2xl font-bold mb-6 text-center">Payroll Generator</h1>
             <Button
                 onClick={handleGeneratePayroll}

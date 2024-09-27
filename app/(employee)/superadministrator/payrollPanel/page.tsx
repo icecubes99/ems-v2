@@ -16,6 +16,7 @@ import { usePendingLeaves } from '@/hooks/use-pending-leaves'
 import AddAdditionalEarningsForm from '../../administrator/_components/additional-earnings-form'
 import { useAdditionalEarnings } from '@/hooks/use-additional-earnings'
 import { columnsAdditionalEarnings } from './_components/columns-additional-earnings'
+import { Button } from '@/components/ui/button'
 
 const page = () => {
     const { deductions } = useDeductions()
@@ -28,11 +29,19 @@ const page = () => {
 
                 <PayrollPanelCards />
                 <QuickActions>
-                    <AddDeductionsForm variant={"superadmin"} />
-                    <AddAdditionalEarningsForm variant={"superadmin"} />
+
+                    <GeneratePayroll className='col-span-2 mt-0' />
+
+                    <div className='flex flex-col justify-around'>
+                        <AddDeductionsForm variant={"superadmin"} />
+                        <AddAdditionalEarningsForm variant={"superadmin"} />
+                        <Button variant={"auth"} size={"lg"}>
+                            Test
+                        </Button>
+                    </div>
+
                 </QuickActions>
                 <div>
-                    <GeneratePayroll />
                 </div>
 
                 <div className='grid grid-cols-2'>

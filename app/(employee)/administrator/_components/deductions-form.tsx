@@ -112,7 +112,7 @@ const AddDeductionsForm: React.FC<DeductionsFormProps> = ({ variant }) => {
         <Dialog open={open} onOpenChange={setOpen}>
             {isMounted && (
                 <DialogTrigger>
-                    <Button className='w-full' variant={variant}>Add Deductions</Button>
+                    <Button size={"lg"} className='w-full' variant={variant}>Add Deductions</Button>
                 </DialogTrigger>
             )}
             <DialogContent className='p-0 w-auto bg-transparent border-none'>

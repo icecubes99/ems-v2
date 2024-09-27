@@ -87,7 +87,7 @@ const CreateDepartmentForm = ({ variant }: CreateDepartmentForm) => {
                 </Button>
             </DialogTrigger>
             <DialogContent className="p-0 w-auto bg-transparent border-none">
-                <Card className='bg-red-50'>
+                <Card className='border-solid border-red-900'>
                     <CardHeader>
                         Create a New Department
                         <CardDescription>
