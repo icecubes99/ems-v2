@@ -11,11 +11,12 @@ const page = () => {
     const { payslips } = useOwnPayslips()
     return (
         <LayoutSideHead label='Payslips'>
-            <div className='flex flex-col gap-6'>
+            <div className='flex flex-col'>
 
                 <div className='mt-5 justify-between flex flex-row mr-6'>
                     <p className='font-bold text-4xl'>PAYSLIPS MANAGEMENT</p>
                 </div>
+
                 <PayslipCards />
                 <div className='bg-card  rounded-xl shadow mr-6'>
                     <div className='p-6 border-b border-border'>

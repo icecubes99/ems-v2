@@ -4,18 +4,18 @@ import OwnLeavesTable from '../_components/own-leaves-table'
 import RequestLeaveButton from '@/components/request-leave-form'
 import LeavesCards from '../_components/leaves-cards'
 import { History } from 'lucide-react'
+import HeadingTitle from '@/components/heading-title'
 
 
 
 const page = () => {
     return (
         <LayoutSideHead label='Leave Requests'>
-            <div className='flex flex-col gap-6'>
+            <div className='flex flex-col'>
 
-                <div className='mt-5 justify-between flex flex-row mr-6'>
-                    <p className='font-bold text-4xl'>LEAVE MANAGEMENT</p>
+                <HeadingTitle title='LEAVE MANAGEMENT'>
                     <RequestLeaveButton />
-                </div>
+                </HeadingTitle>
 
                 <LeavesCards />
                 <div className='bg-card  rounded-xl shadow mr-6'>
