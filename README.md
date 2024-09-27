@@ -1,20 +1,18 @@
 # Next.js NextAuth Project
 
-Welcome to the Next.js NextAuth project! This project showcases the implementation of authentication and various key features using Next.js 14, NextAuth v5, Tailwind CSS, Shadcn UI, Prisma, and MongoDB.
+Welcome to the Employee Management System project! This project showcases the implementation of authentication and various key features using Next.js 14, NextAuth v5, Tailwind CSS, Shadcn UI, Prisma, and MongoDB.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
 - Node.js: [Download and install Node.js](https://nodejs.org/)
-- MongoDB: [Install MongoDB](https://www.mongodb.com/try/download/community)
 
 ## Getting Started
 
 1. **Clone the repository:**
 
    ```bash
-   git clone git@github.com:diwashbhattarai999/Next-Auth-v5.git
 
 2. **Change into the project directory:**
 
@@ -94,15 +92,4 @@ Before you begin, ensure you have the following installed:
 
 Feel free to explore each feature and adapt the project to suit your specific needs. Happy coding!
 
-## Live Demo
 
-The application is deployed on [here](https://db-next-auth-v5.vercel.app/).
-
-## Author
-
-- Diwash Bhattarai
-- diwashb999@gmail.com
-
-## Credits
-
-This project was built by following a tutorial from [Code with Antonio ](https://www.youtube.com/watch?v=1MTyCvS05V4)
