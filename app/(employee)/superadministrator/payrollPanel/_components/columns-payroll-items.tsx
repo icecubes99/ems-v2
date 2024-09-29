@@ -17,6 +17,7 @@ import { PayslipPDFButton } from "@/app/(payslips)/payslips/_components/payslip-
 import AddDeductionsFormCorrections from "./deductions-form-corrections"
 import { useState } from "react"
 import React from "react"
+import AddAdditionalEarningsFormCorrection from "./additional-earnings-form-corrections"
 // import PayslipPDFButton from "./payslip-pdf-button"
 
 
@@ -122,6 +123,7 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
         cell: ({ row }) => {
             const user = row.original
             const [isUpdateOpen, setIsUpdateOpen] = useState(false)
+            const [isAddOpen, setIsAddOpen] = useState(false)
             return (
                 <>
 
@@ -148,10 +150,18 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
                                 Add Deduction
                             </DropdownMenuItem>
 
+                            <DropdownMenuItem onSelect={(event) => {
+                                event.preventDefault()
+                                setIsAddOpen(true)
+                            }}>
+                                Add Addition
+                            </DropdownMenuItem>
+
 
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <AddDeductionsFormCorrections userId={user.userId} variant={"superadmin"} payrollItemId={user.id} payrollId={user.payroll.id} isOpen={isUpdateOpen} onOpenChange={setIsUpdateOpen} />
+                    <AddAdditionalEarningsFormCorrection userId={user.userId} variant={"superadmin"} payrollItemId={user.id} payrollId={user.payroll.id} isOpen={isAddOpen} onOpenChange={setIsAddOpen} />
                 </>
             )
         }

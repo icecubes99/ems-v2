@@ -7,6 +7,7 @@ import "jspdf-autotable"
 import { PayrollItemWithUser, AdditionalEarnings, Deductions } from '@/types/types'
 import { FileDown } from 'lucide-react'
 import { CellHookData } from 'jspdf-autotable'
+import React from 'react'
 
 declare module 'jspdf' {
     interface jsPDF {

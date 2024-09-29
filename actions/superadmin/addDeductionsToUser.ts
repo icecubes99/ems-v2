@@ -3,7 +3,7 @@
 import { DeductionsSchema, DeductionsSchemaWithUser } from "@/schemas/payroll-index";
 import * as z from "zod";
 
-import { startOfDay, endOfDay, subMonths, setDate, differenceInMinutes, subDays } from "date-fns"
+import { subDays } from "date-fns"
 
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
@@ -119,7 +119,6 @@ export const addDeductionsCorrection = async (values: z.infer<typeof DeductionsS
         newNetSalary = netSalary - amount
         newTotalDeductions = totalDeductions + amount
     }
-
 
     await db.payrollItem.update({
         where: {

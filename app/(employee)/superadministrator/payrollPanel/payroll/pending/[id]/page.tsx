@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTableWithFooter } from '@/components/data-table-with-footer'
 import { Calendar, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ApprovePayrollDialog } from '../../../_components/approve-payroll-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { payrollItems } = usePayrollItems(params.id)
@@ -33,10 +34,10 @@ const page = ({ params }: { params: { id: string } }) => {
                 <HeadingTitle title={`Payroll #${params.id}`} />
                 <TableWrapper
                     title='Payroll Details'
-                    description='Wow'
                     payPeriodStart={payroll?.payPeriodStart.toDateString()}
                     payPeriodEnd={payroll?.payPeriodEnd.toDateString()}
                     totalAmount={totalAmount}
+                    payrollId={params.id}
                 >
                     <DataTableWithFooter
                         columns={columnsPayrollItems}
@@ -53,16 +54,16 @@ export default page
 
 interface TableWrapperProps {
     title: string
-    description: string
     children: React.ReactNode
     icon?: React.ReactNode
     payPeriodStart?: string
     payPeriodEnd?: string
     createdAt?: string
     totalAmount?: number | string
+    payrollId: string
 }
 
-function TableWrapper({ title, description, children, icon, payPeriodStart, payPeriodEnd, totalAmount }: TableWrapperProps) {
+function TableWrapper({ title, children, icon, payPeriodStart, payPeriodEnd, totalAmount, payrollId }: TableWrapperProps) {
     return (
         <div className='bg-card rounded-xl border border-white shadow-md mr-6 mt-5 hover:shadow-lg transition duration-300 '>
             <div className='grid grid-cols-4 border-b border-border'>
@@ -116,9 +117,7 @@ function TableWrapper({ title, description, children, icon, payPeriodStart, payP
                 </div>
 
                 <div className='flex items-center justify-center '>
-                    <Button variant={"success"} size={"lg"}>
-                        Approve Payroll
-                    </Button>
+                    <ApprovePayrollDialog payrollId={payrollId} />
                 </div>
             </div>
             <div className='p-6'>
