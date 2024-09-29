@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { DeleteDeductionsDialog } from '@/app/(employee)/administrator/_components/delete-deductions-dialog'
+import React from 'react'
 
 export const columnsDeduction: ColumnDef<DeductionsWithUser>[] = [
     {

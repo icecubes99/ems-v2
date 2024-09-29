@@ -14,11 +14,18 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
 import { PayslipPDFButton } from "@/app/(payslips)/payslips/_components/payslip-pdf-button"
+import AddDeductionsFormCorrections from "./deductions-form-corrections"
+import { useState } from "react"
+import React from "react"
 // import PayslipPDFButton from "./payslip-pdf-button"
 
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+
+interface columnsPayrollItemsProps {
+    payrollId: string
+}
 
 
 export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
@@ -114,27 +121,38 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
         header: "Actions",
         cell: ({ row }) => {
             const user = row.original
+            const [isUpdateOpen, setIsUpdateOpen] = useState(false)
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(user.id)}
-                        >
-                            Copy ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
+                <>
+
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => navigator.clipboard.writeText(user.id)}
+                            >
+                                Copy ID
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem onSelect={(event) => {
+                                event.preventDefault()
+                                setIsUpdateOpen(true)
+                            }}>
+                                Add Deduction
+                            </DropdownMenuItem>
 
 
-
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <AddDeductionsFormCorrections userId={user.userId} variant={"superadmin"} payrollItemId={user.id} payrollId={user.payroll.id} isOpen={isUpdateOpen} onOpenChange={setIsUpdateOpen} />
+                </>
             )
         }
     }
