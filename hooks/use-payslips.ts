@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { fetchOwnPayslips, fetchOtherPayslips } from '@/data/fetch-own-payslips'
-import { Payroll, PayrollItem } from '@prisma/client'
 import { PayrollItemWithUser } from '@/types/types';
 
 export function useOwnPayslips() {
@@ -42,7 +41,7 @@ export function useOwnPayslips() {
 
 
 export function useOtherPayslips(userId: string) {
-    const [payslips, setPayslips] = useState<PayrollItem[] | null>(null);
+    const [payslips, setPayslips] = useState<PayrollItemWithUser[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -58,7 +57,7 @@ export function useOtherPayslips(userId: string) {
                     setError(result.error);
                     setPayslips(null);
                 } else {
-                    setPayslips(result.payslips as PayrollItem[]);
+                    setPayslips(result.payslips as PayrollItemWithUser[]);
                 }
 
             } catch (error) {

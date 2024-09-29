@@ -9,12 +9,14 @@ import SidebarButton from './SidebarButton'
 import { LogoutButton } from './auth/logout-button'
 import { usePathname } from 'next/navigation'
 import { IoLogOut } from "react-icons/io5"
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 interface SidebarProps {
     user?: ExtendedUser
 }
 
-export default function Component({ user }: SidebarProps) {
+export default function Component({ }: SidebarProps) {
+    const user = useCurrentUser()
     const router = usePathname()
     const isHomepage = router === "/homepage"
 

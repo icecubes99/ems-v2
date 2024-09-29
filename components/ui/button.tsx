@@ -25,7 +25,8 @@ const buttonVariants = cva(
           "bg-red-900 text-white shadow hover:bg-red-900/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        sidebar: "bg-purple-300 text-black hover:bg-purple-400/90"
+        sidebar: "bg-purple-300 text-black hover:bg-purple-400/90",
+        success: "bg-emerald-500 text-white shadow hover:bg-emerald-600",
       },
       size: {
         default: "h-9 px-4 py-2",

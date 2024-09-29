@@ -8,7 +8,7 @@ import HeadingTitle from '@/components/heading-title'
 import QuickActions from '@/components/quick-actions'
 import AddDeductionsForm from '../../administrator/_components/deductions-form'
 import TableWrapper from '@/components/table-wrapper'
-import { DollarSign } from 'lucide-react'
+import { BadgeDollarSign, DollarSign } from 'lucide-react'
 import { useDeductions } from '@/hooks/use-deductions'
 import { columnsDeduction } from './_components/columns-deductions'
 import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
@@ -17,10 +17,13 @@ import AddAdditionalEarningsForm from '../../administrator/_components/additiona
 import { useAdditionalEarnings } from '@/hooks/use-additional-earnings'
 import { columnsAdditionalEarnings } from './_components/columns-additional-earnings'
 import { Button } from '@/components/ui/button'
+import { usePendingPayroll } from '@/hooks/use-payroll-data'
+import { columnsPendingPayroll } from './_components/columns-pending-payroll'
 
 const page = () => {
     const { deductions } = useDeductions()
     const { additionalEarnings } = useAdditionalEarnings()
+    const { payroll } = usePendingPayroll()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='Payroll Panel'>
@@ -43,6 +46,10 @@ const page = () => {
                 </QuickActions>
                 <div>
                 </div>
+
+                <TableWrapper title='Pending Payroll' description='Payroll That Needs Approval' icon={<BadgeDollarSign />}>
+                    <DataTableRemainingLeaves columns={columnsPendingPayroll} data={payroll || []} />
+                </TableWrapper>
 
                 <div className='grid grid-cols-2'>
                     <TableWrapper title='Deductions' description='Deductions for the Upcoming Payroll Period' icon={<DollarSign />}>

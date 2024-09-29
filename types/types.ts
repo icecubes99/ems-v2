@@ -175,3 +175,15 @@ export type Deductions = {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export type PayrollWithPayrollItems = {
+    id: string;
+    payPeriodStart: Date;
+    payPeriodEnd: Date;
+    payrollStatus: LeaveStatus;
+    totalAmount: number;
+    createdAt: Date;
+    updatedAt: Date;
+
+    payrollItems: PayrollItemWithUser[];
+};

@@ -27,12 +27,12 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
-        <LogoutButton>
-          <DropdownMenuItem>
-            <ExitIcon className="h-4 w-4 mr-2" />
-            Logout
-          </DropdownMenuItem>
-        </LogoutButton>
+
+        <DropdownMenuItem>
+          <ExitIcon className="h-4 w-4 mr-2" />
+          Logout - Not Working
+        </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
   );
