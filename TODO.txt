@@ -1,0 +1,6 @@
+UPDATES TO ME MADE:
+    - Research Caching for nextjs
+    - Catch alll
+    - Promise.all
+    - Transactions for multi updates in my server actions
+    - 

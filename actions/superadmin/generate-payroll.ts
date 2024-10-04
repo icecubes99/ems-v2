@@ -126,6 +126,7 @@ export async function generatePayroll() {
 
         let totalPayrollAmount = 0;
 
+        // Promise.all
         for (const employee of employees) {
             const { userSalary, timesheets, additionalEarnings, deductions, governmentId } = employee;
             if (!userSalary || !governmentId) {
@@ -141,6 +142,7 @@ export async function generatePayroll() {
             let overtimeMinutes = 0;
             let daysWorked = 0;
 
+            // Promise.all
             for (const timesheet of timesheets) {
                 if (!timesheet.clockOut) {
                     console.warn(`Timesheet ${timesheet.id} for employee ${employee.id} has no clock out time.`);
@@ -180,6 +182,7 @@ export async function generatePayroll() {
 
             // Create deductions for government contributions
             const sixDaysAgo = subDays(new Date(), 6);
+            // promise.all
             for (const contribution of governmentContributions) {
                 await prisma.deductions.create({
                     data: {
