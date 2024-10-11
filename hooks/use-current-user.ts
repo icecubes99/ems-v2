@@ -11,3 +11,8 @@ export const useCurrentUserId = () => {
   return session.data?.user.id;
 };
 
+export const useCurrentUserPicture = () => {
+  const session = useSession();
+
+  return session.data?.user.image;
+}

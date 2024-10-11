@@ -29,7 +29,7 @@ const Header = ({ user, employeePic }: HeaderProps) => {
 
                         <div className='ml-5 flex flex-row items-center space-x-5'>
                             <Avatar>
-                                <AvatarImage src={user?.image || undefined} />
+                                <AvatarImage src={employeePic || undefined} />
                                 <AvatarFallback className='bg-neutral-700 text-white'>
                                     <FaUser />
                                 </AvatarFallback>

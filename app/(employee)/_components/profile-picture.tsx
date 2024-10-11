@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { DialogTitle } from '@radix-ui/react-dialog'
 import { FaUser } from 'react-icons/fa'
 
-
 export default function UploadProfilePicture({ userId, initialProfilePicture }: { userId: string, initialProfilePicture?: string }) {
     const [preview, setPreview] = useState<string | null>(initialProfilePicture || null);
     const [error, setError] = useState<string | null>(null);

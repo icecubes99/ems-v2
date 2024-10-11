@@ -10,6 +10,7 @@ import { LogoutButton } from './auth/logout-button'
 import { usePathname } from 'next/navigation'
 import { IoLogOut } from "react-icons/io5"
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useUserImage } from '@/hooks/use-user-image'
 
 interface SidebarProps {
     user?: ExtendedUser
@@ -19,6 +20,7 @@ export default function Component({ }: SidebarProps) {
     const user = useCurrentUser()
     const router = usePathname()
     const isHomepage = router === "/homepage"
+    const { userImage, } = useUserImage()
 
     return (
         <div className="flex flex-col w-96 bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl">
@@ -37,7 +39,7 @@ export default function Component({ }: SidebarProps) {
                 </div>
                 <div className="flex flex-col items-center gap-4">
                     <Avatar className="w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36">
-                        <AvatarImage src={user?.image || undefined} />
+                        <AvatarImage src={userImage || undefined} />
                         <AvatarFallback className="bg-neutral-700 text-white">
                             <FaUser />
                         </AvatarFallback>

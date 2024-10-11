@@ -9,10 +9,12 @@ import useUserAssignment from '@/hooks/use-current-assignment'
 import useDesignation from '@/hooks/use-designation'
 import QuickActions from '@/components/quick-actions'
 import UploadProfilePicture from '../_components/profile-picture'
+import { useUserImage } from '@/hooks/use-user-image'
 
 const Page = () => {
     const user = useCurrentUser();
     const userId = useCurrentUserId() as string;
+    const { userImage } = useUserImage();
 
     return (
         <LayoutSideHead label='My Profile'>
@@ -23,7 +25,7 @@ const Page = () => {
             </EmployeeDetails>
 
             <QuickActions>
-                <UploadProfilePicture userId={userId} initialProfilePicture={user?.image} />
+                <UploadProfilePicture userId={userId} initialProfilePicture={userImage || undefined} />
             </QuickActions>
         </LayoutSideHead>
     )
