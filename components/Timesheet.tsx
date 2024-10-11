@@ -1,12 +1,12 @@
 "use client"
 
-import React from 'react'
+import React, { useState, useTransition } from 'react';
 import * as z from 'zod';
-import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -15,9 +15,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { logTimesheet } from '@/actions/log-timesheet'
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { logTimesheet } from '@/actions/log-timesheet';
 
 import {
     Form,
@@ -39,6 +39,7 @@ export function TimesheetDialog({ classname }: { classname: string }) {
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
     const [open, setOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { status, isLoading, refreshStatus } = useTimesheetStatus();
 
     const form = useForm<z.infer<typeof TimesheetSchema>>({
@@ -46,7 +47,7 @@ export function TimesheetDialog({ classname }: { classname: string }) {
         defaultValues: {
             password: ""
         }
-    })
+    });
 
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
@@ -55,7 +56,7 @@ export function TimesheetDialog({ classname }: { classname: string }) {
             setError("");
             setSuccess("");
         }
-    }
+    };
 
     const onSubmit = (values: z.infer<typeof TimesheetSchema>) => {
         setError("");
@@ -75,8 +76,8 @@ export function TimesheetDialog({ classname }: { classname: string }) {
                     }
                 })
                 .catch(() => setError("An unexpected error occurred"));
-        })
-    }
+        });
+    };
 
     const getButtonText = (status: TimesheetStatus) => {
         switch (status) {
@@ -89,7 +90,7 @@ export function TimesheetDialog({ classname }: { classname: string }) {
             default:
                 return "Log Timesheet";
         }
-    }
+    };
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -124,12 +125,23 @@ export function TimesheetDialog({ classname }: { classname: string }) {
                                         <FormItem>
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    disabled={isPending}
-                                                    type="password"
-                                                    placeholder='Enter password'
-                                                />
+                                                <div className="relative">
+                                                    <Input
+                                                        {...field}
+                                                        disabled={isPending}
+                                                        type={showPassword ? "text" : "password"}
+                                                        placeholder='Enter password'
+                                                    />
+                                                    <Button
+                                                        type="button"
+                                                        variant="link"
+                                                        size="sm"
+                                                        className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                    >
+                                                        {showPassword ? <FiEyeOff /> : <FiEye />}
+                                                    </Button>
+                                                </div>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -151,5 +163,5 @@ export function TimesheetDialog({ classname }: { classname: string }) {
                 </Form>
             </DialogContent>
         </Dialog>
-    )
+    );
 }

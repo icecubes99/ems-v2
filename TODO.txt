@@ -3,4 +3,13 @@ UPDATES TO ME MADE:
     - Catch alll
     - Promise.all
     - Transactions for multi updates in my server actions
-    - 
+
+
+FUNCTIONAL UPDATES TO BE MADE:
+    - Add Edit functionality to Holidays
+    - Add manual generation of Payroll
+    - Add a isLeave field for timesheets
+    - fix the profile picture not updating
+
+FINISHED UPDATES:
+    -

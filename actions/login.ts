@@ -63,7 +63,7 @@ export const login = async (
   const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
   if (!passwordMatch) {
-    return { error: "Invalid Credentials!" };
+    return { error: "Invalid Password!" };
   }
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
