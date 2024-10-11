@@ -1,13 +1,20 @@
+"use client"
 import { RoleGate } from '@/components/auth/role-gate'
 import LayoutSideHead from '@/components/LayoutSideHead'
 import React from 'react'
-import CreateHolidayCard from '../_components/create-holidays'
+import { CreateHolidayCard } from '../_components/create-holidays'
 import WorkingDaysManager from '../_components/create-workingdays-months'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { HolidayTable } from '@/components/holidays-table'
 import { PasswordsTable } from '@/components/passwords-table'
+import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { useHolidays } from '@/hooks/use-holidays'
+import { columnsHolidays } from '../_components/columns-holidays'
+import TableWrapper from '@/components/table-wrapper'
+import { MdHolidayVillage } from 'react-icons/md'
 
 const page = () => {
+    const { holidays, isLoading, error } = useHolidays()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='Attendance Control' classname='mr-6'>
@@ -21,8 +28,10 @@ const page = () => {
                         <HolidayCard classname='col-span-2' />
                     </div>
                     <div className='grid grid-cols-2 gap-8'>
-                        <HolidayTable />
                         <PasswordsTable />
+                        <TableWrapper description='Holidays' title='Holidays' icon={<MdHolidayVillage />}>
+                            <DataTableRemainingLeaves columns={columnsHolidays} data={holidays || []} />
+                        </TableWrapper>
                     </div>
                 </div>
             </LayoutSideHead>

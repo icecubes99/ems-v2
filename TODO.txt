@@ -1,15 +1,23 @@
-UPDATES TO ME MADE:
+FUTURE UPDATES TO BE MADE:
     - Research Caching for nextjs
     - Catch alll
     - Promise.all
     - Transactions for multi updates in my server actions
 
-
-FUNCTIONAL UPDATES TO BE MADE:
-    - Add Edit functionality to Holidays
+FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
+    - Add Edit and Remove functionality to Holidays
     - Add manual generation of Payroll
     - Add a isLeave field for timesheets
-    - fix the profile picture not updating
+    - Multiple people(or could be a specific designation) can be added a bonus
+    - Add optional workingdays (workable holidays with more rate)
+    - Request early clock outs for those people who want to clock out early 
+    - Edit Overtime, is now able to edit how many hours requested for overtime
+    - Designations should have a rate on their own 
+    - Create an advance generation of timesheets for admins to have access to for their employees 
+    - Ask for medical certificate if sick leave in the request leave 
 
 FINISHED UPDATES:
-    -
+    - fix the profile picture not updating      Oct-10 2:15
+
+====================================================================================================================
+    NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina

@@ -14,8 +14,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import UpdateAdditionalEarningsForm from '@/app/(employee)/administrator/_components/update-additional-earnings-form'
-import { DeleteAdditionalEarningsDialog } from '@/app/(employee)/administrator/_components/delete-additional-earnings-dialog'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 

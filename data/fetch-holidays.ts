@@ -5,7 +5,6 @@ import { db } from "@/lib/db"
 
 export async function getHolidays() {
     const currentYear = new Date().getFullYear()
-    const startOfYear = new Date(currentYear, 0, 1)
     const presentDay = new Date()
     const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59)
 
@@ -24,6 +23,20 @@ export async function getHolidays() {
         return { holidays }
     } catch (error) {
         console.error("Error fetching holidays:", error)
+        return { error: "Failed to fetch holidays" }
+    }
+}
+
+export async function getSpecificHoliday(holidayId: string) {
+    try {
+        const holiday = await db.holiday.findUnique({
+            where: {
+                id: holidayId
+            }
+        })
+        return { holiday }
+    } catch (error) {
+        console.error("Error fetching holiday:", error)
         return { error: "Failed to fetch holidays" }
     }
 }

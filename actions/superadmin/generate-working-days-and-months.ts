@@ -193,6 +193,160 @@ export async function addHoliday(values: z.infer<typeof HolidaySchema>) {
     return { success: "Holiday Created" }
 }
 
+export async function editHoliday(holidayId: string, values: z.infer<typeof HolidaySchema>) {
+    const user = await currentUser();
+    const validatedFields = HolidaySchema.safeParse(values);
+
+    if (!user) {
+        return { error: "Unauthorized!" }
+    }
+
+    const dbUser = await getUserById(user.id);
+
+    if (!validatedFields.success) {
+        return { error: "Invalid Fields!" };
+    }
+
+    if (!dbUser) {
+        return { error: "User not found in database!" }
+    }
+
+    const superadminResult = await superAdmin();
+    if (superadminResult.error) {
+        return { error: superadminResult.error }
+    }
+
+    const { date, name } = validatedFields.data
+
+    const superAdminName = user.name || dbUser.firstName + " " + dbUser.lastName;
+
+    try {
+        await db.$transaction(async (tx) => {
+            // Find the existing holiday
+            const existingHoliday = await tx.holiday.findUnique({
+                where: { id: holidayId }
+            });
+
+            if (!existingHoliday) {
+                throw new Error("Holiday not found");
+            }
+
+            const newHolidayDate = startOfDay(new Date(date));
+
+            // Check if the date has changed
+            if (existingHoliday.date.getTime() !== newHolidayDate.getTime()) {
+                // Delete the working day for the new holiday date if it exists
+                await tx.workingDay.deleteMany({
+                    where: { date: newHolidayDate }
+                });
+
+                // If the new date is a weekday, create a working day for the old holiday date
+                if (!isWeekend(existingHoliday.date)) {
+                    const workingMonth = await tx.workingMonth.findFirst({
+                        where: {
+                            month: existingHoliday.date.getMonth() + 1,
+                            year: existingHoliday.date.getFullYear()
+                        }
+                    });
+
+                    if (workingMonth) {
+                        await tx.workingDay.create({
+                            data: {
+                                date: existingHoliday.date,
+                                password: generatePassword(),
+                                monthId: workingMonth.id
+                            }
+                        });
+                    }
+                }
+            }
+
+            // Update the holiday
+            await tx.holiday.update({
+                where: { id: holidayId },
+                data: {
+                    date: newHolidayDate,
+                    name: name
+                }
+            });
+        });
+
+        await auditAction(dbUser.id, `Holiday Edited by Superadmin: ${superAdminName}`);
+
+        return { success: "Holiday Updated Successfully" };
+    } catch (error) {
+        console.error("Error editing holiday:", error);
+        return { error: "Failed to edit holiday" };
+    }
+}
+
+export async function removeHoliday(holidayId: string) {
+    const user = await currentUser();
+
+    if (!user) {
+        return { error: "Unauthorized!" }
+    }
+
+    const dbUser = await getUserById(user.id);
+
+    if (!dbUser) {
+        return { error: "User not found in database!" }
+    }
+
+    const superadminResult = await superAdmin();
+    if (superadminResult.error) {
+        return { error: superadminResult.error }
+    }
+
+    const superAdminName = user.name || dbUser.firstName + " " + dbUser.lastName;
+
+    try {
+        await db.$transaction(async (tx) => {
+            // Find the existing holiday
+            const existingHoliday = await tx.holiday.findUnique({
+                where: { id: holidayId }
+            });
+
+            if (!existingHoliday) {
+                throw new Error("Holiday not found");
+            }
+
+            // Delete the holiday
+            await tx.holiday.delete({
+                where: { id: holidayId }
+            });
+
+            // If the holiday date is a weekday, create a working day
+            if (!isWeekend(existingHoliday.date)) {
+                const workingMonth = await tx.workingMonth.findFirst({
+                    where: {
+                        month: existingHoliday.date.getMonth() + 1,
+                        year: existingHoliday.date.getFullYear()
+                    }
+                });
+
+                if (workingMonth) {
+                    await tx.workingDay.create({
+                        data: {
+                            date: existingHoliday.date,
+                            password: generatePassword(),
+                            monthId: workingMonth.id
+                        }
+                    });
+                }
+            }
+        });
+
+        await auditAction(dbUser.id, `Holiday Removed by Superadmin: ${superAdminName}`);
+
+        return { success: "Holiday Removed Successfully" };
+    } catch (error) {
+        console.error("Error removing holiday:", error);
+        return { error: "Failed to remove holiday" };
+    }
+}
+
+
 function generatePassword(): string {
     return crypto.randomBytes(3).toString('hex')
 }

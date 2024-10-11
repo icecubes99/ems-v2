@@ -10,12 +10,12 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
+    AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSucess } from "@/components/form-sucess";
 import { approvePayroll } from "@/actions/superadmin/approve-payroll";
-import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { useRouter } from "next/navigation";
 import { usePayroll } from "@/hooks/use-payroll-data";
 import { LeaveStatus } from "@prisma/client";
@@ -54,7 +54,7 @@ export function ApprovePayrollDialog({ payrollId }: ApprovePayrollDialogProps) {
             console.log(result.success);
             setSuccess(result.success);
             setTimeout(() => {
-                // window.location.reload();
+
                 router.push("/superadministrator/payrollPanel")
             }, 300);
         }
