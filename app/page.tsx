@@ -29,7 +29,7 @@ export default function Home() {
         <p className="text-white text-lg">Employee Management System</p>
 
         <div>
-          <LoginButton mode="modal" asChild>
+          <LoginButton mode="redirect" asChild>
             <Button variant="secondary" size="lg">
               Sign in
             </Button>

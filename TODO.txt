@@ -5,10 +5,19 @@ FUTURE UPDATES TO BE MADE:
     - Transactions for multi updates in my server actions
 
 FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
-    - Add Edit and Remove functionality to Holidays
     - Add manual generation of Payroll
+        - Create a server action that creates the payroll with the payroll period dates and a starting 0 for the total amount
+        - Once a payroll is manually created we can see it in the pending payroll table with empty payrollItems
+        - It should be able to add departments or designations to the payroll immediately 
+    - Revamp the salary system
+        - Each designation should have their unique salaries for the people under that 
+        - Could have a salary increase or decrease in a designation level 
+        - Each time an employee is assigned to a designation, its gross salary is its base salary added to the designation salary and it is for transparency only
+        - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details
+        - 
     - Add a isLeave field for timesheets
     - Multiple people(or could be a specific designation) can be added a bonus
+        - MULTI SELECT FROM SHADCN!!!!!
     - Add optional workingdays (workable holidays with more rate)
     - Request early clock outs for those people who want to clock out early 
     - Edit Overtime, is now able to edit how many hours requested for overtime
@@ -17,7 +26,8 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - Ask for medical certificate if sick leave in the request leave 
 
 FINISHED UPDATES:
-    - fix the profile picture not updating      Oct-10 2:15
+    - fix the profile picture not updating      Oct-10 2:15pm
+    - Add Edit and Remove functionality to Holidays     Oct-10 5:39pm
 
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina

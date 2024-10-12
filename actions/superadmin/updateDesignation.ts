@@ -61,7 +61,11 @@ export const updateDesignation = async (designationId: string, values: z.infer<t
 
     // Checks the new Head user if its a a superadmin or not
     const designationHeadUser = await db.user.findUnique({
-        where: { id: designationHeadUserId }
+        where: { id: designationHeadUserId },
+        select: {
+            role: true,
+            assignedDesignations: true
+        }
     })
 
     if (designationHeadUser && designationHeadUser.role !== UserRole.SUPERADMIN) {
@@ -85,6 +89,17 @@ export const updateDesignation = async (designationId: string, values: z.infer<t
             departmentId,
         },
     });
+
+    if (designationHeadUser && designationHeadUser.assignedDesignations === null) {
+        await db.assignDesignation.create({
+            data: {
+                userId: designationHeadUserId,
+                employeeType: "REGULAR",
+                status: "ACTIVE",
+                designationId,
+            },
+        });
+    }
 
     return { success: "Designation updated!" };
 }

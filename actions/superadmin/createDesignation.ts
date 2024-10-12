@@ -53,7 +53,7 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
         })
     }
 
-    await db.designation.create({
+    const designation = await db.designation.create({
         data: {
             designationName,
             designationDescription,
@@ -61,6 +61,17 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
             departmentId,
             designationHeadUserId,
             createdBy,
+        },
+    });
+
+    const designationId = designation.id;
+
+    await db.assignDesignation.create({
+        data: {
+            userId: designationHeadUserId,
+            employeeType: "REGULAR",
+            status: "ACTIVE",
+            designationId,
         },
     });
 

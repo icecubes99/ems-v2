@@ -241,6 +241,8 @@ model Designation {
   designationHeadUserId String
   designationHeadUser User @relation(fields: [designationHeadUserId], references: [id])
 
+  designationSalary Float @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   createdBy String?
@@ -395,9 +397,11 @@ model UserSalary {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   basicSalary Float
-  hourlyRate  Float?
-  minuteRate  Float?
+
+  grossSalary Float?
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -409,8 +413,13 @@ model SalaryHistory {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  salary    Float
-  effectiveDate DateTime
+  
+  basicSalary    Float
+  grossSalary    Float
+
+  startDate DateTime
+  endDate   DateTime @default(now())
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
