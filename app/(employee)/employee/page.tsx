@@ -10,11 +10,18 @@ import useDesignation from '@/hooks/use-designation'
 import QuickActions from '@/components/quick-actions'
 import UploadProfilePicture from '../_components/profile-picture'
 import { useUserImage } from '@/hooks/use-user-image'
+import TableWrapper from '@/components/table-wrapper'
+import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { useAuditLogs, useUserAuditLog } from '@/hooks/use-audit-logs'
+import { SearchCodeIcon } from 'lucide-react'
+import { columnsUserAuditLogs } from '../administrator/_components/columns-user-audit-logs'
 
 const Page = () => {
     const user = useCurrentUser();
     const userId = useCurrentUserId() as string;
     const { userImage } = useUserImage();
+    const { auditLogs } = useUserAuditLog(userId);
+
 
     return (
         <LayoutSideHead label='My Profile'>
@@ -27,6 +34,10 @@ const Page = () => {
             <QuickActions>
                 <UploadProfilePicture userId={userId} initialProfilePicture={userImage || undefined} />
             </QuickActions>
+
+            <TableWrapper description='All Your Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
+                <DataTableRemainingLeaves columns={columnsUserAuditLogs} data={auditLogs || []} />
+            </TableWrapper>
         </LayoutSideHead>
     )
 }

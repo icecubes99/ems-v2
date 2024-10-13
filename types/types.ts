@@ -202,3 +202,11 @@ export type SalaryIncreaseEvent = {
     undoneAt?: Date | null;
     undoneBy?: string | null;
 };
+
+export type AuditLogWithUser = {
+    id: string;
+    userId: string;
+    action: string;
+    createdAt: Date;
+    user: PrismaUser;
+}

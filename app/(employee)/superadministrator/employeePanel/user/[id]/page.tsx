@@ -6,9 +6,14 @@ import EmployeeDetailsV2 from '../../_components/employee-details-v2'
 import AddressCard from '@/app/(employee)/_components/_AddressComponents/AddressCard'
 import EmergencyContactCard from '@/app/(employee)/_components/_EmergencyContactComponents/EmergencyContactCard'
 import OtherLeavesTable from '../../_components/other-leaves-table'
-import { History } from 'lucide-react'
+import { History, SearchCodeIcon } from 'lucide-react'
+import TableWrapper from '@/components/table-wrapper'
+import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { columnsUserAuditLogs } from '@/app/(employee)/administrator/_components/columns-user-audit-logs'
+import { useUserAuditLog } from '@/hooks/use-audit-logs'
 
 const page = ({ params }: { params: { id: string } }) => {
+    const { auditLogs } = useUserAuditLog(params.id);
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='EMPLOYEE PROFILE'>
@@ -17,19 +22,13 @@ const page = ({ params }: { params: { id: string } }) => {
                     <EmergencyContactCard userId={params.id} />
                 </EmployeeDetailsV2>
 
+                <TableWrapper title='Leave Requests History' description='View past and current leave requests' icon={<History />}>
+                    <OtherLeavesTable userId={params.id} />
+                </TableWrapper>
 
-                <div className='bg-card mt-5 rounded-xl shadow mr-6 mb-6 hover:shadow-md'>
-                    <div className='p-6 border-b border-border'>
-                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
-                            <History className='h-6 w-6 text-primary' />
-                            Leave Requests History
-                        </h2>
-                        <p className='text-muted-foreground mt-1'>View past and current leave requests</p>
-                    </div>
-                    <div className='p-6'>
-                        <OtherLeavesTable userId={params.id} />
-                    </div>
-                </div>
+                <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
+                    <DataTableRemainingLeaves columns={columnsUserAuditLogs} data={auditLogs || []} />
+                </TableWrapper>
 
             </LayoutSideHead>
         </RoleGate>

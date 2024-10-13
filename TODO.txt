@@ -15,7 +15,8 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
         - Each time an employee is assigned to a designation,
             its gross salary is its base salary added to the designation salary and it is for transparency only       Oct-12
         - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details       Oct-12
-        - Could undo a salary increase for a department or designation
+        - Could undo a salary increase for a department or designation          Oct-13
+        - Add salary decrease with same functions as increase 
     - Add a isLeave field for timesheets
     - Multiple people(or could be a specific designation) can be added a bonus
         - MULTI SELECT FROM SHADCN!!!!!
@@ -29,6 +30,7 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
     - Add Edit and Remove functionality to Holidays     Oct-10 5:39pm
+    - Added Audit Logs table for users and superadmins          Oct-13 9:49pm
 
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina
