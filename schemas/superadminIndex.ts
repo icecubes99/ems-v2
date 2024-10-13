@@ -29,6 +29,7 @@ export const DesignationSchema = z.object({
     designationHeadUserId: z.string().min(1, {
         message: "Designation Head is required",
     }),
+    designationSalary: z.number().min(1, "Salary is required"),
 })
 
 export const AssignedDesignationSchema = z.object({

@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as z from 'zod';
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,6 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
-import SelectDepartments from './SelectDepartments';
-import SelectUser from '../../_components/SelectUser';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import useDepartment from '@/hooks/use-department';
 import SelectUserDesignationHead from './select-user-designation-head';
@@ -41,6 +39,12 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [formattedSalary, setFormattedSalary] = useState("")
+    const formatNumber = (num: number) => {
+        return "₱" + num.toLocaleString('en-US')
+    }
+
     const [isPending, startTransition] = useTransition();
 
     const form = useForm<z.infer<typeof DesignationSchema>>({
@@ -51,6 +55,7 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
             status: Status.ACTIVE,
             departmentId: departmentId, // Use departmentId prop as default value
             designationHeadUserId: "",
+            designationSalary: 0,
         }
     });
     const departmentDetails = useDepartment(departmentId);
@@ -86,6 +91,24 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
         });
     }
 
+
+    useEffect(() => {
+        const handleClick = () => {
+            if (inputRef.current) {
+                const input = inputRef.current
+                setTimeout(() => {
+                    input.setSelectionRange(input.value.length, input.value.length)
+                }, 0)
+            }
+        }
+
+        const input = inputRef.current
+        input?.addEventListener('click', handleClick)
+
+        return () => {
+            input?.removeEventListener('click', handleClick)
+        }
+    }, [])
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
@@ -190,6 +213,44 @@ const CreateSpecificDesignationForm: React.FC<CreateDesignationFormWithDeptProps
                                             )}
                                         />
                                     </div>
+
+
+                                    {/* Basic Salary */}
+                                    <FormField
+                                        control={form.control}
+                                        name="designationSalary"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Basic Salary</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        ref={inputRef}
+                                                        disabled={isPending}
+                                                        type="text"
+                                                        placeholder="₱0"
+                                                        value={formattedSalary}
+                                                        onChange={(e) => {
+                                                            const value = e.target.value.replace(/[^0-9]/g, '')
+                                                            const numberValue = parseInt(value, 10)
+                                                            const formatted = formatNumber(numberValue || 0)
+                                                            setFormattedSalary(formatted)
+                                                            field.onChange(numberValue || 0)
+
+                                                            // Move cursor to end
+                                                            setTimeout(() => {
+                                                                e.target.setSelectionRange(formatted.length, formatted.length)
+                                                            }, 0)
+                                                        }}
+                                                        onFocus={(e) => {
+                                                            e.target.setSelectionRange(e.target.value.length, e.target.value.length)
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
                                     {/* DEPARTMENT PARENT */}
                                     <div className='hidden'>

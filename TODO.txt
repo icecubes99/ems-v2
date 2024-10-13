@@ -10,11 +10,12 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
         - Once a payroll is manually created we can see it in the pending payroll table with empty payrollItems
         - It should be able to add departments or designations to the payroll immediately 
     - Revamp the salary system
-        - Each designation should have their unique salaries for the people under that 
-        - Could have a salary increase or decrease in a designation level 
-        - Each time an employee is assigned to a designation, its gross salary is its base salary added to the designation salary and it is for transparency only
-        - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details
-        - 
+        - Each designation should have their unique salaries for the people under that      Oct-12
+        - Could have a salary increase or decrease in a designation level           Oct-12
+        - Each time an employee is assigned to a designation,
+            its gross salary is its base salary added to the designation salary and it is for transparency only       Oct-12
+        - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details       Oct-12
+        - Could undo a salary increase for a department or designation
     - Add a isLeave field for timesheets
     - Multiple people(or could be a specific designation) can be added a bonus
         - MULTI SELECT FROM SHADCN!!!!!

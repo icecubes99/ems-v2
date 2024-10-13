@@ -61,6 +61,11 @@ export const newRegister = async (values: z.infer<typeof newRegisterSchema>) => 
 
     const existingUser = await getUserByEmail(email);
 
+    const designationSalary = await db.designation.findUnique({
+        where: { id: designationId },
+        select: { designationSalary: true }
+    })
+
     if (existingUser) {
         return { error: "Email already in use!" };
     }
@@ -94,6 +99,7 @@ export const newRegister = async (values: z.infer<typeof newRegisterSchema>) => 
                 data: {
                     userId: user.id,
                     basicSalary,
+                    grossSalary: basicSalary + (designationSalary?.designationSalary ?? 0)
                 },
             });
 

@@ -226,6 +226,8 @@ model Department {
 
   designations Designation[]
 
+  salaryIncreaseEvents SalaryIncreaseEvent[]
+
   @@unique([departmentHeadUserId])
 }
 
@@ -248,6 +250,8 @@ model Designation {
   createdBy String?
 
   AssignDesignation AssignDesignation[]
+
+  salaryIncreaseEvents SalaryIncreaseEvent[]
 
   @@unique([designationHeadUserId])
 }
@@ -395,7 +399,7 @@ model AdditionalEarnings {
 
 model UserSalary {
   id        String   @id @default(cuid())
-  userId    String
+  userId    String  @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   basicSalary Float
@@ -405,7 +409,7 @@ model UserSalary {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@unique([userId])
+  // @@unique([userId])
 }
 
 
@@ -495,4 +499,25 @@ model PayrollItem {
   updatedAt    DateTime @updatedAt
 
   @@unique([payrollId, userId])
+}
+model SalaryIncreaseEvent {
+  id            String   @id @default(cuid())
+
+  departmentId  String?
+  department    Department? @relation(fields: [departmentId], references: [id])
+
+  designationId String?
+  designation   Designation? @relation(fields: [designationId], references: [id])
+
+  percentage    Float?
+  amount        Float?
+
+  appliedAt     DateTime @default(now())
+  appliedBy     String
+  
+  isUndone      Boolean  @default(false)
+  undoneAt      DateTime?
+  undoneBy      String?
+
+  @@index([departmentId])
 }

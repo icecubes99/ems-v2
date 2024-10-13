@@ -41,7 +41,38 @@ export const createAssignedUser = async (values: z.infer<typeof AssignedDesignat
     const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
     const assignedUserName = assignedUser?.firstName + " " + assignedUser?.lastName;
 
-    // TODO: Add history to user when they are assigned to a designation
+    const designation = await db.designation.findUnique({
+        where: { id: designationId },
+    });
+
+    const userSalary = await db.user.findUnique({
+        where: { id: userId },
+        select: {
+            userSalary: true,
+        }
+    })
+
+    if (userSalary && userSalary.userSalary) {
+        await db.salaryHistory.create({
+            data: {
+                userId,
+                basicSalary: userSalary.userSalary.basicSalary,
+                grossSalary: userSalary.userSalary.grossSalary ?? userSalary.userSalary.basicSalary,
+                startDate: new Date(userSalary.userSalary.updatedAt)
+            }
+        })
+    }
+
+    if (userSalary && userSalary.userSalary) {
+        await db.userSalary.update({
+            where: { id: userSalary.userSalary.id },
+            data: {
+                grossSalary: userSalary.userSalary.basicSalary + (designation?.designationSalary ?? 0),
+            }
+        });
+    } else {
+        return { error: "User salary not found" };
+    }
 
     await auditAction(dbUser.id, `User "${assignedUserName}" assigned to a designation by Admin: ${adminName}`);
 

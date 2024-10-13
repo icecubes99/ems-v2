@@ -43,9 +43,6 @@ const AddDeductionsFormCorrections: React.FC<DeductionsFormProps> = ({ variant, 
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const [open, setOpen] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-
     const [formattedSalary, setFormattedSalary] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
 

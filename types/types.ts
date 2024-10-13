@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, } from "@prisma/client"
 import { User as PrismaUser } from "@prisma/client"
 export type AssignDesignation = {
     id: string
@@ -186,4 +186,19 @@ export type PayrollWithPayrollItems = {
     updatedAt: Date;
 
     payrollItems: PayrollItemWithUser[];
+};
+
+export type SalaryIncreaseEvent = {
+    id: string;
+    departmentId?: string | null;
+    department?: Department | null;
+    designationId?: string | null;
+    designation?: Designation | null;
+    percentage?: number | null;
+    amount?: number | null;
+    appliedAt: Date;
+    appliedBy: string;
+    isUndone: boolean;
+    undoneAt?: Date | null;
+    undoneBy?: string | null;
 };

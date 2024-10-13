@@ -12,18 +12,21 @@ import { BadgeDollarSign, DollarSign } from 'lucide-react'
 import { useDeductions } from '@/hooks/use-deductions'
 import { columnsDeduction } from './_components/columns-deductions'
 import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
-import { usePendingLeaves } from '@/hooks/use-pending-leaves'
 import AddAdditionalEarningsForm from '../../administrator/_components/additional-earnings-form'
 import { useAdditionalEarnings } from '@/hooks/use-additional-earnings'
 import { columnsAdditionalEarnings } from './_components/columns-additional-earnings'
-import { Button } from '@/components/ui/button'
 import { usePendingPayroll } from '@/hooks/use-payroll-data'
 import { columnsPendingPayroll } from './_components/columns-pending-payroll'
+import IncreaseDepartmentalSalaryForm from './_components/increase-departmental-salary-form'
+import IncreaseDesignationalSalaryForm from './_components/increase-designational-salary-form'
+import { columnsSalaryIncreaseEvent } from './_components/columns-salary-increase-event'
+import { useSalaryIncreaseEvents } from '@/hooks/use-salary-increase-events'
 
 const page = () => {
     const { deductions } = useDeductions()
     const { additionalEarnings } = useAdditionalEarnings()
     const { payroll } = usePendingPayroll()
+    const { salaryIncreaseEvents } = useSalaryIncreaseEvents()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead label='Payroll Panel'>
@@ -38,9 +41,11 @@ const page = () => {
                     <div className='flex flex-col justify-around'>
                         <AddDeductionsForm variant={"superadmin"} />
                         <AddAdditionalEarningsForm variant={"superadmin"} />
-                        <Button variant={"auth"} size={"lg"}>
-                            Test
-                        </Button>
+
+                    </div>
+                    <div className='flex flex-col justify-around'>
+                        <IncreaseDepartmentalSalaryForm />
+                        <IncreaseDesignationalSalaryForm />
                     </div>
 
                 </QuickActions>
@@ -60,6 +65,10 @@ const page = () => {
                         <DataTableRemainingLeaves columns={columnsAdditionalEarnings} data={additionalEarnings || []} />
                     </TableWrapper>
                 </div>
+
+                <TableWrapper title='Salary Increase Events' description='Salary Increase Events' icon={<DollarSign />}>
+                    <DataTableRemainingLeaves columns={columnsSalaryIncreaseEvent} data={salaryIncreaseEvents || []} />
+                </TableWrapper>
 
             </LayoutSideHead>
         </RoleGate>

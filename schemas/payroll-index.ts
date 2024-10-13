@@ -61,3 +61,15 @@ export const AdditionalEarningsSchemaWithUser = z.object({
         message: "Description is required",
     }),
 })
+
+export const IncreaseDepartmentSalarySchema = z.object({
+    departmentId: z.string(),
+    increaseType: z.enum(['percentage', 'amount']),
+    value: z.number().positive(),
+});
+
+export const IncreaseDesignationSalarySchema = z.object({
+    designationId: z.string(),
+    increaseType: z.enum(['percentage', 'amount']),
+    value: z.number().positive(),
+});

@@ -28,6 +28,7 @@ import { Status } from '@prisma/client';
 import SelectUser from '../../_components/SelectUser';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface DeductionsFormProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
@@ -110,10 +111,12 @@ const AddDeductionsForm: React.FC<DeductionsFormProps> = ({ variant }) => {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            {isMounted && (
+            {isMounted ? (
                 <DialogTrigger>
                     <Button size={"lg"} className='w-full' variant={variant}>Add Deductions</Button>
                 </DialogTrigger>
+            ) : (
+                <Button size={"lg"} className='w-full' variant={variant}>Add Deductions</Button>
             )}
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card className='w-96'>

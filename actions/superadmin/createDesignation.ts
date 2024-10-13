@@ -34,7 +34,7 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
         return { error: adminResult.error };
     }
 
-    const { designationName, designationDescription, status, designationHeadUserId, departmentId } = validatedFields.data;
+    const { designationName, designationDescription, status, designationHeadUserId, departmentId, designationSalary } = validatedFields.data;
     const createdBy = dbUser.id;
 
     const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
@@ -60,6 +60,7 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
             status,
             departmentId,
             designationHeadUserId,
+            designationSalary,
             createdBy,
         },
     });
