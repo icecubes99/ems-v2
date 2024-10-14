@@ -26,11 +26,53 @@ export async function removePayroll(payrollId: string) {
         const payroll = await db.payroll.findUnique({
             where: {
                 id: payrollId
+            },
+            include: {
+                payrollItems: {
+                    include: {
+                        deductions: true,
+                        additionalEarningsArray: true
+                    }
+                }
             }
         })
 
         if (!payroll) {
             return { error: "Payroll not found!" }
+        }
+        const deductions = payroll?.payrollItems.map(item => item.deductions).flat();
+        const additionalEarnings = payroll?.payrollItems.map(item => item.additionalEarningsArray).flat();
+
+        if (deductions) {
+            for (const deduction of deductions) {
+                await db.deductions.updateMany({
+                    where: {
+                        AND: [
+                            { id: deduction.id },
+                            { deductionType: { in: ["Disbursement", "Salary Advance", "Loan", "Others"] } }
+                        ]
+                    },
+                    data: {
+                        payrollItemId: null
+                    }
+                });
+            }
+        }
+
+        if (additionalEarnings) {
+            for (const additionalEarning of additionalEarnings) {
+                await db.additionalEarnings.updateMany({
+                    where: {
+                        AND: [
+                            { id: additionalEarning.id },
+                            { earningType: { in: ["Bonus", "Others", "Reimbursement", "Allowance"] } }
+                        ]
+                    },
+                    data: {
+                        payrollItemId: null
+                    }
+                });
+            }
         }
 
         await db.payroll.delete({

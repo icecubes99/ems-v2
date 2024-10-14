@@ -374,7 +374,7 @@ model Deductions {
   description   String
 
   payrollItemId String?
-  payrollItem   PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: SetNull)
+  payrollItem   PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: Cascade)
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -391,7 +391,7 @@ model AdditionalEarnings {
   description String
 
   payrollItemId String?
-  payrollItem  PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: SetNull)
+  payrollItem  PayrollItem? @relation(fields: [payrollItemId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

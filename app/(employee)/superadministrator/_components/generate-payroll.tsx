@@ -29,10 +29,14 @@ export default function GeneratePayroll({ className }: { className?: string }) {
             console.error(result.error);
             setError(result.error);
             setIsLoading(false)
+
         } else {
             console.log(result.success);
             setSuccess(result.success);
             setIsLoading(false)
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         }
     }
 

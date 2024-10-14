@@ -5,6 +5,7 @@ import Link from 'next/link'
 import CreateDesignationButton from './CreateDesignationButton'
 import CreateDepartmentForm from './CreateDepartmentForm'
 import { Calendar, DollarSign, Building2, UserPlusIcon } from 'lucide-react'
+import { IoDocumentOutline, IoDocumentsSharp } from 'react-icons/io5'
 
 export default function SuperAdminCards() {
     return (
@@ -71,6 +72,16 @@ export default function SuperAdminCards() {
                     <p className='text-sm'>
                         Add new employees to the system. Manage employee information, roles, and permissions. View and update employee profiles with ease.
                     </p>
+                </CardLayout>
+
+                <CardLayout
+                    header='Audit Logs'
+                    description='View Audit Logs'
+                    icon={<IoDocumentOutline className="h-6 w-6 text-primary" />}
+                    buttonText="View Audit Logs"
+                    buttonLink="/superadministrator/auditLogs"
+                >
+                    <p className='text-sm'>View all the actions performed by all the users in the system. Keep track of all the changes made to the system and ensure accountability.</p>
                 </CardLayout>
             </div>
         </div>

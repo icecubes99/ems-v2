@@ -1,3 +1,5 @@
+"use client"
+import { RoleGate } from "@/components/auth/role-gate";
 
 interface ProtectedLayoutProps {
     children: React.ReactNode;
@@ -5,9 +7,9 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     return (
-        <div className="">
+        <RoleGate allowedRoles={["SUPERADMIN"]}>
             {children}
-        </div>
+        </RoleGate>
     );
 };
 
