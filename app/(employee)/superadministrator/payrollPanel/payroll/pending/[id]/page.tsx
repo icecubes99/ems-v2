@@ -12,6 +12,7 @@ import { DataTableWithFooter } from '@/components/data-table-with-footer'
 import { Calendar, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ApprovePayrollDialog } from '../../../_components/approve-payroll-dialog'
+import { DeletePayrollDialog } from '../../../_components/delete-payroll-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { payrollItems } = usePayrollItems(params.id)
@@ -116,8 +117,9 @@ function TableWrapper({ title, children, icon, payPeriodStart, payPeriodEnd, tot
                     </div>
                 </div>
 
-                <div className='flex items-center justify-center '>
+                <div className='flex items-center justify-center flex-col gap-2'>
                     <ApprovePayrollDialog payrollId={payrollId} />
+                    <DeletePayrollDialog payrollId={payrollId} />
                 </div>
             </div>
             <div className='p-6'>

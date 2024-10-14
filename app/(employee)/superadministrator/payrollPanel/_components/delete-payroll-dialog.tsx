@@ -15,16 +15,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSucess } from "@/components/form-sucess";
-import { approvePayroll } from "@/actions/superadmin/approve-payroll";
+import { removePayroll } from "@/actions/superadmin/remove/remove-payroll";
 import { useRouter } from "next/navigation";
 import { usePayroll } from "@/hooks/use-payroll-data";
 import { LeaveStatus } from "@prisma/client";
 
-interface ApprovePayrollDialogProps {
+interface DeletePayrollDialogProps {
     payrollId: string;
 }
 
-export function ApprovePayrollDialog({ payrollId }: ApprovePayrollDialogProps) {
+export function DeletePayrollDialog({ payrollId }: DeletePayrollDialogProps) {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -46,7 +46,7 @@ export function ApprovePayrollDialog({ payrollId }: ApprovePayrollDialogProps) {
         setError("");
         setSuccess("");
 
-        const result = await approvePayroll(payrollId);
+        const result = await removePayroll(payrollId);
         if (result.error) {
             console.error(result.error);
             setError(result.error);
@@ -63,18 +63,18 @@ export function ApprovePayrollDialog({ payrollId }: ApprovePayrollDialogProps) {
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
-                <Button className="w-36" variant={"success"} disabled={payrollStatus === LeaveStatus.APPROVED}>Approve</Button>
+                <Button className="w-36" variant={"destructive"} disabled={payrollStatus === LeaveStatus.APPROVED}>Delete</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to approve this Payroll?</AlertDialogTitle>
+                    <AlertDialogTitle>Are you sure you want to delete this Payroll?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will approve the payroll and the employees will be able to view their payslips.
+                        This action cannot be undone. This will delete the payroll and the data will be lost.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <Button onClick={handleAction} variant={"success"}>Approve</Button>
+                    <Button onClick={handleAction} variant={"destructive"}>Delete</Button>
                 </AlertDialogFooter>
                 <div>
                     <FormError message={error} />
