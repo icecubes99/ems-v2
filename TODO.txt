@@ -31,6 +31,6 @@ FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
     - Add Edit and Remove functionality to Holidays     Oct-10 5:39pm
     - Added Audit Logs table for users and superadmins          Oct-13 9:49pm
-
+    - Added Remove Payroll and can safely remove payrolls without affecting the deductions and additional earnings 
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina

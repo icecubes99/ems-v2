@@ -140,9 +140,13 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
             }
         });
 
+        const daysNotWorkedHours = payslip.daysNotWorked * 8
+        const daysNotWorkedDeductions = (payslip.basicSalary / (payslip.daysWorked * 8)) * daysNotWorkedHours
+
         // Add deductions table
         const finalY = (doc as any).lastAutoTable.finalY || 100;
         const deductionsBody = [
+            ['Days Not Worked Deductions', daysNotWorkedDeductions.toFixed(2)],
             ['Late Deductions', payslip.lateDeductions.toFixed(2)],
             ['Early Clock Out Deductions', payslip.earlyClockOutDeductions.toFixed(2)],
             ['Additional Deductions', '-'],
