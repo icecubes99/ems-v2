@@ -23,18 +23,15 @@ export default function SuperAdminCards() {
                     buttonLink=""
                 >
                     <div className='space-y-4'>
-                        <div className='grid grid-cols-2  items-center'>
-                            <p className='text-sm font-medium'>Create Department</p>
+                        <div className='flex justify-center items-center'>
                             <CreateDepartmentForm variant="superadmin" />
                         </div>
-                        <div className='grid grid-cols-2  items-center'>
-                            <p className='text-sm font-medium'>Create Designation</p>
+                        <div className='flex justify-center items-center'>
                             <CreateDesignationButton variant="superadmin" />
                         </div>
-                        <div className='grid grid-cols-2  items-center'>
-                            <p className='text-sm font-medium'>View Departments</p>
+                        <div className='flex justify-center items-center'>
                             <Link href='/superadministrator/departments'>
-                                <Button className='w-full' variant={"superadmin"}>
+                                <Button className='w-72' variant={"superadmin"}>
                                     View Departments
                                 </Button>
                             </Link>

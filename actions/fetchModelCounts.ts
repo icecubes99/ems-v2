@@ -119,7 +119,7 @@ export async function fetchUserBasicSalary(userId: string) {
                 userId: userId
             }
         })
-        return basicSalary?.basicSalary
+        return basicSalary?.grossSalary
     } catch (error) {
         console.error("Error fetching user basic salary: ", error);
         throw new Error("Failed to fetch User Basic Salary")
@@ -180,3 +180,12 @@ export async function fetchTotalPayslipCount() {
     }
 }
 
+export async function fetchTotalAuditLogs() {
+    try {
+        const auditLogCounts = await db.auditLog.count({})
+        return auditLogCounts
+    } catch (error) {
+        console.error("Error fetching audit logs count: ", error);
+        throw new Error("Failed to fetch Audit Logs Count")
+    }
+}

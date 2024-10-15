@@ -104,14 +104,14 @@ export const addAdditionalEarningsToUserCorrections = async (values: z.infer<typ
     const { netSalary, totalDeductions, basicSalary, overtimeSalary, additionalEarnings } = payrollItem
 
     let newNetSalary = netSalary
-    const grossSalary = basicSalary + overtimeSalary + additionalEarnings
+    const grossSalary = basicSalary + overtimeSalary + additionalEarnings + amount
     let payrollAmountForTotal = amount
 
     if (grossSalary < totalDeductions) {
         newNetSalary = netSalary
         payrollAmountForTotal = 0
     } else {
-        newNetSalary = netSalary + amount
+        newNetSalary = (netSalary + amount) - totalDeductions
     }
 
     await db.payrollItem.update({
@@ -119,6 +119,7 @@ export const addAdditionalEarningsToUserCorrections = async (values: z.infer<typ
             id: payrollItemId
         },
         data: {
+            additionalEarnings: additionalEarnings + amount,
             netSalary: newNetSalary
         }
     })
@@ -136,7 +137,7 @@ export const addAdditionalEarningsToUserCorrections = async (values: z.infer<typ
     }
 
     const { totalAmount } = payroll
-    const newTotalAmount = totalAmount + payrollAmountForTotal
+    const newTotalAmount = totalAmount + newNetSalary
 
     await db.payroll.update({
         where: {

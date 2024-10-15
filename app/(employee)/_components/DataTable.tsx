@@ -35,12 +35,14 @@ import { Input } from "@/components/ui/input"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    searchValue?: string
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    searchValue,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -72,10 +74,10 @@ export function DataTable<TData, TValue>({
             {/* Search Functionality via Email */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    placeholder={`Search ${searchValue || "email"}...`}
+                    value={(table.getColumn(searchValue || "email")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
+                        table.getColumn(searchValue || "email")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />

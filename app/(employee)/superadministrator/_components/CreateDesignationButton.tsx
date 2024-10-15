@@ -13,7 +13,7 @@ const CreateDesignationButton = ({ variant }: CreateDesignationProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={variant}>
+                <Button className="w-72" variant={variant}>
                     Create Designation
                 </Button>
             </DialogTrigger>

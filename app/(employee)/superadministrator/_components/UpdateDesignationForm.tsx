@@ -31,6 +31,7 @@ import useDesignation from '@/hooks/use-designation';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
+import SelectUserDesignationHead from './select-user-designation-head';
 
 interface UpdateDesignationFormProps {
     designationId: string;
@@ -103,9 +104,9 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ variant, 
             <DialogContent className='p-0 w-full bg-transparent border-none'>
                 <Card>
                     <CardHeader>
-                        Create Designation
+                        Edit Designation
                         <CardDescription>
-                            Input the details of the new designation
+                            Input the details of the designation
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -194,7 +195,7 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ variant, 
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Designation Head</FormLabel>
-                                                    <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                    <SelectUserDesignationHead value={field.value} onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}

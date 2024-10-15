@@ -1,6 +1,6 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchActiveUsersCount, fetchApprovedPayrollCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchRejectedPayrollCount, fetchTotalPayrollCount, fetchTotalPayslipCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchActiveUsersCount, fetchApprovedPayrollCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchRejectedPayrollCount, fetchTotalAuditLogs, fetchTotalPayrollCount, fetchTotalPayslipCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
 import { set } from 'date-fns';
@@ -330,4 +330,28 @@ export function useTotalApprovedPayslipCount() {
         getTotalApprovedPayslipCount()
     }, [])
     return { payslipCount, isLoading, error }
+}
+
+export function useTotalAuditLogCount() {
+    const [auditLogCount, setAuditLogCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalAuditLogCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchTotalAuditLogs()
+                setAuditLogCount(count)
+            } catch (error) {
+                console.error("Error fetching Audit Log Count: ", error);
+                setError("Failed to fetch Audit Log Count")
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        getTotalAuditLogCount()
+    }, [])
+    return { auditLogCount, isLoading, error }
 }

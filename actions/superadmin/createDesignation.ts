@@ -8,7 +8,8 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { admin } from "../admin";
-import { UserRole } from "@prisma/client";
+import { EmployeeType, Status, UserRole } from "@prisma/client";
+import { createAssignedUser } from "./createAssignedUser";
 
 
 export const createDesignation = async (values: z.infer<typeof DesignationSchema>) => {
@@ -43,13 +44,14 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
     await auditAction(dbUser.id, `Designation Created by Admin: ${adminName}`);
 
     const designationHeadUser = await db.user.findUnique({
-        where: { id: designationHeadUserId }
+        where: { id: designationHeadUserId },
+        include: { assignedDesignations: true }
     })
 
     if (designationHeadUser && designationHeadUser.role !== UserRole.SUPERADMIN) {
         await db.user.update({
             where: { id: designationHeadUserId },
-            data: { role: UserRole.ADMIN }
+            data: { role: UserRole.ADMIN },
         })
     }
 
@@ -75,6 +77,19 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
             designationId,
         },
     });
+
+    if (designationHeadUser && designationHeadUser.assignedDesignations === null) {
+        const assignedUserValues = {
+            userId: designationHeadUserId,
+            employeeType: EmployeeType.REGULAR,
+            status: Status.ACTIVE,
+            designationId: designationId
+        };
+        const assignedUserResult = await createAssignedUser(assignedUserValues);
+        if (assignedUserResult.error) {
+            throw new Error(assignedUserResult.error); // Throw an error to rollback the transaction
+        }
+    }
 
     return { success: "Designation created!" };
 }

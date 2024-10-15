@@ -82,7 +82,7 @@ const CreateDepartmentForm = ({ variant }: CreateDepartmentForm) => {
 
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={variant}>
+                <Button className='w-72' variant={variant}>
                     Create Department
                 </Button>
             </DialogTrigger>

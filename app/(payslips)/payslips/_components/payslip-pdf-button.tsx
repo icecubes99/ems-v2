@@ -8,6 +8,7 @@ import { PayrollItemWithUser, AdditionalEarnings, Deductions } from '@/types/typ
 import { FileDown } from 'lucide-react'
 import { CellHookData } from 'jspdf-autotable'
 import React from 'react'
+import { add } from 'date-fns'
 
 declare module 'jspdf' {
     interface jsPDF {
@@ -141,8 +142,14 @@ export function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         });
 
         const daysNotWorkedHours = payslip.daysNotWorked * 8
-        const daysNotWorkedDeductions = (payslip.basicSalary / (payslip.daysWorked * 8)) * daysNotWorkedHours
-
+        let additionalDeductionsAmount = 0
+        // Add additional deductions
+        if (payslip.deductions && payslip.deductions.length > 0) {
+            payslip.deductions.forEach((deduction: Deductions) => {
+                additionalDeductionsAmount += deduction.amount
+            })
+        }
+        const daysNotWorkedDeductions = (payslip.basicSalary / (payslip.daysWorked * 8)) * daysNotWorkedHours || payslip.totalDeductions - (payslip.lateDeductions + payslip.earlyClockOutDeductions + additionalDeductionsAmount)
         // Add deductions table
         const finalY = (doc as any).lastAutoTable.finalY || 100;
         const deductionsBody = [

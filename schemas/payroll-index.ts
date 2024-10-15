@@ -40,7 +40,7 @@ export const AdditionalEarningsSchema = z.object({
     }),
     amount: z.number().min(1, {
         message: "Amount is required",
-    }).max(10000, {
+    }).max(20000, {
         message: "Amount must be less than PHP 10,000",
     }),
     description: z.string().min(1, {
@@ -54,7 +54,7 @@ export const AdditionalEarningsSchemaWithUser = z.object({
     }),
     amount: z.number().min(1, {
         message: "Amount is required",
-    }).max(10000, {
+    }).max(20000, {
         message: "Amount must be less than PHP 10,000",
     }),
     description: z.string().min(1, {
