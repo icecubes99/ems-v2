@@ -1,8 +1,8 @@
 import * as z from "zod";
 
 export const DeductionsSchema = z.object({
-    userId: z.string().min(1, {
-        message: "User is required",
+    userIds: z.array(z.string()).min(1, {
+        message: "At least one user must be selected",
     }),
     deductionType: z.string().min(1, {
         message: "Deduction Type is required",
@@ -32,8 +32,8 @@ export const DeductionsSchemaWithUser = z.object({
 })
 
 export const AdditionalEarningsSchema = z.object({
-    userId: z.string().min(1, {
-        message: "User is required",
+    userIds: z.array(z.string()).min(1, {
+        message: "At least one user must be selected",
     }),
     earningType: z.string().min(1, {
         message: "Earning Type is required",

@@ -1,44 +1,30 @@
 "use client"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useUserList } from '@/hooks/use-user-list';
 import { ExtendedUser } from '@/next-auth';
+import { User } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 
 interface SelectUserProps {
     onUserChange: (userId: string) => void;
     value?: string; // Add value prop
 }
-
+interface MultiSelectUserProps {
+    onUserChangeArr: (userId: string[]) => void;
+    value: string;
+}
 const SelectUser: React.FC<SelectUserProps> = ({ onUserChange, value }) => {
-    const [users, setUsers] = useState<ExtendedUser[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
 
-    const makeApiCall = async () => {
-        const response = await fetch('/api/users', {
-            method: 'GET',
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const users = await response.json();
-        const processedUsers = users.map((user: any) => {
-            const name = user?.firstName + ' ' + user?.lastName;
-
-            return {
-                id: user.id,
-                name,
-            };
-        });
-
-        setUsers(processedUsers);
-    };
+    const { users: user } = useUserList();
 
     useEffect(() => {
-        makeApiCall();
-    }, []);
+        if (user) {
+            setUsers(user);
+        }
+    }, [user])
 
     const handleChange = (value: string) => {
-        // console.log(`Selected user ID: ${value}`);
         onUserChange(value);
     };
 
@@ -49,7 +35,7 @@ const SelectUser: React.FC<SelectUserProps> = ({ onUserChange, value }) => {
             </SelectTrigger>
             <SelectContent>
                 {users.map(user => (
-                    <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>
+                    <SelectItem key={user.id} value={user.id}>{user.firstName + " " + user.lastName}</SelectItem>
                 ))}
             </SelectContent>
         </Select>

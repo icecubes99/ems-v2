@@ -12,7 +12,8 @@ import { auditAction } from "../auditAction";
 import { admin } from "../admin";
 import { UserRole } from "@prisma/client";
 
-export const addDeductionsToUser = async (values: z.infer<typeof DeductionsSchema>) => {
+
+export const addDeductionsToUsers = async (values: z.infer<typeof DeductionsSchema>) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
@@ -33,24 +34,28 @@ export const addDeductionsToUser = async (values: z.infer<typeof DeductionsSchem
         return { error: adminResult.error };
     }
 
-    const { userId, amount, deductionType, description } = validatedFields.data;
+    const { userIds, amount, deductionType, description } = validatedFields.data;
 
-    const createdBy = dbUser.id;
     const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
 
-    await auditAction(dbUser.id, `Deduction Added by Admin: ${adminName}`);
+    await auditAction(dbUser.id, `Multiple Deductions Added by Admin: ${adminName}`);
 
-    await db.deductions.create({
-        data: {
-            userId,
-            amount,
-            deductionType,
-            description,
-        }
-    });
+    const deductionPromises = userIds.map(userId =>
+        db.deductions.create({
+            data: {
+                userId,
+                amount,
+                deductionType,
+                description,
+            }
+        })
+    );
 
-    return { success: "Deduction Added!" };
+    await Promise.all(deductionPromises);
+
+    return { success: `Deductions Added for ${userIds.length} user(s)!` };
 }
+
 
 export const addDeductionsCorrection = async (values: z.infer<typeof DeductionsSchemaWithUser>, userId: string, payrollItemId: string, payrollId: string) => {
     const user = await currentUser();

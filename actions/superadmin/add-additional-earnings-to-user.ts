@@ -31,20 +31,25 @@ export const addAdditionalEarningsToUser = async (values: z.infer<typeof Additio
         return { error: adminResult.error };
     }
 
-    const { userId, amount, earningType, description } = validatedFields.data;
+    const { userIds, amount, earningType, description } = validatedFields.data;
 
     const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
 
     await auditAction(dbUser.id, `Additional Earnings Added by Admin: ${adminName}`);
 
-    await db.additionalEarnings.create({
-        data: {
-            userId,
-            amount,
-            earningType,
-            description,
-        }
-    });
+    const additionaEarningsPromises = userIds.map(userId => {
+        return db.additionalEarnings.create({
+            data: {
+                userId,
+                amount,
+                earningType,
+                description,
+            }
+        });
+
+    })
+
+    await Promise.all(additionaEarningsPromises);
 
     return { success: "Additional Earnings Added!" };
 }
