@@ -20,3 +20,11 @@ export const getDepartment = async (departmentId: string) => {
 
     return { success: "Department found!", data: department };
 }
+
+export async function fetchDepartmentList() {
+    const departments = await db.department.findMany();
+    if (!departments) {
+        return { error: "No departments found!" };
+    }
+    return { success: "Departments found!", data: departments };
+}

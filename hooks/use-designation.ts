@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getLoneDesignation } from "@/actions/superadmin/getDesignations";
+import { getDesignations, getLoneDesignation } from "@/actions/superadmin/getDesignations";
 import { Designation } from "@prisma/client";
 
-const useDesignation = (designationId: string) => {
+export const useDesignation = (designationId: string) => {
 
     const [designation, setDesignation] = useState<Designation | null>(null);
     const [loading, setLoading] = useState(true);
@@ -37,4 +37,26 @@ const useDesignation = (designationId: string) => {
     return { designationName, designationDescription, status, departmentId, designationHeadUserId, loading, error, designation }
 }
 
-export default useDesignation;
+export const useDesignationList = () => {
+    const [designations, setDesignations] = useState<Designation[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<Error | null>(null)
+
+    useEffect(() => {
+        async function loadDesignations() {
+            try {
+                setLoading(true)
+                const fetchedDesignations = await getDesignations()
+                setDesignations(fetchedDesignations.data || [])
+            } catch (e) {
+                setError(e instanceof Error ? e : new Error('An error occurred while fetching designations'))
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadDesignations()
+    }, [])
+
+    return { designations, loading, error }
+}

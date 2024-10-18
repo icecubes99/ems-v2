@@ -24,11 +24,6 @@ export const getDesignationFromDepartment = async (departmentId: string) => {
 }
 
 export const getDesignations = async () => {
-    const user = await currentUser();
-
-    if (!user) {
-        return { error: "Unauthorized!" }
-    }
 
     const designations = await db.designation.findMany({});
 

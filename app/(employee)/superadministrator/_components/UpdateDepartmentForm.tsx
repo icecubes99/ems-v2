@@ -25,7 +25,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
 import SelectUser from '../../_components/SelectUser';
-import useDepartment from '@/hooks/use-department';
+import { useDepartment } from '@/hooks/use-department';
 import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';

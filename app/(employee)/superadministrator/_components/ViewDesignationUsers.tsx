@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import useAssignedUsersInADesignation from '@/hooks/use-assigned-users-in-a-designation'
 import { useUser } from '@/hooks/use-user'
-import useDesignation from '@/hooks/use-designation'
+import { useDesignation } from '@/hooks/use-designation'
 
 interface ViewDesignationUsersProps {
     designationId: string

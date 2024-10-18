@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { DataTableDesignationUsers } from '../../../_components/DataTable-DesignationUsers'
 import { columnsDesignation } from './columns-designations'
 import { AssignDesignationWithUser } from '@/types/types'
-import useDesignation from '@/hooks/use-designation'
+import { useDesignation } from '@/hooks/use-designation'
 
 const Page = ({ params }: { params: { id: string } }) => {
     const [assignedUsers, setAssignedUsers] = useState<AssignDesignationWithUser[]>([]);

@@ -18,7 +18,7 @@ import {
 
 import { AssignedDesignationSchema } from '@/schemas/superadminIndex';
 import { updateAssignedUser } from '@/actions/superadmin/updateAssignedUser';
-import useDesignation from '@/hooks/use-designation';
+import { useDesignation } from '@/hooks/use-designation';
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

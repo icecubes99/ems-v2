@@ -5,7 +5,6 @@ import * as z from 'zod'
 
 import { AdditionalEarningsSchema } from '@/schemas/payroll-index'
 import { addAdditionalEarningsToUser } from '@/actions/superadmin/add-additional-earnings-to-user'
-import { useUserList } from '@/hooks/use-user-list'
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -16,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
-import { LiteMultiSelect } from '@/components/ui/lite-multi-select'
+import { MultiSelectUsers } from '@/components/ui/multi-select-components'
 
 interface AdditionalEarningsFormProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
@@ -28,13 +27,6 @@ export default function AddAdditionalEarningsForm({ variant }: AdditionalEarning
     const [isPending, setIsPending] = useState(false)
     const [open, setOpen] = useState(false)
     const [formattedAmount, setFormattedAmount] = useState("")
-
-    const { users } = useUserList()
-
-    const userOptions = users?.map((user) => ({
-        value: user.id,
-        label: `${user.firstName} ${user.lastName}`
-    })) || []
 
     const form = useForm<z.infer<typeof AdditionalEarningsSchema>>({
         resolver: zodResolver(AdditionalEarningsSchema),
@@ -98,11 +90,8 @@ export default function AddAdditionalEarningsForm({ variant }: AdditionalEarning
                                             <FormItem>
                                                 <FormLabel>Employees to Receive Additional Earnings</FormLabel>
                                                 <FormControl>
-                                                    <LiteMultiSelect
-                                                        options={userOptions}
+                                                    <MultiSelectUsers
                                                         onChange={(values) => field.onChange(values)}
-                                                        placeholder="Select users"
-                                                        itemName='user'
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

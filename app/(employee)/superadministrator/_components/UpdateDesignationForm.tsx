@@ -27,7 +27,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Status } from '@prisma/client';
 import SelectDepartments from './SelectDepartments';
 import SelectUser from '../../_components/SelectUser';
-import useDesignation from '@/hooks/use-designation';
+import { useDesignation } from '@/hooks/use-designation';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';

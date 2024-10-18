@@ -18,15 +18,35 @@ export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
         return { error: superAdminResult.error };
     }
 
-
     try {
         await db.$transaction(async (tx) => {
             const salaryIncreaseEvent = await tx.salaryIncreaseEvent.findUnique({
                 where: { id: salaryIncreaseEventId },
                 include: {
-                    department: {
+                    departments: {
                         include: {
-                            designations: {
+                            department: {
+                                include: {
+                                    designations: {
+                                        include: {
+                                            AssignDesignation: {
+                                                include: {
+                                                    user: {
+                                                        include: {
+                                                            userSalary: true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    designations: {
+                        include: {
+                            designation: {
                                 include: {
                                     AssignDesignation: {
                                         include: {
@@ -40,19 +60,6 @@ export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
                                 }
                             }
                         }
-                    },
-                    designation: {
-                        include: {
-                            AssignDesignation: {
-                                include: {
-                                    user: {
-                                        include: {
-                                            userSalary: true
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 },
             });
@@ -61,61 +68,22 @@ export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
                 throw new Error("Invalid or already undone salary increase event.");
             }
 
-            if (!salaryIncreaseEvent.department && !salaryIncreaseEvent.designation) {
-                throw new Error("Salary increase event is not associated with a department or designation.");
+            if (salaryIncreaseEvent.departments.length === 0 && salaryIncreaseEvent.designations.length === 0) {
+                throw new Error("Salary increase event is not associated with any departments or designations.");
             }
 
-            const isForDepartment = !!salaryIncreaseEvent.department;
-            const targetEntity = isForDepartment ? salaryIncreaseEvent.department : salaryIncreaseEvent.designation;
-            const entityType = isForDepartment ? "department" : "designation";
-
-            const designations = isForDepartment ? targetEntity.designations : [targetEntity];
-
-            for (const designation of designations) {
-                let previousDesignationSalary: number;
-
-                if (salaryIncreaseEvent.percentage) {
-                    previousDesignationSalary = designation.designationSalary / (1 + salaryIncreaseEvent.percentage / 100);
-                } else if (salaryIncreaseEvent.amount) {
-                    previousDesignationSalary = designation.designationSalary - salaryIncreaseEvent.amount;
-                } else {
-                    throw new Error("Invalid salary increase event: neither percentage nor amount is set.");
+            // Handle departments
+            for (const deptIncrease of salaryIncreaseEvent.departments) {
+                const department = deptIncrease.department;
+                for (const designation of department.designations) {
+                    await undoDesignationSalaryIncrease(tx, designation, salaryIncreaseEvent);
                 }
+            }
 
-                await tx.designation.update({
-                    where: { id: designation.id },
-                    data: { designationSalary: previousDesignationSalary },
-                });
-
-                for (const assignedDesignation of designation.AssignDesignation) {
-                    const employee = assignedDesignation.user;
-                    if (employee.userSalary) {
-                        const previousSalaryHistory = await tx.salaryHistory.findFirst({
-                            where: {
-                                userId: employee.id,
-                            },
-                            orderBy: { startDate: 'desc' },
-                        });
-
-                        if (previousSalaryHistory) {
-                            await tx.salaryHistory.create({
-                                data: {
-                                    userId: employee.id,
-                                    basicSalary: employee.userSalary.basicSalary,
-                                    grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
-                                    startDate: new Date(),
-                                },
-                            });
-
-                            await tx.userSalary.update({
-                                where: { id: employee.userSalary.id },
-                                data: {
-                                    grossSalary: previousSalaryHistory.grossSalary,
-                                },
-                            });
-                        }
-                    }
-                }
+            // Handle designations
+            for (const desigIncrease of salaryIncreaseEvent.designations) {
+                const designation = desigIncrease.designation;
+                await undoDesignationSalaryIncrease(tx, designation, salaryIncreaseEvent);
             }
 
             await tx.salaryIncreaseEvent.update({
@@ -127,21 +95,59 @@ export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
                 },
             });
 
-            await tx.salaryIncreaseEvent.deleteMany({
-                where: {
-                    OR: [
-                        { isUndone: true },
-                        { isUndone: false }
-                    ]
-                }
-            })
-
-            await auditAction(user.id, `Undid salary increase for ${entityType} by Super Admin: ${user.name}`);
+            await auditAction(user.id, `Undid salary increase for multiple departments/designations by Super Admin: ${user.name}`);
         });
 
         return { success: "Successfully undid salary increase" };
     } catch (error) {
         console.error("Error undoing salary increase:", error);
         return { error: "An error occurred while undoing the salary increase." };
+    }
+}
+
+async function undoDesignationSalaryIncrease(tx: any, designation: any, salaryIncreaseEvent: any) {
+    let previousDesignationSalary: number;
+
+    if (salaryIncreaseEvent.percentage) {
+        previousDesignationSalary = designation.designationSalary / (1 + salaryIncreaseEvent.percentage / 100);
+    } else if (salaryIncreaseEvent.amount) {
+        previousDesignationSalary = designation.designationSalary - salaryIncreaseEvent.amount;
+    } else {
+        throw new Error("Invalid salary increase event: neither percentage nor amount is set.");
+    }
+
+    await tx.designation.update({
+        where: { id: designation.id },
+        data: { designationSalary: previousDesignationSalary },
+    });
+
+    for (const assignedDesignation of designation.AssignDesignation) {
+        const employee = assignedDesignation.user;
+        if (employee.userSalary) {
+            const previousSalaryHistory = await tx.salaryHistory.findFirst({
+                where: {
+                    userId: employee.id,
+                },
+                orderBy: { startDate: 'desc' },
+            });
+
+            if (previousSalaryHistory) {
+                await tx.salaryHistory.create({
+                    data: {
+                        userId: employee.id,
+                        basicSalary: employee.userSalary.basicSalary,
+                        grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
+                        startDate: new Date(),
+                    },
+                });
+
+                await tx.userSalary.update({
+                    where: { id: employee.userSalary.id },
+                    data: {
+                        grossSalary: previousSalaryHistory.grossSalary,
+                    },
+                });
+            }
+        }
     }
 }

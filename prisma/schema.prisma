@@ -226,7 +226,7 @@ model Department {
 
   designations Designation[]
 
-  salaryIncreaseEvents SalaryIncreaseEvent[]
+ salaryIncreaseEvents DepartmentSalaryIncrease[]
 
   @@unique([departmentHeadUserId])
 }
@@ -251,7 +251,7 @@ model Designation {
 
   AssignDesignation AssignDesignation[]
 
-  salaryIncreaseEvents SalaryIncreaseEvent[]
+  salaryIncreaseEvents DesignationSalaryIncrease[]
 
   @@unique([designationHeadUserId])
 }
@@ -502,22 +502,32 @@ model PayrollItem {
 }
 model SalaryIncreaseEvent {
   id            String   @id @default(cuid())
-
-  departmentId  String?
-  department    Department? @relation(fields: [departmentId], references: [id])
-
-  designationId String?
-  designation   Designation? @relation(fields: [designationId], references: [id])
-
   percentage    Float?
   amount        Float?
-
   appliedAt     DateTime @default(now())
   appliedBy     String
-  
   isUndone      Boolean  @default(false)
   undoneAt      DateTime?
   undoneBy      String?
+  departments   DepartmentSalaryIncrease[]
+  designations  DesignationSalaryIncrease[]
+}
 
-  @@index([departmentId])
+
+model DepartmentSalaryIncrease {
+  department          Department        @relation(fields: [departmentId], references: [id])
+  departmentId        String
+  salaryIncreaseEvent SalaryIncreaseEvent @relation(fields: [salaryIncreaseEventId], references: [id])
+  salaryIncreaseEventId String
+
+  @@id([departmentId, salaryIncreaseEventId])
+}
+
+model DesignationSalaryIncrease {
+  designation         Designation       @relation(fields: [designationId], references: [id])
+  designationId       String
+  salaryIncreaseEvent SalaryIncreaseEvent @relation(fields: [salaryIncreaseEventId], references: [id])
+  salaryIncreaseEventId String
+
+  @@id([designationId, salaryIncreaseEventId])
 }

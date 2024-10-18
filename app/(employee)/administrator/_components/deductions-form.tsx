@@ -5,7 +5,6 @@ import * as z from 'zod'
 
 import { DeductionsSchema } from '@/schemas/payroll-index'
 import { addDeductionsToUsers } from '@/actions/superadmin/addDeductionsToUser'
-import { useUserList } from '@/hooks/use-user-list'
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -16,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
-import { LiteMultiSelect } from '@/components/ui/lite-multi-select'
+import { MultiSelectUsers } from '@/components/ui/multi-select-components'
 
 interface DeductionsFormProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
@@ -28,13 +27,6 @@ export default function AddDeductionsForm({ variant }: DeductionsFormProps) {
     const [isPending, setIsPending] = useState(false)
     const [open, setOpen] = useState(false)
     const [formattedSalary, setFormattedSalary] = useState("")
-
-    const { users } = useUserList()
-
-    const userOptions = users?.map((user) => ({
-        value: user.id,
-        label: `${user.firstName} ${user.lastName}`
-    })) || []
 
     const form = useForm<z.infer<typeof DeductionsSchema>>({
         resolver: zodResolver(DeductionsSchema),
@@ -98,11 +90,8 @@ export default function AddDeductionsForm({ variant }: DeductionsFormProps) {
                                             <FormItem>
                                                 <FormLabel>Employees to be Deducted</FormLabel>
                                                 <FormControl>
-                                                    <LiteMultiSelect
-                                                        options={userOptions}
+                                                    <MultiSelectUsers
                                                         onChange={(values) => field.onChange(values)}
-                                                        placeholder="Select users"
-                                                        itemName='user'
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

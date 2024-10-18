@@ -2,7 +2,7 @@
 
 import React from 'react'
 import useDesignationFromDepartment from '@/hooks/use-current-designationsFromDepartment'
-import useDepartment from '@/hooks/use-department'
+import { useDepartment } from '@/hooks/use-department'
 import { useUser } from '@/hooks/use-user'
 import { Designation, Status } from '@prisma/client'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'

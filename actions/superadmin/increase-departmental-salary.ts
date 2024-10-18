@@ -25,77 +25,78 @@ export async function increaseDepartmentSalary(values: z.infer<typeof IncreaseDe
         return { error: "Invalid input." };
     }
 
-    const { departmentId, increaseType, value } = validatedFields.data;
+    const { departmentIds, increaseType, value } = validatedFields.data;
 
     try {
         await db.$transaction(async (tx) => {
-            const department = await tx.department.findUnique({
-                where: { id: departmentId },
-                include: { designations: { include: { AssignDesignation: { include: { user: { include: { userSalary: true } } } } } } },
-            });
-
-            if (!department) {
-                throw new Error("Department not found");
-            }
-
-            // Check if tx.salaryIncreaseEvent exists before calling create
-            if (!tx.salaryIncreaseEvent) {
-                throw new Error("SalaryIncreaseEvent is not defined in the transaction");
-            }
-
-            await tx.salaryIncreaseEvent.create({
+            const salaryIncreaseEvent = await tx.salaryIncreaseEvent.create({
                 data: {
-                    departmentId,
                     percentage: increaseType === 'percentage' ? value : null,
                     amount: increaseType === 'amount' ? value : null,
                     appliedBy: user.id,
+                    departments: {
+                        create: departmentIds.map(departmentId => ({
+                            department: { connect: { id: departmentId } }
+                        }))
+                    }
                 },
             });
 
-            for (const designation of department.designations) {
-                let newDesignationSalary: number;
-                if (increaseType === 'percentage') {
-                    newDesignationSalary = designation.designationSalary * (1 + value / 100);
-                } else {
-                    newDesignationSalary = designation.designationSalary + value;
-                }
-
-                await tx.designation.update({
-                    where: { id: designation.id },
-                    data: { designationSalary: newDesignationSalary },
+            for (const departmentId of departmentIds) {
+                const department = await tx.department.findUnique({
+                    where: { id: departmentId },
+                    include: { designations: { include: { AssignDesignation: { include: { user: { include: { userSalary: true } } } } } } },
                 });
 
-                for (const assignedDesignation of designation.AssignDesignation) {
-                    const employee = assignedDesignation.user;
-                    if (employee.userSalary) {
-                        await tx.salaryHistory.create({
-                            data: {
-                                userId: employee.id,
-                                basicSalary: employee.userSalary.basicSalary,
-                                grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
-                                startDate: employee.userSalary.updatedAt,
-                            },
-                        });
+                if (!department) {
+                    throw new Error(`Department with ID ${departmentId} not found`);
+                }
 
-                        const newBasicSalary = employee.userSalary.basicSalary
-                        const newGrossSalary = newBasicSalary + newDesignationSalary;
+                for (const designation of department.designations) {
+                    let newDesignationSalary: number;
+                    if (increaseType === 'percentage') {
+                        newDesignationSalary = designation.designationSalary * (1 + value / 100);
+                    } else {
+                        newDesignationSalary = designation.designationSalary + value;
+                    }
 
-                        await tx.userSalary.update({
-                            where: { id: employee.userSalary.id },
-                            data: {
-                                grossSalary: newGrossSalary,
-                            },
-                        });
+                    await tx.designation.update({
+                        where: { id: designation.id },
+                        data: { designationSalary: newDesignationSalary },
+                    });
+
+                    for (const assignedDesignation of designation.AssignDesignation) {
+                        const employee = assignedDesignation.user;
+                        if (employee.userSalary) {
+                            await tx.salaryHistory.create({
+                                data: {
+                                    userId: employee.id,
+                                    basicSalary: employee.userSalary.basicSalary,
+                                    grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
+                                    startDate: employee.userSalary.updatedAt,
+                                },
+                            });
+
+                            const newBasicSalary = employee.userSalary.basicSalary
+                            const newGrossSalary = newBasicSalary + newDesignationSalary;
+
+                            await tx.userSalary.update({
+                                where: { id: employee.userSalary.id },
+                                data: {
+                                    grossSalary: newGrossSalary,
+                                },
+                            });
+                        }
                     }
                 }
             }
 
             const increaseDescription = increaseType === 'percentage' ? `${value}%` : `$${value}`;
-            await auditAction(user.id, `Increased salaries for department ${departmentId} by ${increaseDescription} by Super Admin: ${user.name}`);
+            await auditAction(user.id, `Increased salaries for departments ${departmentIds.join(', ')} by ${increaseDescription} by Super Admin: ${user.name}`);
         });
 
         const increaseDescription = increaseType === 'percentage' ? `${value}%` : `$${value}`;
-        return { success: `Successfully increased salaries for department by ${increaseDescription}` };
+        return { success: `Successfully increased salaries for selected departments by ${increaseDescription}` };
     } catch (error) {
         console.error("Error increasing department salary:", error);
         return { error: "An error occurred while processing the salary increase." };

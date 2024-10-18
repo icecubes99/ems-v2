@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getDepartment } from "@/actions/superadmin/getDepartment";
+import { fetchDepartmentList, getDepartment } from "@/actions/superadmin/getDepartment";
 import { Department } from "@prisma/client";
 
-const useDepartment = (departmentId: string) => {
+export const useDepartment = (departmentId: string) => {
 
     const [department, setDepartment] = useState<Department | null>(null);
     const [loading, setLoading] = useState(true);
@@ -37,4 +37,34 @@ const useDepartment = (departmentId: string) => {
     return { departmentName, departmentDescription, departmentHeadUserId, status, loading, department }
 }
 
-export default useDepartment;
+export const useDepartmentList = () => {
+    const [departments, setDepartments] = useState<Department[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchDepartments = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await fetchDepartmentList();
+
+                if (response.error) {
+                    setError(response.error);
+                    setDepartments([]);
+                } else {
+                    setDepartments(response.data as Department[]);
+                }
+            } catch (error) {
+                setDepartments([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDepartments();
+    }, []);
+
+    return { departments, loading, error }
+}

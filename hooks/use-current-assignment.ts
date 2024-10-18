@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAssignedUserByUserId } from "@/actions/superadmin/getAssignedUser";
 import { AssignDesignation } from "@prisma/client";
-import useDesignation from "./use-designation";
+import { useDesignation } from "./use-designation";
 
 const useUserAssignment = (userId: string) => {
 

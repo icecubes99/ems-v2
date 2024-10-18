@@ -26,7 +26,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { EmployeeType, Status } from '@prisma/client';
 import SelectUser from '../../_components/SelectUser';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import useDesignation from '@/hooks/use-designation';
+import { useDesignation } from '@/hooks/use-designation';
 import SelectNonAssignedUsers from './select-user-assigned-user';
 
 interface CreateAssignedUserFormProps {

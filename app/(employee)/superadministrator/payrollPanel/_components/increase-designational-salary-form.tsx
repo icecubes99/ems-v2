@@ -25,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import SelectDesignation from '../../_components/select-designations'
+import { MultiSelectDesignations } from '@/components/ui/multi-select-components'
 
 export default function IncreaseDesignationalSalaryForm() {
     const [error, setError] = useState<string | undefined>("")
@@ -46,7 +47,7 @@ export default function IncreaseDesignationalSalaryForm() {
     const form = useForm<z.infer<typeof IncreaseDesignationSalarySchema>>({
         resolver: zodResolver(IncreaseDesignationSalarySchema),
         defaultValues: {
-            designationId: "",
+            designationIds: [],
             value: 0,
         },
     })
@@ -107,14 +108,13 @@ export default function IncreaseDesignationalSalaryForm() {
                             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
                                 <FormField
                                     control={form.control}
-                                    name='designationId'
+                                    name='designationIds'
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Department</FormLabel>
                                             <FormControl>
-                                                <SelectDesignation
-                                                    value={field.value}
-                                                    onUserChange={field.onChange} />
+                                                <MultiSelectDesignations
+                                                    onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { DeleteDeductionsDialog } from '@/app/(employee)/administrator/_components/delete-deductions-dialog'
 import React from 'react'
-import useDepartment from '@/hooks/use-department'
+import { useDepartment } from '@/hooks/use-department'
 import { Badge } from '@/components/ui/badge'
 import { UndoSalaryIncreaseDialog } from './undo-salary-increase'
 

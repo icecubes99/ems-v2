@@ -9,8 +9,16 @@ export async function fetchSalaryIncreaseEvents() {
                 appliedAt: 'desc'
             },
             include: {
-                department: true,
-                designation: true
+                departments: {
+                    include: {
+                        department: true
+                    }
+                },
+                designations: {
+                    include: {
+                        designation: true
+                    }
+                }
             },
             where: {
                 isUndone: false

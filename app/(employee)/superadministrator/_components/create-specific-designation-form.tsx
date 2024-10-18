@@ -26,7 +26,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Status } from '@prisma/client';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import useDepartment from '@/hooks/use-department';
+import { useDepartment } from '@/hooks/use-department';
 import SelectUserDesignationHead from './select-user-designation-head';
 
 

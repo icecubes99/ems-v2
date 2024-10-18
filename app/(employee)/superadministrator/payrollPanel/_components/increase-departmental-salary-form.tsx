@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState, useTransition } from 'react'
+import React, { useState, useTransition } from 'react'
 import * as z from 'zod'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,7 +24,7 @@ import { FormSucess } from "@/components/form-sucess"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-import SelectDepartments from '../../_components/SelectDepartments'
+import { MultiSelectDepartments } from '@/components/ui/multi-select-components'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 export default function IncreaseDepartmentalSalaryForm() {
@@ -34,7 +34,6 @@ export default function IncreaseDepartmentalSalaryForm() {
     const [open, setOpen] = useState(false)
     const [formattedSalary, setFormattedSalary] = useState("")
     const [increaseType, setIncreaseType] = useState("amount")
-    const inputRef = useRef<HTMLInputElement>(null)
 
     const formatNumber = (num: number) => {
         return "₱" + num.toLocaleString('en-US')
@@ -47,7 +46,7 @@ export default function IncreaseDepartmentalSalaryForm() {
     const form = useForm<z.infer<typeof IncreaseDepartmentSalarySchema>>({
         resolver: zodResolver(IncreaseDepartmentSalarySchema),
         defaultValues: {
-            departmentId: "",
+            departmentIds: [],
             value: 0,
         },
     })
@@ -60,7 +59,6 @@ export default function IncreaseDepartmentalSalaryForm() {
             increaseDepartmentSalary(values)
                 .then((data) => {
                     if (data.error) {
-                        console.log(values)
                         setError(data.error)
                     }
 
@@ -75,24 +73,6 @@ export default function IncreaseDepartmentalSalaryForm() {
         })
     }
 
-    useEffect(() => {
-        const handleClick = () => {
-            if (inputRef.current) {
-                const input = inputRef.current
-                setTimeout(() => {
-                    input.setSelectionRange(input.value.length, input.value.length)
-                }, 0)
-            }
-        }
-
-        const input = inputRef.current
-        input?.addEventListener('click', handleClick)
-
-        return () => {
-            input?.removeEventListener('click', handleClick)
-        }
-    }, [])
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -101,21 +81,20 @@ export default function IncreaseDepartmentalSalaryForm() {
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Increase the Salary of an entire Department</CardTitle>
+                        <CardTitle>Increase the Salary of entire Departments</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
                                 <FormField
                                     control={form.control}
-                                    name='departmentId'
+                                    name='departmentIds'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Department</FormLabel>
+                                            <FormLabel>Departments</FormLabel>
                                             <FormControl>
-                                                <SelectDepartments
-                                                    value={field.value}
-                                                    onUserChange={field.onChange} />
+                                                <MultiSelectDepartments
+                                                    onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -160,7 +139,6 @@ export default function IncreaseDepartmentalSalaryForm() {
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    ref={inputRef}
                                                     disabled={isPending}
                                                     type="text"
                                                     placeholder={increaseType === "amount" ? "₱0" : "0%"}
@@ -171,13 +149,6 @@ export default function IncreaseDepartmentalSalaryForm() {
                                                         const formatted = increaseType === "amount" ? formatNumber(numberValue || 0) : formatPercentage(numberValue || 0)
                                                         setFormattedSalary(formatted)
                                                         field.onChange(numberValue || 0)
-
-                                                        setTimeout(() => {
-                                                            e.target.setSelectionRange(formatted.length, formatted.length)
-                                                        }, 0)
-                                                    }}
-                                                    onFocus={(e) => {
-                                                        e.target.setSelectionRange(e.target.value.length, e.target.value.length)
                                                     }}
                                                 />
                                             </FormControl>

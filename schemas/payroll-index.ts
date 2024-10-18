@@ -63,13 +63,17 @@ export const AdditionalEarningsSchemaWithUser = z.object({
 })
 
 export const IncreaseDepartmentSalarySchema = z.object({
-    departmentId: z.string(),
+    departmentIds: z.array(z.string()).min(1, {
+        message: "At least one Department must be selected",
+    }),
     increaseType: z.enum(['percentage', 'amount']),
     value: z.number().positive(),
 });
 
 export const IncreaseDesignationSalarySchema = z.object({
-    designationId: z.string(),
+    designationIds: z.array(z.string()).min(1, {
+        message: "At least one Department must be selected",
+    }),
     increaseType: z.enum(['percentage', 'amount']),
     value: z.number().positive(),
 });
