@@ -19,6 +19,7 @@ import React from 'react'
 import { useDepartment } from '@/hooks/use-department'
 import { Badge } from '@/components/ui/badge'
 import { UndoSalaryIncreaseDialog } from './undo-salary-increase'
+import { useDesignation } from '@/hooks/use-designation'
 
 
 export const columnsSalaryIncreaseEvent: ColumnDef<SalaryIncreaseEvent>[] = [
@@ -37,14 +38,25 @@ export const columnsSalaryIncreaseEvent: ColumnDef<SalaryIncreaseEvent>[] = [
             )
         },
         cell: ({ row }) => {
-            const departmentName = row.original.department?.departmentName || ""
-            const designationDepartmentId = row.original.designation?.departmentId || ""
-            const { department } = useDepartment(designationDepartmentId || "")
-            const departmentNameSpecific = department?.departmentName
-            if (departmentName && departmentName !== "") {
-                return <div>{`${departmentName}`}</div>
+            const departmentNames = row.original.departments.map((department) => {
+                const dept = department.departmentId
+                const { department: deptLOL } = useDepartment(dept)
+                return deptLOL?.departmentName || ""
+            })
+
+            const designationDepartmentNames = row.original.designations.map((designations) => {
+                const desig = designations.designationId
+                const { designation: desigLOL } = useDesignation(desig)
+                const desigDeptId = desigLOL?.departmentId
+                const { department: desigDept } = useDepartment(desigDeptId || "")
+                return desigDept?.departmentName || ""
+            })
+
+            const uniqueDepartmentNames = Array.from(new Set([...departmentNames, ...designationDepartmentNames])).filter(Boolean)
+            if (uniqueDepartmentNames.length > 0) {
+                return <div>{`${uniqueDepartmentNames.join(', ')}`}</div>
             } else {
-                return <div>{departmentNameSpecific}</div>
+                return <div>No Department Name</div>
             }
         }
     },
@@ -63,21 +75,32 @@ export const columnsSalaryIncreaseEvent: ColumnDef<SalaryIncreaseEvent>[] = [
             )
         },
         cell: ({ row }) => {
-            const designationName = row.original.designation?.designationName || null
-            if (designationName === null || designationName === undefined) {
-                return <div>
-                    <Badge variant={"cyan"}>
-                        All Designations
-                    </Badge>
-                </div>
+            const designationNames = row.original.designations.map((designation) => {
+                const desig = designation.designationId
+                const { designation: desigLOL } = useDesignation(desig)
+                return desigLOL?.designationName || ""
+            }).filter(Boolean) // Filter out empty strings
+
+            if (designationNames.length === 0) {
+                return (
+                    <div>
+                        <Badge variant={"cyan"}>
+                            All Designations
+                        </Badge>
+                    </div>
+                )
             } else {
-                return <div>
-                    <Badge variant={'default'} >
-                        {`${designationName}`}
-                    </Badge>
-                </div>
+                return (
+                    <div className=" flex flex-row gap-2 flex-wrap">
+                        {designationNames.map((designationName, index) => (
+                            <Badge key={index} variant={"default"}>
+                                {designationName}
+                            </Badge>
+                        ))}
+                    </div>
+                )
             }
-        },
+        }
     },
     {
         accessorKey: "appliedAt",

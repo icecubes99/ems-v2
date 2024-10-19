@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, DepartmentSalaryIncrease, DesignationSalaryIncrease, } from "@prisma/client"
 import { User as PrismaUser } from "@prisma/client"
 export type AssignDesignation = {
     id: string
@@ -190,10 +190,6 @@ export type PayrollWithPayrollItems = {
 
 export type SalaryIncreaseEvent = {
     id: string;
-    departmentId?: string | null;
-    department?: Department | null;
-    designationId?: string | null;
-    designation?: Designation | null;
     percentage?: number | null;
     amount?: number | null;
     appliedAt: Date;
@@ -201,6 +197,8 @@ export type SalaryIncreaseEvent = {
     isUndone: boolean;
     undoneAt?: Date | null;
     undoneBy?: string | null;
+    departments: DepartmentSalaryIncrease[];
+    designations: DesignationSalaryIncrease[];
 };
 
 export type AuditLogWithUser = {

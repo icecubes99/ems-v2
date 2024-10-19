@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { FaUser, FaMoneyBill, FaKey, FaAddressBook, FaShieldAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { FaUser, FaMoneyBill, FaKey, FaAddressBook, FaShieldAlt, FaChevronRight } from 'react-icons/fa'
 import { ExtendedUser } from '@/next-auth'
 import Link from 'next/link'
 import { RoleGateNull } from './auth/role-gate-null'
@@ -32,6 +32,19 @@ export default function Sidebar({ }: SidebarProps) {
         setIsClient(true)
         const savedState = localStorage.getItem('sidebarCollapsed')
         setIsCollapsed(savedState === 'true')
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.metaKey && event.key === 'b') {
+                event.preventDefault()
+                toggleSidebar()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
     }, [])
 
     useEffect(() => {
