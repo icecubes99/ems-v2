@@ -424,6 +424,11 @@ model SalaryHistory {
   startDate DateTime
   endDate   DateTime @default(now())
 
+  amountIncreased Float?
+  
+  salaryIncreaseEventId String?
+  salaryIncreaseEvent SalaryIncreaseEvent? @relation(fields: [salaryIncreaseEventId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -511,6 +516,8 @@ model SalaryIncreaseEvent {
   undoneBy      String?
   departments   DepartmentSalaryIncrease[]
   designations  DesignationSalaryIncrease[]
+
+  salaryHistories SalaryHistory[]
 }
 
 

@@ -3,7 +3,6 @@
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
-import { z } from "zod";
 import { superAdmin } from "./superAdmin";
 
 export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
@@ -127,6 +126,7 @@ async function undoDesignationSalaryIncrease(tx: any, designation: any, salaryIn
             const previousSalaryHistory = await tx.salaryHistory.findFirst({
                 where: {
                     userId: employee.id,
+                    salaryIncreaseEventId: salaryIncreaseEvent.id
                 },
                 orderBy: { startDate: 'desc' },
             });
@@ -136,15 +136,17 @@ async function undoDesignationSalaryIncrease(tx: any, designation: any, salaryIn
                     data: {
                         userId: employee.id,
                         basicSalary: employee.userSalary.basicSalary,
-                        grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
+                        grossSalary: employee.userSalary.grossSalary,
                         startDate: new Date(),
+                        amountIncreased: -previousSalaryHistory.amountIncreased,
+                        salaryIncreaseEventId: salaryIncreaseEvent.id
                     },
                 });
 
                 await tx.userSalary.update({
                     where: { id: employee.userSalary.id },
                     data: {
-                        grossSalary: previousSalaryHistory.grossSalary,
+                        grossSalary: employee.userSalary.grossSalary - previousSalaryHistory.amountIncreased,
                     },
                 });
             }

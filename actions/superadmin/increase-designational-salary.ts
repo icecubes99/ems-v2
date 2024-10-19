@@ -67,17 +67,21 @@ export async function increaseDesignationSalary(values: z.infer<typeof IncreaseD
                 for (const assignedDesignation of designation.AssignDesignation) {
                     const employee = assignedDesignation.user;
                     if (employee.userSalary) {
+                        const previousBasicSalary = employee.userSalary.basicSalary;
+                        const previousGrossSalary = employee.userSalary.grossSalary || employee.userSalary.basicSalary;
+                        const newGrossSalary = previousGrossSalary + (newDesignationSalary - designation.designationSalary);
+                        const amountIncreased = newGrossSalary - previousGrossSalary;
+
                         await tx.salaryHistory.create({
                             data: {
                                 userId: employee.id,
-                                basicSalary: employee.userSalary.basicSalary,
-                                grossSalary: employee.userSalary.grossSalary || employee.userSalary.basicSalary,
+                                basicSalary: previousBasicSalary,
+                                grossSalary: previousGrossSalary,
                                 startDate: employee.userSalary.updatedAt,
+                                amountIncreased: amountIncreased,
+                                salaryIncreaseEventId: salaryIncreaseEvent.id
                             },
                         });
-
-                        const newBasicSalary = employee.userSalary.basicSalary
-                        const newGrossSalary = newBasicSalary + newDesignationSalary;
 
                         await tx.userSalary.update({
                             where: { id: employee.userSalary.id },
