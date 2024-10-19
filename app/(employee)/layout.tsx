@@ -1,5 +1,6 @@
 "use client"
 import { RoleGate } from "@/components/auth/role-gate";
+import { Toaster } from "@/components/ui/toaster";
 
 interface ProtectedLayoutProps {
     children: React.ReactNode;
@@ -7,7 +8,8 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     return (
-        <RoleGate allowedRoles={["SUPERADMIN"]}>
+        <RoleGate allowedRoles={["SUPERADMIN", "ADMIN", "USER"]}>
+            <Toaster />
             {children}
         </RoleGate>
     );

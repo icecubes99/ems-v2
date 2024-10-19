@@ -29,29 +29,31 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: "eaguado@addu.edu.ph",
-    subject: "Confirm your email",
-    html: `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-        <h2 style="color: #5B21B6;">Confirm Your Email Address</h2>
-        <p>Dear User,</p>
-        <p>Thank you for registering with us. Please click the link below to verify your email address:</p>
-        <p>
-          <a href="${confirmLink}" style="color: #5B21B6; text-decoration: none;" 
-            onmouseover="this.style.color='#3B0D99';" 
-            onmouseout="this.style.color='#5B21B6';">
-            Verify Email Address
-          </a>
-        </p>
-        <p>If you did not request this email, please ignore it.</p>
-        <p>Best regards,<br>Kupler Industries</p>
-        <hr style="border: 0; border-top: 1px solid #eee;">
-        <p style="font-size: 0.9em; color: #999;">This email was sent to ${email}. If you have any questions, please contact our support team.</p>
-      </div>
-    `,
-  });
+  // await resend.emails.send({
+  //   from: "onboarding@resend.dev",
+  //   to: "eaguado@addu.edu.ph",
+  //   subject: "Confirm your email",
+  //   html: `
+  //     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+  //       <h2 style="color: #5B21B6;">Confirm Your Email Address</h2>
+  //       <p>Dear User,</p>
+  //       <p>Thank you for registering with us. Please click the link below to verify your email address:</p>
+  //       <p>
+  //         <a href="${confirmLink}" style="color: #5B21B6; text-decoration: none;" 
+  //           onmouseover="this.style.color='#3B0D99';" 
+  //           onmouseout="this.style.color='#5B21B6';">
+  //           Verify Email Address
+  //         </a>
+  //       </p>
+  //       <p>If you did not request this email, please ignore it.</p>
+  //       <p>Best regards,<br>Kupler Industries</p>
+  //       <hr style="border: 0; border-top: 1px solid #eee;">
+  //       <p style="font-size: 0.9em; color: #999;">This email was sent to ${email}. If you have any questions, please contact our support team.</p>
+  //     </div>
+  //   `,
+  // });
+
+  console.log(confirmLink)
 };
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {

@@ -26,6 +26,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { MultiSelectDepartments } from '@/components/ui/multi-select-components'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { ChevronUp } from 'lucide-react'
 
 export default function IncreaseDepartmentalSalaryForm() {
     const [error, setError] = useState<string | undefined>("")
@@ -76,7 +77,10 @@ export default function IncreaseDepartmentalSalaryForm() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="superadmin" size={"lg"}>Increase Departmental Salary</Button>
+                <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
+                    <ChevronUp className="w-6 h-6 mb-2" />
+                    Increase Departmental Salary
+                </Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card>

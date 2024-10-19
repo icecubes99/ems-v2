@@ -16,6 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
 import { MultiSelectUsers } from '@/components/ui/multi-select-components'
+import { Plus } from 'lucide-react'
 
 interface DeductionsFormProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
@@ -70,7 +71,8 @@ export default function AddDeductionsForm({ variant }: DeductionsFormProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size="lg" className='w-full' variant={variant}>
+                <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
+                    <Plus className="w-6 h-6 mb-2" />
                     Add Deductions
                 </Button>
             </DialogTrigger>

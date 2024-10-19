@@ -5,7 +5,6 @@ import React from 'react'
 import GeneratePayroll from '../_components/generate-payroll'
 import PayrollPanelCards from './_components/payroll-panel-cards'
 import HeadingTitle from '@/components/heading-title'
-import QuickActions from '@/components/quick-actions'
 import AddDeductionsForm from '../../administrator/_components/deductions-form'
 import TableWrapper from '@/components/table-wrapper'
 import { BadgeDollarSign, DollarSign } from 'lucide-react'
@@ -21,10 +20,8 @@ import IncreaseDepartmentalSalaryForm from './_components/increase-departmental-
 import IncreaseDesignationalSalaryForm from './_components/increase-designational-salary-form'
 import { columnsSalaryIncreaseEvent } from './_components/columns-salary-increase-event'
 import { useSalaryIncreaseEvents } from '@/hooks/use-salary-increase-events'
-import { DeleteMultipleDeductionsDialog } from '../../administrator/_components/delete-deductions-dialog'
 import { DataTableDeductions } from './_components/data-table-deductions'
 import { DataTableAdditionalEarnings } from './_components/data-table-additional-earnings'
-import GovernmentContributionsEditor from './_components/edit-government-contributions'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
@@ -41,17 +38,13 @@ const page = () => {
 
                 <PayrollPanelCards />
                 <QuickActions>
-                    <GeneratePayroll className='col-span-2 mt-0' />
+                    <GeneratePayroll className='col-span-1 mt-0' />
 
-                    <div className='flex flex-col justify-around'>
-                        <AddDeductionsForm variant={"superadmin"} />
-                        <AddAdditionalEarningsForm variant={"superadmin"} />
+                    <AddDeductionsForm variant={"superadmin"} />
+                    <AddAdditionalEarningsForm variant={"superadmin"} />
 
-                    </div>
-                    <div className='flex flex-col justify-around'>
-                        <IncreaseDepartmentalSalaryForm />
-                        <IncreaseDesignationalSalaryForm />
-                    </div>
+                    <IncreaseDepartmentalSalaryForm />
+                    <IncreaseDesignationalSalaryForm />
                 </QuickActions>
                 <QuickActions title='ADVANCED'>
                     <Link href={"/superadministrator/payrollPanel/editGovernmentContributions"}>
@@ -87,3 +80,20 @@ const page = () => {
 }
 
 export default page
+
+interface QuickActionsProps {
+    children: React.ReactNode
+    title?: string
+
+}
+
+const QuickActions = ({ children, title }: QuickActionsProps) => {
+    return (
+        <>
+            <p className="col-span-4 font-bold text-lg mt-6">{title || "QUICK ACTIONS"}</p>
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5 mr-6 items-center justify-center">
+                {children}
+            </div>
+        </>
+    )
+}

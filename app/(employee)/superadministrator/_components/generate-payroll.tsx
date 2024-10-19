@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { generatePayroll } from '@/actions/superadmin/generate-payroll'
-import { Loader2 } from 'lucide-react'
+import { DollarSign, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FormError } from '@/components/form-error'
 import { FormSucess } from '@/components/form-sucess'
+import { toast } from 'sonner'
 
 export default function GeneratePayroll({ className }: { className?: string }) {
     const [isLoading, setIsLoading] = useState(false)
@@ -27,12 +28,11 @@ export default function GeneratePayroll({ className }: { className?: string }) {
         const result = await generatePayroll();
         if (result.error) {
             console.error(result.error);
-            setError(result.error);
             setIsLoading(false)
-
+            toast.error(result.error)
         } else {
             console.log(result.success);
-            setSuccess(result.success);
+            toast.success(result.success)
             setIsLoading(false)
             setTimeout(() => {
                 window.location.reload();
@@ -41,27 +41,28 @@ export default function GeneratePayroll({ className }: { className?: string }) {
     }
 
     return (
-        <div className={cn("mt-10 p-6 bg-white rounded-lg border border-red-50 shadow-md hover:shadow-lg hover:border-red-200 transition duration-300", className)}>
-            <h1 className="text-2xl font-bold mb-6 text-center">Payroll Generator</h1>
-            <Button
-                onClick={handleGeneratePayroll}
-                disabled={isLoading}
-                className="w-full"
-                variant={"superadmin"}
-            >
+        <Button
+            onClick={handleGeneratePayroll}
+            disabled={isLoading}
+            className="h-auto w-full py-4 flex flex-col items-center justify-center"
+            variant={"superadmin"}
+
+        >
+            <>
+
                 {isLoading ? (
                     <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <Loader2 className="mb-2 h-6 w-6 animate-spin" />
                         Generating Payroll...
                     </>
                 ) : (
-                    'Generate Payroll'
+                    <>
+
+                        <DollarSign className="w-6 h-6 mb-2" />
+                        Generate Payroll
+                    </>
                 )}
-            </Button>
-            <div className='mt-4'>
-                <FormError message={error} />
-                <FormSucess message={success} />
-            </div>
-        </div>
+            </>
+        </Button>
     )
 }

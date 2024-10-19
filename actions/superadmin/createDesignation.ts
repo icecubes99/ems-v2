@@ -11,7 +11,6 @@ import { admin } from "../admin";
 import { EmployeeType, Status, UserRole } from "@prisma/client";
 import { createAssignedUser } from "./createAssignedUser";
 
-
 export const createDesignation = async (values: z.infer<typeof DesignationSchema>) => {
     const user = await currentUser();
     const validatedFields = DesignationSchema.safeParse(values);
@@ -40,19 +39,18 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
 
     const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
 
-
     await auditAction(dbUser.id, `Designation Created by Admin: ${adminName}`);
 
     const designationHeadUser = await db.user.findUnique({
         where: { id: designationHeadUserId },
         include: { assignedDesignations: true }
-    })
+    });
 
     if (designationHeadUser && designationHeadUser.role !== UserRole.SUPERADMIN) {
         await db.user.update({
             where: { id: designationHeadUserId },
             data: { role: UserRole.ADMIN },
-        })
+        });
     }
 
     const designation = await db.designation.create({
@@ -69,14 +67,29 @@ export const createDesignation = async (values: z.infer<typeof DesignationSchema
 
     const designationId = designation.id;
 
-    await db.assignDesignation.create({
-        data: {
-            userId: designationHeadUserId,
-            employeeType: "REGULAR",
-            status: "ACTIVE",
-            designationId,
-        },
+    const existingAssignDesignation = await db.assignDesignation.findUnique({
+        where: { userId: designationHeadUserId },
     });
+
+    if (existingAssignDesignation) {
+        await db.assignDesignation.update({
+            where: { userId: designationHeadUserId },
+            data: {
+                employeeType: "REGULAR",
+                status: "ACTIVE",
+                designationId,
+            },
+        });
+    } else {
+        await db.assignDesignation.create({
+            data: {
+                userId: designationHeadUserId,
+                employeeType: "REGULAR",
+                status: "ACTIVE",
+                designationId,
+            },
+        });
+    }
 
     if (designationHeadUser && designationHeadUser.assignedDesignations === null) {
         const assignedUserValues = {
