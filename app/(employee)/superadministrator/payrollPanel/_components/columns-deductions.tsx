@@ -16,8 +16,32 @@ import {
 import { Button } from "@/components/ui/button"
 import { DeleteDeductionsDialog } from '@/app/(employee)/administrator/_components/delete-deductions-dialog'
 import React from 'react'
+import { Checkbox } from "@/components/ui/checkbox"
 
 export const columnsDeduction: ColumnDef<DeductionsWithUser>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+
+    },
     {
         accessorKey: "userId",
         header: ({ column }) => {

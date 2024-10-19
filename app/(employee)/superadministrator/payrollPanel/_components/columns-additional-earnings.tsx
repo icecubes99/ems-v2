@@ -16,8 +16,32 @@ import {
 import { Button } from "@/components/ui/button"
 import UpdateAdditionalEarningsForm from '@/app/(employee)/administrator/_components/update-additional-earnings-form'
 import { DeleteAdditionalEarningsDialog } from '@/app/(employee)/administrator/_components/delete-additional-earnings-dialog'
+import { Checkbox } from '@/components/ui/checkbox'
 
 export const columnsAdditionalEarnings: ColumnDef<AdditionalEarningsWithUser>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+
+    },
     {
         accessorKey: "userId",
         header: ({ column }) => {

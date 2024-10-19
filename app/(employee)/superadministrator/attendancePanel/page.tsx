@@ -7,7 +7,7 @@ import WorkingDaysManager from '../_components/create-workingdays-months'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { HolidayTable } from '@/components/holidays-table'
 import { PasswordsTable } from '@/components/passwords-table'
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { useHolidays } from '@/hooks/use-holidays'
 import { columnsHolidays } from '../_components/columns-holidays'
 import TableWrapper from '@/components/table-wrapper'
@@ -30,7 +30,7 @@ const page = () => {
                     <div className='grid grid-cols-2 gap-8'>
                         <PasswordsTable />
                         <TableWrapper description='Holidays' title='Holidays' icon={<MdHolidayVillage />}>
-                            <DataTableRemainingLeaves columns={columnsHolidays} data={holidays || []} />
+                            <DataTableTemplate columns={columnsHolidays} data={holidays || []} />
                         </TableWrapper>
                     </div>
                 </div>

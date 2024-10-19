@@ -11,7 +11,7 @@ import TableWrapper from '@/components/table-wrapper'
 import { BadgeDollarSign, DollarSign } from 'lucide-react'
 import { useDeductions } from '@/hooks/use-deductions'
 import { columnsDeduction } from './_components/columns-deductions'
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import AddAdditionalEarningsForm from '../../administrator/_components/additional-earnings-form'
 import { useAdditionalEarnings } from '@/hooks/use-additional-earnings'
 import { columnsAdditionalEarnings } from './_components/columns-additional-earnings'
@@ -21,6 +21,9 @@ import IncreaseDepartmentalSalaryForm from './_components/increase-departmental-
 import IncreaseDesignationalSalaryForm from './_components/increase-designational-salary-form'
 import { columnsSalaryIncreaseEvent } from './_components/columns-salary-increase-event'
 import { useSalaryIncreaseEvents } from '@/hooks/use-salary-increase-events'
+import { DeleteMultipleDeductionsDialog } from '../../administrator/_components/delete-deductions-dialog'
+import { DataTableDeductions } from './_components/data-table-deductions'
+import { DataTableAdditionalEarnings } from './_components/data-table-additional-earnings'
 
 const page = () => {
     const { deductions } = useDeductions()
@@ -53,21 +56,21 @@ const page = () => {
                 </div>
 
                 <TableWrapper title='Pending Payroll' description='Payroll That Needs Approval' icon={<BadgeDollarSign />}>
-                    <DataTableRemainingLeaves columns={columnsPendingPayroll} data={payroll || []} />
+                    <DataTableTemplate columns={columnsPendingPayroll} data={payroll || []} />
                 </TableWrapper>
 
                 <div className='grid grid-cols-2'>
                     <TableWrapper title='Deductions' description='Deductions for the Upcoming Payroll Period' icon={<DollarSign />}>
-                        <DataTableRemainingLeaves columns={columnsDeduction} data={deductions || []} />
+                        <DataTableDeductions columns={columnsDeduction} data={deductions || []} />
                     </TableWrapper>
 
                     <TableWrapper title='Additional Earnings' description='Additional Earnings for the Upcoming Payroll Period' icon={<DollarSign />}>
-                        <DataTableRemainingLeaves columns={columnsAdditionalEarnings} data={additionalEarnings || []} />
+                        <DataTableAdditionalEarnings columns={columnsAdditionalEarnings} data={additionalEarnings || []} />
                     </TableWrapper>
                 </div>
 
                 <TableWrapper title='Salary Increase Events' description='Salary Increase Events' icon={<DollarSign />}>
-                    <DataTableRemainingLeaves columns={columnsSalaryIncreaseEvent} data={salaryIncreaseEvents || []} />
+                    <DataTableTemplate columns={columnsSalaryIncreaseEvent} data={salaryIncreaseEvents || []} />
                 </TableWrapper>
 
             </LayoutSideHead>

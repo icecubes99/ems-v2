@@ -1,5 +1,5 @@
 "use client"
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import HeadingCard from '@/components/heading-card'
 import HeadingTitle from '@/components/heading-title'
 import LayoutSideHead from '@/components/LayoutSideHead'

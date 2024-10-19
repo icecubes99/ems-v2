@@ -21,7 +21,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-
 import {
     Table,
     TableBody,
@@ -31,7 +30,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { DeleteMultipleAdditionalEarningsDialog } from "@/app/(employee)/administrator/_components/delete-additional-earnings-dialog"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -39,19 +38,18 @@ interface DataTableProps<TData, TValue> {
     label?: string
 }
 
-export function DataTableRemainingLeaves<TData, TValue>({
+export function DataTableAdditionalEarnings<TData extends { id: string }, TValue>({
     columns,
     data,
-    label
+    label,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({
-            hiddenInfo: false
-        })
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+        hiddenInfo: false
+    })
+    const [rowSelection, setRowSelection] = React.useState({})
+    const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
 
     const table = useReactTable({
         data,
@@ -63,47 +61,46 @@ export function DataTableRemainingLeaves<TData, TValue>({
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
+            rowSelection,
         },
-
     })
+
+    const handleDeleteSelected = () => {
+        setIsDeleteOpen(true)
+    }
+
+    const selectedIds = React.useMemo(() => {
+        return Object.keys(rowSelection).map(index => data[parseInt(index)].id)
+    }, [data, rowSelection])
+
+    const handleDeleteComplete = () => {
+        setIsDeleteOpen(false)
+        setRowSelection({})
+        // You might want to refresh your data here
+    }
 
     return (
         <>
-            {/* Search Functionality via Email */}
-            {/* <div className="flex items-center py-4"> */}
-            {/* <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                /> */}
-            {/* <p className="text-lg font-semibold">{label}</p> */}
-            {/* </div> */}
-
-            {/* Table */}
-            <div className="rounded-md borde">
+            <div className="rounded-md">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </TableHead>
-                                    )
-                                })}
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         ))}
                     </TableHeader>
@@ -132,11 +129,8 @@ export function DataTableRemainingLeaves<TData, TValue>({
                 </Table>
             </div>
 
-            {/* Pagination */}
-            <div className="flex flex-row items-center justify-between">
-
-                {/* COLUMNS */}
-                <div>
+            <div className="flex flex-row items-center justify-between mt-4">
+                <div className="flex items-center space-x-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto">
@@ -146,9 +140,7 @@ export function DataTableRemainingLeaves<TData, TValue>({
                         <DropdownMenuContent align="end">
                             {table
                                 .getAllColumns()
-                                .filter(
-                                    (column) => column.getCanHide()
-                                )
+                                .filter((column) => column.getCanHide())
                                 .map((column) => {
                                     return (
                                         <DropdownMenuCheckboxItem
@@ -165,6 +157,13 @@ export function DataTableRemainingLeaves<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <Button
+                        onClick={handleDeleteSelected}
+                        disabled={selectedIds.length === 0}
+                        variant="destructive"
+                    >
+                        Delete Selected
+                    </Button>
                 </div>
 
                 <div className="flex items-center justify-end space-x-2 py-4">
@@ -185,9 +184,14 @@ export function DataTableRemainingLeaves<TData, TValue>({
                         Next
                     </Button>
                 </div>
-
             </div>
 
+            <DeleteMultipleAdditionalEarningsDialog
+                additionalEarningsId={selectedIds}
+                isOpen={isDeleteOpen}
+                onOpenChange={setIsDeleteOpen}
+                onDeleteComplete={handleDeleteComplete}
+            />
         </>
     )
 }

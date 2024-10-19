@@ -33,3 +33,34 @@ export const deleteAdditionalEarningsOfUser = async (additionalEarningsId: strin
 
     return { success: "Additional Earnings Deleted!" };
 }
+
+export const deleteMultipleAdditionalEarningsOfUser = async (additionalEarningsId: string[]) => {
+    const user = await currentUser();
+    if (!user) {
+        return { error: "Unauthorized!" };
+    }
+
+    const dbUser = await getUserById(user?.id);
+    if (!dbUser) {
+        return { error: "User not found in database!" };
+    }
+
+    const adminResult = await admin();
+    if (adminResult.error) {
+        return { error: adminResult.error };
+    }
+
+    const adminName = user?.name || dbUser.firstName + " " + dbUser.lastName;
+
+    await auditAction(dbUser.id, `Multiple Additional Earnings Deleted by Admin: ${adminName}`);
+
+    await db.$transaction(async (tx) => {
+        for (const additionalEarningId of additionalEarningsId) {
+            await tx.additionalEarnings.delete({
+                where: { id: additionalEarningId }
+            });
+        }
+    });
+
+    return { success: "Additional Earnings Deleted!" };
+}

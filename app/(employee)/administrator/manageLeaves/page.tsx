@@ -5,7 +5,7 @@ import React from 'react'
 
 import { columnsRemainingLeaves } from '@/app/(leaves)/_components/columns-remaining-leaves'
 import { useRemainingLeaves } from '@/hooks/use-remaining-leaves'
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { usePendingLeaves } from '@/hooks/use-pending-leaves'
 import { columnsPendingLeaves } from '@/app/(leaves)/_components/columns-pending-leaves'
 import { History } from 'lucide-react'
@@ -37,7 +37,7 @@ const Page = () => {
                                     <p className='text-muted-foreground mt-1'>View pending leave requests</p>
                                 </div>
                                 <div className='p-6'>
-                                    <DataTableRemainingLeaves columns={columnsPendingLeaves} data={pendingLeaves || []} />
+                                    <DataTableTemplate columns={columnsPendingLeaves} data={pendingLeaves || []} />
                                 </div>
                             </div>
                         </>
@@ -60,7 +60,7 @@ const Page = () => {
                                     <p className='text-muted-foreground mt-1'>View previous leave requests</p>
                                 </div>
                                 <div className='p-6'>
-                                    <DataTableRemainingLeaves columns={columnsRemainingLeaves} data={leaves || []} />
+                                    <DataTableTemplate columns={columnsRemainingLeaves} data={leaves || []} />
                                 </div>
                             </div>
                         </>

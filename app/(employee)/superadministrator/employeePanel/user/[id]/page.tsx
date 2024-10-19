@@ -8,7 +8,7 @@ import EmergencyContactCard from '@/app/(employee)/_components/_EmergencyContact
 import OtherLeavesTable from '../../_components/other-leaves-table'
 import { History, SearchCodeIcon } from 'lucide-react'
 import TableWrapper from '@/components/table-wrapper'
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { columnsUserAuditLogs } from '@/app/(employee)/administrator/_components/columns-user-audit-logs'
 import { useUserAuditLog } from '@/hooks/use-audit-logs'
 
@@ -27,7 +27,7 @@ const page = ({ params }: { params: { id: string } }) => {
                 </TableWrapper>
 
                 <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
-                    <DataTableRemainingLeaves columns={columnsUserAuditLogs} data={auditLogs || []} />
+                    <DataTableTemplate columns={columnsUserAuditLogs} data={auditLogs || []} />
                 </TableWrapper>
 
             </LayoutSideHead>

@@ -1,6 +1,6 @@
 "use client"
 
-import { DataTableRemainingLeaves } from '@/app/(leaves)/_components/DataTableRemainingLeaves'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { RoleGate } from '@/components/auth/role-gate'
 import LayoutSideHead from '@/components/LayoutSideHead'
 import { usePendingOvertimes } from '@/hooks/use-pending-overtimes'
@@ -35,7 +35,7 @@ const Page = () => {
                                         <p className='text-muted-foreground mt-1'>View Pending Overtime Requests</p>
                                     </div>
                                     <div className='p-6'>
-                                        <DataTableRemainingLeaves columns={columnsPendingOvertimes} data={overtimes || []} />
+                                        <DataTableTemplate columns={columnsPendingOvertimes} data={overtimes || []} />
                                     </div>
                                 </div>
                             </>
