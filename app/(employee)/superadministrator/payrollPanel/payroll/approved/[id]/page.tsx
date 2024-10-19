@@ -7,7 +7,7 @@ import React from 'react'
 const page = ({ params }: { params: { id: string } }) => {
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Payroll'>
+            <LayoutSideHead>
                 <HeadingTitle title={`Payroll #${params.id}`} />
 
             </LayoutSideHead>

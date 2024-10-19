@@ -5,13 +5,13 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import { cn } from '@/lib/utils';
 import { useUserImage } from '@/hooks/use-user-image';
+import { Breadcrumb } from './ui/breadcrumb-header';
 
 interface LayoutSideHeadProps {
     children: React.ReactNode;
-    label: string;
     classname?: string
 }
-const LayoutSideHead = ({ children, label, classname }: LayoutSideHeadProps) => {
+const LayoutSideHead = ({ children, classname }: LayoutSideHeadProps) => {
     const user = useCurrentUser();
     const { userImage } = useUserImage();
     return (
@@ -21,7 +21,7 @@ const LayoutSideHead = ({ children, label, classname }: LayoutSideHeadProps) => 
                 <div className='max-h-screen overflow-y-auto'>
                     <Header user={user} employeePic={userImage || undefined} />
                     <div className={cn('ml-4 mb-20', classname)}>
-                        <p className={cn('font-semibold text-lg')}>{label}</p>
+                        <Breadcrumb />
                         {children}
                     </div>
                 </div>

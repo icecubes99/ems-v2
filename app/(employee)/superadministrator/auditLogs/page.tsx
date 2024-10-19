@@ -15,7 +15,7 @@ const page = () => {
     const { auditLogCount } = useTotalAuditLogCount()
     const { auditLogs } = useAuditLogs()
     return (
-        <LayoutSideHead label='Audit Logs'>
+        <LayoutSideHead>
             <HeadingTitle title='AUDITS TABLE' />
 
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-3 mt-5 mr-6 ">

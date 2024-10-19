@@ -16,7 +16,7 @@ const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='EMPLOYEE PROFILE'>
+            <LayoutSideHead>
                 <EmployeeDetailsV2 userId={params.id}>
                     <AddressCard userId={params.id} />
                     <EmergencyContactCard userId={params.id} />

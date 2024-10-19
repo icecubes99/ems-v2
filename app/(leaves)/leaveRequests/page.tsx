@@ -10,7 +10,7 @@ import HeadingTitle from '@/components/heading-title'
 
 const page = () => {
     return (
-        <LayoutSideHead label='Leave Requests'>
+        <LayoutSideHead>
             <div className='flex flex-col'>
 
                 <HeadingTitle title='LEAVE MANAGEMENT'>

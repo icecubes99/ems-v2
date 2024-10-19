@@ -17,7 +17,7 @@ const page = () => {
     const { holidays, isLoading, error } = useHolidays()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Attendance Control' classname='mr-6'>
+            <LayoutSideHead classname='mr-6'>
                 <div className='flex flex-col gap-6'>
                     <div className='mt-5'>
                         <p className='font-bold text-4xl'>TIMESHEET CONTROLS</p>

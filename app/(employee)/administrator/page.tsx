@@ -19,7 +19,7 @@ const AdminPage = () => {
 
     return (
         <RoleGate allowedRoles={["ADMIN", "SUPERADMIN"]}>
-            <LayoutSideHead label='Administrator Panel'>
+            <LayoutSideHead>
                 <AdminCards userId={userId} />
             </LayoutSideHead>
         </RoleGate>

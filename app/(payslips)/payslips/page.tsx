@@ -10,7 +10,7 @@ import PayslipCards from './_components/payslip-cards'
 const page = () => {
     const { payslips } = useOwnPayslips()
     return (
-        <LayoutSideHead label='Payslips'>
+        <LayoutSideHead>
             <div className='flex flex-col'>
 
                 <div className='mt-5 justify-between flex flex-row mr-6'>

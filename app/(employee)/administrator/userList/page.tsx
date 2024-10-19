@@ -7,7 +7,7 @@ import UserList from '../../_components/UserList'
 const page = () => {
     return (
         <RoleGate allowedRoles={["ADMIN", "SUPERADMIN"]}>
-            <LayoutSideHead label='UserList'>
+            <LayoutSideHead>
                 <div className='mx-5'>
                     <UserList />
                 </div>

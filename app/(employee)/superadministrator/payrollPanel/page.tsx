@@ -29,7 +29,7 @@ const page = () => {
     const { salaryIncreaseEvents } = useSalaryIncreaseEvents()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Payroll Panel'>
+            <LayoutSideHead>
 
                 <HeadingTitle title='PAYROLL MANAGEMENT' />
 

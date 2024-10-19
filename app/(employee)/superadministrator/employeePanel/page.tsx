@@ -12,7 +12,7 @@ const page = () => {
 
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Employee Panel'>
+            <LayoutSideHead>
                 <EmployeePageContent />
 
                 <div className='mr-6 mb-5'>

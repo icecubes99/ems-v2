@@ -13,7 +13,7 @@ const Page = () => {
 
     return (
         <RoleGate allowedRoles={["ADMIN", "SUPERADMIN"]}>
-            <LayoutSideHead label='Overtime Requests Management'>
+            <LayoutSideHead>
                 <div className='mt-5 mb-5'>
                     <p className='font-bold text-4xl'>MANAGE OVERTIMES</p>
                 </div>

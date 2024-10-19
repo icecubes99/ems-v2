@@ -22,7 +22,7 @@ const Page = () => {
 
 
     return (
-        <LayoutSideHead label='My Profile'>
+        <LayoutSideHead>
 
             <EmployeeDetails>
                 <AddressCard userId={userId} />

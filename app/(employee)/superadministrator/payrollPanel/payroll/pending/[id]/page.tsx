@@ -31,7 +31,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Payroll'>
+            <LayoutSideHead>
                 <HeadingTitle title={`Payroll #${params.id}`} />
                 <TableWrapper
                     title='Payroll Details'

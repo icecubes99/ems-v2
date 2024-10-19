@@ -1,7 +1,9 @@
+'use client'
+
 import Image from 'next/image'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { FaUser, FaMoneyBill, FaKey, FaAddressBook, FaShieldAlt } from 'react-icons/fa'
+import { FaUser, FaMoneyBill, FaKey, FaAddressBook, FaShieldAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { ExtendedUser } from '@/next-auth'
 import Link from 'next/link'
 import { RoleGateNull } from './auth/role-gate-null'
@@ -11,40 +13,76 @@ import { usePathname } from 'next/navigation'
 import { IoLogOut } from "react-icons/io5"
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useUserImage } from '@/hooks/use-user-image'
+import { Button } from './ui/button'
+import { Skeleton } from './ui/skeleton'
 
 interface SidebarProps {
     user?: ExtendedUser
 }
 
-export default function Component({ }: SidebarProps) {
+export default function Sidebar({ }: SidebarProps) {
+    const [isCollapsed, setIsCollapsed] = useState(true)
+    const [isClient, setIsClient] = useState(false)
     const user = useCurrentUser()
     const router = usePathname()
     const isHomepage = router === "/homepage"
-    const { userImage, } = useUserImage()
+    const { userImage } = useUserImage()
+
+    useEffect(() => {
+        setIsClient(true)
+        const savedState = localStorage.getItem('sidebarCollapsed')
+        setIsCollapsed(savedState === 'true')
+    }, [])
+
+    useEffect(() => {
+        if (isClient) {
+            localStorage.setItem('sidebarCollapsed', isCollapsed.toString())
+        }
+    }, [isCollapsed, isClient])
+
+    const toggleSidebar = () => {
+        setIsCollapsed(prev => !prev)
+    }
+
+    if (!isClient) {
+        return (
+            <Skeleton className="w-96 h-screen bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl" />
+        )
+    }
 
     return (
-        <div className="flex flex-col w-96 bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl">
+        <div
+            className={`flex flex-col ${isCollapsed ? 'w-20' : 'w-96'
+                } bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl transition-all duration-300 ease-in-out relative`}
+        >
+            <Button
+                onClick={toggleSidebar}
+                className="absolute -right-3 top-5 bg-purple-400 hover:bg-purple-500 rounded-full p-1 transition-transform duration-300 ease-in-out"
+                size="icon"
+                style={{ transform: isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)' }}
+            >
+                <FaChevronRight />
+            </Button>
             <div className="flex flex-col items-center space-y-10 flex-grow">
                 <div className="mt-7 mb-5">
                     <Link href="/homepage">
                         <Image
-                            src="/kupler.svg"
-                            className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''
-                                }`}
-                            width={150}
-                            height={100}
+                            src={isCollapsed ? "/k.svg" : "/kupler.svg"}
+                            className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
+                            width={isCollapsed ? 50 : 150}
+                            height={isCollapsed ? 33 : 100}
                             alt="Logo"
                         />
                     </Link>
                 </div>
                 <div className="flex flex-col items-center gap-4">
-                    <Avatar className="w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36">
+                    <Avatar className={isCollapsed ? "w-12 h-12" : "w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36"}>
                         <AvatarImage src={userImage || undefined} />
                         <AvatarFallback className="bg-neutral-700 text-white">
                             <FaUser />
                         </AvatarFallback>
                     </Avatar>
-                    <div className="text-center">
+                    <div className={`text-center transition-opacity duration-300 ease-in-out ${isCollapsed ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
                         <p className="font-semibold">{user?.name}</p>
                         <p className="font-light text-sm">{user?.jobTitle}</p>
                     </div>
@@ -55,18 +93,21 @@ export default function Component({ }: SidebarProps) {
                         icon={<FaUser />}
                         label="PROFILE DETAILS"
                         isActive={router.startsWith("/employee")}
+                        isCollapsed={isCollapsed}
                     />
                     <SidebarButton
                         link="/payslips"
                         icon={<FaMoneyBill />}
                         label="PAYSLIPS"
                         isActive={router.startsWith("/payslips")}
+                        isCollapsed={isCollapsed}
                     />
                     <SidebarButton
                         link="/leaveRequests"
                         icon={<FaAddressBook />}
                         label="LEAVE REQUESTS"
                         isActive={router.startsWith("/leaveRequests")}
+                        isCollapsed={isCollapsed}
                     />
                     <RoleGateNull allowedRole="ADMIN">
                         <SidebarButton
@@ -76,6 +117,7 @@ export default function Component({ }: SidebarProps) {
                             isAdmin
                             label="ADMIN PANEL"
                             isActive={router.startsWith("/administrator")}
+                            isCollapsed={isCollapsed}
                         />
                     </RoleGateNull>
                     <RoleGateNull allowedRole="SUPERADMIN">
@@ -86,6 +128,7 @@ export default function Component({ }: SidebarProps) {
                             isAdmin
                             label="ADMIN PANEL"
                             isActive={router.startsWith("/administrator")}
+                            isCollapsed={isCollapsed}
                         />
                         <SidebarButton
                             link="/superadministrator"
@@ -94,16 +137,21 @@ export default function Component({ }: SidebarProps) {
                             label="SUPERADMIN PANEL"
                             isSuperAdmin
                             isActive={router.startsWith("/superadministrator")}
+                            isCollapsed={isCollapsed}
                         />
                     </RoleGateNull>
                 </div>
             </div>
             <div className="mt-auto mb-14">
                 <LogoutButton userId={user?.id as string}>
-                    <div className="flex items-center w-full h-12 hover:bg-gradient-to-r from-red-200 to-red-400">
-                        <IoLogOut className="mr-10 ml-16" />
-                        <p className="text-sm font-medium">LOG OUT</p>
-                    </div>
+                    <SidebarButton
+                        link="/logout"
+                        icon={<IoLogOut />}
+                        label="LOG OUT"
+                        isActive={router.startsWith("/logout")}
+                        isCollapsed={isCollapsed}
+                        classname=' hover:bg-gradient-to-r from-red-200 to-red-400 transition-all duration-300 ease-in-out '
+                    />
                 </LogoutButton>
             </div>
         </div>

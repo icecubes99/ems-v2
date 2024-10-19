@@ -43,7 +43,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Designation'>
+            <LayoutSideHead>
                 <div className='mt-5'>
                     <p className='font-bold text-4xl'><span className='text-purple-950'>{designationName}</span>'s Designated Users</p>
                 </div>

@@ -34,7 +34,7 @@ const page = () => {
 
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
-            <LayoutSideHead label='Departments Table'>
+            <LayoutSideHead>
                 <section className="py-10">
                     <div className="mr-6">
                         <h1 className="text-3xl">

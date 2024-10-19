@@ -36,7 +36,7 @@ const page = () => {
     }, [])
 
     return (
-        <LayoutSideHead label='Data Table'>
+        <LayoutSideHead>
             <section className="py-10">
                 <div className="mr-6">
                     <h1 className="text-3xl">
