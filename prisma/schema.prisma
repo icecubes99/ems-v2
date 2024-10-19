@@ -520,7 +520,6 @@ model SalaryIncreaseEvent {
   salaryHistories SalaryHistory[]
 }
 
-
 model DepartmentSalaryIncrease {
   department          Department        @relation(fields: [departmentId], references: [id])
   departmentId        String
@@ -537,4 +536,12 @@ model DesignationSalaryIncrease {
   salaryIncreaseEventId String
 
   @@id([designationId, salaryIncreaseEventId])
+}
+
+model GovernmentContribution {
+  id        String   @id @default(cuid())
+  type      String   @unique
+  brackets  Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

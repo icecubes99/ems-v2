@@ -93,6 +93,10 @@ export const routes = [
                     {
                         path: "/superadministrator/payrollPanel/payroll/pending/[id]",
                         label: "Pending",
+                    },
+                    {
+                        path: "/superadministrator/payrollPanel/editGovernmentContributions",
+                        label: "Edit Government Contributions"
                     }
                 ]
             }

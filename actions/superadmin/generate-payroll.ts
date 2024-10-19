@@ -178,13 +178,13 @@ export async function generatePayroll() {
             let totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + notWorkedDeduction;
 
             // Calculate government contributions based on basic salary
-            const governmentContributions = calculateGovernmentContributions(basicSalaryForDeduction);
+            const governmentContributions = await calculateGovernmentContributions(basicSalaryForDeduction);
 
             // Create deductions for government contributions
             const sixDaysAgo = subDays(new Date(), 6);
             // promise.all
-            for (const contribution of governmentContributions) {
-                await prisma.deductions.create({
+            await Promise.all(governmentContributions.map(contribution =>
+                prisma.deductions.create({
                     data: {
                         userId: employee.id,
                         deductionType: contribution.type,
@@ -192,8 +192,8 @@ export async function generatePayroll() {
                         description: `${contribution.type} contribution`,
                         createdAt: sixDaysAgo,
                     }
-                });
-            }
+                })
+            ));
 
             // Update total deductions
             const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
@@ -300,105 +300,121 @@ export async function generatePayroll() {
     }
 }
 
-function calculateGovernmentContributions(basicSalary: number): Array<{ type: string, amount: number }> {
+export interface SSSBracket {
+    table: [number, number, number][];
+}
+
+export interface ContributionRule {
+    minSalary?: number;
+    maxSalary?: number;
+    rate?: number;
+    contribution?: number;
+    deduction?: number;
+}
+
+export interface OtherContributionBracket {
+    rules: ContributionRule[];
+}
+
+export type ContributionBracket = SSSBracket | OtherContributionBracket;
+
+export interface GovernmentContribution {
+    id: string;
+    type: string;
+    brackets: ContributionBracket;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+async function calculateGovernmentContributions(basicSalary: number): Promise<Array<{ type: string, amount: number }>> {
     const contributions: Array<{ type: string, amount: number }> = [];
+    const contributionTypes = ['SSS', 'PhilHealth', 'PagIBIG', 'Tax'];
 
-    // SSS Contribution
-    const sssTable = [
-        [1000, 3249.99, 135],
-        [3250, 3749.99, 157.50],
-        [3750, 4249.99, 180],
-        [4250, 4749.99, 202.5],
-        [4750, 5249.99, 225],
-        [5250, 5749.99, 247.5],
-        [5750, 6249.99, 270],
-        [6250, 6749.99, 292.5],
-        [6750, 7249.99, 315],
-        [7250, 7749.99, 337.5],
-        [7750, 8249.99, 360],
-        [8250, 8749.99, 382.5],
-        [8750, 9249.99, 405],
-        [9250, 9749.99, 427.5],
-        [9750, 10249.99, 450],
-        [10250, 10749.99, 472.5],
-        [10750, 11249.99, 495],
-        [11250, 11749.99, 517.5],
-        [11750, 12249.99, 540],
-        [12250, 12749.99, 562.5],
-        [12750, 13249.99, 585],
-        [13250, 13749.99, 607.5],
-        [13750, 14249.99, 630],
-        [14250, 14749.99, 652.5],
-        [14750, 15249.99, 675],
-        [15250, 15749.99, 697.5],
-        [15750, 16249.99, 720],
-        [16250, 16749.99, 742.5],
-        [16750, 17249.99, 765],
-        [17250, 17749.99, 787.5],
-        [17750, 18249.99, 810],
-        [18250, 18749.99, 832.5],
-        [18750, 19249.99, 855],
-        [19250, 19749.99, 877.5],
-        [19750, 20249.99, 900],
-        [20250, 20749.99, 922.5],
-        [20750, 21249.99, 945],
-        [21250, 21749.99, 967.5],
-        [21750, 22249.99, 990],
-        [22250, 22749.99, 1012.5],
-        [22270, 23249.99, 1035],
-        [23250, 23749.99, 1057.5],
-        [23750, 24249.99, 1080],
-        [24250, 24279.99, 1102.5],
-        [24750, Infinity, 1125],
-    ];
+    for (const type of contributionTypes) {
+        const contributionData = await prisma.governmentContribution.findUnique({
+            where: { type },
+        }) as GovernmentContribution | null;
 
-    let sssContribution = 0;
-    for (let i = 0; i < sssTable.length; i++) {
-        if (basicSalary >= sssTable[i][0] && (i === sssTable.length - 1 || basicSalary <= sssTable[i][1])) {
-            sssContribution = sssTable[i][2];
-            break;
+        if (!contributionData || !contributionData.brackets) {
+            console.error(`Contribution data for ${type} not found or invalid`);
+            continue;
         }
-    }
-    contributions.push({ type: 'SSS', amount: sssContribution });
 
-    // PhilHealth Contribution
-    let philHealthContribution = 0;
-    if (basicSalary <= 10000) {
-        philHealthContribution = 450 / 2;
-    } else if (basicSalary >= 10000.01 && basicSalary <= 89999.99) {
-        philHealthContribution = (basicSalary * 0.05) / 2;
-    } else if (basicSalary >= 90000) {
-        philHealthContribution = 4050;
-    }
-    contributions.push({ type: 'PhilHealth', amount: philHealthContribution });
+        let amount = 0;
 
-    // Pag-IBIG Contribution
-    let pagIbigContribution = 0;
-    if (basicSalary <= 1500) {
-        pagIbigContribution = basicSalary * 0.01;
-    } else if (basicSalary > 1500 && basicSalary < 5000) {
-        pagIbigContribution = basicSalary * 0.02;
-    } else if (basicSalary >= 5000) {
-        pagIbigContribution = 100;
-    }
-    contributions.push({ type: 'PagIBIG', amount: pagIbigContribution });
+        switch (type) {
+            case 'SSS':
+                amount = calculateSSS(basicSalary, (contributionData.brackets as SSSBracket).table);
+                break;
+            case 'PhilHealth':
+                amount = calculatePhilHealth(basicSalary, (contributionData.brackets as OtherContributionBracket).rules);
+                break;
+            case 'PagIBIG':
+                amount = calculatePagIBIG(basicSalary, (contributionData.brackets as OtherContributionBracket).rules);
+                break;
+            case 'Tax':
+                amount = calculateTax(basicSalary, (contributionData.brackets as OtherContributionBracket).rules);
+                break;
+        }
 
-    // Tax Calculation
-    let taxAmount = 0;
-    if (basicSalary <= 20833) {
-        taxAmount = 0;
-    } else if (basicSalary > 20833 && basicSalary <= 33332) {
-        taxAmount = (basicSalary - 20833) * 0.15;
-    } else if (basicSalary > 33332 && basicSalary <= 66666) {
-        taxAmount = ((basicSalary - 33332) * 0.20) + 1875;
-    } else if (basicSalary > 66666 && basicSalary <= 166666) {
-        taxAmount = ((basicSalary - 66666) * 0.25) + 8541.8;
-    } else if (basicSalary > 166666 && basicSalary <= 666666) {
-        taxAmount = ((basicSalary - 166666) * 0.30) + 33541.8;
-    } else if (basicSalary > 666666) {
-        taxAmount = ((basicSalary - 666666) * 0.35) + 183541.8;
+        contributions.push({ type, amount });
     }
-    contributions.push({ type: 'Tax', amount: taxAmount });
 
     return contributions;
+}
+
+function calculateSSS(salary: number, table: [number, number, number][]): number {
+    if (!table || table.length === 0) {
+        console.error('SSS table is empty or undefined');
+        return 0;
+    }
+
+    for (const [min, max, contribution] of table) {
+        if (salary >= min && salary <= max) {
+            return contribution;
+        }
+    }
+    return table[table.length - 1][2]; // Return the last contribution amount if salary exceeds all brackets
+}
+
+function calculatePhilHealth(salary: number, rules: ContributionRule[]): number {
+    if (!rules || rules.length === 0) {
+        console.error('PhilHealth rules are empty or undefined');
+        return 0;
+    }
+
+    for (const rule of rules) {
+        if (rule.maxSalary && salary <= rule.maxSalary) {
+            return rule.contribution || (salary * (rule.rate || 0));
+        }
+    }
+    return rules[rules.length - 1].contribution || 0;
+}
+
+function calculatePagIBIG(salary: number, rules: ContributionRule[]): number {
+    if (!rules || rules.length === 0) {
+        console.error('Pag-IBIG rules are empty or undefined');
+        return 0;
+    }
+
+    for (const rule of rules) {
+        if (rule.maxSalary && salary <= rule.maxSalary) {
+            return rule.contribution || (salary * (rule.rate || 0));
+        }
+    }
+    return rules[rules.length - 1].contribution || 0;
+}
+
+function calculateTax(salary: number, rules: ContributionRule[]): number {
+    if (!rules || rules.length === 0) {
+        console.error('Tax rules are empty or undefined');
+        return 0;
+    }
+
+    for (const rule of rules) {
+        if (!rule.maxSalary || salary <= rule.maxSalary) {
+            return (salary - (rule.minSalary || 0)) * (rule.rate || 0) + (rule.deduction || 0);
+        }
+    }
+    return 0; // This should never happen if the rules are set up correctly
 }

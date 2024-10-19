@@ -7,6 +7,7 @@ import DepartmentHeadCard from './department-head-control-card'
 import { PasswordsTable } from '@/components/passwords-table'
 import { Users, FileText, Clock, Building, UserCircle } from 'lucide-react'
 import { useLeavesPendingCount, useOvertimesPendingCount } from '@/hooks/use-ModelCounts'
+import HeadingTitle from '@/components/heading-title'
 
 interface AdminCardsProps {
     userId: string
@@ -17,9 +18,9 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
     const { pendingOvertimesCount } = useOvertimesPendingCount()
     return (
         <div className='flex flex-col gap-6 mb-2'>
-            <div className='mt-5'>
-                <h1 className='font-bold text-4xl text-primary'>ACTIONS</h1>
-            </div>
+
+            <HeadingTitle title='ACTIONS' />
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
                 <div className='row-span-3'>
                     <PasswordsTable classname='w-full' />

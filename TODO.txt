@@ -33,7 +33,7 @@ FINISHED UPDATES:
             its gross salary is its base salary added to the designation salary and it is for transparency only       Oct-12
         - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details       Oct-12
         - Could undo a salary increase for a department or designation          Oct-13
-
+    - Added Dynamic Government Contributions where it is editable       Oct-19 7:40pm
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina

@@ -24,6 +24,9 @@ import { useSalaryIncreaseEvents } from '@/hooks/use-salary-increase-events'
 import { DeleteMultipleDeductionsDialog } from '../../administrator/_components/delete-deductions-dialog'
 import { DataTableDeductions } from './_components/data-table-deductions'
 import { DataTableAdditionalEarnings } from './_components/data-table-additional-earnings'
+import GovernmentContributionsEditor from './_components/edit-government-contributions'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const page = () => {
     const { deductions } = useDeductions()
@@ -38,7 +41,6 @@ const page = () => {
 
                 <PayrollPanelCards />
                 <QuickActions>
-
                     <GeneratePayroll className='col-span-2 mt-0' />
 
                     <div className='flex flex-col justify-around'>
@@ -50,7 +52,13 @@ const page = () => {
                         <IncreaseDepartmentalSalaryForm />
                         <IncreaseDesignationalSalaryForm />
                     </div>
-
+                </QuickActions>
+                <QuickActions title='ADVANCED'>
+                    <Link href={"/superadministrator/payrollPanel/editGovernmentContributions"}>
+                        <Button className='w-full' size={"lg"} variant={"outline"}>
+                            Edit Government Contributions
+                        </Button>
+                    </Link>
                 </QuickActions>
                 <div>
                 </div>

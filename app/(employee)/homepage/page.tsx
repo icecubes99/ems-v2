@@ -14,11 +14,8 @@ const HomePage = () => {
     return (
         <RoleGate allowedRoles={["USER", "ADMIN", "SUPERADMIN"]}>
             <LayoutSideHead>
-
-
                 <HeadingTitle title={greeting + ", " + user?.firstName + "!"} />
                 <HomepageCards />
-
             </LayoutSideHead>
         </RoleGate>
     )
