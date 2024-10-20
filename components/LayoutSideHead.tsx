@@ -22,7 +22,9 @@ const LayoutSideHead = ({ children, classname }: LayoutSideHeadProps) => {
                     <Header user={user} employeePic={userImage || undefined} />
                     <div className={cn('ml-4 mb-20', classname)}>
                         <Breadcrumb />
-                        {children}
+                        <div className='mr-6'>
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>

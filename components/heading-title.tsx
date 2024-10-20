@@ -6,7 +6,7 @@ interface HeadingTitleProps {
 }
 const HeadingTitle = ({ title, children }: HeadingTitleProps) => {
     return (
-        <div className='mt-5 justify-between flex flex-row mr-6'>
+        <div className='mt-5 justify-between flex flex-row  '>
             <p className='font-bold text-4xl'>{title}</p>
             {children}
         </div>

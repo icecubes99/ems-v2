@@ -60,7 +60,7 @@ const page = () => {
                     <DataTableTemplate columns={columnsPendingPayroll} data={payroll || []} />
                 </TableWrapper>
 
-                <div className='grid grid-cols-2'>
+                <div className='grid grid-cols-2 gap-2'>
                     <TableWrapper title='Deductions' description='Deductions for the Upcoming Payroll Period' icon={<DollarSign />}>
                         <DataTableDeductions columns={columnsDeduction} data={deductions || []} />
                     </TableWrapper>
@@ -91,7 +91,7 @@ const QuickActions = ({ children, title }: QuickActionsProps) => {
     return (
         <>
             <p className="col-span-4 font-bold text-lg mt-6">{title || "QUICK ACTIONS"}</p>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5 mr-6 items-center justify-center">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5   items-center justify-center">
                 {children}
             </div>
         </>

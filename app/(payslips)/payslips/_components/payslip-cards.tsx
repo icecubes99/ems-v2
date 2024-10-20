@@ -18,7 +18,7 @@ const PayslipCards = () => {
 
     return (
         <>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-3 mt-5 mr-6 ">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-3 mt-5   ">
                 <HeadingCard title='Total Payslips Received' count={payslipCount} icon={<FaMoneyBillWave />} isLoading={isLoading} />
 
                 <HeadingCard title='Semi-Monthly Salary' count={formatter.format(basicSalary || 0)} icon={<FcMoneyTransfer />} isLoading={bsLoad} />

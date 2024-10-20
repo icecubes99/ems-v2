@@ -1,6 +1,6 @@
 // hooks/useTotalUserCount.ts
 import { useState, useEffect } from 'react'
-import { fetchActiveUsersCount, fetchApprovedPayrollCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchRejectedPayrollCount, fetchTotalAuditLogs, fetchTotalPayrollCount, fetchTotalPayslipCount, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
+import { fetchActiveUsersCount, fetchApprovedPayrollCount, fetchInactiveUsersCount, fetchLeavesPendingCount, fetchOvertimesPendingCount, fetchRejectedPayrollCount, fetchRemainingWorkingDays, fetchTotalAuditLogs, fetchTotalHolidaysCount, fetchTotalPayrollCount, fetchTotalPayslipCount, fetchTotalWorkingDays, fetchUserBasicSalary, fetchUserPayslipCount, fetchUsersCount } from '@/actions/fetchModelCounts'
 import { fetchDepartmentsCount } from '@/actions/fetchModelCounts';
 import { fetchDesignationsCount } from '@/actions/fetchModelCounts';
 import { set } from 'date-fns';
@@ -354,4 +354,76 @@ export function useTotalAuditLogCount() {
         getTotalAuditLogCount()
     }, [])
     return { auditLogCount, isLoading, error }
+}
+
+export function useTotalWorkingDaysCount() {
+    const [workingDays, setWorkingDays] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalWorkingDays() {
+            try {
+                setIsLoading(true);
+                const count = await fetchTotalWorkingDays()
+                setWorkingDays(count)
+            } catch (error) {
+                console.error("Error fetching Working Days Count: ", error);
+                setError("Failed to fetch Working Days Count")
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        getTotalWorkingDays()
+    }, [])
+    return { workingDays, isLoading, error }
+}
+
+export function useRemainingWorkingDaysCount() {
+    const [remainingDays, setRemainingDays] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getRemainingWorkingDays() {
+            try {
+                setIsLoading(true);
+                const totalDays = await fetchRemainingWorkingDays()
+                setRemainingDays(totalDays)
+            } catch (error) {
+                console.error("Error fetching Remaining Working Days Count: ", error);
+                setError("Failed to fetch Remaining Working Days Count")
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        getRemainingWorkingDays()
+    }, [])
+    return { remainingDays, isLoading, error }
+}
+
+export function useTotalHolidaysCount() {
+    const [holidaysCount, setHolidaysCount] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getTotalHolidaysCount() {
+            try {
+                setIsLoading(true);
+                const count = await fetchTotalHolidaysCount()
+                setHolidaysCount(count)
+            } catch (error) {
+                console.error("Error fetching Holidays Count: ", error);
+                setError("Failed to fetch Holidays Count")
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        getTotalHolidaysCount()
+    }, [])
+    return { holidaysCount, isLoading, error }
 }

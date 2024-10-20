@@ -39,19 +39,21 @@ const SidebarButton = ({
             >
                 <div
                     className={cn(
-                        "flex items-center",
+                        "flex items-center transition-all duration-300 ease-in-out",
                         isCollapsed ? "justify-center" : "justify-start w-full",
                         iconClassname
                     )}
                 >
-                    <div className={isCollapsed ? "" : "mr-10 ml-16"}>
+                    <div className={`transition-all duration-300 ease-in-out ${isCollapsed ? "" : "mr-10 ml-16"}`}>
                         {icon}
                     </div>
-                    {!isCollapsed && (
-                        <p className='text-sm font-medium transition-opacity duration-300 ease-in-out'>
-                            {label}
-                        </p>
-                    )}
+                    {/* <p className={`text-sm font-medium transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}> */}
+                    <div className={`text-sm font-medium flex flex-col items-center gap-4 transition-all duration-150 ease-in-out  ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}
+                        style={{ transform: isCollapsed ? 'scale(0.8)' : 'scale(1)' }}>
+
+                        {label}
+                    </div>
+                    {/* </p> */}
                 </div>
             </div>
         </Link>

@@ -39,6 +39,8 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useSpecificHoliday } from '@/hooks/use-holidays';
 import { CgSpinner } from 'react-icons/cg';
 import { useRouter } from 'next/navigation';
+import { FaCalendarPlus } from 'react-icons/fa';
+import { Plus } from 'lucide-react';
 
 export const CreateHolidayCard = ({ className }: { className?: string }) => {
     const [error, setError] = useState<string | undefined>("");
@@ -93,7 +95,12 @@ export const CreateHolidayCard = ({ className }: { className?: string }) => {
 
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className='w-full' variant={"superadmin"} size={"lg"}>Add Holiday</Button>
+                <Button className="h-auto w-full py-4 flex flex-col items-center justify-center"
+                    variant={"outline"}
+                    size={"lg"}>
+                    <Plus className="w-6 h-6 mb-2" />
+                    Add Holiday
+                </Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card>

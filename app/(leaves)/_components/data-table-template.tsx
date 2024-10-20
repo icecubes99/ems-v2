@@ -36,12 +36,13 @@ import { Input } from "@/components/ui/input"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    label?: string
+    searchValue?: string
 }
 
 export function DataTableTemplate<TData, TValue>({
     columns,
     data,
+    searchValue
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -73,17 +74,18 @@ export function DataTableTemplate<TData, TValue>({
     return (
         <>
             {/* Search Functionality via Email */}
-            {/* <div className="flex items-center py-4"> */}
-            {/* <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                /> */}
-            {/* <p className="text-lg font-semibold">{label}</p> */}
-            {/* </div> */}
+            {searchValue && (
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder={`Filter by ${searchValue}...`}
+                        value={(table.getColumn(searchValue)?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(searchValue)?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                </div>
+            )}
 
             {/* Table */}
             <div className="rounded-md borde">

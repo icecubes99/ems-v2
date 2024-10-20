@@ -15,7 +15,7 @@ const page = () => {
             <LayoutSideHead>
                 <EmployeePageContent />
 
-                <div className='mr-6 mb-5'>
+                <div className='  mb-5'>
                     <p className="col-span-4 font-bold  text-lg">EMPLOYEE LIST</p>
                     <DataTable columns={columnsEmployeeList} data={users} />
                 </div>

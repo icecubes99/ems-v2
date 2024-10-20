@@ -8,6 +8,8 @@ import { PasswordsTable } from '@/components/passwords-table'
 import { Users, FileText, Clock, Building, UserCircle } from 'lucide-react'
 import { useLeavesPendingCount, useOvertimesPendingCount } from '@/hooks/use-ModelCounts'
 import HeadingTitle from '@/components/heading-title'
+import { MdLock } from 'react-icons/md'
+import TableWrapper from '@/components/table-wrapper'
 
 interface AdminCardsProps {
     userId: string
@@ -23,7 +25,9 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
                 <div className='row-span-3'>
-                    <PasswordsTable classname='w-full' />
+                    <TableWrapper description='List of Passwords for the Working Day' title='Passwords' icon={<MdLock />}>
+                        <PasswordsTable />
+                    </TableWrapper>
                 </div>
 
                 <Card className="flex flex-col">

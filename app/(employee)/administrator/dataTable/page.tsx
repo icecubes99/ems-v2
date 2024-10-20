@@ -38,7 +38,7 @@ const page = () => {
     return (
         <LayoutSideHead>
             <section className="py-10">
-                <div className="mr-6">
+                <div className="">
                     <h1 className="text-3xl">
                         <DataTable columns={columns} data={users} />
                     </h1>

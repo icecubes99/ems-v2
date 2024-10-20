@@ -14,7 +14,7 @@ const PayrollPanelCards = () => {
     const { payslipCount, isLoading: isLoadingPayslips } = useTotalApprovedPayslipCount()
 
     return (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-3 mt-5 mr-6 ">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-3 mt-5   ">
             <HeadingCard title='Total Payroll Generated' count={payrollCount} icon={<MdOutlinePayments />} isLoading={isLoading} />
             <HeadingCard title='Total Payroll Approved' count={approvedPC} icon={<IoSendSharp />} isLoading={approvedIS} />
             <HeadingCard title='Total Payroll Rejected' count={rejectedPC} icon={<IoSendSharp />} isLoading={rejectedIS} />

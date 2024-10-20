@@ -14,7 +14,7 @@ const EmployeeCards = () => {
 
     return (
         <>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6 ">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5   ">
 
                 <HeadingCard title="Total Employees" count={userCount} icon={<Users />} isLoading={isLoading} />
 
@@ -24,7 +24,7 @@ const EmployeeCards = () => {
             </div>
 
             <p className="col-span-4 font-bold  text-lg">QUICK ACTIONS</p>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5 mr-6">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5  ">
                 <Link href={"/superadministrator/employeePanel/createEmployee"} className="">
                     <Button variant="superadmin" className="h-auto py-4 flex w-full flex-col items-center justify-center">
                         <UserPlus className="h-6 w-6 mb-2" />

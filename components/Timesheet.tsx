@@ -97,11 +97,11 @@ export function TimesheetDialog({ classname }: { classname: string }) {
             <DialogTrigger asChild>
                 <Button
                     size={"lg"}
-                    className={cn("", classname)}
-                    variant="outline"
+                    className={cn("h-auto w-full py-4 flex flex-col items-center justify-center", classname)}
+                    variant="auth"
                     disabled={isLoading || status === 'CLOCKED_OUT'}
                 >
-                    <CalendarClock className="h-4 w-4 mr-4" />
+                    <CalendarClock className="w-6 h-6 mb-2" />
                     {isLoading ? "Loading..." : getButtonText(status)}
                 </Button>
             </DialogTrigger>

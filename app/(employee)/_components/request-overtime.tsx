@@ -30,8 +30,12 @@ import { DialogContent, DialogTrigger } from '@/components/RefreshDialog';
 import { Textarea } from '@/components/ui/textarea';
 import { OvertimeStatus, useOvertimeStatus } from '@/hooks/use-overtime-status';
 import { Clock12, Clock6, Clock8 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const RequestOvertime = () => {
+interface Props {
+    className?: string;
+}
+const RequestOvertime = (className: Props) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -93,11 +97,12 @@ const RequestOvertime = () => {
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button
-                    variant={"auth"}
+                    variant={"outline"}
                     disabled={isLoading || status === 'RECORDED'}
                     size={"lg"}
+                    className={cn("h-auto w-full py-4 flex flex-col items-center justify-center", className)}
                 >
-                    <Clock8 className='h-4 w-4 mr-4' />
+                    <Clock8 className='h-6 w-6 mb-2' />
                     {isLoading ? "Loading..." : getButtonText(status)}
                 </Button>
             </DialogTrigger>

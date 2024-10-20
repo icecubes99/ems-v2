@@ -28,14 +28,14 @@ const getGreeting = () => {
     const currentMinutes = new Date().getMinutes();
 
     if (currentHour < 12) {
-        return "Good Morning";
+        return "🌅 Good Morning";
     } else if (currentHour === 12 && currentMinutes <= 59) {
-        return "Have a Happy Lunch";
+        return "🍽️ Have a Happy Lunch";
     } else if (currentHour === 13 && currentMinutes === 0) {
-        return "Have a Happy Lunch";
+        return "🍽️ Have a Happy Lunch";
     } else if (currentHour >= 17 && (currentHour > 17 || currentMinutes >= 30)) {
-        return "Good Evening";
+        return "🌒 Good Evening";
     } else {
-        return "Good Afternoon";
+        return "☀️ Good Afternoon";
     }
 }

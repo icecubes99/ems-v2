@@ -88,14 +88,14 @@ export default function Sidebar({ }: SidebarProps) {
                         />
                     </Link>
                 </div>
-                <div className="flex flex-col items-center gap-4">
-                    <Avatar className={isCollapsed ? "w-12 h-12" : "w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36"}>
+                <div className="flex flex-col items-center gap-4 transition-all duration-300 ease-in-out" style={{ transform: isCollapsed ? 'scale(0.8)' : 'scale(1)' }}>
+                    <Avatar className={`transition-all duration-300 ease-in-out ${isCollapsed ? "w-12 h-12" : "w-20 h-20 md:w-32 md:h-32 lg:w-36 lg:h-36"}`}>
                         <AvatarImage src={userImage || undefined} />
                         <AvatarFallback className="bg-neutral-700 text-white">
                             <FaUser />
                         </AvatarFallback>
                     </Avatar>
-                    <div className={`text-center transition-opacity duration-300 ease-in-out ${isCollapsed ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+                    <div className={`text-center transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
                         <p className="font-semibold">{user?.name}</p>
                         <p className="font-light text-sm">{user?.jobTitle}</p>
                     </div>

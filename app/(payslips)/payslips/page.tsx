@@ -13,12 +13,12 @@ const page = () => {
         <LayoutSideHead>
             <div className='flex flex-col'>
 
-                <div className='mt-5 justify-between flex flex-row mr-6'>
+                <div className='mt-5 justify-between flex flex-row  '>
                     <p className='font-bold text-4xl'>PAYSLIPS MANAGEMENT</p>
                 </div>
 
                 <PayslipCards />
-                <div className='bg-card  rounded-xl shadow mr-6'>
+                <div className='bg-card  rounded-xl shadow  '>
                     <div className='p-6 border-b border-border'>
                         <h2 className='text-2xl font-semibold flex items-center gap-2'>
                             <FaMoneyBillWaveAlt className='h-6 w-6 text-primary' />

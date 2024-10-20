@@ -49,7 +49,7 @@ export default function GovernmentContributionsEditor() {
     }
 
     return (
-        <div className="mr-6">
+        <div className=" ">
             <h1 className="text-2xl font-bold mb-4">Government Contributions Editor</h1>
             {contributions.map((contribution) => (
                 <div key={contribution.id} className="mb-4 p-4 border rounded">

@@ -66,7 +66,7 @@ interface TableWrapperProps {
 
 function TableWrapper({ title, children, icon, payPeriodStart, payPeriodEnd, totalAmount, payrollId }: TableWrapperProps) {
     return (
-        <div className='bg-card rounded-xl border border-white shadow-md mr-6 mt-5 hover:shadow-lg transition duration-300 '>
+        <div className='bg-card rounded-xl border border-white shadow-md   mt-5 hover:shadow-lg transition duration-300 '>
             <div className='grid grid-cols-4 border-b border-border'>
 
                 <div className='p-6  col-span-3'>

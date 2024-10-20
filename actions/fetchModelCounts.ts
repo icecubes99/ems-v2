@@ -189,3 +189,54 @@ export async function fetchTotalAuditLogs() {
         throw new Error("Failed to fetch Audit Logs Count")
     }
 }
+
+export async function fetchTotalWorkingDays() {
+    try {
+        const currentYear = new Date().getFullYear();
+        const startOfYear = new Date(currentYear, 0, 1); // January 1st
+        const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59, 999); // December 31st
+
+        const workingDaysCount = await db.workingDay.count({
+            where: {
+                createdAt: {
+                    gte: startOfYear,
+                    lte: endOfYear
+                }
+            }
+        })
+        return workingDaysCount
+    } catch (error) {
+        console.error("Error fetching working days count: ", error);
+        throw new Error("Failed to fetch Working Days Count")
+    }
+}
+export async function fetchRemainingWorkingDays() {
+    try {
+        const today = new Date();
+        const endOfYear = new Date(today.getFullYear(), 11, 31, 23, 59, 59, 999); // December 31st
+
+        const remainingWorkingDaysCount = await db.workingDay.count({
+            where: {
+                date: {
+                    gte: today,
+                    lte: endOfYear
+                },
+            }
+        });
+
+        return remainingWorkingDaysCount;
+    } catch (error) {
+        console.error("Error fetching remaining working days count: ", error);
+        throw new Error("Failed to fetch Remaining Working Days Count");
+    }
+}
+
+export async function fetchTotalHolidaysCount() {
+    try {
+        const holidaysCount = await db.holiday.count({})
+        return holidaysCount
+    } catch (error) {
+        console.error("Error fetching holidays count: ", error);
+        throw new Error("Failed to fetch Holidays Count")
+    }
+}   

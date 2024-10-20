@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Briefcase, Building, CalendarClock, Users } from "lucide-react"
+import { Briefcase, Building, CalendarClock, Plus, Users } from "lucide-react"
 import { useTotalDepartmentsCount, useTotalDesignationCount, useTotalUserCount } from "@/hooks/use-ModelCounts"
 import { HolidayTable } from "@/components/holidays-table"
 import { TimesheetDialog } from "@/components/Timesheet"
@@ -19,7 +19,7 @@ const HomepageCards = () => {
 
     return (
         <>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6 ">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 ">
                 <HeadingCard
                     title='Total Employees'
                     count={userCount}
@@ -35,14 +35,18 @@ const HomepageCards = () => {
 
             </div>
 
-            <QuickActions>
-                <TimesheetDialog classname="col-span-2" />
-                <Button variant={"auth"} size={"lg"}>Upload Documents</Button>
+            <QuickActions className="lg:grid-cols-3">
+                <TimesheetDialog classname=" " />
+                <Button variant={"outline"} size={"lg"}
+                    className={("h-auto w-full py-4 flex flex-col items-center justify-center")}>
+                    <Plus className="w-6 h-6 mb-2" />
+                    Upload Documents
+                </Button>
                 <RequestOvertime />
             </QuickActions>
 
             <p className="col-span-4 font-bold  text-lg">MISC</p>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5">
                 <HolidayTable className="col-span-2" />
             </div>
         </>

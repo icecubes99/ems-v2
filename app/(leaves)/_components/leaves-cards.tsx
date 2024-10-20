@@ -14,7 +14,7 @@ const LeavesCards = () => {
     return (
 
 
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 mr-6 ">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5   ">
 
             <HeadingCard title='Vacation Days Available' count={vacationDays} icon={<Calendar />} isLoading={loading} />
 

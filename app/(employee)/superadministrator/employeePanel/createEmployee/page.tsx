@@ -10,7 +10,7 @@ const page = () => {
                 <div className='mt-5'>
                     <p className='font-bold text-4xl'>EMPLOYEE REGISTRATION</p>
                     <div className='flex items-center'>
-                        <div className='mr-6 w-10/12'>
+                        <div className='  w-10/12'>
                             <NewRegisterForm />
 
                         </div>

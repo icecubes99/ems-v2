@@ -118,7 +118,7 @@ export const newRegister = async (values: z.infer<typeof newRegisterSchema>) => 
         await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
         const superAdminName = user.name || dbUser.firstName + " " + dbUser.lastName;
-        await auditAction(user.id, `User Created by SuperAdmin: ${superAdminName}`);
+        await auditAction(user.id, `User "${firstName} ${lastName}" Created by SuperAdmin: ${superAdminName}`);
 
 
         return { success: "User registered successfully. Confirmation email sent!" };

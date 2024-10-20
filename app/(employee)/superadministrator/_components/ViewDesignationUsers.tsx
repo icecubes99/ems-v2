@@ -47,7 +47,7 @@ export default function ViewDesignationUsers({ designationId }: ViewDesignationU
 
     if (designationUsersLoading || loading) {
         return (
-            <Card className='mr-6'>
+            <Card className=' '>
                 <CardHeader>
                     <Skeleton className="h-9 w-1/6" />
                 </CardHeader>
@@ -78,7 +78,7 @@ export default function ViewDesignationUsers({ designationId }: ViewDesignationU
     }
 
     return (
-        <Card className='mr-6'>
+        <Card className=' '>
             <CardHeader>Users in this Designation {designation?.designationName}</CardHeader>
             <CardContent>
                 <Table>

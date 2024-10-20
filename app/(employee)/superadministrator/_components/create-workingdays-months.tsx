@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
+import { FaSpinner, FaCheckCircle, FaPlay } from 'react-icons/fa'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { toast } from '@/hooks/use-toast'
 
 import { generateWorkingMonthsAndDays, checkWorkingDaysExist } from '@/actions/superadmin/generate-working-days-and-months'
 import { cn } from '@/lib/utils'
+import { Check, Play } from 'lucide-react'
 
 export default function WorkingDaysManager({ classname }: { classname: string }) {
     const [isGenerating, setIsGenerating] = useState(false)
@@ -50,25 +52,29 @@ export default function WorkingDaysManager({ classname }: { classname: string })
     }
 
     return (
-        <div className={cn("space-y-6", classname)}>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Generate Working Days</CardTitle>
-                    <CardDescription>
-                        Generate working months and days for the rest of the year.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Button
-                        onClick={handleGenerateWorkingDays}
-                        disabled={isGenerating || workingDaysExist}
-                        variant={"superadmin"}
-                        className='w-full'
-                    >
-                        {isGenerating ? "Generating..." : workingDaysExist ? "Already Generated For this Year" : "Generate Working Months and Days"}
-                    </Button>
-                </CardContent>
-            </Card>
-        </div>
+
+        <Button
+            onClick={handleGenerateWorkingDays}
+            disabled={isGenerating || workingDaysExist}
+            variant={"superadmin"}
+            className="h-auto w-full py-4 flex flex-col items-center justify-center"
+        >
+            {isGenerating ? (
+                <>
+                    <FaSpinner className="mb-2 h-6 w-6 animate-spin" />
+                    Generating...
+                </>
+            ) : workingDaysExist ? (
+                <>
+                    <Check className="w-6 h-6 mb-2" />
+                    Already Generated For this Year
+                </>
+            ) : (
+                <>
+                    <Play className="w-6 h-6 mb-2" />
+                    Generate Working Months and Days
+                </>
+            )}
+        </Button>
     )
 }

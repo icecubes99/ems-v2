@@ -18,7 +18,7 @@ const page = () => {
                 </HeadingTitle>
 
                 <LeavesCards />
-                <div className='bg-card  rounded-xl shadow mr-6'>
+                <div className='bg-card  rounded-xl shadow  '>
                     <div className='p-6 border-b border-border'>
                         <h2 className='text-2xl font-semibold flex items-center gap-2'>
                             <History className='h-6 w-6 text-primary' />

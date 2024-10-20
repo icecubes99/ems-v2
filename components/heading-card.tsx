@@ -12,7 +12,7 @@ interface HeadingCardProps {
 
 const HeadingCard = ({ title, count, icon, isLoading }: HeadingCardProps) => {
     return (
-        <Card className="hover:shadow-xl transition-shadow duration-300">
+        <Card className="hover:shadow-md transition-shadow duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
                 <CardTitle>
                     {title}
