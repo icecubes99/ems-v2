@@ -34,7 +34,8 @@ FINISHED UPDATES:
     - Added Dynamic Government Contributions where it is editable       Oct-19 7:40pm
     - Designations should have a rate on their own 
     - Create an advance generation of timesheets for admins to have access to for their employees Oct-20 4:51pm
-        - is able to undo the advanced timesheets
+        - is able to undo the advanced timesheets   Oct-20 9:47pm
+    - Added Documents upload feature        Oct-20 11pm
         
 ====================================================================================================================
-    NOVEMBER 18 FINAL DEFENSE - 5 WEEKS LEFT potangina
+    NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT yawa
