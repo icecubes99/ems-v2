@@ -44,16 +44,16 @@ const SidebarButton = ({
                         iconClassname
                     )}
                 >
-                    <div className={`transition-all duration-300 ease-in-out ${isCollapsed ? "" : "mr-10 ml-16"}`}>
+                    <div className={`transition-all duration-500 ease-in-out ${isCollapsed ? "" : "mr-10 ml-16"}`}>
                         {icon}
                     </div>
-                    {/* <p className={`text-sm font-medium transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}> */}
-                    <div className={`text-sm font-medium flex flex-col items-center gap-4 transition-all duration-150 ease-in-out  ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}
-                        style={{ transform: isCollapsed ? 'scale(0.8)' : 'scale(1)' }}>
-
+                    <div className={`text-sm font-medium flex flex-col items-center gap-4 ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto open'}`}
+                        style={{
+                            transform: isCollapsed ? 'scale(0.8) translateX(-5px)' : 'scale(1) translateX(0)',
+                            transition: isCollapsed ? 'none' : 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out'
+                        }}>
                         {label}
                     </div>
-                    {/* </p> */}
                 </div>
             </div>
         </Link>

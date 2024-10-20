@@ -71,6 +71,7 @@ model User {
   timesheets              Timesheet[]
   leaves                  Leaves[]
   overtimes               Overtimes[]
+  advancedTimesheets      AdvanceTimesheetUsers[]
 
   assignedDesignations    AssignDesignation?
 
@@ -285,6 +286,8 @@ model Timesheet {
   isOvertime   Boolean    @default(false)
   forgotClockOut Boolean    @default(false)
   clockOutEarly Boolean    @default(false)
+  isLeave       Boolean   @default(false)
+  isAdvanced    Boolean   @default(false)
 
   clockOutEarlyMinutes Int        @default(0)
   minutesLate  Int        @default(0)
@@ -544,4 +547,27 @@ model GovernmentContribution {
   brackets  Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AdvanceTimesheet {
+  id        String @id @default(cuid())
+  type      String
+  startDate DateTime
+  endDate   DateTime
+
+  isUndone Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     AdvanceTimesheetUsers[]
+}
+
+model AdvanceTimesheetUsers {
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  advanceTimesheet  AdvanceTimesheet @relation(fields: [advanceTimesheetId], references: [id], onDelete: Cascade)
+  advanceTimesheetId  String
+
+  @@id([userId, advanceTimesheetId])
 }

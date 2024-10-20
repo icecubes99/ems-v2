@@ -13,12 +13,17 @@ import { MdBeachAccess, MdEventAvailable, MdHolidayVillage, MdLock, MdWork } fro
 import { useRemainingWorkingDaysCount, useTotalHolidaysCount, useTotalWorkingDaysCount } from '@/hooks/use-ModelCounts'
 import HeadingCard from '@/components/heading-card'
 import QuickActions from '@/components/quick-actions'
+import { AdvanceClockInForm } from '../_components/advance-clock-in-form'
+import { columnsAdvanceTimesheet } from '../_components/columns-advance-timesheet'
+import { Calendar } from 'lucide-react'
+import { useAdvanceTimesheets } from '@/hooks/use-advance-timesheets'
 
 const page = () => {
     const { holidays, } = useHolidays()
     const { workingDays, isLoading: twLoading } = useTotalWorkingDaysCount();
     const { remainingDays, isLoading: rwLoading } = useRemainingWorkingDaysCount();
     const { holidaysCount, isLoading: hLoading } = useTotalHolidaysCount()
+    const { advanceTimesheets } = useAdvanceTimesheets()
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead classname=' '>
@@ -35,6 +40,7 @@ const page = () => {
                 <QuickActions className='lg:grid-cols-3'>
                     <WorkingDaysManager classname='col-span-1' />
                     <CreateHolidayCard />
+                    <AdvanceClockInForm />
                 </QuickActions>
 
                 <div className='grid grid-cols-2 gap-8'>
@@ -45,6 +51,10 @@ const page = () => {
                         <DataTableTemplate columns={columnsHolidays} data={holidays || []} />
                     </TableWrapper>
                 </div>
+
+                <TableWrapper title='Advance Timesheets' description='List of upcoming Timesheets' icon={<Calendar />}>
+                    <DataTableTemplate columns={columnsAdvanceTimesheet} data={advanceTimesheets || []} />
+                </TableWrapper>
 
             </LayoutSideHead>
         </RoleGate>

@@ -15,6 +15,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { useUserImage } from '@/hooks/use-user-image'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
+import SidebarEnhancements from './sidebar-enhancements'
 
 interface SidebarProps {
     user?: ExtendedUser
@@ -63,6 +64,8 @@ export default function Sidebar({ }: SidebarProps) {
         )
     }
 
+    const userTimeZone = "Asia/Manila"
+
     return (
         <div
             className={`flex flex-col ${isCollapsed ? 'w-20' : 'w-96'
@@ -76,7 +79,7 @@ export default function Sidebar({ }: SidebarProps) {
             >
                 <FaChevronRight />
             </Button>
-            <div className="flex flex-col items-center space-y-10 flex-grow">
+            <div className="flex flex-col items-center space-y-8 flex-grow">
                 <div className="mt-7 mb-5">
                     <Link href="/homepage">
                         <Image
@@ -100,61 +103,68 @@ export default function Sidebar({ }: SidebarProps) {
                         <p className="font-light text-sm">{user?.jobTitle}</p>
                     </div>
                 </div>
-                <div className="w-full flex-grow">
-                    <SidebarButton
-                        link="/employee"
-                        icon={<FaUser />}
-                        label="PROFILE DETAILS"
-                        isActive={router.startsWith("/employee")}
-                        isCollapsed={isCollapsed}
-                    />
-                    <SidebarButton
-                        link="/payslips"
-                        icon={<FaMoneyBill />}
-                        label="PAYSLIPS"
-                        isActive={router.startsWith("/payslips")}
-                        isCollapsed={isCollapsed}
-                    />
-                    <SidebarButton
-                        link="/leaveRequests"
-                        icon={<FaAddressBook />}
-                        label="LEAVE REQUESTS"
-                        isActive={router.startsWith("/leaveRequests")}
-                        isCollapsed={isCollapsed}
-                    />
-                    <RoleGateNull allowedRole="ADMIN">
-                        <SidebarButton
-                            link="/administrator"
-                            icon={<FaKey />}
-                            iconClassname="text-sky-900"
-                            isAdmin
-                            label="ADMIN PANEL"
-                            isActive={router.startsWith("/administrator")}
-                            isCollapsed={isCollapsed}
-                        />
-                    </RoleGateNull>
-                    <RoleGateNull allowedRole="SUPERADMIN">
-                        <SidebarButton
-                            link="/administrator"
-                            icon={<FaKey />}
-                            iconClassname="text-sky-950"
-                            isAdmin
-                            label="ADMIN PANEL"
-                            isActive={router.startsWith("/administrator")}
-                            isCollapsed={isCollapsed}
-                        />
-                        <SidebarButton
-                            link="/superadministrator"
-                            icon={<FaShieldAlt />}
-                            iconClassname="text-red-900"
-                            label="SUPERADMIN PANEL"
-                            isSuperAdmin
-                            isActive={router.startsWith("/superadministrator")}
-                            isCollapsed={isCollapsed}
-                        />
-                    </RoleGateNull>
-                </div>
+                <SidebarEnhancements
+                    isCollapsed={isCollapsed}
+                    userTimeZone={userTimeZone}
+                />
+
             </div>
+
+            <div className="mb-auto">
+                <SidebarButton
+                    link="/employee"
+                    icon={<FaUser />}
+                    label="PROFILE DETAILS"
+                    isActive={router.startsWith("/employee")}
+                    isCollapsed={isCollapsed}
+                />
+                <SidebarButton
+                    link="/payslips"
+                    icon={<FaMoneyBill />}
+                    label="PAYSLIPS"
+                    isActive={router.startsWith("/payslips")}
+                    isCollapsed={isCollapsed}
+                />
+                <SidebarButton
+                    link="/leaveRequests"
+                    icon={<FaAddressBook />}
+                    label="LEAVE REQUESTS"
+                    isActive={router.startsWith("/leaveRequests")}
+                    isCollapsed={isCollapsed}
+                />
+                <RoleGateNull allowedRole="ADMIN">
+                    <SidebarButton
+                        link="/administrator"
+                        icon={<FaKey />}
+                        iconClassname="text-sky-900"
+                        isAdmin
+                        label="ADMIN PANEL"
+                        isActive={router.startsWith("/administrator")}
+                        isCollapsed={isCollapsed}
+                    />
+                </RoleGateNull>
+                <RoleGateNull allowedRole="SUPERADMIN">
+                    <SidebarButton
+                        link="/administrator"
+                        icon={<FaKey />}
+                        iconClassname="text-sky-950"
+                        isAdmin
+                        label="ADMIN PANEL"
+                        isActive={router.startsWith("/administrator")}
+                        isCollapsed={isCollapsed}
+                    />
+                    <SidebarButton
+                        link="/superadministrator"
+                        icon={<FaShieldAlt />}
+                        iconClassname="text-red-900"
+                        label="SUPERADMIN PANEL"
+                        isSuperAdmin
+                        isActive={router.startsWith("/superadministrator")}
+                        isCollapsed={isCollapsed}
+                    />
+                </RoleGateNull>
+            </div>
+
             <div className="mt-auto mb-14">
                 <LogoutButton userId={user?.id as string}>
                     <SidebarButton

@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, DepartmentSalaryIncrease, DesignationSalaryIncrease, } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, DepartmentSalaryIncrease, DesignationSalaryIncrease, AdvanceTimesheetUsers, } from "@prisma/client"
 import { User as PrismaUser } from "@prisma/client"
 export type AssignDesignation = {
     id: string
@@ -208,3 +208,15 @@ export type AuditLogWithUser = {
     createdAt: Date;
     user: PrismaUser;
 }
+
+
+export type AdvanceTimesheet = {
+    id: string;
+    type: string;
+    startDate: Date;
+    endDate: Date;
+    isUndone: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    users: AdvanceTimesheetUsers[];
+};

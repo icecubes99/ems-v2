@@ -28,3 +28,13 @@ export const OvertimeSchema = z.object({
 export const PendingOvertimesSchema = z.object({
     status: z.enum([LeaveStatus.PENDING, LeaveStatus.APPROVED, LeaveStatus.REJECTED])
 })
+
+export const AdvanceClockInSchema = z.object({
+    userIds: z.array(z.string()).min(1, "At least one user must be selected"),
+    startDate: z.string().min(1, "Start date is required"),
+    endDate: z.string().min(1, "End date is required"),
+    type: z.string().min(1, "Type is required")
+}).refine(data => new Date(data.endDate) >= new Date(data.startDate), {
+    message: "End date cannot be before start date",
+    path: ["endDate"],
+});

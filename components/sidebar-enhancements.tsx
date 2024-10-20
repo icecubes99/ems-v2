@@ -1,0 +1,139 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import { Clock } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+interface SidebarEnhancementsProps {
+    isCollapsed: boolean
+    userTimeZone: string
+    className?: string
+}
+
+const quotes = [
+    { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+    { text: "Success is not final.", author: "Winston Churchill" },
+    { text: "Keep moving forward.", author: "Walt Disney" },
+    { text: "Dream big.", author: "Shan Tranquilan" },
+    { text: "Seize the day.", author: "Horace" },
+    { text: "You can do it.", author: "Reanne Angcos" },
+    { text: "Never give up.", author: "Marlo Magdangal" },
+    { text: "Stay positive.", author: "Paul Simbajon" },
+    { text: "Be yourself.", author: "Kyle Caballes" },
+    { text: "Believe in yourself.", author: "Kyle Table" },
+    { text: "Stay focused.", author: "Ellyanna Du" },
+    { text: "Work hard, play hard.", author: "Miguel Co" },
+    { text: "Keep it simple.", author: "Brian Geralde" },
+    { text: "Stay humble.", author: "Jose Gallardo" },
+    { text: "Be kind.", author: "Kanye West" }
+]
+
+export default function SidebarEnhancements({
+    isCollapsed,
+    userTimeZone,
+    className
+}: SidebarEnhancementsProps) {
+    const [currentTime, setCurrentTime] = useState(new Date())
+    const [isVisible, setIsVisible] = useState(false)
+    const [quote, setQuote] = useState({ text: '', author: '' })
+    const [showQuote, setShowQuote] = useState(false)
+    const [showDate, setShowDate] = useState(false)
+    const [showClock, setShowClock] = useState(false)
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTime(new Date())
+        }, 1000)
+
+        return () => clearInterval(intervalId)
+    }, [])
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout
+
+        if (!isCollapsed) {
+            timeoutId = setTimeout(() => {
+                setIsVisible(true)
+            }, 1000)
+        } else {
+            setIsVisible(false)
+        }
+
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId)
+        }
+    }, [isCollapsed])
+
+    useEffect(() => {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)]
+        setQuote(randomQuote)
+    }, [])
+
+    useEffect(() => {
+        const checkHeight = () => {
+            setShowQuote(window.innerHeight > 925)
+            setShowDate(window.innerHeight > 825)
+            setShowClock(window.innerHeight > 780)
+        }
+
+        checkHeight()
+        window.addEventListener('resize', checkHeight)
+
+        return () => {
+            window.removeEventListener('resize', checkHeight)
+        }
+    }, [])
+
+    if (isCollapsed) return null
+
+    return (
+        <div
+            className={cn(
+                'px-4 space-y-4 items-center transition-all duration-1000 ease-in-out flex flex-col justify-center',
+                isVisible ? 'opacity-50' : 'opacity-0',
+                className
+            )}
+        >
+            {/* Clock widget */}
+            {showClock && (
+                <div className="flex items-center space-x-2 justify-center w-full">
+                    <Clock className="h-5 w-5 text-purple-700" />
+                    <div>
+                        <p className="text-sm font-medium">
+                            {currentTime.toLocaleTimeString('en-US', {
+                                timeZone: userTimeZone,
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                            })}
+                        </p>
+                        <p className="text-xs text-purple-800">{userTimeZone}</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Date widget */}
+            {showDate && (
+                <div className="text-center">
+                    <p className="text-xs font-medium">
+                        {currentTime.toLocaleDateString('en-US', {
+                            timeZone: userTimeZone,
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
+                    </p>
+                </div>
+            )}
+
+            {/* Motivational quote */}
+            {showQuote && (
+                <div className="text-center">
+                    <p className="text-sm italic">"{quote.text}"</p>
+                    <p className="text-xs text-purple-800 mt-1">- {quote.author}</p>
+                </div>
+            )}
+        </div>
+    )
+}
