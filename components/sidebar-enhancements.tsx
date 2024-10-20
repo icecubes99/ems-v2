@@ -25,7 +25,27 @@ const quotes = [
     { text: "Work hard, play hard.", author: "Miguel Co" },
     { text: "Keep it simple.", author: "Brian Geralde" },
     { text: "Stay humble.", author: "Jose Gallardo" },
-    { text: "Be kind.", author: "Kanye West" }
+    { text: "Be kind.", author: "Kanye West" },
+    { text: "Think different.", author: "Apple" },
+    { text: "Impossible is nothing.", author: "Adidas" },
+    { text: "Have it your way.", author: "Burger King" },
+    { text: "Think big.", author: "Emmanuel Aguado" },
+    { text: "Stay curious.", author: "Stephen Hawking" },
+    { text: "Be the change.", author: "Mahatma Gandhi" },
+    { text: "Carpe diem.", author: "Unknown" },
+    { text: "Keep calm.", author: "Unknown" },
+    { text: "Teamwork works.", author: "John C. Maxwell" },
+    { text: "Hard work.", author: "Kevin Durant" },
+    { text: "Success is habit.", author: "Aristotle" },
+    { text: "Love your work.", author: "Steve Jobs" },
+    { text: "Keep going.", author: "Sam Levenson" },
+    { text: "Future is now.", author: "Mahatma Gandhi" },
+    { text: "Fill your life.", author: "Steve Jobs" },
+    { text: "Love your job.", author: "Confucius" },
+    { text: "Work in silence.", author: "Frank Ocean" },
+    { text: "Work hard.", author: "Unknown" },
+    { text: "Happiness is success.", author: "Albert Schweitzer" },
+    { text: "Dream big.", author: "Emmanuel Aguado" }
 ]
 
 export default function SidebarEnhancements({
@@ -54,7 +74,7 @@ export default function SidebarEnhancements({
         if (!isCollapsed) {
             timeoutId = setTimeout(() => {
                 setIsVisible(true)
-            }, 1000)
+            }, 2000)
         } else {
             setIsVisible(false)
         }

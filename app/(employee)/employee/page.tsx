@@ -6,7 +6,7 @@ import { useCurrentUser, useCurrentUserId } from '@/hooks/use-current-user'
 import AddressCard from '../_components/_AddressComponents/AddressCard'
 import EmergencyContactCard from '../_components/_EmergencyContactComponents/EmergencyContactCard'
 import QuickActions from '@/components/quick-actions'
-import UploadProfilePicture from '../_components/profile-picture'
+import { UploadProfilePictureForm } from '../_components/upload-profile-picture'
 import { useUserImage } from '@/hooks/use-user-image'
 import TableWrapper from '@/components/table-wrapper'
 import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
@@ -30,7 +30,7 @@ const Page = () => {
             </EmployeeDetails>
 
             <QuickActions>
-                <UploadProfilePicture userId={userId} initialProfilePicture={userImage || undefined} />
+                <UploadProfilePictureForm userId={userId} initialProfilePicture={userImage || undefined} />
             </QuickActions>
 
             <TableWrapper description='All Your Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>

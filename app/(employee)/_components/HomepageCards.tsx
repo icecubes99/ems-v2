@@ -10,6 +10,7 @@ import { Head } from "react-day-picker"
 import { IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import QuickActions from "@/components/quick-actions"
+import { UploadDocumentForm } from "@/components/upload-documents-dialog"
 
 
 const HomepageCards = () => {
@@ -37,12 +38,8 @@ const HomepageCards = () => {
 
             <QuickActions className="lg:grid-cols-3">
                 <TimesheetDialog classname=" " />
-                <Button variant={"outline"} size={"lg"}
-                    className={("h-auto w-full py-4 flex flex-col items-center justify-center")}>
-                    <Plus className="w-6 h-6 mb-2" />
-                    Upload Documents
-                </Button>
                 <RequestOvertime />
+                <UploadDocumentForm />
             </QuickActions>
 
             <p className="col-span-4 font-bold  text-lg">MISC</p>
