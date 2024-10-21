@@ -28,7 +28,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             <LayoutSideHead>
                 <div className='mt-5'>
                     <p className='font-bold text-4xl'>
-                        <span className='text-purple-950'>{designationName}</span>'s Designated Users
+                        <span className='text-violet-950'>{designationName}</span>'s Designated Users
                     </p>
                 </div>
                 <div className='mt-5 pr-10'>

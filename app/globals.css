@@ -39,16 +39,22 @@ body,
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    /* Custom colors */
+    --violet-950: 250 100% 10%;
+    --purple-500: 270 100% 71%;
+    --slate-100: 210 20% 95%;
+    --dark-slate: 210 20% 20%; /* Dark mode equivalent for slate-100 */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 0 0% 5%; /* Near black */
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 0 0% 10%; /* Slightly lighter than background */
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 0 0% 10%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -80,8 +86,26 @@ body,
     @apply bg-background text-foreground;
   }
 }
-/* add this snippet in your globals.css file */
 
+/* Custom text color classes */
+.text-violet-950 {
+  @apply text-[hsl(var(--violet-950))];
+}
+
+.dark .text-violet-950 {
+  @apply text-[hsl(var(--purple-500))];
+}
+
+/* Custom background color classes */
+.bg-slate-100 {
+  @apply bg-[hsl(var(--slate-100))];
+}
+
+.dark .bg-slate-100 {
+  @apply bg-[hsl(var(--dark-slate))];
+}
+
+/* add this snippet in your globals.css file */
 .rdp-vhidden {
   @apply hidden;
 }

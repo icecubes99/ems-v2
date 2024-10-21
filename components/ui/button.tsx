@@ -18,11 +18,11 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         auth:
-          "bg-violet-900 text-white shadow hover:bg-violet-900/90",
+          "bg-violet-900 text-white shadow hover:bg-violet-900/90 dark:bg-violet-700 dark:text-gray-200 dark:hover:bg-violet-700/80",
         admin:
-          "bg-sky-900 text-white shadow hover:bg-sky-900/90",
+          "bg-sky-900 text-white shadow hover:bg-sky-900/90 dark:bg-sky-700 dark:text-gray-200 dark:hover:bg-sky-700/80",
         superadmin:
-          "bg-red-900 text-white shadow hover:bg-red-900/90",
+          "bg-red-900 text-white shadow hover:bg-red-900/90 dark:bg-red-800 dark:text-gray-200 dark:hover:bg-red-800/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         sidebar: "bg-purple-300 text-black hover:bg-purple-400/90",

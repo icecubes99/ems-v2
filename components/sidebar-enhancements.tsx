@@ -117,9 +117,9 @@ export default function SidebarEnhancements({
             {/* Clock widget */}
             {showClock && (
                 <div className="flex items-center space-x-2 justify-center w-full">
-                    <Clock className="h-5 w-5 text-purple-700" />
+                    <Clock className="h-5 w-5 text-purple-700 dark:text-purple-50" />
                     <div>
-                        <p className="text-sm font-medium">
+                        <p className="text-sm font-medium dark:text-gray-50">
                             {currentTime.toLocaleTimeString('en-US', {
                                 timeZone: userTimeZone,
                                 hour: '2-digit',
@@ -127,7 +127,7 @@ export default function SidebarEnhancements({
                                 second: '2-digit'
                             })}
                         </p>
-                        <p className="text-xs text-purple-800">{userTimeZone}</p>
+                        <p className="text-xs text-purple-800 dark:text-purple-200">{userTimeZone}</p>
                     </div>
                 </div>
             )}
@@ -135,7 +135,7 @@ export default function SidebarEnhancements({
             {/* Date widget */}
             {showDate && (
                 <div className="text-center">
-                    <p className="text-xs font-medium">
+                    <p className="text-xs font-medium dark:text-gray-50">
                         {currentTime.toLocaleDateString('en-US', {
                             timeZone: userTimeZone,
                             weekday: 'long',
@@ -150,8 +150,8 @@ export default function SidebarEnhancements({
             {/* Motivational quote */}
             {showQuote && (
                 <div className="text-center">
-                    <p className="text-sm italic">"{quote.text}"</p>
-                    <p className="text-xs text-purple-800 mt-1">- {quote.author}</p>
+                    <p className="text-sm italic dark:text-gray-50">"{quote.text}"</p>
+                    <p className="text-xs text-purple-800 mt-1 dark:text-purple-200">- {quote.author}</p>
                 </div>
             )}
         </div>

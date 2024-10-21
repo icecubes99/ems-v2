@@ -60,7 +60,7 @@ export default function GovernmentContributionsEditor() {
                     {editingType === contribution.type ? (
                         <div>
                             <Textarea
-                                className="w-full h-96 p-2 border rounded mt-2 text-md font-mono bg-slate-50"
+                                className="w-full h-96 p-2 border rounded mt-2 text-md font-mono"
                                 value={editingBrackets}
                                 onChange={(e) => setEditingBrackets(e.target.value)}
                             />

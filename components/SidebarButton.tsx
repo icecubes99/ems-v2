@@ -30,9 +30,9 @@ const SidebarButton = ({
             <div
                 className={cn(
                     `w-full cursor-pointer h-12 flex items-center transition-all duration-300 ease-in-out
-                    ${isActive ? 'bg-gradient-to-r from-purple-300 to-violet-300 shadow-md' : 'hover:bg-gradient-to-r from-purple-300 to-violet-300'} 
-                    ${isSuperAdmin ? "hover:bg-gradient-to-r from-purple-300 to-red-300" : ""}
-                    ${isAdmin ? "hover:bg-gradient-to-r from-purple-300 to-indigo-300" : ""}
+                    ${isActive ? 'bg-gradient-to-r from-purple-300 to-violet-300 shadow-md dark:from-purple-700 dark:to-violet-700' : 'hover:bg-gradient-to-r from-purple-300 to-violet-300 dark:hover:from-purple-700 dark:hover:to-violet-700'} 
+                    ${isSuperAdmin ? "hover:bg-gradient-to-r from-purple-300 to-red-300 dark:hover:from-purple-700 dark:hover:to-red-700  dark:from-purple-700 dark:to-red-700" : ""}
+                    ${isAdmin ? "hover:bg-gradient-to-r from-purple-300 to-indigo-300 dark:hover:from-purple-700 dark:hover:to-indigo-700 dark:from-purple-700 dark:to-indigo-700" : ""}
                     ${isCollapsed ? 'justify-center' : 'justify-start'}`,
                     classname
                 )}
@@ -44,10 +44,13 @@ const SidebarButton = ({
                         iconClassname
                     )}
                 >
-                    <div className={`transition-all duration-500 ease-in-out ${isCollapsed ? "" : "mr-10 ml-16"}`}>
+                    <div className={`transition-all duration-500 ease-in-out
+                        ${isCollapsed ? "" : "mr-10 ml-16"}
+                        ${isActive ? "dark:text-white" : ""}
+                        `}>
                         {icon}
                     </div>
-                    <div className={`text-sm font-medium flex flex-col items-center gap-4 ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto open'}`}
+                    <div className={`text-sm font-medium flex flex-col items-center gap-4 ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto open'} dark:text-gray-200`}
                         style={{
                             transform: isCollapsed ? 'scale(0.8) translateX(-5px)' : 'scale(1) translateX(0)',
                             transition: isCollapsed ? 'none' : 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out'

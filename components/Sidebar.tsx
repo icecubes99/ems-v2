@@ -16,7 +16,7 @@ import { useUserImage } from '@/hooks/use-user-image'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 import SidebarEnhancements from './sidebar-enhancements'
-
+import { useTheme } from 'next-themes'
 interface SidebarProps {
     user?: ExtendedUser
 }
@@ -28,6 +28,15 @@ export default function Sidebar({ }: SidebarProps) {
     const router = usePathname()
     const isHomepage = router === "/homepage"
     const { userImage } = useUserImage()
+    const { theme } = useTheme()
+
+    const getLogo = () => {
+        if (isCollapsed) {
+            return theme === 'dark' ? "/kDark.svg" : "/k.svg"
+        } else {
+            return theme === 'dark' ? "/kuplerDark.svg" : "/kupler.svg"
+        }
+    }
 
     useEffect(() => {
         setIsClient(true)
@@ -60,7 +69,7 @@ export default function Sidebar({ }: SidebarProps) {
 
     if (!isClient) {
         return (
-            <Skeleton className="w-96 h-screen bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl" />
+            <Skeleton className="w-96 h-screen bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen dark:from-black dark:to-black rounded-br-3xl shadow-xl" />
         )
     }
 
@@ -68,8 +77,9 @@ export default function Sidebar({ }: SidebarProps) {
 
     return (
         <div
-            className={`flex flex-col ${isCollapsed ? 'w-20' : 'w-96'
-                } bg-gradient-to-b from-purple-300 to-violet-50 min-h-screen rounded-br-3xl shadow-xl transition-all duration-300 ease-in-out relative`}
+            className={`flex flex-col ${isCollapsed ? 'w-20' : 'w-96'}
+                bg-gradient-to-b from-purple-300 to-violet-50 dark:from-black dark:to-black
+                min-h-screen rounded-br-3xl shadow-xl transition-all duration-300 ease-in-out relative`}
         >
             <Button
                 onClick={toggleSidebar}
@@ -83,7 +93,7 @@ export default function Sidebar({ }: SidebarProps) {
                 <div className="mt-7 mb-5">
                     <Link href="/homepage">
                         <Image
-                            src={isCollapsed ? "/k.svg" : "/kupler.svg"}
+                            src={getLogo()}
                             className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
                             width={isCollapsed ? 50 : 150}
                             height={isCollapsed ? 33 : 100}
@@ -136,7 +146,7 @@ export default function Sidebar({ }: SidebarProps) {
                     <SidebarButton
                         link="/administrator"
                         icon={<FaKey />}
-                        iconClassname="text-sky-900"
+                        iconClassname="text-sky-900 dark:text-sky-700  dark:hover:text-white"
                         isAdmin
                         label="ADMIN PANEL"
                         isActive={router.startsWith("/administrator")}
@@ -147,7 +157,7 @@ export default function Sidebar({ }: SidebarProps) {
                     <SidebarButton
                         link="/administrator"
                         icon={<FaKey />}
-                        iconClassname="text-sky-950"
+                        iconClassname="text-sky-950 dark:text-sky-700  dark:hover:text-white"
                         isAdmin
                         label="ADMIN PANEL"
                         isActive={router.startsWith("/administrator")}
@@ -156,7 +166,7 @@ export default function Sidebar({ }: SidebarProps) {
                     <SidebarButton
                         link="/superadministrator"
                         icon={<FaShieldAlt />}
-                        iconClassname="text-red-900"
+                        iconClassname="text-red-900 dark:text-pink-700  dark:hover:text-white"
                         label="SUPERADMIN PANEL"
                         isSuperAdmin
                         isActive={router.startsWith("/superadministrator")}
