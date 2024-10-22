@@ -11,13 +11,19 @@ import { IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import QuickActions from "@/components/quick-actions"
 import { UploadDocumentForm } from "@/components/upload-documents-dialog"
+import TableWrapper from "@/components/table-wrapper"
+import { DataTableTemplate } from "@/app/(leaves)/_components/data-table-template"
+import { columnsUserDocuments } from "./columns-user-documents"
+import { useUserDocuments } from "@/hooks/use-documents"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 
 const HomepageCards = () => {
     const { userCount, error, isLoading } = useTotalUserCount()
     const { departmentCount, isLoading: depLoading } = useTotalDepartmentsCount()
     const { designationCount, isLoading: desLoading } = useTotalDesignationCount()
-
+    const user = useCurrentUser()
+    const { documents } = useUserDocuments(user?.id as string)
     return (
         <>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5 ">
@@ -45,6 +51,9 @@ const HomepageCards = () => {
             <p className="col-span-4 font-bold  text-lg">MISC</p>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5">
                 <HolidayTable className="col-span-2" />
+                <TableWrapper className="col-span-2" title="Documents" description="List of Docs">
+                    <DataTableTemplate columns={columnsUserDocuments} data={documents || []} />
+                </TableWrapper>
             </div>
         </>
     )

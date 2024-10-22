@@ -44,10 +44,10 @@ const Header = ({ user, employeePic }: HeaderProps) => {
                     </div>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className='w-80 dark:bg-gray-800 dark:text-gray-200'>
+                <DropdownMenuContent className='w-80 dark:text-gray-200'>
                     <LogoutButton userId={user?.id as string}>
                         <DropdownMenuItem asChild>
-                            <Button variant={'destructive'} className='rounded-l-full w-full mt-1 dark:bg-red-700 dark:text-white'>
+                            <Button variant={'destructive'} className='rounded-l-full w-full mt-1'>
                                 <ExitIcon className='h-4 w-4 mr-2' />
                                 Logout
                             </Button>

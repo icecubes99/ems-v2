@@ -29,7 +29,6 @@ const LayoutSideHead = ({ children, classname }: LayoutSideHeadProps) => {
                         <div className={cn('ml-4 mb-20', classname)}>
                             <div className="flex justify-between items-center">
                                 <Breadcrumb />
-                                <ThemeToggle />
                             </div>
                             <div className='mr-6 dark:text-white'>
                                 {children}

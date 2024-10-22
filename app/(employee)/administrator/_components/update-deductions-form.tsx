@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DeductionsSchema } from '@/schemas/payroll-index';
+import { DeductionsSoloSchema } from '@/schemas/payroll-index';
 import { updateDeductionsToUser } from '@/actions/superadmin/update-deductions-to-user';
 
 import {
@@ -55,8 +55,8 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
         onOpenChange(newOpen);
     }
 
-    const form = useForm<z.infer<typeof DeductionsSchema>>({
-        resolver: zodResolver(DeductionsSchema),
+    const form = useForm<z.infer<typeof DeductionsSoloSchema>>({
+        resolver: zodResolver(DeductionsSoloSchema),
         defaultValues: {
             userId: "",
             deductionType: "",
@@ -76,7 +76,7 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
         }
     }, [deduction, form]);
 
-    const onSubmit = (values: z.infer<typeof DeductionsSchema>) => {
+    const onSubmit = (values: z.infer<typeof DeductionsSoloSchema>) => {
         setError("");
         setSuccess("");
 

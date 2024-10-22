@@ -17,6 +17,13 @@ import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 import SidebarEnhancements from './sidebar-enhancements'
 import { useTheme } from 'next-themes'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 interface SidebarProps {
     user?: ExtendedUser
 }
@@ -81,6 +88,7 @@ export default function Sidebar({ }: SidebarProps) {
                 bg-gradient-to-b from-purple-300 to-violet-50 dark:from-black dark:to-black
                 min-h-screen rounded-br-3xl shadow-xl transition-all duration-300 ease-in-out relative`}
         >
+
             <Button
                 onClick={toggleSidebar}
                 className="absolute -right-3 top-5 bg-purple-400 hover:bg-purple-500 rounded-full p-1 transition-transform duration-300 ease-in-out"
@@ -94,7 +102,7 @@ export default function Sidebar({ }: SidebarProps) {
                     <Link href="/homepage">
                         <Image
                             src={getLogo()}
-                            className={`hover:bg-purple-100/30 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md' : ''}`}
+                            className={`hover:bg-purple-100/30 dark:hover:bg-white/10 hover:shadow-lg rounded-xl pt-2 pb-1 px-4 transition duration-300 ease-in-out ${isHomepage ? 'bg-purple-100/30 shadow-md dark:bg-white/10' : ''}`}
                             width={isCollapsed ? 50 : 150}
                             height={isCollapsed ? 33 : 100}
                             alt="Logo"

@@ -209,6 +209,16 @@ export type AuditLogWithUser = {
     user: PrismaUser;
 }
 
+export type DocumentWithUser = {
+    id: string;
+    documentName: string;
+    documentType: string;
+    documentLink: string;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    user: PrismaUser;
+};
 
 export type AdvanceTimesheet = {
     id: string;

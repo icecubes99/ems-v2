@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from './theme-toggle'
 
 interface SidebarEnhancementsProps {
     isCollapsed: boolean
@@ -117,6 +118,7 @@ export default function SidebarEnhancements({
             {/* Clock widget */}
             {showClock && (
                 <div className="flex items-center space-x-2 justify-center w-full">
+                    <ThemeToggle />
                     <Clock className="h-5 w-5 text-purple-700 dark:text-purple-50" />
                     <div>
                         <p className="text-sm font-medium dark:text-gray-50">
@@ -154,6 +156,8 @@ export default function SidebarEnhancements({
                     <p className="text-xs text-purple-800 mt-1 dark:text-purple-200">- {quote.author}</p>
                 </div>
             )}
+
+
         </div>
     )
 }

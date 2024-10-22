@@ -26,7 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import SelectUser from '../../_components/SelectUser';
 import { useAdditionalEarning } from '@/hooks/use-additional-earnings';
 import { updateAdditionalEarningsToUser } from '@/actions/superadmin/update-additional-earnings-to-user';
-import { AdditionalEarningsSchema } from '@/schemas/payroll-index';
+import { AdditionalEarningsSoloSchema } from '@/schemas/payroll-index';
 
 interface AdditionalEarningsFormProps {
     variant: "default" | "destructive" | "outline" | "secondary" | "auth" | "admin" | "superadmin" | "ghost" | "link" | "sidebar" | null | undefined;
@@ -56,8 +56,8 @@ const UpdateAdditionalEarningsForm: React.FC<AdditionalEarningsFormProps> = ({ v
         }
     }
 
-    const form = useForm<z.infer<typeof AdditionalEarningsSchema>>({
-        resolver: zodResolver(AdditionalEarningsSchema),
+    const form = useForm<z.infer<typeof AdditionalEarningsSoloSchema>>({
+        resolver: zodResolver(AdditionalEarningsSoloSchema),
         defaultValues: {
             userId: "",
             earningType: "",
@@ -77,7 +77,7 @@ const UpdateAdditionalEarningsForm: React.FC<AdditionalEarningsFormProps> = ({ v
         }
     }, [additionalEarning, form]);
 
-    const onSubmit = (values: z.infer<typeof AdditionalEarningsSchema>) => {
+    const onSubmit = (values: z.infer<typeof AdditionalEarningsSoloSchema>) => {
         setError("");
         setSuccess("");
 

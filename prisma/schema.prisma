@@ -209,7 +209,6 @@ model Documents {
 
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
 }
 
 model Department {

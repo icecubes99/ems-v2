@@ -1,6 +1,6 @@
 "use server"
 
-import { AdditionalEarningsSchema } from "@/schemas/payroll-index";
+import { AdditionalEarningsSoloSchema } from "@/schemas/payroll-index";
 import * as z from "zod";
 
 import { db } from "@/lib/db";
@@ -9,13 +9,13 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { admin } from "../admin";
 
-export const updateAdditionalEarningsToUser = async (values: z.infer<typeof AdditionalEarningsSchema>, additionalEarningsId: string) => {
+export const updateAdditionalEarningsToUser = async (values: z.infer<typeof AdditionalEarningsSoloSchema>, additionalEarningsId: string) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
     }
 
-    const validatedFields = AdditionalEarningsSchema.safeParse(values);
+    const validatedFields = AdditionalEarningsSoloSchema.safeParse(values);
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }

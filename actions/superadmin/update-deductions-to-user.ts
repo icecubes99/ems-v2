@@ -1,6 +1,6 @@
 "use server"
 
-import { DeductionsSchema } from "@/schemas/payroll-index";
+import { DeductionsSoloSchema } from "@/schemas/payroll-index";
 import * as z from "zod";
 
 import { db } from "@/lib/db";
@@ -10,13 +10,13 @@ import { auditAction } from "../auditAction";
 import { admin } from "../admin";
 import { UserRole } from "@prisma/client";
 
-export const updateDeductionsToUser = async (values: z.infer<typeof DeductionsSchema>, deductionId: string) => {
+export const updateDeductionsToUser = async (values: z.infer<typeof DeductionsSoloSchema>, deductionId: string) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
     }
 
-    const validatedFields = DeductionsSchema.safeParse(values);
+    const validatedFields = DeductionsSoloSchema.safeParse(values);
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }
