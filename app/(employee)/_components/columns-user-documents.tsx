@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import { Documents } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { UpdateDocumentsDialog } from "./update-documents-dialog"
+import { RemoveDocumentsDialog } from "./remove-documents-dialog"
 
 
 export const columnsUserDocuments: ColumnDef<Documents>[] = [
@@ -84,17 +86,31 @@ export const columnsUserDocuments: ColumnDef<Documents>[] = [
         },
         cell: ({ row }) => {
             const documentLink = row.original.documentLink
-            return <div className="py-2">
+            return <div className="">
                 <Link href={documentLink} legacyBehavior>
                     <a target="_blank" rel="noopener noreferrer">
-                        <Button variant={"default"} size={"lg"}>
-                            <Download className="w-6 h-6 mr-2" />
-                            View Document
+                        <Button variant={"outline"} size={"lg"}>
+                            <Download className="w-4 h-4 mr-2" />
+                            View
                         </Button>
                     </a>
                 </Link>
             </div>
         }
     },
+    {
+        accessorKey: "Edit",
+        cell: ({ row }) => {
+            const id = row.original.id
+            return <UpdateDocumentsDialog documentId={id} />
+        }
+    },
+    {
+        accessorKey: "Delete",
+        cell: ({ row }) => {
+            const id = row.original.id
+            return <RemoveDocumentsDialog documentId={id} />
+        }
+    }
 
 ]

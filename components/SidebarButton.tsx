@@ -11,6 +11,7 @@ interface SidebarButtonProps {
     isActive: boolean
     isSuperAdmin?: boolean
     isAdmin?: boolean
+    isLogout?: boolean
     isCollapsed: boolean
 }
 
@@ -23,6 +24,7 @@ const SidebarButton = ({
     isActive,
     isSuperAdmin,
     isAdmin,
+    isLogout,
     isCollapsed
 }: SidebarButtonProps) => {
     return (
@@ -33,6 +35,7 @@ const SidebarButton = ({
                     ${isActive ? 'bg-gradient-to-r from-purple-300 to-violet-300 shadow-md dark:from-purple-700 dark:to-violet-700' : 'hover:bg-gradient-to-r from-purple-300 to-violet-300 dark:hover:from-purple-700 dark:hover:to-violet-700'} 
                     ${isSuperAdmin ? "hover:bg-gradient-to-r from-purple-300 to-red-300 dark:hover:from-purple-700 dark:hover:to-red-700  dark:from-purple-700 dark:to-red-700" : ""}
                     ${isAdmin ? "hover:bg-gradient-to-r from-purple-300 to-indigo-300 dark:hover:from-purple-700 dark:hover:to-indigo-700 dark:from-purple-700 dark:to-indigo-700" : ""}
+                    ${isLogout ? "hover:bg-gradient-to-r from-red-200 to-red-400 dark:hover:from-red-700 dark:hover:to-red-900" : ""}
                     ${isCollapsed ? 'justify-center' : 'justify-start'}`,
                     classname
                 )}

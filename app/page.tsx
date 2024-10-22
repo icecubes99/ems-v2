@@ -11,24 +11,20 @@ const font = Poppins({
 });
 export default function Home() {
   return (
-    <main
-      className="
-        flex h-full flex-col items-center justify-center
-        bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-900 via-violet-600 to-purple-900        
-      "
-    >
-      <div className="space-y-6 text-center">
-        <h1
-          className={cn(
-            "text-6xl font-semibold text-gray-300 drop-shadow-md",
-            font.className
-          )}
-        >
-          Kupler Industries Incorporated
-        </h1>
-        <p className="text-white text-lg">Employee Management System</p>
+    <main className="h-screen bg-purple-100 flex flex-row">
 
-        <div>
+      <div className="h-screen hidden md:flex bg-black -mr-80  items-center justify-center w-full text-white">
+        <p className="mr-80">
+          Sexy Image Here
+        </p>
+      </div>
+
+      <div className="h-screen w-full bg-gradient-to-t from-purple-500 to-purple-700 flex flex-col gap-2 items-center justify-center">
+        <div className="text-5xl text-white text-center font-bold">
+          Kupler Industries Inc.
+        </div>
+        <div className="text-white/80 font-medium">Employee Management System</div>
+        <div className="mt-4">
           <LoginButton mode="redirect" asChild>
             <Button variant="secondary" size="lg">
               Sign in
@@ -36,6 +32,7 @@ export default function Home() {
           </LoginButton>
         </div>
       </div>
+
     </main>
   );
 }

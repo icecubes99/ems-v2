@@ -69,10 +69,10 @@ const UpdateDeductionsForm: React.FC<DeductionsFormProps> = ({ variant, deductio
         if (deduction) {
             const formattedDeduction = {
                 ...deduction,
-                amount: deduction.amount // Keep amount as number for form reset
+                amount: deduction.amount
             };
             form.reset(formattedDeduction);
-            setFormattedSalary(formatNumber(deduction.amount)); // Format amount for display
+            setFormattedSalary(formatNumber(deduction.amount));
         }
     }, [deduction, form]);
 

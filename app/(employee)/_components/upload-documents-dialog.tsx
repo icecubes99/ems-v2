@@ -21,7 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormError } from "@/components/form-error"
-import { FormSucess } from './form-sucess'
+import { FormSucess } from '../../../components/form-sucess'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Plus, Upload } from 'lucide-react'

@@ -20,8 +20,7 @@ export function ThemeToggle() {
         setMounted(true)
 
         const handleKeyDown = (event: KeyboardEvent) => {
-            // Check for Cmd+Shift+D (Mac) or Ctrl+Shift+D (Windows/Linux)
-            if (event.metaKey && event.key === 'd') {
+            if (event.metaKey && event.key === 'h') {
                 event.preventDefault()
                 setTheme(theme === 'dark' ? 'light' : 'dark')
             }
@@ -29,7 +28,6 @@ export function ThemeToggle() {
 
         window.addEventListener('keydown', handleKeyDown)
 
-        // Cleanup function to remove the event listener
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }

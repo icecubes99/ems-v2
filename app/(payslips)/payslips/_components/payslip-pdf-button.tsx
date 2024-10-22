@@ -8,7 +8,6 @@ import { PayrollItemWithUser, AdditionalEarnings, Deductions } from '@/types/typ
 import { FileDown } from 'lucide-react'
 import { CellHookData } from 'jspdf-autotable'
 import React from 'react'
-import { add } from 'date-fns'
 
 declare module 'jspdf' {
     interface jsPDF {

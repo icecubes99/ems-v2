@@ -191,7 +191,7 @@ export default function Sidebar({ }: SidebarProps) {
                         label="LOG OUT"
                         isActive={router.startsWith("/logout")}
                         isCollapsed={isCollapsed}
-                        classname=' hover:bg-gradient-to-r from-red-200 to-red-400 transition-all duration-300 ease-in-out '
+                        isLogout
                     />
                 </LogoutButton>
             </div>

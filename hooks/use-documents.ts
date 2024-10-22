@@ -69,3 +69,37 @@ export function useUserDocuments(userId: string) {
 
     return { documents, loading, error }
 }
+
+export function useSingleDocument(documentId: string) {
+    const [document, setDocument] = useState<Documents | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+
+    useEffect(() => {
+        const getDocument = async () => {
+            setLoading(true)
+            setError(null)
+
+            try {
+                const result = await fetchSingleDocument(documentId)
+
+                if (result.error) {
+                    setError(result.error)
+                    setDocument(null)
+                } else {
+                    setDocument(result.document as Documents)
+                }
+            } catch (error) {
+                setError("An error occured while fetching data")
+                console.error("Error fetching User Documents", error)
+                setDocument(null)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        getDocument()
+    }, [documentId])
+
+    return { document, loading, error }
+}

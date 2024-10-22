@@ -7,10 +7,10 @@ import { TimesheetDialog } from "@/components/Timesheet"
 import RequestOvertime from "./request-overtime"
 import HeadingCard from "@/components/heading-card"
 import { Head } from "react-day-picker"
-import { IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
+import { IoDocument, IoDocumentAttach, IoSparklesOutline } from "react-icons/io5"
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import QuickActions from "@/components/quick-actions"
-import { UploadDocumentForm } from "@/components/upload-documents-dialog"
+import { UploadDocumentForm } from "@/app/(employee)/_components/upload-documents-dialog"
 import TableWrapper from "@/components/table-wrapper"
 import { DataTableTemplate } from "@/app/(leaves)/_components/data-table-template"
 import { columnsUserDocuments } from "./columns-user-documents"
@@ -50,8 +50,8 @@ const HomepageCards = () => {
 
             <p className="col-span-4 font-bold  text-lg">MISC</p>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 mt-5">
-                <HolidayTable className="col-span-2" />
-                <TableWrapper className="col-span-2" title="Documents" description="List of Docs">
+                <HolidayTable className="" />
+                <TableWrapper className="col-span-2" title="Documents" description="Your own Documents" icon={<IoDocument />}>
                     <DataTableTemplate columns={columnsUserDocuments} data={documents || []} />
                 </TableWrapper>
             </div>

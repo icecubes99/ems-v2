@@ -135,3 +135,11 @@ export const SettingsSchema = z
       path: ["password"],
     }
   );
+
+export const UpdateDocumentsSchema = z
+  .object({
+    id: z.string().min(1, "ID is Required"),
+    documentName: z.string().min(1, "Name is Required"),
+    documentType: z.string().min(1, "Type is Required"),
+    documentLink: z.string().min(1, "Link is Required")
+  })

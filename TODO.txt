@@ -15,6 +15,9 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - Request early clock outs for those people who want to clock out early 
     - Edit Overtime, is now able to edit how many hours requested for overtime
     - Ask for medical certificate if sick leave in the request leave 
+    - edit names of documents and delete it from the blob 
+    - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
+    - double check the calculations
 
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm

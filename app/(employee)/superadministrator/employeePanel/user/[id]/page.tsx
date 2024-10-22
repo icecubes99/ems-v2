@@ -11,9 +11,13 @@ import TableWrapper from '@/components/table-wrapper'
 import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { columnsUserAuditLogs } from '@/app/(employee)/administrator/_components/columns-user-audit-logs'
 import { useUserAuditLog } from '@/hooks/use-audit-logs'
+import { useUserDocuments } from '@/hooks/use-documents'
+import { IoDocument } from 'react-icons/io5'
+import { columnsUserDocuments } from '@/app/(employee)/_components/columns-user-documents'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
+    const { documents } = useUserDocuments(params.id);
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead>
@@ -26,9 +30,18 @@ const page = ({ params }: { params: { id: string } }) => {
                     <OtherLeavesTable userId={params.id} />
                 </TableWrapper>
 
-                <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
-                    <DataTableTemplate columns={columnsUserAuditLogs} data={auditLogs || []} />
-                </TableWrapper>
+                <div className='grid grid-cols-2 gap-2'>
+
+                    <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
+                        <DataTableTemplate columns={columnsUserAuditLogs} data={auditLogs || []} />
+                    </TableWrapper>
+
+                    <TableWrapper title='User Documents' description="This User's Documents" icon={<IoDocument />}>
+                        <DataTableTemplate columns={columnsUserDocuments} data={documents || []} />
+                    </TableWrapper>
+
+
+                </div>
 
             </LayoutSideHead>
         </RoleGate>
