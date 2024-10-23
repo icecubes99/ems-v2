@@ -20,7 +20,7 @@ const LayoutSideHead = ({ children, classname }: LayoutSideHeadProps) => {
     const { userImage } = useUserImage();
 
     return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="default" enableSystem>
             <div className='flex flex-row dark:bg-[#121212]'>
                 <Sidebar />
                 <div className='flex flex-col w-full pl-2'>

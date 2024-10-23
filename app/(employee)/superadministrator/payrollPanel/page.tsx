@@ -24,6 +24,8 @@ import { DataTableDeductions } from './_components/data-table-deductions'
 import { DataTableAdditionalEarnings } from './_components/data-table-additional-earnings'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { GeneratePayrollManualDialog } from './_components/generate-payroll-manual-dialog'
 
 const page = () => {
     const { deductions } = useDeductions()
@@ -46,7 +48,8 @@ const page = () => {
                     <IncreaseDepartmentalSalaryForm />
                     <IncreaseDesignationalSalaryForm />
                 </QuickActions>
-                <QuickActions title='ADVANCED'>
+                <QuickActions title='ADVANCED' className='lg:grid-cols-4'>
+                    <GeneratePayrollManualDialog />
                     <Link href={"/superadministrator/payrollPanel/editGovernmentContributions"}>
                         <Button className='w-full' size={"lg"} variant={"outline"}>
                             Edit Government Contributions
@@ -84,14 +87,14 @@ export default page
 interface QuickActionsProps {
     children: React.ReactNode
     title?: string
-
+    className?: string
 }
 
-const QuickActions = ({ children, title }: QuickActionsProps) => {
+const QuickActions = ({ children, title, className }: QuickActionsProps) => {
     return (
         <>
             <p className="col-span-4 font-bold text-lg mt-6">{title || "QUICK ACTIONS"}</p>
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5   items-center justify-center">
+            <div className={cn("grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 mt-5   items-center justify-center", className)}>
                 {children}
             </div>
         </>

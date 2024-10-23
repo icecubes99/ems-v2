@@ -134,7 +134,7 @@ export async function generatePayroll() {
                 continue;
             }
 
-            const dailyRate = userSalary.basicSalary / totalWorkingDays;
+            const dailyRate = (userSalary.grossSalary || userSalary.basicSalary) / totalWorkingDays;
             const minuteRate = dailyRate / 600; // Assuming 10 working hours per day
             let totalMinutesWorked = 0;
             let totalLateMinutes = 0;
@@ -170,6 +170,7 @@ export async function generatePayroll() {
 
             const basicSalary = daysWorked * dailyRate;
             const basicSalaryForDeduction = userSalary.basicSalary
+            const grossSalaryForDeduction = userSalary.grossSalary
             const overtimeSalary = overtimeMinutes * minuteRate * 1.5; // 1.5x rate for overtime
             const notWorkedDeduction = minutesNotWorked * minuteRate;
 
@@ -178,7 +179,7 @@ export async function generatePayroll() {
             let totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + notWorkedDeduction;
 
             // Calculate government contributions based on basic salary
-            const governmentContributions = await calculateGovernmentContributions(basicSalaryForDeduction);
+            const governmentContributions = await calculateGovernmentContributions(grossSalaryForDeduction || basicSalaryForDeduction);
 
             // Create deductions for government contributions
             const sixDaysAgo = subDays(new Date(), 6);
@@ -326,7 +327,7 @@ export interface GovernmentContribution {
     updatedAt: Date;
 }
 
-async function calculateGovernmentContributions(basicSalary: number): Promise<Array<{ type: string, amount: number }>> {
+export async function calculateGovernmentContributions(basicSalary: number): Promise<Array<{ type: string, amount: number }>> {
     const contributions: Array<{ type: string, amount: number }> = [];
     const contributionTypes = ['SSS', 'PhilHealth', 'PagIBIG', 'Tax'];
 

@@ -112,3 +112,15 @@ export const IncreaseDesignationSalarySchema = z.object({
     increaseType: z.enum(['percentage', 'amount']),
     value: z.number().positive(),
 });
+
+export const PayrollFirstsStep = z.object({
+    payPeriodStart: z.string().min(1, "Start date is required"),
+    payPeriodEnd: z.string().min(1, "End date is required"),
+}).refine(data => new Date(data.payPeriodEnd) >= new Date(data.payPeriodStart), {
+    message: "End date cannot be before start date",
+    path: ["endDate"],
+});
+
+export const AddEmployeeToPayrollCalculatedSchema = z.object({
+    userId: z.string().min(1, "User is required"),
+})

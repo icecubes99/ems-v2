@@ -18,16 +18,7 @@ import AddDeductionsFormCorrections from "./deductions-form-corrections"
 import { useState } from "react"
 import React from "react"
 import AddAdditionalEarningsFormCorrection from "./additional-earnings-form-corrections"
-// import PayslipPDFButton from "./payslip-pdf-button"
-
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-
-interface columnsPayrollItemsProps {
-    payrollId: string
-}
-
+import { RemoveEmployeeDialog } from "./delete-payroll-item"
 
 export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
     {
@@ -124,6 +115,7 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
             const user = row.original
             const [isUpdateOpen, setIsUpdateOpen] = useState(false)
             const [isAddOpen, setIsAddOpen] = useState(false)
+            const [isDeleteOpen, setIsDeleteOpen] = useState(false)
             return (
                 <>
 
@@ -156,12 +148,22 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
                             }}>
                                 Add Addition
                             </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onSelect={(event) => {
+                                    event.preventDefault()
+                                    setIsDeleteOpen(true)
+                                }}
+                            >
+                                Remove Employee
+                            </DropdownMenuItem>
 
 
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <AddDeductionsFormCorrections userId={user.userId} variant={"superadmin"} payrollItemId={user.id} payrollId={user.payroll.id} isOpen={isUpdateOpen} onOpenChange={setIsUpdateOpen} />
                     <AddAdditionalEarningsFormCorrection userId={user.userId} variant={"superadmin"} payrollItemId={user.id} payrollId={user.payroll.id} isOpen={isAddOpen} onOpenChange={setIsAddOpen} />
+                    <RemoveEmployeeDialog userId={user.userId} payrollId={user.payroll.id} isOpen={isDeleteOpen} onOpenChange={setIsDeleteOpen} variant={"destructive"} />
                 </>
             )
         }
