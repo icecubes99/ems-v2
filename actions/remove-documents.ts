@@ -2,6 +2,7 @@
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
+import { put, del } from "@vercel/blob";
 
 export async function removeDocuments(id: string) {
     const user = await currentUser()
@@ -14,11 +15,13 @@ export async function removeDocuments(id: string) {
         }
     })
 
-    const documentName = document?.documentName
-
     if (!document) {
         return { error: "Document not found!" }
     }
+
+    await del(document?.documentLink)
+
+    const documentName = document.documentName
 
     await db.documents.delete({
         where: {

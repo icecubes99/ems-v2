@@ -1,7 +1,6 @@
 'use server'
 
-import { put } from '@vercel/blob'
-import { revalidatePath } from 'next/cache'
+import { put, } from '@vercel/blob'
 import { prisma } from '@/lib/prisma'
 
 export async function uploadDocument(formData: FormData) {
@@ -19,7 +18,6 @@ export async function uploadDocument(formData: FormData) {
             access: 'public',
         })
 
-        // Create a new document record in the database
         const document = await prisma.documents.create({
             data: {
                 documentName,
@@ -28,8 +26,6 @@ export async function uploadDocument(formData: FormData) {
                 userId,
             },
         })
-
-        revalidatePath('/documents') // Adjust this path as needed
 
         return { documentLink: blob.url }
     } catch (error) {
