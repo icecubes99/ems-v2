@@ -7,7 +7,6 @@ FUTURE UPDATES TO BE MADE:
 FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
 
     - Add salary decrease with same functions as increase 
-    - Add a isLeave field for timesheets
     - Add optional workingdays (workable holidays with more rate)
     - Request early clock outs for those people who want to clock out early 
     - Edit Overtime, is now able to edit how many hours requested for overtime
@@ -40,6 +39,7 @@ FINISHED UPDATES:
         - Create a server action that creates the payroll with the payroll period dates and a starting 0 for the total amount
         - Once a payroll is manually created we can see it in the pending payroll table with empty payrollItems
         - It should be able to add departments or designations to the payroll immediately 
+    - Add a isLeave field for timesheets        Oct-24 8:56am
     ====================PROGRESS REPORT ONEIL OCT 24=========================================
         
 ====================================================================================================================

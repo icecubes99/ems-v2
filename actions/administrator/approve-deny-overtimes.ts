@@ -7,8 +7,8 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "../auditAction";
 import { PendingOvertimesSchema } from "@/schemas/attendance-index";
 import { admin } from "../admin";
-import { LeaveStatus, UserRole, OvertimeType } from "@prisma/client";
-import { startOfDay, endOfDay } from "date-fns";
+import { LeaveStatus, UserRole, OvertimeType, OvertimeStatus } from "@prisma/client";
+import { startOfDay, endOfDay, differenceInMinutes, setHours, setMinutes } from "date-fns";
 
 export const approveDenyOvertimes = async (overtimeId: string, action: z.infer<typeof PendingOvertimesSchema>) => {
     const user = await currentUser();
@@ -38,9 +38,14 @@ export const approveDenyOvertimes = async (overtimeId: string, action: z.infer<t
         include: { user: true }
     });
 
-    if (!overtime) {
+    if (!overtime || !overtime.clockOut) {
         return { error: "Overtime not Found!" }
     }
+
+    const overtimeClockOut = new Date(overtime.clockOut);
+    const sixPM = setMinutes(setHours(new Date(overtimeClockOut), 18), 0);
+    const minutesFromSixPM = differenceInMinutes(overtimeClockOut, sixPM);
+
 
     const { status } = validatedFields.data;
 
@@ -62,13 +67,19 @@ export const approveDenyOvertimes = async (overtimeId: string, action: z.infer<t
             // Update the overtime status
             await db.overtimes.update({
                 where: { id: overtimeId },
-                data: { status: LeaveStatus.APPROVED }
+                data: {
+                    status: OvertimeStatus.COMPLETED
+                }
             });
 
             // Update the timesheet
             await db.timesheet.update({
                 where: { id: timesheet.id },
-                data: { isOvertime: true },
+                data: {
+                    isOvertime: true,
+                    clockOut: overtime.clockOut,
+                    minutesOvertime: minutesFromSixPM,
+                },
             });
 
             await auditAction(dbUser.id, `Overtime Approved by ${user.role}: ${user.name}`)

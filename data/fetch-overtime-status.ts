@@ -1,11 +1,11 @@
-
+// actions/get-overtime-status.ts
 "use server"
 
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 
-export async function fetchOvertimeStatus() {
+export async function getOvertimeStatus() {
     const user = await currentUser();
 
     if (!user) {
@@ -18,14 +18,14 @@ export async function fetchOvertimeStatus() {
         throw new Error("User not found in database");
     }
 
-    const today = new Date()
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const overtime = await db.overtimes.findFirst({
         where: {
             userId: dbUser.id,
             createdAt: {
-                gte: today
+                gte: today,
             },
         },
         orderBy: {
@@ -34,8 +34,12 @@ export async function fetchOvertimeStatus() {
     });
 
     if (!overtime) {
-        return { status: "NOT_RECORDED" as const }
+        return { status: 'NOT_RECORDED' as const };
     }
 
-    return { status: "RECORDED" as const }
+    if (overtime.clockOut) {
+        return { status: 'COMPLETED' as const };
+    }
+
+    return { status: 'IN_PROGRESS' as const };
 }

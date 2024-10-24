@@ -21,10 +21,16 @@ export const PendingLeavesSchema = z.object({
 })
 
 export const OvertimeSchema = z.object({
-    reason: z.string().min(1, "Reason is Required"),
-    overtimeType: z.enum([OvertimeType.HOLIDAY, OvertimeType.MANDATORY, OvertimeType.REGULAR])
-})
-
+    reason: z.string().min(1, "Reason is required"),
+    overtimeType: z.nativeEnum(OvertimeType),
+    timeOut: z.string().refine((time) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        const totalMinutes = hours * 60 + minutes;
+        return totalMinutes >= 18 * 60 + 1 && totalMinutes <= 21 * 60;
+    }, {
+        message: "Time out must be between 6:01 PM and 9:00 PM",
+    }),
+});
 export const PendingOvertimesSchema = z.object({
     status: z.enum([LeaveStatus.PENDING, LeaveStatus.APPROVED, LeaveStatus.REJECTED])
 })

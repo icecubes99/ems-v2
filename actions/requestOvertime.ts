@@ -16,17 +16,16 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
 
     const validatedFields = OvertimeSchema.safeParse(values);
     if (!validatedFields.success) {
-        return { error: "Invalid fields!" };
+        console.error("Validation error:", validatedFields.error);
+        return { error: "Invalid fields!", details: validatedFields.error.errors };
     }
 
-    const { reason, overtimeType } = validatedFields.data;
-    if (!reason || !overtimeType) {
+    const { reason, overtimeType, timeOut } = validatedFields.data;
+    if (!reason || !overtimeType || !timeOut) {
         return { error: "Please fill in all fields!" }
     }
 
-    const dbUser = await db.user.findUnique({
-        where: { id: user.id },
-    });
+    const dbUser = await getUserById(user.id);
 
     if (!dbUser) {
         return { error: "User not found in database!" };
@@ -66,16 +65,23 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
     }
 
     try {
-        await db.overtimes.create({
+        const [hours, minutes] = timeOut.split(':').map(Number);
+        const timeOutDate = new Date();
+        timeOutDate.setHours(hours, minutes, 0, 0);
+
+        const overtime = await db.overtimes.create({
             data: {
                 reason,
                 overtimeType,
-                userId: dbUser.id
+                userId: dbUser.id,
+                timeOut: timeOutDate,
+                clockIn: new Date(),
+                status: 'IN_PROGRESS'
             }
         });
 
-        await auditAction(dbUser.id, "User requested Overtime")
-        return { success: "Overtime request submitted" };
+        await auditAction(dbUser.id, "User started Overtime")
+        return { success: "Overtime started", overtimeId: overtime.id };
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === "P2002") {
@@ -84,5 +90,46 @@ export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) =>
         }
         console.error("Error submitting overtime request:", error);
         return { error: "Error submitting overtime request" };
+    }
+}
+
+export const clockOutOvertime = async () => {
+    const user = await currentUser();
+    if (!user) {
+        return { error: "Unauthorized!" };
+    }
+
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const overtime = await db.overtimes.findFirst({
+            where: {
+                userId: user.id,
+                status: 'IN_PROGRESS',
+                createdAt: {
+                    gte: today,
+                    lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+                }
+            }
+        });
+
+        if (!overtime) {
+            return { error: "No active overtime found for today" };
+        }
+
+        await db.overtimes.update({
+            where: { id: overtime.id },
+            data: {
+                clockOut: new Date(),
+                status: 'PENDING'
+            }
+        });
+
+        await auditAction(user.id, "User ended Overtime")
+        return { success: "Overtime ended successfully" };
+    } catch (error) {
+        console.error("Error ending overtime:", error);
+        return { error: "Error ending overtime" };
     }
 }

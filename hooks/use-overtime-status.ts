@@ -1,7 +1,8 @@
+// hooks/use-overtime-status.ts
 import { useState, useEffect } from 'react';
-import { fetchOvertimeStatus } from '@/data/fetch-overtime-status';
+import { getOvertimeStatus } from '@/data/fetch-overtime-status';
 
-export type OvertimeStatus = "NOT_RECORDED" | "RECORDED";
+export type OvertimeStatus = 'NOT_RECORDED' | 'IN_PROGRESS' | 'COMPLETED';
 
 export function useOvertimeStatus() {
     const [status, setStatus] = useState<OvertimeStatus>('NOT_RECORDED');
@@ -10,7 +11,7 @@ export function useOvertimeStatus() {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const result = await fetchOvertimeStatus();
+                const result = await getOvertimeStatus();
                 setStatus(result.status);
             } catch (error) {
                 console.error('Failed to fetch overtime status:', error);
@@ -25,7 +26,7 @@ export function useOvertimeStatus() {
     const refreshStatus = async () => {
         setIsLoading(true);
         try {
-            const result = await fetchOvertimeStatus();
+            const result = await getOvertimeStatus();
             setStatus(result.status);
         } catch (error) {
             console.error('Failed to refresh overtime status:', error);

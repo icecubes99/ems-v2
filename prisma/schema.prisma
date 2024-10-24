@@ -289,6 +289,7 @@ model Timesheet {
   isAdvanced    Boolean   @default(false)
 
   clockOutEarlyMinutes Int        @default(0)
+  minutesOvertime      Int        @default(0) 
   minutesLate  Int        @default(0)
   
   createdAt DateTime @default(now())
@@ -348,20 +349,29 @@ model Leaves {
   @@unique([userId, startDate, endDate])
   
 }
-
+enum OvertimeStatus {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+    REJECTED
+}
 model Overtimes {
-  id        String   @id @default(cuid())
-  reason    String
-  status    LeaveStatus @default(PENDING)
-  overtimeType OvertimeType
-
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([userId, createdAt])
+    id        String   @id @default(cuid())
+    reason    String
+    status    OvertimeStatus @default(PENDING)
+    overtimeType OvertimeType
+  
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+    timeOut   DateTime
+    clockIn   DateTime?
+    clockOut  DateTime?
+  
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+  
+    @@unique([userId, createdAt])
 }
 
 // Payroll subsystem

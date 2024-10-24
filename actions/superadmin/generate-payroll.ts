@@ -163,7 +163,7 @@ export async function generatePayroll() {
                 totalLateMinutes += timesheet.minutesLate;
 
                 if (timesheet.isOvertime) {
-                    overtimeMinutes += 60; // Add 60 minutes for each day marked as overtime
+                    overtimeMinutes += timesheet.minutesOvertime;
                 }
 
                 daysWorked++;
