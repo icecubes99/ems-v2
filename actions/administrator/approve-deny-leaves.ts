@@ -116,6 +116,7 @@ export const approveDenyLeaves = async (leaveId: string, action: z.infer<typeof 
                             clockOut: clockOutTime,
                             isLate: false,
                             minutesLate: 0,
+                            isLeave: true,
                         },
                     });
                 }

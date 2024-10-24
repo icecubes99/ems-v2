@@ -141,12 +141,16 @@ export async function generatePayroll() {
             let totalEarlyOutMinutes = 0;
             let overtimeMinutes = 0;
             let daysWorked = 0;
+            let leaveDaysCount = 0;
 
             // Promise.all
             for (const timesheet of timesheets) {
                 if (!timesheet.clockOut) {
                     console.warn(`Timesheet ${timesheet.id} for employee ${employee.id} has no clock out time.`);
                     continue;
+                }
+                if (timesheet.isLeave) {
+                    leaveDaysCount++;
                 }
 
                 const clockIn = new Date(timesheet.clockIn);
@@ -247,7 +251,8 @@ export async function generatePayroll() {
                         minutesNotWorked,
                         minutesLate: totalLateMinutes,
                         minutesOvertime: overtimeMinutes,
-                        minutesEarlyOut: totalEarlyOutMinutes
+                        minutesEarlyOut: totalEarlyOutMinutes,
+                        daysLeave: leaveDaysCount
                     }
                 });
 

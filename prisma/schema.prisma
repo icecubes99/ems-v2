@@ -491,6 +491,7 @@ model PayrollItem {
 
   daysWorked   Int
   daysNotWorked Int
+  daysLeave    Int @default(0)
 
   minutesWorked Int
   minutesNotWorked Int

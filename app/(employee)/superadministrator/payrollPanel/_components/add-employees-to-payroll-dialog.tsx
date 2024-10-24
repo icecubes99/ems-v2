@@ -23,11 +23,12 @@ import { addEmployeeToPayrollCalculated } from '@/actions/superadmin/generate-pa
 import { AddEmployeeToPayrollCalculatedSchema } from '@/schemas/payroll-index';
 import SelectUser from '@/app/(employee)/_components/SelectUser';
 import { UserPlus } from 'lucide-react';
+import { MultiSelectUsers } from '@/components/ui/multi-select-components';
 
 interface Props {
     payrollId: string;
 }
-export const AddSingleEmployeeToPayrollDialog = ({ payrollId }: Props) => {
+export const AddEmployeesToPayrollDialog = ({ payrollId }: Props) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -35,7 +36,7 @@ export const AddSingleEmployeeToPayrollDialog = ({ payrollId }: Props) => {
     const form = useForm<z.infer<typeof AddEmployeeToPayrollCalculatedSchema>>({
         resolver: zodResolver(AddEmployeeToPayrollCalculatedSchema),
         defaultValues: {
-            userId: "",
+            userIds: [],
         }
     });
 
@@ -80,12 +81,14 @@ export const AddSingleEmployeeToPayrollDialog = ({ payrollId }: Props) => {
 
                                 <FormField
                                     control={form.control}
-                                    name="userId"
+                                    name="userIds"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Pick Employee</FormLabel>
                                             <FormControl>
-                                                <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                <MultiSelectUsers
+                                                    onChange={(values) => field.onChange(values)}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

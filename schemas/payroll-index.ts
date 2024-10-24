@@ -122,5 +122,5 @@ export const PayrollFirstsStep = z.object({
 });
 
 export const AddEmployeeToPayrollCalculatedSchema = z.object({
-    userId: z.string().min(1, "User is required"),
+    userIds: z.array(z.string()).min(1, "User is required"),
 })

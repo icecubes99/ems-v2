@@ -13,7 +13,7 @@ import { Calendar, DollarSign, UserPlus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ApprovePayrollDialog } from '../../../_components/approve-payroll-dialog'
 import { DeletePayrollDialog } from '../../../_components/delete-payroll-dialog'
-import { AddSingleEmployeeToPayrollDialog } from '../../../_components/add-lone-employee-to-payroll-dialog'
+import { AddEmployeesToPayrollDialog } from '../../../_components/add-employees-to-payroll-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { payrollItems } = usePayrollItems(params.id)
@@ -119,7 +119,7 @@ function TableWrapper({ title, children, icon, payPeriodStart, payPeriodEnd, tot
 
                 <div className='flex items-center col-span-2 justify-end mr-10 flex-row gap-2'>
                     <div>
-                        <AddSingleEmployeeToPayrollDialog payrollId={payrollId} />
+                        <AddEmployeesToPayrollDialog payrollId={payrollId} />
                     </div>
                     <div className='flex items-center justify-center flex-col gap-2'>
                         <ApprovePayrollDialog payrollId={payrollId} />
