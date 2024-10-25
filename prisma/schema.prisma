@@ -292,6 +292,10 @@ model Timesheet {
   minutesOvertime      Int        @default(0) 
   minutesLate  Int        @default(0)
   
+  payrollItem     PayrollItem? @relation(fields: [payrollItemId], references: [id])
+  payrollItemId   String?
+
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -512,6 +516,8 @@ model PayrollItem {
   // additional earnings and deductions
   additionalEarningsArray AdditionalEarnings[]
   deductions              Deductions[]
+
+  timesheets    Timesheet[]
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

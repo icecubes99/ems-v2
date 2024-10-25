@@ -40,45 +40,44 @@ export async function removePayroll(payrollId: string) {
         if (!payroll) {
             return { error: "Payroll not found!" }
         }
-        const deductions = payroll?.payrollItems.map(item => item.deductions).flat();
-        const additionalEarnings = payroll?.payrollItems.map(item => item.additionalEarningsArray).flat();
 
-        if (deductions) {
-            for (const deduction of deductions) {
-                await db.deductions.updateMany({
-                    where: {
-                        AND: [
-                            { id: deduction.id },
-                            { deductionType: { in: ["Disbursement", "Salary Advance", "Loan", "Others"] } }
-                        ]
-                    },
-                    data: {
-                        payrollItemId: null
-                    }
-                });
-            }
-        }
+        await db.$transaction(async (prisma) => {
+            // Update timesheets to remove payrollItemId
+            await prisma.timesheet.updateMany({
+                where: {
+                    payrollItemId: { in: payroll.payrollItems.map(item => item.id) }
+                },
+                data: {
+                    payrollItemId: null
+                }
+            });
 
-        if (additionalEarnings) {
-            for (const additionalEarning of additionalEarnings) {
-                await db.additionalEarnings.updateMany({
-                    where: {
-                        AND: [
-                            { id: additionalEarning.id },
-                            { earningType: { in: ["Bonus", "Others", "Reimbursement", "Allowance"] } }
-                        ]
-                    },
-                    data: {
-                        payrollItemId: null
-                    }
-                });
-            }
-        }
+            // Update deductions
+            await prisma.deductions.updateMany({
+                where: {
+                    payrollItemId: { in: payroll.payrollItems.map(item => item.id) },
+                    deductionType: { in: ["Disbursement", "Salary Advance", "Loan", "Others"] }
+                },
+                data: {
+                    payrollItemId: null
+                }
+            });
 
-        await db.payroll.delete({
-            where: {
-                id: payrollId
-            }
+            // Update additional earnings
+            await prisma.additionalEarnings.updateMany({
+                where: {
+                    payrollItemId: { in: payroll.payrollItems.map(item => item.id) },
+                    earningType: { in: ["Bonus", "Others", "Reimbursement", "Allowance"] }
+                },
+                data: {
+                    payrollItemId: null
+                }
+            });
+
+            // Delete the payroll and its items
+            await prisma.payroll.delete({
+                where: { id: payrollId }
+            });
         });
 
         const superaAdminName = user?.name || dbUser.firstName + " " + dbUser.lastName;

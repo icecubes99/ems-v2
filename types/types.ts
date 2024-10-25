@@ -127,6 +127,14 @@ export type AdditionalEarningsWithUser = {
 }
 
 
+export type TimesheetBreakdown = {
+    date: Date;
+    minutesLate: number;
+    minutesOvertime: number;
+    clockIn: Date;
+    clockOut: Date;
+}
+
 export type PayrollItemWithUser = {
     id: string;
     payrollId: string;
@@ -152,6 +160,7 @@ export type PayrollItemWithUser = {
     updatedAt: Date;
     additionalEarningsArray: AdditionalEarnings[];
     deductions: Deductions[];
+    timesheets: TimesheetBreakdown[];
 }
 
 export type AdditionalEarnings = {

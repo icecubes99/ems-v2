@@ -30,11 +30,47 @@ export async function fetchOwnPayslips() {
                 user: true,
                 payroll: true,
                 additionalEarningsArray: true,
-                deductions: true
+                deductions: true,
+                timesheets: {
+                    where: {
+                        OR: [
+                            { isLate: true },
+                            { isOvertime: true }
+                        ]
+                    },
+                    select: {
+                        day: {
+                            select: {
+                                date: true
+                            }
+                        },
+                        minutesLate: true,
+                        minutesOvertime: true,
+                        clockIn: true,
+                        clockOut: true
+                    },
+                    orderBy: {
+                        day: {
+                            date: 'asc'
+                        }
+                    }
+                }
             }
-
         })
-        return { payslips }
+
+        // Transform the data to match the expected client-side type
+        const transformedPayslips = payslips.map(payslip => ({
+            ...payslip,
+            timesheets: payslip.timesheets.map(timesheet => ({
+                date: timesheet.day.date,
+                minutesLate: timesheet.minutesLate,
+                minutesOvertime: timesheet.minutesOvertime,
+                clockIn: timesheet.clockIn,
+                clockOut: timesheet.clockOut
+            }))
+        }))
+
+        return { payslips: transformedPayslips }
     } catch (error) {
         console.error("Error fetching Payslips", error)
         return { error: "Failed to fetch Payslips" }
@@ -62,9 +98,52 @@ export async function fetchOtherPayslips(userId: string) {
             },
             orderBy: {
                 createdAt: "desc"
+            },
+            include: {
+                user: true,
+                payroll: true,
+                additionalEarningsArray: true,
+                deductions: true,
+                timesheets: {
+                    where: {
+                        OR: [
+                            { isLate: true },
+                            { isOvertime: true }
+                        ]
+                    },
+                    select: {
+                        day: {
+                            select: {
+                                date: true
+                            }
+                        },
+                        minutesLate: true,
+                        minutesOvertime: true,
+                        clockIn: true,
+                        clockOut: true
+                    },
+                    orderBy: {
+                        day: {
+                            date: 'asc'
+                        }
+                    }
+                }
             }
         })
-        return { payslips }
+
+        // Transform the data to match the expected client-side type
+        const transformedPayslips = payslips.map(payslip => ({
+            ...payslip,
+            timesheets: payslip.timesheets.map(timesheet => ({
+                date: timesheet.day.date,
+                minutesLate: timesheet.minutesLate,
+                minutesOvertime: timesheet.minutesOvertime,
+                clockIn: timesheet.clockIn,
+                clockOut: timesheet.clockOut
+            }))
+        }))
+
+        return { payslips: transformedPayslips }
     } catch (error) {
         console.error("Error fetching Payslips", error)
         return { error: "Failed to fetch Payslips" }

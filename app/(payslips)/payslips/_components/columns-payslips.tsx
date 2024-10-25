@@ -6,13 +6,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
-import { PayslipPDFButton } from "./payslip-pdf-button"
-// import PayslipPDFButton from "./payslip-pdf-button"
-
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-
+import PayslipPDFButton from "./payslip-pdf-button"
 
 export const columnsPayslips: ColumnDef<PayrollItemWithUser>[] = [
     {
@@ -103,3 +97,4 @@ export const columnsPayslips: ColumnDef<PayrollItemWithUser>[] = [
         },
     },
 ]
+

@@ -271,6 +271,22 @@ export async function generatePayroll() {
                     }
                 });
 
+                await prisma.timesheet.updateMany({
+                    where: {
+                        userId: employee.id,
+                        day: {
+                            date: {
+                                gte: payPeriodStart,
+                                lte: payPeriodEnd
+                            }
+                        },
+                        payrollItemId: null // Only update if not already assigned
+                    },
+                    data: {
+                        payrollItemId: payrollItem.id
+                    }
+                });
+
                 // Update Deductions with the new payrollItemId
                 await prisma.deductions.updateMany({
                     where: {
@@ -286,6 +302,8 @@ export async function generatePayroll() {
                     }
                 });
             });
+
+
 
             totalPayrollAmount += netSalary;
         }

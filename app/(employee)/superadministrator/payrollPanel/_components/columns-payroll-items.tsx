@@ -13,7 +13,7 @@ import {
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
-import { PayslipPDFButton } from "@/app/(payslips)/payslips/_components/payslip-pdf-button"
+import PayslipPDFButton from "@/app/(payslips)/payslips/_components/payslip-pdf-button"
 import AddDeductionsFormCorrections from "./deductions-form-corrections"
 import { useState } from "react"
 import React from "react"

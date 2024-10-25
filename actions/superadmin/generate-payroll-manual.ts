@@ -33,7 +33,10 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
             return { error: "Invalid Fields!" }
         }
 
-        const { payPeriodEnd, payPeriodStart } = validatedFields.data;
+        const { payPeriodEnd: payPeriodEndDate, payPeriodStart: payPeriodStartDate } = validatedFields.data;
+
+        const payPeriodStart = startOfDay(new Date(payPeriodStartDate));
+        const payPeriodEnd = endOfDay(new Date(payPeriodEndDate));
 
         const existingPayroll = await db.payroll.findFirst({
             where: {
@@ -236,7 +239,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
             totalLateMinutes += timesheet.minutesLate;
 
             if (timesheet.isOvertime) {
-                overtimeMinutes += 60; // Add 60 minutes for each day marked as overtime
+                overtimeMinutes += timesheet.minutesOvertime;
             }
 
             daysWorked++;
@@ -329,6 +332,22 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                     createdAt: {
                         gte: payPeriodStart,
                         lte: payPeriodEnd
+                    },
+                    payrollItemId: null
+                },
+                data: {
+                    payrollItemId: payrollItem.id
+                }
+            });
+
+            await prisma.timesheet.updateMany({
+                where: {
+                    userId: employee.id,
+                    day: {
+                        date: {
+                            gte: payPeriodStart,
+                            lte: payPeriodEnd
+                        }
                     },
                     payrollItemId: null
                 },

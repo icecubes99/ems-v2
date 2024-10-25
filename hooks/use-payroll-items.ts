@@ -20,7 +20,7 @@ export function usePayrollItems(payrollId: string) {
                     setError(result.error);
                     setPayrollItems(null);
                 } else {
-                    setPayrollItems(result.payrollItems as PayrollItemWithUser[]);
+                    setPayrollItems(result.payslips as PayrollItemWithUser[]);
                 }
 
             } catch (error) {

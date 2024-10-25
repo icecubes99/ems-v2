@@ -9,11 +9,12 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - Add salary decrease with same functions as increase 
     - Add optional workingdays (workable holidays with more rate)
     - Request early clock outs for those people who want to clock out early 
-    - Edit Overtime, is now able to edit how many hours requested for overtime
     - Ask for medical certificate if sick leave in the request leave 
-    - edit names of documents and delete it from the blob 
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
+    - add remove employee functionality
+    - add more transparency to the payslip pdf
+    - 
 
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
@@ -21,7 +22,7 @@ FINISHED UPDATES:
     - Added Audit Logs table for users and superadmins          Oct-13 9:49pm
     - Added Remove Payroll and can safely remove payrolls without affecting the deductions and additional earnings 
     - Multiple people(or could be a specific designation) can be added a bonus      Oct-18
-        - MULTI SELECT FROM SHADCN!!!!!
+        - MULTI SELECT FROM SHADCN!!!!! 
     - Added Collapsible sidebar and breadcrumbs up top      Oct-19
     - Revamp the salary system          Oct-19  4:03pm
         - Each designation should have their unique salaries for the people under that      Oct-12
@@ -35,12 +36,14 @@ FINISHED UPDATES:
     - Create an advance generation of timesheets for admins to have access to for their employees Oct-20 4:51pm
         - is able to undo the advanced timesheets   Oct-20 9:47pm
     - Added Documents upload feature        Oct-20 11pm
+    - edit names of documents and delete it from the blob 
     - Add manual generation of Payroll      Oct-23 8:27pm
         - Create a server action that creates the payroll with the payroll period dates and a starting 0 for the total amount
         - Once a payroll is manually created we can see it in the pending payroll table with empty payrollItems
         - It should be able to add departments or designations to the payroll immediately 
     - Add a isLeave field for timesheets        Oct-24 8:56am
+    - Edit Overtime, is now able to edit how many hours requested for overtime
     ====================PROGRESS REPORT ONEIL OCT 24=========================================
         
 ====================================================================================================================
-    NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT yawa
+    NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT 
