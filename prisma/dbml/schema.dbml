@@ -1,0 +1,581 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  firstName String
+  middleName String
+  lastName String
+  gender Gender
+  dateOfBirth DateTime
+  jobTitle String
+  email String [unique]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime
+  lastLogin DateTime [default: `now()`]
+  emergencyContact EmergencyContact
+  auditLogs AuditLog [not null]
+  address AddressLine
+  documents Documents [not null]
+  timesheets Timesheet [not null]
+  leaves Leaves [not null]
+  overtimes Overtimes [not null]
+  advancedTimesheets AdvanceTimesheetUsers [not null]
+  assignedDesignations AssignDesignation
+  vacationDays Int [default: 5]
+  incentiveDays Int [default: 5]
+  department Department
+  designation Designation
+  deductions Deductions [not null]
+  additionalEarnings AdditionalEarnings [not null]
+  userSalary UserSalary
+  governmentId GovernmentId
+  payrollItems PayrollItem [not null]
+  salaryHistories SalaryHistory [not null]
+  emailVerified DateTime
+  image String
+  password String
+  role UserRole [not null, default: 'USER']
+  accounts Account [not null]
+  isTwoFactorEnabled Boolean [not null, default: false]
+  twoFactorConfirmation TwoFactorConfirmation
+  twoFactorConfirmationId String
+}
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table VerificationToken {
+  id String [pk]
+  email String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table PasswordResetToken {
+  id String [pk]
+  email String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table TwoFactorToken {
+  id String [pk]
+  email String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table TwoFactorConfirmation {
+  id String [pk]
+  userId String [unique, not null]
+  user User [not null]
+}
+
+Table AddressLine {
+  id String [pk]
+  street String
+  barangay String
+  city String
+  province String
+  country String
+  zipCode String
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime
+  userId String [unique, not null]
+  user User [not null]
+}
+
+Table AuditLog {
+  id String [pk]
+  userId String [not null]
+  action String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  user User [not null]
+}
+
+Table EmergencyContact {
+  id String [pk]
+  firstName String [not null]
+  middleName String [not null]
+  lastName String [not null]
+  relationship String [not null]
+  contactNumber String [not null]
+  emailAddress String [not null]
+  userId String [unique, not null]
+  user User [not null]
+}
+
+Table Documents {
+  id String [pk]
+  documentName String [not null]
+  documentType String [not null]
+  documentLink String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  userId String [not null]
+  user User [not null]
+}
+
+Table Department {
+  id String [pk]
+  departmentName String [not null]
+  departmentDescription String [not null]
+  status Status [not null]
+  departmentHeadUserId String [unique, not null]
+  departmentHeadUser User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  createdBy String
+  designations Designation [not null]
+  salaryIncreaseEvents DepartmentSalaryIncrease [not null]
+}
+
+Table Designation {
+  id String [pk]
+  designationName String [not null]
+  designationDescription String [not null]
+  status Status [not null]
+  departmentId String [not null]
+  department Department [not null]
+  designationHeadUserId String [unique, not null]
+  designationHeadUser User [not null]
+  designationSalary Float [not null, default: 0]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  createdBy String
+  AssignDesignation AssignDesignation [not null]
+  salaryIncreaseEvents DesignationSalaryIncrease [not null]
+}
+
+Table AssignDesignation {
+  id String [pk]
+  employeeType EmployeeType [not null]
+  status Status [not null]
+  designationId String [not null]
+  designation Designation [not null]
+  userId String [unique, not null]
+  user User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Timesheet {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  dayId String [not null]
+  day WorkingDay [not null]
+  clockIn DateTime [default: `now()`, not null]
+  clockOut DateTime
+  isLate Boolean [not null, default: false]
+  isOvertime Boolean [not null, default: false]
+  forgotClockOut Boolean [not null, default: false]
+  clockOutEarly Boolean [not null, default: false]
+  isLeave Boolean [not null, default: false]
+  isAdvanced Boolean [not null, default: false]
+  clockOutEarlyMinutes Int [not null, default: 0]
+  minutesOvertime Int [not null, default: 0]
+  minutesLate Int [not null, default: 0]
+  payrollItem PayrollItem
+  payrollItemId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (userId, dayId) [unique]
+  }
+}
+
+Table WorkingDay {
+  id String [pk]
+  date DateTime [not null]
+  password String [not null]
+  monthId String [not null]
+  month WorkingMonth [not null]
+  timesheets Timesheet [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (date, monthId) [unique]
+  }
+}
+
+Table WorkingMonth {
+  id String [pk]
+  month Int [not null]
+  year Int [not null]
+  workingDays WorkingDay [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (month, year) [unique]
+  }
+}
+
+Table Holiday {
+  id String [pk]
+  date DateTime [unique, not null]
+  name String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Leaves {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  leaveStatus LeaveStatus [not null, default: 'PENDING']
+  reason String [not null]
+  leaveType LeaveType [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (userId, startDate, endDate) [unique]
+  }
+}
+
+Table Overtimes {
+  id String [pk]
+  reason String [not null]
+  status OvertimeStatus [not null, default: 'PENDING']
+  overtimeType OvertimeType [not null]
+  userId String [not null]
+  user User [not null]
+  timeOut DateTime [not null]
+  clockIn DateTime
+  clockOut DateTime
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (userId, createdAt) [unique]
+  }
+}
+
+Table Deductions {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  deductionType String [not null]
+  amount Float [not null]
+  description String [not null]
+  payrollItemId String
+  payrollItem PayrollItem
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table AdditionalEarnings {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  earningType String [not null]
+  amount Float [not null]
+  description String [not null]
+  payrollItemId String
+  payrollItem PayrollItem
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table UserSalary {
+  id String [pk]
+  userId String [unique, not null]
+  user User [not null]
+  basicSalary Float [not null]
+  grossSalary Float
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table SalaryHistory {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  basicSalary Float [not null]
+  grossSalary Float [not null]
+  startDate DateTime [not null]
+  endDate DateTime [default: `now()`, not null]
+  amountIncreased Float
+  salaryIncreaseEventId String
+  salaryIncreaseEvent SalaryIncreaseEvent
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table GovernmentId {
+  id String [pk]
+  userId String [unique, not null]
+  user User [not null]
+  sssNumber String
+  tinNumber String
+  philHealthNumber String
+  pagIbigNumber String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Payroll {
+  id String [pk]
+  payPeriodStart DateTime [not null]
+  payPeriodEnd DateTime [not null]
+  payrollStatus LeaveStatus [not null, default: 'PENDING']
+  totalAmount Float [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  payrollItems PayrollItem [not null]
+
+  indexes {
+    (payPeriodStart, payPeriodEnd) [unique]
+  }
+}
+
+Table PayrollItem {
+  id String [pk]
+  payrollId String [not null]
+  payroll Payroll [not null]
+  userId String [not null]
+  user User [not null]
+  basicSalary Float [not null]
+  overtimeSalary Float [not null, default: 0]
+  dailyRate Float [not null]
+  additionalEarnings Float [not null, default: 0]
+  lateDeductions Float [not null, default: 0]
+  earlyClockOutDeductions Float [not null, default: 0]
+  totalDeductions Float [not null, default: 0]
+  netSalary Float [not null]
+  daysWorked Int [not null]
+  daysNotWorked Int [not null]
+  daysLeave Int [not null, default: 0]
+  minutesWorked Int [not null]
+  minutesNotWorked Int [not null]
+  minutesEarlyOut Int [not null, default: 0]
+  minutesLate Int [not null]
+  minutesOvertime Int [not null]
+  additionalEarningsArray AdditionalEarnings [not null]
+  deductions Deductions [not null]
+  timesheets Timesheet [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (payrollId, userId) [unique]
+  }
+}
+
+Table SalaryIncreaseEvent {
+  id String [pk]
+  percentage Float
+  amount Float
+  appliedAt DateTime [default: `now()`, not null]
+  appliedBy String [not null]
+  isUndone Boolean [not null, default: false]
+  undoneAt DateTime
+  undoneBy String
+  departments DepartmentSalaryIncrease [not null]
+  designations DesignationSalaryIncrease [not null]
+  salaryHistories SalaryHistory [not null]
+}
+
+Table DepartmentSalaryIncrease {
+  department Department [not null]
+  departmentId String [not null]
+  salaryIncreaseEvent SalaryIncreaseEvent [not null]
+  salaryIncreaseEventId String [not null]
+
+  indexes {
+    (departmentId, salaryIncreaseEventId) [pk]
+  }
+}
+
+Table DesignationSalaryIncrease {
+  designation Designation [not null]
+  designationId String [not null]
+  salaryIncreaseEvent SalaryIncreaseEvent [not null]
+  salaryIncreaseEventId String [not null]
+
+  indexes {
+    (designationId, salaryIncreaseEventId) [pk]
+  }
+}
+
+Table GovernmentContribution {
+  id String [pk]
+  type String [unique, not null]
+  brackets Json [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table AdvanceTimesheet {
+  id String [pk]
+  type String [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  isUndone Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  users AdvanceTimesheetUsers [not null]
+}
+
+Table AdvanceTimesheetUsers {
+  user User [not null]
+  userId String [not null]
+  advanceTimesheet AdvanceTimesheet [not null]
+  advanceTimesheetId String [not null]
+
+  indexes {
+    (userId, advanceTimesheetId) [pk]
+  }
+}
+
+Enum UserRole {
+  ADMIN
+  USER
+  SUPERADMIN
+}
+
+Enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+Enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+Enum EmployeeType {
+  REGULAR
+  CONTRACTUAL
+  PROBATIONARY
+}
+
+Enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum LeaveType {
+  VACATION
+  SICK
+  MATERNITY
+  INCENTIVE
+}
+
+Enum OvertimeType {
+  REGULAR
+  HOLIDAY
+  MANDATORY
+}
+
+Enum OvertimeStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: TwoFactorConfirmation.userId - User.id [delete: Cascade]
+
+Ref: AddressLine.userId - User.id [delete: Cascade]
+
+Ref: AuditLog.userId > User.id
+
+Ref: EmergencyContact.userId - User.id [delete: Cascade]
+
+Ref: Documents.userId > User.id [delete: Cascade]
+
+Ref: Department.departmentHeadUserId - User.id
+
+Ref: Designation.departmentId > Department.id
+
+Ref: Designation.designationHeadUserId - User.id
+
+Ref: AssignDesignation.designationId > Designation.id [delete: Cascade]
+
+Ref: AssignDesignation.userId - User.id [delete: Cascade]
+
+Ref: Timesheet.userId > User.id [delete: Cascade]
+
+Ref: Timesheet.dayId > WorkingDay.id [delete: Cascade]
+
+Ref: Timesheet.payrollItemId > PayrollItem.id
+
+Ref: WorkingDay.monthId > WorkingMonth.id [delete: Cascade]
+
+Ref: Leaves.userId > User.id [delete: Cascade]
+
+Ref: Overtimes.userId > User.id [delete: Cascade]
+
+Ref: Deductions.userId > User.id [delete: Cascade]
+
+Ref: Deductions.payrollItemId > PayrollItem.id [delete: Cascade]
+
+Ref: AdditionalEarnings.userId > User.id [delete: Cascade]
+
+Ref: AdditionalEarnings.payrollItemId > PayrollItem.id [delete: Cascade]
+
+Ref: UserSalary.userId - User.id [delete: Cascade]
+
+Ref: SalaryHistory.userId > User.id [delete: Cascade]
+
+Ref: SalaryHistory.salaryIncreaseEventId > SalaryIncreaseEvent.id [delete: Cascade]
+
+Ref: GovernmentId.userId - User.id [delete: Cascade]
+
+Ref: PayrollItem.payrollId > Payroll.id [delete: Cascade]
+
+Ref: PayrollItem.userId > User.id [delete: Cascade]
+
+Ref: DepartmentSalaryIncrease.departmentId > Department.id
+
+Ref: DepartmentSalaryIncrease.salaryIncreaseEventId > SalaryIncreaseEvent.id
+
+Ref: DesignationSalaryIncrease.designationId > Designation.id
+
+Ref: DesignationSalaryIncrease.salaryIncreaseEventId > SalaryIncreaseEvent.id
+
+Ref: AdvanceTimesheetUsers.userId > User.id [delete: Cascade]
+
+Ref: AdvanceTimesheetUsers.advanceTimesheetId > AdvanceTimesheet.id [delete: Cascade]

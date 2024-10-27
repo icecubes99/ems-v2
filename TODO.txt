@@ -13,7 +13,6 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
-    - add more transparency to the payslip pdf
     - 
 
 FINISHED UPDATES:
@@ -28,7 +27,7 @@ FINISHED UPDATES:
         - Each designation should have their unique salaries for the people under that      Oct-12
         - Could have a salary increase or decrease in a designation level           Oct-12
         - Each time an employee is assigned to a designation,
-            its gross salary is its base salary added to the designation salary and it is for transparency only       Oct-12
+            its gross salary is its base salary added tzo the designation salary and it is for transparency only       Oct-12
         - Each time an employee is switched to a new designation, a new salaryHistory is to be made with its previous details       Oct-12
         - Could undo a salary increase for a department or designation          Oct-13
     - Added Dynamic Government Contributions where it is editable       Oct-19 7:40pm
@@ -44,6 +43,7 @@ FINISHED UPDATES:
     - Add a isLeave field for timesheets        Oct-24 8:56am
     - Edit Overtime, is now able to edit how many hours requested for overtime
     ====================PROGRESS REPORT ONEIL OCT 24=========================================
+    - add more transparency to the payslip pdf      Oct 25
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT 
