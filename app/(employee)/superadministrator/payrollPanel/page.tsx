@@ -26,6 +26,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { GeneratePayrollManualDialog } from './_components/generate-payroll-manual-dialog'
+import DecreaseDepartmentalSalaryForm from './_components/decrease-departmental-salary-form'
+import DecreaseDesignationalSalaryForm from './_components/decrease-designational-salary-form'
 
 const page = () => {
     const { deductions } = useDeductions()
@@ -47,6 +49,9 @@ const page = () => {
 
                     <IncreaseDepartmentalSalaryForm />
                     <IncreaseDesignationalSalaryForm />
+
+                    <DecreaseDepartmentalSalaryForm />
+                    <DecreaseDesignationalSalaryForm />
                 </QuickActions>
                 <QuickActions title='ADVANCED' className='lg:grid-cols-4'>
                     <GeneratePayrollManualDialog />
@@ -73,7 +78,7 @@ const page = () => {
                     </TableWrapper>
                 </div>
 
-                <TableWrapper title='Salary Increase Events' description='Salary Increase Events' icon={<DollarSign />}>
+                <TableWrapper title='Salary Changes Events' description='Salary Increase or Decrease Events' icon={<DollarSign />}>
                     <DataTableTemplate columns={columnsSalaryIncreaseEvent} data={salaryIncreaseEvents || []} />
                 </TableWrapper>
 

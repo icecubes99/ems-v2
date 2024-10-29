@@ -5,8 +5,6 @@ import * as z from 'zod'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { IncreaseDepartmentSalarySchema } from '@/schemas/payroll-index'
-import { increaseDepartmentSalary } from '@/actions/superadmin/increase-departmental-salary'
 
 import {
     Form,
@@ -26,9 +24,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { MultiSelectDepartments } from '@/components/ui/multi-select-components'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { DecreaseDepartmentSalarySchema } from '@/schemas/payroll-index'
+import { decreaseDepartmentSalary } from '@/actions/superadmin/increase-departmental-salary'
 
-export default function IncreaseDepartmentalSalaryForm() {
+export default function DecreaseDepartmentalSalaryForm() {
     const [error, setError] = useState<string | undefined>("")
     const [success, setSuccess] = useState<string | undefined>("")
     const [isPending, startTransition] = useTransition()
@@ -44,20 +44,23 @@ export default function IncreaseDepartmentalSalaryForm() {
         return num.toString() + "%"
     }
 
-    const form = useForm<z.infer<typeof IncreaseDepartmentSalarySchema>>({
-        resolver: zodResolver(IncreaseDepartmentSalarySchema),
+    const form = useForm<z.infer<typeof DecreaseDepartmentSalarySchema>>({
+        resolver: zodResolver(DecreaseDepartmentSalarySchema),
         defaultValues: {
             departmentIds: [],
             value: 0,
         },
     })
 
-    const onSubmit = (values: z.infer<typeof IncreaseDepartmentSalarySchema>) => {
+    const onSubmit = (values: z.infer<typeof DecreaseDepartmentSalarySchema>) => {
         setError("")
         setSuccess("")
 
+        const formattedValues = {
+            ...values,
+        }
         startTransition(() => {
-            increaseDepartmentSalary(values)
+            decreaseDepartmentSalary(values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error)
@@ -78,14 +81,14 @@ export default function IncreaseDepartmentalSalaryForm() {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
-                    <ChevronUp className="w-6 h-6 mb-2" />
-                    Increase Departmental Salary
+                    <ChevronDown className="w-6 h-6 mb-2" />
+                    Decrease Departmental Salary
                 </Button>
             </DialogTrigger>
             <DialogContent className='p-0 w-auto bg-transparent border-none'>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Increase the Salary of entire Departments</CardTitle>
+                        <CardTitle>Decrease the Salary of entire Departments</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
@@ -107,10 +110,10 @@ export default function IncreaseDepartmentalSalaryForm() {
 
                                 <FormField
                                     control={form.control}
-                                    name='increaseType'
+                                    name='decreaseType'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Increase Type</FormLabel>
+                                            <FormLabel>Decrease Type</FormLabel>
                                             <Select
                                                 disabled={isPending}
                                                 onValueChange={(value) => {
@@ -139,7 +142,7 @@ export default function IncreaseDepartmentalSalaryForm() {
                                     name="value"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Amount Added</FormLabel>
+                                            <FormLabel>Amount Deducted</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
@@ -164,7 +167,7 @@ export default function IncreaseDepartmentalSalaryForm() {
                                 <FormError message={error} />
                                 <FormSucess message={success} />
                                 <Button variant="superadmin" disabled={isPending} type='submit' className='w-full'>
-                                    Increase Salary
+                                    Decrease Salary
                                 </Button>
                             </form>
                         </Form>

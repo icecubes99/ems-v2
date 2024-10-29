@@ -106,12 +106,26 @@ export const IncreaseDepartmentSalarySchema = z.object({
     increaseType: z.enum(['percentage', 'amount']),
     value: z.number().positive(),
 });
+export const DecreaseDepartmentSalarySchema = z.object({
+    departmentIds: z.array(z.string()).min(1, {
+        message: "At least one Department must be selected",
+    }),
+    decreaseType: z.enum(['percentage', 'amount']),
+    value: z.number().positive(),
+});
 
 export const IncreaseDesignationSalarySchema = z.object({
     designationIds: z.array(z.string()).min(1, {
         message: "At least one Department must be selected",
     }),
     increaseType: z.enum(['percentage', 'amount']),
+    value: z.number().positive(),
+});
+export const DecreaseDesignationSalarySchema = z.object({
+    designationIds: z.array(z.string()).min(1, {
+        message: "At least one Department must be selected",
+    }),
+    decreaseType: z.enum(['percentage', 'amount']),
     value: z.number().positive(),
 });
 

@@ -193,14 +193,14 @@ export const columnsSalaryIncreaseEvent: ColumnDef<SalaryIncreaseEvent>[] = [
                             <DropdownMenuItem
                                 onClick={() => navigator.clipboard.writeText(user.id)}
                             >
-                                Copy Salary Increase ID
+                                Copy Salary Change ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onSelect={(event) => {
                                 event.preventDefault()
                                 setIsDeleteOpen(true)
                             }}>
-                                Undo Salary Increase
+                                Undo Salary Change
                             </DropdownMenuItem>
 
                         </DropdownMenuContent>

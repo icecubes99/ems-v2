@@ -6,6 +6,9 @@ import EmployeePageContent from './_components/employee-page-content'
 import { columnsEmployeeList } from './_components/columns-employees'
 import { useUserList } from '@/hooks/use-user-list'
 import { DataTable } from './_components/DataTable'
+import TableWrapper from '@/components/table-wrapper'
+import { Users } from 'lucide-react'
+import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 const page = () => {
 
     const { users } = useUserList()
@@ -14,11 +17,9 @@ const page = () => {
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead>
                 <EmployeePageContent />
-
-                <div className='  mb-5'>
-                    <p className="col-span-4 font-bold  text-lg">EMPLOYEE LIST</p>
-                    <DataTable columns={columnsEmployeeList} data={users} />
-                </div>
+                <TableWrapper title="Employees" description='List of Employee' icon={<Users />} >
+                    <DataTableTemplate searchValue='name' columns={columnsEmployeeList} data={users} />
+                </TableWrapper>
 
             </LayoutSideHead>
         </RoleGate>
