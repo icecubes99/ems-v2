@@ -6,6 +6,8 @@ import { useTotalActiveUserCount, useTotalDepartmentsCount, useTotalDesignationC
 import Link from "next/link"
 import HeadingCard from "@/components/heading-card"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import CreateAllowances from "../../payrollPanel/_components/create-allowances-form"
+import QuickActions from "@/components/quick-actions"
 
 const EmployeeCards = () => {
     const { userCount, error, isLoading } = useTotalUserCount()
@@ -31,15 +33,17 @@ const EmployeeCards = () => {
                         Add Employees
                     </Button>
                 </Link>
-                <Button variant="outline" className="h-auto py-4 flex w-full flex-col items-center justify-center">
-                    <MagnifyingGlassIcon className="h-6 w-6 mb-2" />
-                    View Employees
-                </Button>
-                <Button variant="outline" className="h-auto py-4 flex w-full flex-col items-center justify-center">
-                    <CircleDollarSign className="h-6 w-6 mb-2" />
-                    Add Allowances to Employee
-                </Button>
+                <CreateAllowances />
             </div>
+
+
+            <QuickActions title='ADVANCED' className='lg:grid-cols-4'>
+                <Link href={"/superadministrator/employeePanel/allowancesPanel"}>
+                    <Button className="w-full">
+                        Manage Allowances
+                    </Button>
+                </Link>
+            </QuickActions>
         </>
     )
 }

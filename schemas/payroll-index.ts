@@ -1,3 +1,5 @@
+import { Status } from "@prisma/client";
+import { start } from "repl";
 import * as z from "zod";
 
 export const DeductionsSchema = z.object({
@@ -124,3 +126,15 @@ export const PayrollFirstsStep = z.object({
 export const AddEmployeeToPayrollCalculatedSchema = z.object({
     userIds: z.array(z.string()).min(1, "User is required"),
 })
+
+export const EmployeeAllowanceSchema = z.object({
+    userId: z.string().min(1, "User is required"),
+    type: z.string().min(1, "Allowance Type is required"),
+    amount: z.number().min(1, "Amount is required"),
+    startDate: z.string().min(1, "Start Date is required"),
+    endDate: z.string().min(1, "End Date is required"),
+    status: z.enum([Status.ACTIVE, Status.INACTIVE]),
+}).refine(data => new Date(data.endDate) >= new Date(data.startDate), {
+    message: "End date cannot be before start date",
+    path: ["endDate"],
+});

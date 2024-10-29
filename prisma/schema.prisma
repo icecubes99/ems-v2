@@ -94,6 +94,7 @@ model User {
   governmentId            GovernmentId?
   payrollItems            PayrollItem[]
   salaryHistories         SalaryHistory[]
+  allowances              Allowance[]
   
   // default
   emailVerified           DateTime?
@@ -590,4 +591,18 @@ model AdvanceTimesheetUsers {
   advanceTimesheetId  String
 
   @@id([userId, advanceTimesheetId])
+}
+
+model Allowance {
+  id        String @id @default(cuid())
+  type      String
+  amount    Float
+  startDate DateTime
+  endDate   DateTime
+  status    Status
+
+  userId    String
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

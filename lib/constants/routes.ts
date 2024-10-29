@@ -1,3 +1,4 @@
+import path from "path";
 
 export const routes = [
     {
@@ -65,6 +66,10 @@ export const routes = [
                     {
                         path: "/superadministrator/employeePanel/user/[id]",
                         label: "User",
+                    },
+                    {
+                        path: "/superadministrator/employeePanel/allowancesPanel",
+                        label: "Allowances Panel",
                     }
                 ]
             },

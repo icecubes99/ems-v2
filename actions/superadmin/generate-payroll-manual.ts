@@ -9,6 +9,7 @@ import { superAdmin } from './superAdmin'
 import { AddEmployeeToPayrollCalculatedSchema, PayrollFirstsStep } from '@/schemas/payroll-index'
 import { startOfDay, endOfDay, subMonths, setDate, differenceInMinutes, subDays } from "date-fns"
 import { calculateGovernmentContributions } from "./generate-payroll";
+import { Status } from "@prisma/client";
 
 export async function generatePayrollManual(values: z.infer<typeof PayrollFirstsStep>) {
     try {
@@ -92,28 +93,34 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
 }
 
 export async function addEmployeeToPayrollCalculated(payrollId: string, values: z.infer<typeof AddEmployeeToPayrollCalculatedSchema>) {
+    // Step 1: Get the current user
     const user = await currentUser();
 
     if (!user) {
         return { error: "Unauthorized!" };
     }
 
+    // Step 2: Get the user from the database
     const dbUser = await getUserById(user.id);
     if (!dbUser) {
         return { error: "User not found in database!" }
     }
 
+    // Step 3: Check if the user is a superadmin
     const superadminResult = await superAdmin();
     if (superadminResult.error) {
         return { error: superadminResult.error }
     }
 
+    // Step 4: Validate the input fields
     const validatedFields = AddEmployeeToPayrollCalculatedSchema.safeParse(values);
     if (!validatedFields.success) {
         return { error: "Invalid Fields!" }
     }
 
     const { userIds } = validatedFields.data;
+
+    // Step 5: Get the payroll record
     const payroll = await db.payroll.findFirst({
         where: {
             id: payrollId
@@ -123,9 +130,10 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
     if (!payroll) {
         return { error: "Payroll not found!" };
     }
+
+    // Step 6: Process each user ID
     for (const userId of userIds) {
-
-
+        // Step 6.1: Check if the payroll item already exists
         const existingPayrollItem = await db.payrollItem.findFirst({
             where: {
                 payrollId,
@@ -140,6 +148,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
         const payPeriodStart = new Date(payroll.payPeriodStart);
         const payPeriodEnd = new Date(payroll.payPeriodEnd);
 
+        // Step 6.2: Get the working days within the pay period
         const workingDays = await db.workingDay.findMany({
             where: {
                 date: {
@@ -150,6 +159,8 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
         });
 
         const totalWorkingDays = workingDays.length;
+
+        // Step 6.3: Get the employee details
         const employee = await db.user.findFirst({
             where: {
                 id: userId
@@ -194,7 +205,34 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                             tinNumber: null
                         }
                     }
-                }
+                },
+                allowances: {
+                    where: {
+                        OR: [
+                            {
+                                startDate: {
+                                    lte: payPeriodEnd
+                                },
+                                endDate: {
+                                    gte: payPeriodStart
+                                }
+                            },
+                            {
+                                startDate: {
+                                    gte: payPeriodStart,
+                                    lte: payPeriodEnd
+                                }
+                            },
+                            {
+                                endDate: {
+                                    gte: payPeriodStart,
+                                    lte: payPeriodEnd
+                                }
+                            }
+                        ],
+                        status: Status.ACTIVE
+                    }
+                },
             }
         });
 
@@ -202,14 +240,13 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
             return { error: "Employee not found!" };
         }
 
-
-
         const { userSalary, timesheets, additionalEarnings, deductions, governmentId } = employee;
         if (!userSalary || !governmentId) {
             console.error(`Employee ${employee.id} has no salary information or government IDs.`);
             return { error: "Employee has no salary information or government IDs." };
         }
 
+        // Step 6.4: Calculate the payroll details
         const dailyRate = (userSalary.grossSalary || userSalary.basicSalary) / totalWorkingDays;
         const minuteRate = dailyRate / 600; // Assuming 10 working hours per day
         let totalMinutesWorked = 0;
@@ -252,26 +289,16 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
         const basicSalaryForDeduction = userSalary.basicSalary;
         const grossSalaryForDeduction = userSalary.grossSalary;
         const overtimeSalary = overtimeMinutes * minuteRate * 1.5; // 1.5x rate for overtime
-        const notWorkedDeduction = minutesNotWorked * minuteRate;
 
-        const totalAdditionalEarnings = additionalEarnings.reduce((sum, earning) => sum + earning.amount, 0);
+        const notWorkedDeduction = minutesNotWorked * minuteRate;
+        const partialAdditionalEarnings = additionalEarnings.reduce((sum, earning) => sum + earning.amount, 0);
+        const allowances = employee.allowances;
+        const totalAdditionalEarnings = partialAdditionalEarnings + allowances.reduce((sum, allowance) => sum + allowance.amount, 0);
 
         let totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + notWorkedDeduction;
 
+        // Step 6.5: Calculate government contributions
         const governmentContributions = await calculateGovernmentContributions(grossSalaryForDeduction || basicSalaryForDeduction);
-
-        const sixDaysAgo = subDays(new Date(), 6);
-        await Promise.all(governmentContributions.map(contribution =>
-            db.deductions.create({
-                data: {
-                    userId: employee.id,
-                    deductionType: contribution.type,
-                    amount: contribution.amount,
-                    description: `${contribution.type} contribution`,
-                    createdAt: sixDaysAgo,
-                }
-            })
-        ));
 
         const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
         totalDeductions += totalGovernmentDeductions;
@@ -302,7 +329,9 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
             return { error: "Invalid net salary calculation." };
         }
 
+        // Step 6.6: Use a transaction to ensure data consistency
         await db.$transaction(async (prisma) => {
+            // Step 6.6.1: Create the PayrollItem
             const payrollItem = await prisma.payrollItem.create({
                 data: {
                     payrollId: payroll.id,
@@ -326,6 +355,36 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                 }
             });
 
+            // Step 6.6.2: Create deductions for government contributions
+            await Promise.all(governmentContributions.map(contribution =>
+                prisma.deductions.create({
+                    data: {
+                        userId: employee.id,
+                        deductionType: contribution.type,
+                        amount: contribution.amount,
+                        description: `${contribution.type} contribution`,
+                        payrollItemId: payrollItem.id,
+                    }
+                })
+            ));
+
+            // Step 6.6.3: Create the Additional Earnings for allowance if there is an allowance
+            const allowances = employee.allowances;
+            if (allowances.length > 0) {
+                for (const allowance of allowances) {
+                    await prisma.additionalEarnings.create({
+                        data: {
+                            userId: employee.id,
+                            amount: allowance.amount,
+                            earningType: allowance.type,
+                            description: "Allowance",
+                            payrollItemId: payrollItem.id,
+                        }
+                    });
+                }
+            }
+
+            // Step 6.6.4: Update AdditionalEarnings with the new payrollItemId
             await prisma.additionalEarnings.updateMany({
                 where: {
                     userId: employee.id,
@@ -340,6 +399,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                 }
             });
 
+            // Step 6.6.5: Update Timesheets with the new payrollItemId
             await prisma.timesheet.updateMany({
                 where: {
                     userId: employee.id,
@@ -356,6 +416,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                 }
             });
 
+            // Step 6.6.6: Update Deductions with the new payrollItemId
             await prisma.deductions.updateMany({
                 where: {
                     userId: employee.id,
@@ -370,6 +431,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                 }
             });
 
+            // Step 6.6.7: Update the total amount in the payroll
             await prisma.payroll.update({
                 where: {
                     id: payrollId
@@ -383,10 +445,11 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
         });
     }
 
+    // Step 7: Audit the action
     const superAdminName = user.name || dbUser.firstName + " " + dbUser.lastName;
     await auditAction(user.id, `Employees added to Payroll by SuperAdmin: ${superAdminName}`);
 
-
+    // Step 8: Return success message
     return { success: "Employee added to payroll successfully!" };
 }
 

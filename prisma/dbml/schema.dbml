@@ -33,6 +33,7 @@ Table User {
   governmentId GovernmentId
   payrollItems PayrollItem [not null]
   salaryHistories SalaryHistory [not null]
+  allowances Allowance [not null]
   emailVerified DateTime
   image String
   password String
@@ -465,6 +466,19 @@ Table AdvanceTimesheetUsers {
   }
 }
 
+Table Allowance {
+  id String [pk]
+  type String [not null]
+  amount Float [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  status Status [not null]
+  userId String [not null]
+  user User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
 Enum UserRole {
   ADMIN
   USER
@@ -579,3 +593,5 @@ Ref: DesignationSalaryIncrease.salaryIncreaseEventId > SalaryIncreaseEvent.id
 Ref: AdvanceTimesheetUsers.userId > User.id [delete: Cascade]
 
 Ref: AdvanceTimesheetUsers.advanceTimesheetId > AdvanceTimesheet.id [delete: Cascade]
+
+Ref: Allowance.userId > User.id [delete: Cascade]

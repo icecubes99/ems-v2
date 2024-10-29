@@ -3,28 +3,32 @@
 import { prisma } from '@/lib/prisma'
 import { currentUser } from "@/lib/auth"
 import { auditAction } from "../auditAction"
-import { startOfDay, endOfDay, subMonths, setDate, differenceInMinutes, subDays } from "date-fns"
+import { startOfDay, endOfDay, subMonths, setDate, differenceInMinutes } from "date-fns"
 import { getUserById } from '@/data/user'
 import { superAdmin } from './superAdmin'
+import { Status } from '@prisma/client'
 
 export async function generatePayroll() {
     try {
+        // Step 1: Get the current user
         const user = await currentUser();
-
         if (!user) {
             return { error: "Unauthorized!" };
         }
 
+        // Step 2: Get the user from the database
         const dbUser = await getUserById(user.id);
         if (!dbUser) {
             return { error: "User not found in database!" }
         }
 
+        // Step 3: Check if the user is a super admin
         const superadminResult = await superAdmin();
         if (superadminResult.error) {
             return { error: superadminResult.error }
         }
 
+        // Step 4: Determine the pay period start and end dates
         const today = new Date();
         let payPeriodStart: Date;
         let payPeriodEnd: Date;
@@ -39,10 +43,12 @@ export async function generatePayroll() {
             return { error: "Payroll can only be generated between the 11th-15th or 26th-31st of the month." };
         }
 
+        // Step 5: Check if Prisma client is initialized
         if (!prisma) {
             throw new Error('Prisma client is not initialized');
         }
 
+        // Step 6: Check if a payroll for the current period already exists
         const existingPayroll = await prisma.payroll.findFirst({
             where: {
                 payPeriodStart,
@@ -54,6 +60,7 @@ export async function generatePayroll() {
             return { error: "A payroll for this period already exists!" };
         }
 
+        // Step 7: Create a new payroll record
         const newPayroll = await prisma.payroll.create({
             data: {
                 payPeriodStart,
@@ -63,6 +70,7 @@ export async function generatePayroll() {
             }
         });
 
+        // Step 8: Get the working days within the pay period
         const workingDays = await prisma.workingDay.findMany({
             where: {
                 date: {
@@ -74,6 +82,7 @@ export async function generatePayroll() {
 
         const totalWorkingDays = workingDays.length;
 
+        // Step 9: Get all employees with salary information
         const employees = await prisma.user.findMany({
             where: {
                 userSalary: {
@@ -120,13 +129,40 @@ export async function generatePayroll() {
                             tinNumber: null
                         }
                     }
-                }
+                },
+                allowances: {
+                    where: {
+                        OR: [
+                            {
+                                startDate: {
+                                    lte: payPeriodEnd
+                                },
+                                endDate: {
+                                    gte: payPeriodStart
+                                }
+                            },
+                            {
+                                startDate: {
+                                    gte: payPeriodStart,
+                                    lte: payPeriodEnd
+                                }
+                            },
+                            {
+                                endDate: {
+                                    gte: payPeriodStart,
+                                    lte: payPeriodEnd
+                                }
+                            }
+                        ],
+                        status: Status.ACTIVE
+                    }
+                },
             }
         });
 
         let totalPayrollAmount = 0;
 
-        // Promise.all
+        // Step 10: Process each employee's payroll
         for (const employee of employees) {
             const { userSalary, timesheets, additionalEarnings, deductions, governmentId } = employee;
             if (!userSalary || !governmentId) {
@@ -143,7 +179,7 @@ export async function generatePayroll() {
             let daysWorked = 0;
             let leaveDaysCount = 0;
 
-            // Promise.all
+            // Step 11: Process each timesheet for the employee
             for (const timesheet of timesheets) {
                 if (!timesheet.clockOut) {
                     console.warn(`Timesheet ${timesheet.id} for employee ${employee.id} has no clock out time.`);
@@ -178,29 +214,16 @@ export async function generatePayroll() {
             const overtimeSalary = overtimeMinutes * minuteRate * 1.5; // 1.5x rate for overtime
             const notWorkedDeduction = minutesNotWorked * minuteRate;
 
-            const totalAdditionalEarnings = additionalEarnings.reduce((sum, earning) => sum + earning.amount, 0);
+            const partialAdditionalEarnings = additionalEarnings.reduce((sum, earning) => sum + earning.amount, 0);
+            const allowances = employee.allowances;
+            const totalAdditionalEarnings = partialAdditionalEarnings + allowances.reduce((sum, allowance) => sum + allowance.amount, 0);
 
             let totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + notWorkedDeduction;
 
-            // Calculate government contributions based on basic salary
+            // Step 12: Calculate government contributions based on basic salary
             const governmentContributions = await calculateGovernmentContributions(grossSalaryForDeduction || basicSalaryForDeduction);
 
-            // Create deductions for government contributions
-            const sixDaysAgo = subDays(new Date(), 6);
-            // promise.all
-            await Promise.all(governmentContributions.map(contribution =>
-                prisma.deductions.create({
-                    data: {
-                        userId: employee.id,
-                        deductionType: contribution.type,
-                        amount: contribution.amount,
-                        description: `${contribution.type} contribution`,
-                        createdAt: sixDaysAgo,
-                    }
-                })
-            ));
-
-            // Update total deductions
+            // Step 13: Update total deductions
             const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
             totalDeductions += totalGovernmentDeductions;
 
@@ -230,7 +253,7 @@ export async function generatePayroll() {
                 continue;
             }
 
-            // Use a transaction to ensure data consistency
+            // Step 15: Use a transaction to ensure data consistency
             await prisma.$transaction(async (prisma) => {
                 // Create the PayrollItem
                 const payrollItem = await prisma.payrollItem.create({
@@ -256,6 +279,35 @@ export async function generatePayroll() {
                     }
                 });
 
+                // Create deductions for government contributions
+                await Promise.all(governmentContributions.map(contribution =>
+                    prisma.deductions.create({
+                        data: {
+                            userId: employee.id,
+                            deductionType: contribution.type,
+                            amount: contribution.amount,
+                            description: `${contribution.type} contribution`,
+                            payrollItemId: payrollItem.id,
+                        }
+                    })
+                ));
+
+                // Create the Additional Earnings for allowance if there is an allowance
+                const allowances = employee.allowances;
+                if (allowances.length > 0) {
+                    for (const allowance of allowances) {
+                        await prisma.additionalEarnings.create({
+                            data: {
+                                userId: employee.id,
+                                amount: allowance.amount,
+                                earningType: allowance.type,
+                                description: "Allowance",
+                                payrollItemId: payrollItem.id,
+                            }
+                        });
+                    }
+                }
+
                 // Update AdditionalEarnings with the new payrollItemId
                 await prisma.additionalEarnings.updateMany({
                     where: {
@@ -271,6 +323,7 @@ export async function generatePayroll() {
                     }
                 });
 
+                // Update Timesheets with the new payrollItemId
                 await prisma.timesheet.updateMany({
                     where: {
                         userId: employee.id,
@@ -303,17 +356,16 @@ export async function generatePayroll() {
                 });
             });
 
-
-
             totalPayrollAmount += netSalary;
         }
 
-        // Update the total amount for the payroll
+        // Step 16: Update the total amount for the payroll
         await prisma.payroll.update({
             where: { id: newPayroll.id },
             data: { totalAmount: totalPayrollAmount }
         });
 
+        // Step 17: Audit the payroll generation action
         const superAdminName = user.name || dbUser.firstName + " " + dbUser.lastName;
         await auditAction(user.id, `Payroll generated for period ${payPeriodStart.toLocaleDateString()} to ${payPeriodEnd.toLocaleDateString()} by SuperAdmin: ${superAdminName}`);
 
