@@ -151,17 +151,26 @@ export type PayrollItemWithUser = {
     netSalary: number;
     daysWorked: number;
     daysNotWorked: number;
+    daysLeave: number;
     minutesWorked: number;
     minutesNotWorked: number;
     minutesEarlyOut: number;
     minutesLate: number;
     minutesOvertime: number;
+    additionalEarningsArray: AdditionalEarnings[]; // Ensure AdditionalEarnings type is defined elsewhere
+    deductions: Deductions[]; // Ensure Deductions type is defined elsewhere
+    timesheets: Timesheet[]; // Ensure Timesheet type is defined elsewhere
     createdAt: Date;
     updatedAt: Date;
-    additionalEarningsArray: AdditionalEarnings[];
-    deductions: Deductions[];
-    timesheets: TimesheetBreakdown[];
 }
+
+export type Timesheet = {
+    date: Date;
+    minutesLate: number;
+    minutesOvertime: number;
+    clockIn: Date;
+    clockOut: Date | null;
+};
 
 export type AdditionalEarnings = {
     id: string;

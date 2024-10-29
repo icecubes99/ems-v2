@@ -18,7 +18,7 @@ export const RoleGate: React.FC<RoleGateProps> = ({ children, allowedRoles }) =>
       <>
         <div className="bg-violet-950 max-h-screen overflow-hidden flex flex-col items-center justify-center">
           <div className="pt-28">
-            <FormError message="You do not have permission to view this content! Please ask your adminstrators if something is wrong." />
+            <FormError message="You do not have permission to view this content! Please contact your adminstrators if something is wrong." />
           </div>
           <div className="-mt-28">
             <NotFound statusCode={404} />

@@ -60,6 +60,11 @@ const page = () => {
                             Edit Government Contributions
                         </Button>
                     </Link>
+                    <Link href={"/superadministrator/payrollPanel/payroll"}>
+                        <Button className='w-full' size={"lg"} variant={"outline"}>
+                            View Dashboard
+                        </Button>
+                    </Link>
                 </QuickActions>
                 <div>
                 </div>

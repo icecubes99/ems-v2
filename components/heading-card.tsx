@@ -8,9 +8,10 @@ interface HeadingCardProps {
     count: ReactNode
     icon?: React.ReactNode
     isLoading?: boolean
+    subtitle?: string
 }
 
-const HeadingCard = ({ title, count, icon, isLoading }: HeadingCardProps) => {
+const HeadingCard = ({ title, count, icon, isLoading, subtitle }: HeadingCardProps) => {
     return (
         <Card className="hover:shadow-md transition-shadow duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
@@ -25,6 +26,10 @@ const HeadingCard = ({ title, count, icon, isLoading }: HeadingCardProps) => {
                 <div className="text-2xl font-bold">
                     {isLoading ? <CgSpinnerTwoAlt className="animate-spin" /> : count}
                 </div>
+                <p className="text-xs text-muted-foreground">
+                    {subtitle}
+                </p>
+
             </CardContent>
         </Card>
     )

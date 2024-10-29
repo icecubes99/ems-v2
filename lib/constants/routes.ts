@@ -102,6 +102,10 @@ export const routes = [
                     {
                         path: "/superadministrator/payrollPanel/editGovernmentContributions",
                         label: "Edit Government Contributions"
+                    },
+                    {
+                        path: "/superadministrator/payrollPanel/payroll",
+                        label: "Payroll"
                     }
                 ]
             }
