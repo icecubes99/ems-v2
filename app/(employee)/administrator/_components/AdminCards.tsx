@@ -5,7 +5,7 @@ import Link from 'next/link'
 import DesignationHeadCard from './designation-head-control-card'
 import DepartmentHeadCard from './department-head-control-card'
 import { PasswordsTable } from '@/components/passwords-table'
-import { Users, FileText, Clock, Building, UserCircle } from 'lucide-react'
+import { Users, FileText, Clock, Building, UserCircle, Lock } from 'lucide-react'
 import { useLeavesPendingCount, useOvertimesPendingCount } from '@/hooks/use-ModelCounts'
 import HeadingTitle from '@/components/heading-title'
 import { MdLock } from 'react-icons/md'
@@ -49,6 +49,30 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
                         <Link href="/administrator/dataTable" passHref legacyBehavior className="w-full">
                             <Button variant="admin" className="w-full">
                                 View Employees
+                            </Button>
+                        </Link>
+                    </CardFooter>
+                </Card>
+
+                <Card className="flex flex-col">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Lock className="h-6 w-6" />
+                            Password Screen Saver
+                        </CardTitle>
+                        <CardDescription>
+                            Show the Password through the Screen Saver
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className='flex-grow'>
+                        <div className='flex items-center justify-between'>
+                            <p className='text-sm font-medium'>Password for the Day</p>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="mt-auto">
+                        <Link href="/administrator/passwordScreenSaver" passHref legacyBehavior className="w-full">
+                            <Button variant="admin" className="w-full">
+                                Show Password
                             </Button>
                         </Link>
                     </CardFooter>

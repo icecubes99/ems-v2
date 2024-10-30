@@ -6,14 +6,12 @@ FUTURE UPDATES TO BE MADE:
 
 FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
 
-    - Add salary decrease with same functions as increase 
     - Add optional workingdays (workable holidays with more rate)
     - Request early clock outs for those people who want to clock out early 
     - Ask for medical certificate if sick leave in the request leave 
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
-    - add a password display page for the day
 
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
@@ -45,7 +43,9 @@ FINISHED UPDATES:
     ====================PROGRESS REPORT ONEIL OCT 24=========================================
     - add more transparency to the payslip pdf      Oct 25
     - added allowances          Oct 29
-    - added a payroll dashboard
+    - added a payroll dashboard     Oct 29
+    - Add salary decrease with same functions as increase   Oct 29
+    - add a password display page for the day           Oct 30 11:25am
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT 
