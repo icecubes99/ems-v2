@@ -132,7 +132,7 @@ export type TimesheetBreakdown = {
     minutesLate: number;
     minutesOvertime: number;
     clockIn: Date;
-    clockOut: Date;
+    clockOut: Date | null;
 }
 
 export type PayrollItemWithUser = {

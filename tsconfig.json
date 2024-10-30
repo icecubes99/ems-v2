@@ -35,7 +35,8 @@
     "**/**/*.ts",
     "**/**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(employee)/administrator/dataTable"
+    "app/(employee)/administrator/dataTable",
+    "app/api/send-email/route.js"
   ],
   "exclude": [
     "node_modules"

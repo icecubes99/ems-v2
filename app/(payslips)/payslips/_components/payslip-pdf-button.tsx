@@ -311,7 +311,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
                 .filter((ts: TimesheetBreakdown) => ts.minutesOvertime > 0)
                 .map((ts: TimesheetBreakdown) => [
                     new Date(ts.date).toLocaleDateString(),
-                    ts.clockOut.toLocaleString() || 'N/A',
+                    ts.clockOut?.toLocaleString() || 'N/A',
                     ts.minutesOvertime.toString()
                 ])
         ]
