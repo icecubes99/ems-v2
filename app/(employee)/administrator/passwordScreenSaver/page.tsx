@@ -28,7 +28,7 @@ export default function Component() {
                 {todayPassword ? (
                     <div className='flex items-center flex-col text-white/70'>Today's password:
                         <div>
-                            <span className="font-bold text-[10rem] leading-[1.2] mt-2 flex items-center text-white/100">{todayPassword}</span>
+                            <span className="font-bold text-[22rem] leading-[1] mt-2 flex items-center text-white/100">{todayPassword}</span>
                         </div>
                     </div>
                 ) : (
