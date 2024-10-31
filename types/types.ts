@@ -157,9 +157,9 @@ export type PayrollItemWithUser = {
     minutesEarlyOut: number;
     minutesLate: number;
     minutesOvertime: number;
-    additionalEarningsArray: AdditionalEarnings[]; // Ensure AdditionalEarnings type is defined elsewhere
-    deductions: Deductions[]; // Ensure Deductions type is defined elsewhere
-    timesheets: Timesheet[]; // Ensure Timesheet type is defined elsewhere
+    additionalEarningsArray: AdditionalEarnings[];
+    deductions: Deductions[];
+    timesheets: Timesheet[];
     createdAt: Date;
     updatedAt: Date;
 }

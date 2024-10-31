@@ -7,7 +7,6 @@ import { startOfDay, endOfDay, subMonths, setDate, differenceInMinutes } from "d
 import { getUserById } from '@/data/user'
 import { superAdmin } from './superAdmin'
 import { Status } from '@prisma/client'
-
 export async function generatePayroll() {
     try {
         // Step 1: Get the current user
@@ -157,6 +156,16 @@ export async function generatePayroll() {
                         status: Status.ACTIVE
                     }
                 },
+                salaryHistories: {
+                    where: {
+                        startDate: {
+                            lte: payPeriodEnd
+                        },
+                        endDate: {
+                            gte: payPeriodStart
+                        }
+                    }
+                }
             }
         });
 
@@ -164,13 +173,28 @@ export async function generatePayroll() {
 
         // Step 10: Process each employee's payroll
         for (const employee of employees) {
-            const { userSalary, timesheets, additionalEarnings, deductions, governmentId } = employee;
+            const { userSalary, timesheets, additionalEarnings, deductions, governmentId, salaryHistories } = employee;
             if (!userSalary || !governmentId) {
                 console.error(`Employee ${employee.id} has no salary information or government IDs.`);
                 continue;
             }
 
-            const dailyRate = (userSalary.grossSalary || userSalary.basicSalary) / totalWorkingDays;
+            // Determine the salary to use based on salaryHistories
+            let grossSalary = userSalary.grossSalary || userSalary.basicSalary;
+            if (salaryHistories.length > 0) {
+                const relevantHistory = salaryHistories.find(history => history.endDate >= payPeriodStart && history.startDate <= payPeriodEnd);
+                if (relevantHistory) {
+                    if (relevantHistory.endDate < payPeriodEnd) {
+                        // If the endDate of the salaryHistory is within the pay period, use the userSalary after the endDate
+                        grossSalary = userSalary.grossSalary || userSalary.basicSalary;
+                    } else {
+                        // Use the salary from the salaryHistory
+                        grossSalary = relevantHistory.grossSalary;
+                    }
+                }
+            }
+
+            const dailyRate = grossSalary / totalWorkingDays;
             const minuteRate = dailyRate / 600; // Assuming 10 working hours per day
             let totalMinutesWorked = 0;
             let totalLateMinutes = 0;

@@ -233,6 +233,16 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                         status: Status.ACTIVE
                     }
                 },
+                salaryHistories: {
+                    where: {
+                        startDate: {
+                            lte: payPeriodEnd
+                        },
+                        endDate: {
+                            gte: payPeriodStart
+                        }
+                    }
+                }
             }
         });
 
@@ -240,14 +250,28 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
             return { error: "Employee not found!" };
         }
 
-        const { userSalary, timesheets, additionalEarnings, deductions, governmentId } = employee;
+        const { userSalary, timesheets, additionalEarnings, deductions, governmentId, salaryHistories } = employee;
         if (!userSalary || !governmentId) {
             console.error(`Employee ${employee.id} has no salary information or government IDs.`);
             return { error: "Employee has no salary information or government IDs." };
         }
 
-        // Step 6.4: Calculate the payroll details
-        const dailyRate = (userSalary.grossSalary || userSalary.basicSalary) / totalWorkingDays;
+        // Determine the salary to use based on salaryHistories
+        let grossSalary = userSalary.grossSalary || userSalary.basicSalary;
+        if (salaryHistories.length > 0) {
+            const relevantHistory = salaryHistories.find(history => history.endDate >= payPeriodStart && history.startDate <= payPeriodEnd);
+            if (relevantHistory) {
+                if (relevantHistory.endDate < payPeriodEnd) {
+                    // If the endDate of the salaryHistory is within the pay period, use the userSalary after the endDate
+                    grossSalary = userSalary.grossSalary || userSalary.basicSalary;
+                } else {
+                    // Use the salary from the salaryHistory
+                    grossSalary = relevantHistory.grossSalary;
+                }
+            }
+        }
+
+        const dailyRate = grossSalary / totalWorkingDays;
         const minuteRate = dailyRate / 600; // Assuming 10 working hours per day
         let totalMinutesWorked = 0;
         let totalLateMinutes = 0;

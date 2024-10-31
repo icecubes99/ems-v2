@@ -12,7 +12,8 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
-
+    - add absences in payslip
+    
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
     - Add Edit and Remove functionality to Holidays     Oct-10 5:39pm

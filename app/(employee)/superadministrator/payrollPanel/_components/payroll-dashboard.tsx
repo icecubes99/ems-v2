@@ -1,9 +1,8 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { usePayrollItems } from '@/hooks/use-payroll-items'
-import { usePayroll, usePendingPayroll } from '@/hooks/use-payroll-data'
-import { usePayrollSummary, useDepartmentSalaries, useTopEarners, useYearlyPayrollData } from '@/hooks/use-data-dashboard'
+import { useApprovedDeniedPayroll } from '@/hooks/use-payroll-data'
+import { usePayrollSummary, useDepartmentSalaries, useTopEarners, useYearlyPayrollData, usePayrollItems } from '@/hooks/use-data-dashboard'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
@@ -16,7 +15,7 @@ import { LeaveStatus } from '@prisma/client'
 
 export function PayrollDashboard() {
     const [selectedPayrollId, setSelectedPayrollId] = useState<string | null>(null)
-    const { payroll: pendingPayrolls, isLoading: isPendingPayrollLoading, error: pendingPayrollError } = usePendingPayroll()
+    const { payroll: pendingPayrolls, isLoading: isPendingPayrollLoading, error: pendingPayrollError } = useApprovedDeniedPayroll()
     const { payrollItems, isLoading: isPayrollItemsLoading, error: payrollItemsError } = usePayrollItems(selectedPayrollId || '')
     const { summary, isLoading: isSummaryLoading } = usePayrollSummary(selectedPayrollId || '')
     const { salaries: departmentSalaries, isLoading: isDepartmentSalariesLoading } = useDepartmentSalaries(selectedPayrollId || '')
