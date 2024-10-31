@@ -12,7 +12,6 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
-    - add absences in payslip
     
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
@@ -47,6 +46,7 @@ FINISHED UPDATES:
     - added a payroll dashboard     Oct 29
     - Add salary decrease with same functions as increase   Oct 29
     - add a password display page for the day           Oct 30 11:25am
+    - add absences in payslip       Oct 31 12:50pm
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 4 WEEKS LEFT 

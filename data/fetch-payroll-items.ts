@@ -14,6 +14,7 @@ export async function fetchPayrollItems(payrollId: string) {
                 payroll: true,
                 additionalEarningsArray: true,
                 deductions: true,
+                daysNotWorkedArray: true,
                 timesheets: {
                     where: {
                         OR: [

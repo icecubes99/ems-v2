@@ -1,4 +1,4 @@
-import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, DepartmentSalaryIncrease, DesignationSalaryIncrease, AdvanceTimesheetUsers, } from "@prisma/client"
+import { EmployeeType, Status, Gender, Prisma, LeaveStatus, LeaveType, OvertimeType, Payroll, PayrollItem, Department, Designation, DepartmentSalaryIncrease, DesignationSalaryIncrease, AdvanceTimesheetUsers, DaysNotWorked, } from "@prisma/client"
 import { User as PrismaUser } from "@prisma/client"
 export type AssignDesignation = {
     id: string
@@ -160,6 +160,7 @@ export type PayrollItemWithUser = {
     additionalEarningsArray: AdditionalEarnings[];
     deductions: Deductions[];
     timesheets: Timesheet[];
+    daysNotWorkedArray: DaysNotWorked[];
     createdAt: Date;
     updatedAt: Date;
 }

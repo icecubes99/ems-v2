@@ -34,6 +34,7 @@ Table User {
   payrollItems PayrollItem [not null]
   salaryHistories SalaryHistory [not null]
   allowances Allowance [not null]
+  daysNotWorked DaysNotWorked [not null]
   emailVerified DateTime
   image String
   password String
@@ -391,6 +392,7 @@ Table PayrollItem {
   minutesOvertime Int [not null]
   additionalEarningsArray AdditionalEarnings [not null]
   deductions Deductions [not null]
+  daysNotWorkedArray DaysNotWorked [not null]
   timesheets Timesheet [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -398,6 +400,17 @@ Table PayrollItem {
   indexes {
     (payrollId, userId) [unique]
   }
+}
+
+Table DaysNotWorked {
+  id String [pk]
+  date DateTime [not null]
+  userId String [not null]
+  user User [not null]
+  payrollItemId String [not null]
+  payrollItem PayrollItem [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
 }
 
 Table SalaryIncreaseEvent {
@@ -581,6 +594,10 @@ Ref: GovernmentId.userId - User.id [delete: Cascade]
 Ref: PayrollItem.payrollId > Payroll.id [delete: Cascade]
 
 Ref: PayrollItem.userId > User.id [delete: Cascade]
+
+Ref: DaysNotWorked.userId > User.id [delete: Cascade]
+
+Ref: DaysNotWorked.payrollItemId > PayrollItem.id [delete: Cascade]
 
 Ref: DepartmentSalaryIncrease.departmentId > Department.id
 

@@ -31,6 +31,7 @@ export async function fetchOwnPayslips() {
                 payroll: true,
                 additionalEarningsArray: true,
                 deductions: true,
+                daysNotWorkedArray: true,
                 timesheets: {
                     where: {
                         OR: [
@@ -104,6 +105,7 @@ export async function fetchOtherPayslips(userId: string) {
                 payroll: true,
                 additionalEarningsArray: true,
                 deductions: true,
+                daysNotWorkedArray: true,
                 timesheets: {
                     where: {
                         OR: [

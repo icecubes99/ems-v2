@@ -90,9 +90,7 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
         console.error("Error generating payroll:", error);
         return { error: "Failed to generate payroll. Please check server logs for details." };
     }
-}
-
-export async function addEmployeeToPayrollCalculated(payrollId: string, values: z.infer<typeof AddEmployeeToPayrollCalculatedSchema>) {
+} export async function addEmployeeToPayrollCalculated(payrollId: string, values: z.infer<typeof AddEmployeeToPayrollCalculatedSchema>) {
     // Step 1: Get the current user
     const user = await currentUser();
 
@@ -453,6 +451,30 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
                 data: {
                     payrollItemId: payrollItem.id
                 }
+            });
+
+            // Step 18: Create DaysNotWorked entries
+            const daysNotWorkedEntries = [];
+            const allDaysInPeriod = [];
+            for (let d = new Date(payPeriodStart); d <= payPeriodEnd; d.setDate(d.getDate() + 1)) {
+                allDaysInPeriod.push(new Date(d));
+            }
+
+            for (const day of allDaysInPeriod) {
+                const isWorkingDay = workingDays.some(wd => wd.date.getTime() === day.getTime());
+                const hasTimesheet = timesheets.some(ts => ts.day.date.getTime() === day.getTime());
+
+                if (isWorkingDay && !hasTimesheet) {
+                    daysNotWorkedEntries.push({
+                        date: day,
+                        userId: employee.id,
+                        payrollItemId: payrollItem.id,
+                    });
+                }
+            }
+
+            await prisma.daysNotWorked.createMany({
+                data: daysNotWorkedEntries
             });
 
             // Step 6.6.7: Update the total amount in the payroll

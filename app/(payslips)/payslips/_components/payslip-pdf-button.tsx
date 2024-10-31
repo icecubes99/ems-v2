@@ -8,6 +8,7 @@ import { PayrollItemWithUser, TimesheetBreakdown } from '@/types/types'
 import { FileDown } from 'lucide-react'
 import { CellHookData } from 'jspdf-autotable'
 import React from 'react'
+import { DaysNotWorked } from '@prisma/client'
 
 declare module 'jspdf' {
     interface jsPDF {
@@ -65,10 +66,13 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         addPayslipPage(doc)
 
         // Second page (lates and overtimes breakdown)
-        if (payslip.timesheets && payslip.timesheets.length > 0) {
+        if (payslip.timesheets) {
             doc.addPage()
             addLatesOvertimesPage(doc)
         }
+
+        doc.addPage()
+        addAbsencesPage(doc)
 
         doc.save(`Payslip_${payslip.user.lastName}_${new Date(payslip.payroll.payPeriodEnd).toISOString().split('T')[0]}.pdf`)
         setGeneratingPDF(false)
@@ -85,6 +89,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         // Add company name and details
         doc.setFontSize(18)
         doc.setTextColor(66, 44, 141) // Purple color
+        doc.setFont('helvetica', 'bold')
         doc.text('Kupler Industries Incorporated', 14, 40)
         doc.setFontSize(10)
         doc.setTextColor(52, 73, 94) // Dark gray
@@ -120,7 +125,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
 
         // Add earnings table
         const earningsBody = [
-            ['Basic Salary', payslip.daysWorked * 8, (payslip.basicSalary / (payslip.daysWorked * 8)).toFixed(2), payslip.basicSalary.toFixed(2)],
+            ['Basic Salary', payslip.daysWorked * 10, (payslip.basicSalary / (payslip.daysWorked * 10)).toFixed(2), payslip.basicSalary.toFixed(2)],
             ['Overtime Pay', (payslip.minutesOvertime / 60).toFixed(2), (payslip.overtimeSalary / (payslip.minutesOvertime / 60)).toFixed(2), payslip.overtimeSalary.toFixed(2)],
         ]
         earningsBody.push(['Total Additional Earnings', '-', '-', '-'])
@@ -229,6 +234,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         // Add company name and details (same as first page)
         doc.setFontSize(18)
         doc.setTextColor(66, 44, 141) // Purple color
+        doc.setFont('helvetica', 'bold')
         doc.text('Kupler Industries Incorporated', 14, 40)
         doc.setFontSize(10)
         doc.setTextColor(52, 73, 94) // Dark gray
@@ -290,7 +296,11 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
                 0: { cellWidth: 70, halign: 'left' },
                 1: { cellWidth: 55, halign: 'right' },
                 2: { cellWidth: 55, halign: 'right' }
-            },
+            }, didParseCell: (data: CellHookData) => {
+                if (data.section === 'head' && data.column.index > 0) {
+                    data.cell.styles.halign = 'right';
+                }
+            }
         })
 
         // Add total lates
@@ -326,7 +336,11 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
                 0: { cellWidth: 70, halign: 'left' },
                 1: { cellWidth: 55, halign: 'right' },
                 2: { cellWidth: 55, halign: 'right' }
-            },
+            }, didParseCell: (data: CellHookData) => {
+                if (data.section === 'head' && data.column.index > 0) {
+                    data.cell.styles.halign = 'right';
+                }
+            }
         })
 
         // Add total overtimes
@@ -339,6 +353,101 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         doc.setFontSize(8)
         doc.setTextColor(127, 140, 141) // Light gray
         doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, doc.internal.pageSize.height - 10)
+    }
+
+
+    const addAbsencesPage = (doc: jsPDF) => {
+        // Set the background to white
+        doc.setFillColor(255, 255, 255)
+        doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F')
+
+        // Add logo
+        doc.addImage(jpgDataUrl!, 'JPG', 14, 10, 50, 20)
+
+        // Add company name and details (same as first page)
+        doc.setFontSize(18)
+        doc.setTextColor(66, 44, 141) // Purple color
+        doc.text('Kupler Industries Incorporated', 14, 40)
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(52, 73, 94) // Dark gray
+        doc.text('Door 4 & 5, Don Pedro Building, Lapu-Lapu St,', 14, 46)
+        doc.text('Agdao, Davao City, 8000 Davao del Sur, Philippines', 14, 51)
+        doc.text('Phone: 221-0323 / 221-0520', 14, 56)
+        doc.text("Email: info@kuplerindustries.com", 14, 61)
+
+        // Add title
+        doc.setFontSize(24)
+        doc.setTextColor(66, 44, 141) // Purple color
+        doc.setFont('helvetica', 'bold')
+        doc.text('ABSENCES', doc.internal.pageSize.width - 16, 18, { align: 'right' })
+
+        // Add employee info
+        doc.setFontSize(12)
+        doc.setTextColor(52, 73, 94) // Dark gray
+        doc.setFont('helvetica', 'bold')
+        doc.text('EMPLOYEE INFORMATION', 14, 70)
+        doc.setFont('helvetica', 'normal')
+        doc.setFontSize(10)
+        doc.text(`Full Name: ${payslip.user.firstName} ${payslip.user.middleName || ''} ${payslip.user.lastName}`, 14, 77)
+        doc.text(`Job Title: ${payslip.user.jobTitle || 'N/A'}`, 14, 83)
+        doc.text(`Email: ${payslip.user.email || 'N/A'}`, 14, 89)
+
+        // Add pay information
+        doc.setFontSize(12)
+        doc.setFont('helvetica', 'bold')
+        doc.text('PAY INFORMATION', 120, 70)
+        doc.setFont('helvetica', 'normal')
+        doc.setFontSize(10)
+        doc.text(`Pay Period: ${new Date(payslip.payroll.payPeriodStart).toLocaleDateString()} - ${new Date(payslip.payroll.payPeriodEnd).toLocaleDateString()}`, 120, 77)
+        doc.text(`Payroll #: ${payslip.payrollId}`, 120, 83)
+
+        // Add Absences  breakdown
+        doc.setFontSize(14)
+        doc.setTextColor(66, 44, 141) // Purple color
+        doc.setFont('helvetica', 'bold')
+        doc.text('Absences', 14, 100)
+
+
+        const absencesData = [
+            ['Date', 'Deducted Amount'],
+            ...(payslip.daysNotWorkedArray || [])
+                .filter((wd: DaysNotWorked) => wd)
+                .map((wd) => [
+                    new Date(wd.date).toLocaleDateString(),
+                    ((payslip.basicSalary / (payslip.daysWorked * 10)) * 10).toFixed(2)
+                ])
+        ]
+
+        doc.autoTable({
+            startY: 105,
+            head: [absencesData[0]],
+            body: absencesData.slice(1),
+            styles: { fontSize: 9, cellPadding: 2 },
+            headStyles: { fillColor: [66, 44, 141], textColor: 255 },
+            columnStyles: {
+                0: { cellWidth: 70, halign: 'left' },
+                1: { cellWidth: 55, halign: 'right' },
+            },
+            didParseCell: (data: CellHookData) => {
+                if (data.section === 'head' && data.column.index > 0) {
+                    data.cell.styles.halign = 'right';
+                }
+            }
+        })
+
+        // Add total absences
+        doc.setFontSize(10)
+        doc.setTextColor(52, 73, 94) // Dark gray
+        doc.setFont('helvetica', 'bold')
+        doc.text(`Total Absences: ${payslip.daysNotWorked}`, 14, (doc as any).lastAutoTable.finalY + 10)
+
+        // Add footer
+        doc.setFontSize(8)
+        doc.setTextColor(127, 140, 141) // Light gray
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, doc.internal.pageSize.height - 10)
+
+
     }
 
     return (

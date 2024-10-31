@@ -95,7 +95,7 @@ model User {
   payrollItems            PayrollItem[]
   salaryHistories         SalaryHistory[]
   allowances              Allowance[]
-  
+  daysNotWorked           DaysNotWorked[]
   // default
   emailVerified           DateTime?
   image                   String?
@@ -521,6 +521,7 @@ model PayrollItem {
   // additional earnings and deductions
   additionalEarningsArray AdditionalEarnings[]
   deductions              Deductions[]
+  daysNotWorkedArray      DaysNotWorked[]
 
   timesheets    Timesheet[]
 
@@ -528,6 +529,18 @@ model PayrollItem {
   updatedAt    DateTime @updatedAt
 
   @@unique([payrollId, userId])
+}
+
+model DaysNotWorked {
+  id        String   @id @default(cuid())
+  date      DateTime
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payrollItemId String
+  payrollItem PayrollItem @relation(fields: [payrollItemId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 model SalaryIncreaseEvent {
   id            String   @id @default(cuid())
