@@ -97,7 +97,7 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
             </DialogTrigger>
             <DialogContent className="p-0 w-auto bg-transparent border-none">
 
-                <Card className='bg-red-50'>
+                <Card className=''>
                     <CardHeader>
                         Update a  Department for Kupler Industries
                         <CardDescription>

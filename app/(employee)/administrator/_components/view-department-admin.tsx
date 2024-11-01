@@ -98,6 +98,8 @@ function DesignationsTable({ designations, departmentName, departmentId }: { des
                             <TableHead>Designation Description</TableHead>
                             <TableHead>Designation Status</TableHead>
                             <TableHead>Designation Head</TableHead>
+                            <TableHead>Salary</TableHead>
+
                             <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -135,6 +137,7 @@ function DesignationRow({ designation }: { designation: Designation }) {
                     `${user?.firstName ?? 'N/A'} ${user?.lastName ?? ''}`
                 )}
             </TableCell>
+            <TableCell>{designation.designationSalary}</TableCell>
             <TableCell>
                 <div className='flex flex-col gap-2'>
                     <Link className='h-4' href={`/administrator/designations/${designation.id}`} legacyBehavior passHref>

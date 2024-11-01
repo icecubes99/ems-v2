@@ -65,6 +65,9 @@ const CreateDesignationForm = ({ variant }: CreateDesignationFormProps) => {
             createDesignation(values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300)
             });
         });
     }

@@ -13,6 +13,8 @@ import UpdateDesignationForm from './UpdateDesignationForm'
 import Link from 'next/link'
 import { Skeleton } from '@/components/ui/skeleton'
 import CreateSpecificDesignationForm from './create-specific-designation-form'
+import { formatPeso } from '@/lib/format'
+import EditDesignationSalaryForm from './edit-designation-salary-form'
 
 interface ViewDepartmentProps {
     departmentId: string
@@ -87,16 +89,17 @@ function DesignationsTable({ designations, departmentName, departmentId }: { des
     }
 
     return (
-        <div className="p-5 space-y-4">
-            <p className="text-sm font-bold uppercase">{departmentName} DEPARTMENT DESIGNATIONS</p>
+        <div className="py-2 space-y-4">
+            <p className="text-sm font-bold uppercase">{departmentName} DESIGNATIONS</p>
             <div className='max-h-96 overflow-y-auto'>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Designation Name</TableHead>
-                            <TableHead>Designation Description</TableHead>
-                            <TableHead>Designation Status</TableHead>
-                            <TableHead>Designation Head</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Head</TableHead>
+                            <TableHead>Salary</TableHead>
                             <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -134,6 +137,7 @@ function DesignationRow({ designation }: { designation: Designation }) {
                     `${user?.firstName ?? 'N/A'} ${user?.lastName ?? ''}`
                 )}
             </TableCell>
+            <TableCell>{formatPeso(designation.designationSalary)}</TableCell>
             <TableCell>
                 <div className='flex flex-col gap-2'>
                     <Link className='h-4' href={`/superadministrator/departments/designations/${designation.id}`} legacyBehavior passHref>
@@ -142,6 +146,7 @@ function DesignationRow({ designation }: { designation: Designation }) {
                         </Button>
                     </Link>
                     <UpdateDesignationForm variant={"superadmin"} designationId={designation.id} />
+                    <EditDesignationSalaryForm designationId={designation.id} />
                 </div>
             </TableCell>
         </TableRow>

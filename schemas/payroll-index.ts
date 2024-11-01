@@ -152,3 +152,8 @@ export const EmployeeAllowanceSchema = z.object({
     message: "End date cannot be before start date",
     path: ["endDate"],
 });
+
+export const EditDesignationSalarySchema = z.object({
+    designationId: z.string(),
+    newSalary: z.number().positive(),
+});
