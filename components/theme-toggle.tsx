@@ -50,7 +50,7 @@ export function ThemeToggle() {
                             aria-label="Toggle dark mode"
                         />
                     </TooltipTrigger>
-                    <TooltipContent className='duration-[2000ms]'>
+                    <TooltipContent className='duration-&lsqb;2000ms&rsqb;'>
                         <div>
                             <p><kbd>Cmd + D</kbd></p>
                         </div>

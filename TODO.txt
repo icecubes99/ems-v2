@@ -13,7 +13,6 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - add remove employee functionality
     - can edit user roles 
     - solve the jobtitle problem
-    - revamp the select users data
 
     
 FINISHED UPDATES:
@@ -52,6 +51,7 @@ FINISHED UPDATES:
     - add absences in payslip       Oct 31 12:50pm
     - can edit designation salary       Nov 1 2pm
     - Ask for medical certificate if sick leave in the request leave        Nov 1 6:31pm
+    - revamp the select users data for editing department and designations      Nov 2 12:04am
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 2 WEEKS LEFT 

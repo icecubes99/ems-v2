@@ -1,55 +1,45 @@
 "use client"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ExtendedUser } from '@/next-auth';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useUserListWithDepartmentHead } from '@/hooks/use-user-list';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface SelectUserProps {
     onUserChange: (userId: string) => void;
-    value?: string; // Add value prop
+    value?: string;
+    departmentHeadId?: string;
 }
 
-const SelectUserDepartmentHead: React.FC<SelectUserProps> = ({ onUserChange, value }) => {
-    const [users, setUsers] = useState<ExtendedUser[]>([]);
+const SelectUserDepartmentHead: React.FC<SelectUserProps> = ({
+    onUserChange,
+    value,
+    departmentHeadId
+}) => {
+    const { users, loading, error } = useUserListWithDepartmentHead(departmentHeadId || '');
 
-    const makeApiCall = async () => {
-        const response = await fetch('/api/users/departmentHead', {
-            method: 'GET',
-        });
+    const processedUsers = users.map(user => ({
+        id: user.id,
+        name: `${user.firstName} ${user.lastName}`
+    }));
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+    if (loading) {
+        return <Skeleton className="h-10 w-full" />;
+    }
 
-        const users = await response.json();
-        const processedUsers = users.map((user: any) => {
-            const name = user?.firstName + ' ' + user?.lastName;
-
-            return {
-                id: user.id,
-                name,
-            };
-        });
-
-        setUsers(processedUsers);
-    };
-
-    useEffect(() => {
-        makeApiCall();
-    }, []);
-
-    const handleChange = (value: string) => {
-        // console.log(`Selected user ID: ${value}`);
-        onUserChange(value);
-    };
+    if (error) {
+        return <div>Error loading users</div>;
+    }
 
     return (
-        <Select onValueChange={handleChange} value={value}>
+        <Select onValueChange={onUserChange} value={value}>
             <SelectTrigger>
-                <SelectValue placeholder="Pick a User"></SelectValue>
+                <SelectValue placeholder="Pick a User" />
             </SelectTrigger>
             <SelectContent>
-                {users.map(user => (
-                    <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>
+                {processedUsers.map(user => (
+                    <SelectItem key={user.id} value={user.id}>
+                        {user.name}
+                    </SelectItem>
                 ))}
             </SelectContent>
         </Select>

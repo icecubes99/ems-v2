@@ -195,7 +195,7 @@ const UpdateDesignationForm: React.FC<UpdateDesignationFormProps> = ({ variant, 
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Designation Head</FormLabel>
-                                                    <SelectUserDesignationHead value={field.value} onUserChange={field.onChange} />
+                                                    <SelectUserDesignationHead value={field.value} designationHeadId={field.value} onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}

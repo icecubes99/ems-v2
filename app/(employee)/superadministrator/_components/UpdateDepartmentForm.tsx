@@ -29,6 +29,7 @@ import { useDepartment } from '@/hooks/use-department';
 import { updateDepartment } from '@/actions/superadmin/updateDepartment';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
+import SelectUserDepartmentHead from './select-user-department-head';
 
 interface UpdateDepartmentFormProps {
     departmentId: string;
@@ -190,7 +191,7 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Department Head</FormLabel>
-                                                    <SelectUser value={field.value} onUserChange={field.onChange} />
+                                                    <SelectUserDepartmentHead departmentHeadId={field.value} value={field.value} onUserChange={field.onChange} />
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
