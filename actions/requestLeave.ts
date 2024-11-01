@@ -3,23 +3,31 @@
 import { LeaveRequestSchema } from "@/schemas/attendance-index"
 import { db } from "@/lib/db"
 import * as z from "zod";
-import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 import { LeaveType, LeaveStatus, Prisma } from "@prisma/client";
+import { put } from '@vercel/blob'
 
-export const requestLeave = async (values: z.infer<typeof LeaveRequestSchema>) => {
+export const requestLeave = async (formData: FormData) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
     }
+
+    const values = {
+        startDate: formData.get('startDate') as string,
+        endDate: formData.get('endDate') as string,
+        reason: formData.get('reason') as string,
+        leaveType: formData.get('leaveType') as LeaveType,
+        document: formData.get('document') as File,
+    };
 
     const validatedFields = LeaveRequestSchema.safeParse(values);
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }
 
-    const { startDate, endDate, reason, leaveType } = validatedFields.data;
+    const { startDate, endDate, reason, leaveType, document } = validatedFields.data;
     if (!startDate || !endDate || !reason) {
         return { error: "Please fill in all fields!" }
     }
@@ -29,6 +37,10 @@ export const requestLeave = async (values: z.infer<typeof LeaveRequestSchema>) =
 
     if (parsedStartDate > parsedEndDate) {
         return { error: "Start date cannot be after end date!" };
+    }
+
+    if (!document) {
+        return { error: 'No file provided' }
     }
 
     // Calculate the number of days requested
@@ -73,6 +85,10 @@ export const requestLeave = async (values: z.infer<typeof LeaveRequestSchema>) =
     }
 
     try {
+        const blob = await put(`leaveRequests/${dbUser.id}-${document.name}`, document, {
+            access: 'public',
+        })
+
         await db.leaves.create({
             data: {
                 startDate: parsedStartDate,
@@ -80,6 +96,7 @@ export const requestLeave = async (values: z.infer<typeof LeaveRequestSchema>) =
                 reason,
                 leaveType,
                 userId: dbUser.id,
+                documentLink: blob.url,
             },
         });
 

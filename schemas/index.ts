@@ -143,3 +143,21 @@ export const UpdateDocumentsSchema = z
     documentType: z.string().min(1, "Type is Required"),
     documentLink: z.string().min(1, "Link is Required")
   })
+
+export const DocumentSchema = z.object({
+  documentName: z.string().min(1, "Document name is required"),
+  documentType: z.string().min(1, "Document type is required"),
+  file: z.instanceof(File)
+    .refine(file => file.size <= 10000000, `Max file size is 10MB.`)
+    .refine(
+      file => [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/jpeg',
+        'image/png',
+        'image/svg+xml'
+      ].includes(file.type),
+      "Only .pdf, .doc, .docx, .jpg, .png, and .svg formats are supported."
+    )
+})

@@ -59,6 +59,7 @@ export type LeavesWithUser = {
     endDate: Date
     leaveStatus: LeaveStatus
     reason: string
+    documentLink: string
     leaveType: LeaveType;
     user: {
         id: string;

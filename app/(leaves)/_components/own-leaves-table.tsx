@@ -15,8 +15,10 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { Calendar } from "lucide-react"
+import { Calendar, Download } from "lucide-react"
 import { LeaveStatus } from "@prisma/client"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface OwnLeavesTableProps {
     classname?: string
@@ -31,6 +33,7 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                     <TableHead>Date Range</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Reason</TableHead>
+                    <TableHead>Link</TableHead>
                     <TableHead>Status</TableHead>
                 </TableRow>
             </TableHeader>
@@ -54,6 +57,16 @@ const OwnLeavesTable = ({ classname }: OwnLeavesTableProps) => {
                             </TableCell>
                             <TableCell>{leave.leaveType}</TableCell>
                             <TableCell className="w-1/2 pr-10">{leave.reason}</TableCell>
+                            <TableCell>
+                                <Link href={leave.documentLink} legacyBehavior>
+                                    <a target="_blank" rel="noopener noreferrer">
+                                        <Button variant={"outline"} size={"lg"}>
+                                            <Download className="w-4 h-4 mr-2" />
+                                            View
+                                        </Button>
+                                    </a>
+                                </Link>
+                            </TableCell>
                             <TableCell>
                                 {leave.leaveStatus === LeaveStatus.APPROVED ? (
                                     <Badge variant="sucess">Approved</Badge>

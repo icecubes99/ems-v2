@@ -2,7 +2,7 @@
 
 import { Account, AddressLine, Department, Gender, Leaves, LeaveStatus, Status, TwoFactorConfirmation, UserRole } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { Download, MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,7 @@ import { LeavesWithUser } from "@/types/types"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { ApproveLeaveDialog, RejectLeaveDialog } from "@/app/(employee)/administrator/_components/update-pending-leaves-buttons"
+import Link from "next/link"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -86,6 +87,34 @@ export const columnsPendingLeaves: ColumnDef<LeavesWithUser>[] = [
         },
         cell: ({ row }) => {
             return <div className="w-40">{row.original.reason}</div>
+        }
+    },
+    {
+        accessorKey: "documentLink",
+        header: ({ column }) => {
+            return (
+                <div
+                    className="flex flex-row items-center hover:cursor-pointer"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    <p className="hover:bg-slate-100/90">
+                        Link
+                    </p>
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </div>
+            )
+        },
+        cell: ({ row }) => {
+            const documentLink = row.original.documentLink
+            return < div className="" >
+                <Link href={documentLink} legacyBehavior>
+                    <a target="_blank" rel="noopener noreferrer">
+                        <Button variant={"outline"} size={"lg"}>
+                            <Download className="w-4 h-4 mr-2" />
+                            View
+                        </Button>
+                    </a>
+                </Link>
+            </div >
         }
     },
     {

@@ -27,6 +27,7 @@ import { LeaveType, Status } from '@prisma/client';
 import { Dialog } from '@/components/ui/dialog';
 import { DialogContent, DialogTrigger } from '@/components/RefreshDialog';
 import { Textarea } from './ui/textarea';
+import { Input } from './ui/input';
 
 const RequestLeaveButton = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -52,25 +53,35 @@ const RequestLeaveButton = () => {
         }
     }
 
+
     const onSubmit = (values: z.infer<typeof LeaveRequestSchema>) => {
-        setError("");
-        setSuccess("");
+        setError("")
+        setSuccess("")
 
-        startTransition(() => {
-            requestLeave(values)
-                .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                    }
+        const formData = new FormData()
+        formData.append('startDate', values.startDate)
+        formData.append('endDate', values.endDate)
+        formData.append('reason', values.reason)
+        formData.append('leaveType', values.leaveType)
+        formData.append('document', values.document)
 
-                    if (data.success) {
-                        setSuccess(data.success);
-                        setOpen(false);
-                        handleOpenChange(false);
-                    }
-                })
-                .catch(() => setError("An Error has Happened"));
-        });
+
+        startTransition(async () => {
+            try {
+                const result = await requestLeave(formData)
+                if ('error' in result) {
+                    setError(result.error)
+                } else if ('success' in result) {
+                    setSuccess(result.success)
+                    setTimeout(() => {
+                        setOpen(false)
+                        window.location.reload()
+                    }, 1000)
+                }
+            } catch (error) {
+                setError("An error occurred while submitting your request")
+            }
+        })
     }
 
     return (
@@ -192,6 +203,32 @@ const RequestLeaveButton = () => {
                                                             {...field}
                                                             disabled={isPending}
                                                             placeholder=''
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <FormField
+                                            control={form.control}
+                                            name='document'
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Choose a document</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="file"
+                                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.svg"
+                                                            disabled={isPending}
+                                                            onChange={(e) => {
+                                                                const file = e.target.files?.[0]
+                                                                if (file) {
+                                                                    field.onChange(file)
+                                                                }
+                                                            }}
                                                         />
                                                     </FormControl>
                                                     <FormMessage />

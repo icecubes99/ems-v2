@@ -352,6 +352,7 @@ model Leaves {
   leaveStatus LeaveStatus @default(PENDING)
   reason    String
   leaveType LeaveType
+  documentLink  String 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
