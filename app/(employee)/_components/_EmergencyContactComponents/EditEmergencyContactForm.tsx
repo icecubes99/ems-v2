@@ -24,21 +24,21 @@ import { FormSucess } from "@/components/form-sucess";
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSession } from 'next-auth/react';
-import { useCurrentUserId } from '@/hooks/use-current-user';
 import useEmergencyContact from '@/hooks/use-current-emergencyContact';
 import { editEmergencyContact } from '@/actions/editEmergencyContact';
 import { Skeleton } from '@/components/ui/skeleton';
 
+interface Props {
+    userId: string
+}
 
-
-const EditEmergencyContactForm = () => {
+const EditEmergencyContactForm = ({ userId }: Props) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
     const { update } = useSession();
 
-    const userId = useCurrentUserId();
     const { emergencyContact, loading } = useEmergencyContact(userId as string);
 
     const form = useForm<z.infer<typeof EmergencyContactSchema>>({
@@ -61,7 +61,7 @@ const EditEmergencyContactForm = () => {
 
     const onSubmit = (values: z.infer<typeof EmergencyContactSchema>) => {
         startTransition(() => {
-            editEmergencyContact(values)
+            editEmergencyContact(userId, values)
                 .then((data) => {
 
                     if (data.error) {

@@ -6,6 +6,8 @@ import { useCurrentUser, useCurrentUserId } from '@/hooks/use-current-user';
 import useUser from '@/hooks/use-user';
 import { Address, ExtendedUser } from '@/next-auth';
 import { EmployeeType, Status, UserRole } from '@prisma/client';
+import { Separator } from '@/components/ui/separator';
+import { User } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 
 interface EmployeeDetailsProps {
@@ -18,11 +20,13 @@ const EmployeeDetailsV2 = ({ children, userId }: EmployeeDetailsProps) => {
 
     const { status, employeeType, loading, designationName, error } = useUserAssignment(userId);
 
-    const formatDate = (dateString?: string) => {
-        if (!dateString) return '';
-        const date = new Date(dateString);
+
+    const formatDate = (dateInput?: Date | string) => {
+        if (!dateInput) return '';
+        const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
         return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
     };
+
     return (
         <div className='flex flex-col  gap-6'>
             <div className='mt-5 flex flex-col items-center justify-start'>
@@ -62,54 +66,42 @@ const EmployeeDetailsV2 = ({ children, userId }: EmployeeDetailsProps) => {
             </div>
 
             <div className='grid grid-cols-3 gap-8 '>
-                <Card className=' shadow-sm'>
-                    <CardHeader>
-                        <CardTitle>
-                            PROFILE DETAILS
-                        </CardTitle>
-                        <CardDescription>This is You</CardDescription>
+                <Card>
+                    <CardHeader className="flex flex-row items-center gap-4">
+                        <User className="h-6 w-6 text-primary" />
+                        <CardTitle>Profile Information</CardTitle>
                     </CardHeader>
-                    <CardContent className='space-y-4'>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>FIRST NAME:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {user?.firstName}
-                            </p>
+                    <CardContent className="grid gap-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">First Name</div>
+                                <div>{user?.firstName}</div>
+                            </div>
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">Last Name</div>
+                                <div>{user?.lastName}</div>
+                            </div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>MIDDLE NAME:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {user?.middleName}
-                            </p>
+                        <div>
+                            <div className="text-sm font-medium text-muted-foreground">Middle Name</div>
+                            <div>{user?.middleName}</div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>LAST NAME:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {user?.lastName}
-                            </p>
+                        <Separator />
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">Gender</div>
+                                <div>{user?.gender}</div>
+                            </div>
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">Date of Birth</div>
+                                <div>{formatDate(user?.dateOfBirth ?? undefined)}</div>
+                            </div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>GENDER:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {user?.gender}
-                            </p>
-                        </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>DATE OF BIRTH:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {/* @ts-ignore */}
-                                {formatDate(user.dateOfBirth)}
-                            </p>
-                        </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>JOB TITLE:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {user?.jobTitle}
-                            </p>
+                        <div>
+                            <div className="text-sm font-medium text-muted-foreground">Job Title</div>
+                            <div>{user?.jobTitle}</div>
                         </div>
                     </CardContent>
-                    <CardFooter className='justify-end items-end'>
-                    </CardFooter>
                 </Card>
                 {children}
             </div>

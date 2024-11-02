@@ -24,8 +24,11 @@ import { addAddress } from '@/actions/addAddress';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
+interface Props {
+    userId: string;
+}
 
-const AddressForm = () => {
+const AddressForm = ({ userId }: Props) => {
     const [error, setError] = useState<string | undefined>("");
     const [sucess, setSucess] = useState<string | undefined>("");
 
@@ -56,7 +59,7 @@ const AddressForm = () => {
         setSucess("");
 
         startTransition(() => {
-            addAddress(values)
+            addAddress(userId, values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);

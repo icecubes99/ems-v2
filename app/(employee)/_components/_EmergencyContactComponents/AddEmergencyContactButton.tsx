@@ -3,7 +3,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import EmergencyContactForm from "./EmergencyContactForm";
 
-const AddEmergencyContactButton = () => {
+interface AddEmergencyContactButtonProps {
+    userId: string;
+}
+
+const AddEmergencyContactButton = ({ userId }: AddEmergencyContactButtonProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -12,7 +16,7 @@ const AddEmergencyContactButton = () => {
                 </Button>
             </DialogTrigger>
             <DialogContent className="p-0 w-auto bg-transparent border-none">
-                <EmergencyContactForm />
+                <EmergencyContactForm userId={userId} />
             </DialogContent>
         </Dialog>
     )

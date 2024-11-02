@@ -9,7 +9,7 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 
-export const editAddress = async (values: z.infer<typeof AddressSchema>) => {
+export const editAddress = async (userId: string, values: z.infer<typeof AddressSchema>) => {
     const user = await currentUser();
     const validatedFields = AddressSchema.safeParse(values);
 
@@ -17,7 +17,7 @@ export const editAddress = async (values: z.infer<typeof AddressSchema>) => {
         return { error: "Unauthorized!" };
     }
 
-    const dbUser = await getUserById(user?.id);
+    const dbUser = await getUserById(userId);
 
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
@@ -41,7 +41,7 @@ export const editAddress = async (values: z.infer<typeof AddressSchema>) => {
     await auditAction(dbUser.id, "User Address Update");
 
     await db.addressLine.update({
-        where: { userId: dbUser.id },
+        where: { userId },
         data: {
             street,
             barangay,

@@ -8,7 +8,7 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 
-export const editEmergencyContact = async (values: z.infer<typeof EmergencyContactSchema>) => {
+export const editEmergencyContact = async (userId: string, values: z.infer<typeof EmergencyContactSchema>) => {
     const user = await currentUser();
     const validatedFields = EmergencyContactSchema.safeParse(values);
 
@@ -16,7 +16,7 @@ export const editEmergencyContact = async (values: z.infer<typeof EmergencyConta
         return { error: "Unauthorized!" };
     }
 
-    const dbUser = await getUserById(user?.id);
+    const dbUser = await getUserById(userId);
 
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };

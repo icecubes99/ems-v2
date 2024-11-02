@@ -25,9 +25,12 @@ import { addEmergencyContact } from '@/actions/addEmergencyContact';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+interface EmergencyContactFormProps {
+    userId: string;
+}
 
 
-const EmergencyContactForm = () => {
+const EmergencyContactForm = ({ userId }: EmergencyContactFormProps) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -50,7 +53,7 @@ const EmergencyContactForm = () => {
         setSuccess("");
 
         startTransition(() => {
-            addEmergencyContact(values).then((data) => {
+            addEmergencyContact(userId, values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
             });

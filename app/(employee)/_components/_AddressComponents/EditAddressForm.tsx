@@ -26,14 +26,20 @@ import useAddress from '@/hooks/use-current-address';
 import { useSession } from 'next-auth/react';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from '@/components/ui/skeleton';
+import { Building2 } from 'lucide-react';
+import useUser from '@/hooks/use-user';
 
-const EditAddressForm = () => {
+interface Props {
+    userId: string
+}
+
+const EditAddressForm = ({ userId }: Props) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>();
     const [isPending, startTransition] = useTransition();
     const { update } = useSession();
 
-    const userId = useCurrentUserId();
+    const { user } = useUser(userId);
     const { address, loading } = useAddress(userId as string);
 
 
@@ -67,7 +73,7 @@ const EditAddressForm = () => {
 
     const onSubmit = (values: z.infer<typeof AddressSchema>) => {
         startTransition(() => {
-            editAddress(values)
+            editAddress(userId, values)
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
@@ -91,7 +97,8 @@ const EditAddressForm = () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={"auth"}>
+                <Button variant={"outline"} className='w-full'>
+                    <Building2 className="mr-2 h-4 w-4" />
                     Edit Address
                 </Button>
             </DialogTrigger>

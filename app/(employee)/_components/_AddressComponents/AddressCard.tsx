@@ -1,11 +1,14 @@
 "use client"
+
 import React, { useEffect, useState } from 'react';
 import { getAddress } from '@/actions/readAddress';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import EditAddressButton from './EditAddressButton';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { MapPin, Building2, Shield } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import AddressForm from './AddressForm';
 import EditAddressForm from './EditAddressForm';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const AddressCard = ({ userId }: { userId: string }) => {
     const [address, setAddress] = useState<any>(null);
@@ -29,85 +32,74 @@ const AddressCard = ({ userId }: { userId: string }) => {
         fetchAddress();
     }, [userId]);
 
-    if (!isMounted) {
-        return null; // Render nothing on the server
-    }
+    if (!isMounted) return null;
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>
-                    Address Information
-                </CardTitle>
-                <CardDescription>
-                    Here is the address information for the user.
-                </CardDescription>
+            <CardHeader className="flex flex-row items-center gap-4">
+                <MapPin className="h-6 w-6 text-primary" />
+                <CardTitle>Address Information</CardTitle>
             </CardHeader>
-            <CardContent className='space-y-4'>
+            <CardContent className="grid gap-4">
                 {loading ? (
                     <div className='flex flex-col gap-4'>
                         <Skeleton className="h-9" />
                         <Skeleton className="h-9" />
                         <Skeleton className="h-9" />
                         <Skeleton className="h-9" />
-                        <Skeleton className="h-9" />
-
                     </div>
                 ) : error ? (
-                    <div className='flex flex-col gap-4'>
-                        <p className='text-sm font-medium'>{error}</p>
-                        {/* <AddAddressButton /> */}
+                    <div className="flex flex-col items-center justify-center gap-4 py-8">
+                        <Shield className="h-12 w-12 text-muted-foreground" />
+                        <div className="text-center text-sm text-muted-foreground">
+                            No address information found
+                        </div>
+                        <AddressForm userId={userId} />
                     </div>
                 ) : (
                     <>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>STREET:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.street}
-                            </p>
+                        <div>
+                            <div className="text-sm font-medium text-muted-foreground">Street</div>
+                            <div>{address?.street}</div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>BARANGAY:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.barangay}
-                            </p>
+                        <div>
+                            <div className="text-sm font-medium text-muted-foreground">Barangay</div>
+                            <div>{address?.barangay}</div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>CITY:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.city}
-                            </p>
+                        <Separator />
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">City</div>
+                                <div>{address?.city}</div>
+                            </div>
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">Province</div>
+                                <div>{address?.province}</div>
+                            </div>
                         </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>PROVINCE:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.province}
-                            </p>
-                        </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>COUNTRY:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.country}
-                            </p>
-                        </div>
-                        <div className='flex flex-row items-center justify-between'>
-                            <p className='text-sm font-medium'>ZIP CODE:</p>
-                            <p className='text-md font-mono max-w-[250px] bg-slate-100 truncate p-1 rounded-md'>
-                                {address?.zipCode}
-                            </p>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">Country</div>
+                                <div>{address?.country}</div>
+                            </div>
+                            <div>
+                                <div className="text-sm font-medium text-muted-foreground">ZIP Code</div>
+                                <div>{address?.zipCode}</div>
+                            </div>
                         </div>
                     </>
                 )}
             </CardContent>
             <CardFooter className='justify-end'>
                 {loading ? (
-                    <AddressForm />
+                    <div></div>
                 ) : error ? (
-                    <AddressForm />
+                    <div></div>
                 ) : (
-                    <EditAddressForm />
+                    <EditAddressForm userId={userId} />
                 )}
             </CardFooter>
+
         </Card>
     );
 };
