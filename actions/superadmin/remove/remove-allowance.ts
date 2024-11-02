@@ -5,6 +5,8 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db"
 import { superAdmin } from "../superAdmin";
 import { auditAction } from "@/actions/auditAction";
+import { archiveEntity } from "./archive-entity";
+import { ArchiveType } from "@prisma/client";
 
 export async function removeAllowance(allowanceId: string) {
     try {
@@ -32,6 +34,8 @@ export async function removeAllowance(allowanceId: string) {
         if (!allowance) {
             return { error: "Allowance not found!" }
         }
+
+        await archiveEntity(ArchiveType.ALLOWANCE, allowanceId, allowance);
 
         await db.allowance.delete({
             where: {

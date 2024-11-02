@@ -315,6 +315,8 @@ model WorkingDay {
   month     WorkingMonth @relation(fields: [monthId], references: [id], onDelete: Cascade)
   timesheets Timesheet[]
 
+  isRequired Boolean @default(true)
+
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
@@ -519,6 +521,9 @@ model PayrollItem {
   minutesLate Int
   minutesOvertime Int
 
+  specialDayMinutes  Int     @default(0)
+  specialDayEarnings Decimal @default(0)
+
   // additional earnings and deductions
   additionalEarningsArray AdditionalEarnings[]
   deductions              Deductions[]
@@ -619,4 +624,24 @@ model Allowance {
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum ArchiveType {
+  USER
+  DEPARTMENT
+  DESIGNATION
+  DOCUMENT
+  PAYROLL_ITEM
+  PAYROLL
+  ALLOWANCE
+}
+
+model Archive {
+  id            String      @id @default(cuid())
+  archiveType   ArchiveType
+  entityId      String
+  entityData    Json
+  createdAt     DateTime    @default(now())
+
+  @@unique([archiveType, entityId])
 }

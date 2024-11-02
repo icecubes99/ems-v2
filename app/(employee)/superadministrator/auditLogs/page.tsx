@@ -11,10 +11,13 @@ import { useAuditLogs } from '@/hooks/use-audit-logs'
 import { useTotalAuditLogCount } from '@/hooks/use-ModelCounts'
 import { DataTable } from '../../_components/DataTable'
 import { ClipboardList } from 'lucide-react'
+import { useArchives } from '@/hooks/use-archives'
+import { columnsArchives } from './_components/columns-archives'
 
 const page = () => {
     const { auditLogCount } = useTotalAuditLogCount()
     const { auditLogs } = useAuditLogs()
+    const { archives } = useArchives()
     return (
         <LayoutSideHead>
             <HeadingTitle title='AUDITS TABLE' />
@@ -25,6 +28,9 @@ const page = () => {
 
             <TableWrapper title='System Audit Logs' description='' icon={<ClipboardList />}>
                 <DataTableTemplate searchValue='action' data={auditLogs || []} columns={columnsAuditLogs} />
+            </TableWrapper>
+            <TableWrapper title='Archive' description='' icon={<ClipboardList />}>
+                <DataTableTemplate searchValue='archiveType' data={archives || []} columns={columnsArchives} />
             </TableWrapper>
 
         </LayoutSideHead>

@@ -4,6 +4,8 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { superAdmin } from "../superAdmin";
 import { auditAction } from "@/actions/auditAction";
+import { archiveEntity } from "./archive-entity";
+import { ArchiveType } from "@prisma/client";
 
 export async function removePayroll(payrollId: string) {
     try {
@@ -31,7 +33,9 @@ export async function removePayroll(payrollId: string) {
                 payrollItems: {
                     include: {
                         deductions: true,
-                        additionalEarningsArray: true
+                        additionalEarningsArray: true,
+                        daysNotWorkedArray: true,
+                        timesheets: true
                     }
                 }
             }
@@ -40,6 +44,17 @@ export async function removePayroll(payrollId: string) {
         if (!payroll) {
             return { error: "Payroll not found!" }
         }
+
+        await archiveEntity(ArchiveType.PAYROLL, payrollId, {
+            ...payroll,
+            payrollItems: payroll.payrollItems.map(item => ({
+                ...item,
+                deductions: item.deductions,
+                additionalEarnings: item.additionalEarningsArray,
+                daysNotWorked: item.daysNotWorkedArray,
+                timesheets: item.timesheets
+            }))
+        });
 
         await db.$transaction(async (prisma) => {
             // Update timesheets to remove payrollItemId

@@ -6,7 +6,7 @@ FUTURE UPDATES TO BE MADE:
 
 FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
 
-    - Request early clock outs for those people who want to clock out early 
+    - Request early clock outs for those people who want to clock out early  *REMOVED*
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
@@ -52,6 +52,7 @@ FINISHED UPDATES:
     - revamp the select users data for editing department and designations      Nov 2 12:04am
     - can edit user roles       Nov 2 2pm 
     - Add optional workingdays (workable holidays with more rate)       Nov 2 4pm
+    - Added archives        Nov 2 7pm
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 2 WEEKS LEFT 

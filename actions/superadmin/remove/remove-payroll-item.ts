@@ -4,6 +4,8 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { superAdmin } from "../superAdmin";
 import { auditAction } from "@/actions/auditAction";
+import { archiveEntity } from "./archive-entity";
+import { ArchiveType } from "@prisma/client";
 
 export async function removeEmployeeFromPayroll(payrollId: string, userId: string) {
     try {
@@ -29,13 +31,24 @@ export async function removeEmployeeFromPayroll(payrollId: string, userId: strin
             },
             include: {
                 deductions: true,
-                additionalEarningsArray: true
+                additionalEarningsArray: true,
+                daysNotWorkedArray: true,
+                timesheets: true
             }
         });
 
         if (!payrollItem) {
             return { error: "Payroll item not found!" };
         }
+
+        // Archive payroll item and related data
+        await archiveEntity(ArchiveType.PAYROLL_ITEM, payrollItem.id, {
+            ...payrollItem,
+            deductions: payrollItem.deductions,
+            additionalEarnings: payrollItem.additionalEarningsArray,
+            daysNotWorked: payrollItem.daysNotWorkedArray,
+            timesheets: payrollItem.timesheets
+        });
 
         if (payrollItem.deductions) {
             for (const deduction of payrollItem.deductions) {

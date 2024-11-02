@@ -496,6 +496,18 @@ Table Allowance {
   updatedAt DateTime [not null]
 }
 
+Table Archive {
+  id String [pk]
+  archiveType ArchiveType [not null]
+  entityId String [not null]
+  entityData Json [not null]
+  createdAt DateTime [default: `now()`, not null]
+
+  indexes {
+    (archiveType, entityId) [unique]
+  }
+}
+
 Enum UserRole {
   ADMIN
   USER
@@ -543,6 +555,16 @@ Enum OvertimeStatus {
   IN_PROGRESS
   COMPLETED
   REJECTED
+}
+
+Enum ArchiveType {
+  USER
+  DEPARTMENT
+  DESIGNATION
+  DOCUMENT
+  PAYROLL_ITEM
+  PAYROLL
+  ALLOWANCE
 }
 
 Ref: Account.userId > User.id [delete: Cascade]
