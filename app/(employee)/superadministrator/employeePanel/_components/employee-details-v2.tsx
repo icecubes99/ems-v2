@@ -5,7 +5,7 @@ import useUserAssignment from '@/hooks/use-current-assignment';
 import { useCurrentUser, useCurrentUserId } from '@/hooks/use-current-user';
 import useUser from '@/hooks/use-user';
 import { Address, ExtendedUser } from '@/next-auth';
-import { EmployeeType, Status } from '@prisma/client';
+import { EmployeeType, Status, UserRole } from '@prisma/client';
 import React, { useEffect, useState } from 'react'
 
 interface EmployeeDetailsProps {
@@ -48,12 +48,20 @@ const EmployeeDetailsV2 = ({ children, userId }: EmployeeDetailsProps) => {
                             ) : (
                                 <Badge className='p-2' variant={"destructive"}>Probationary</Badge>
                             )}
+                            {user.role === UserRole.ADMIN ? (
+                                <Badge className='p-2' variant={"cyan"}>Admin</Badge>
+                            ) : user.role === UserRole.SUPERADMIN ? (
+                                <Badge className='p-2' variant={"violet"}>Super Admin</Badge>
+                            ) : (
+                                <Badge className='p-2' variant={"outline"}>User</Badge>
+                            )
+                            }
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className='grid grid-cols-3 gap-8 pr-6'>
+            <div className='grid grid-cols-3 gap-8 '>
                 <Card className=' shadow-sm'>
                     <CardHeader>
                         <CardTitle>

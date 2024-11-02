@@ -13,7 +13,7 @@ export default function SuperAdminCards() {
             <div className='mt-5'>
                 <p className='font-bold text-4xl'>ACTIONS</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <CardLayout
                     isHidden
                     header='Departmental Actions'

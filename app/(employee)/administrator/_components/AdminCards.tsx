@@ -23,7 +23,7 @@ const AdminCards = ({ userId }: AdminCardsProps) => {
 
             <HeadingTitle title='ACTIONS' />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pr-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className='row-span-3'>
                     <TableWrapper description='List of Passwords for the Working Day' title='Passwords' className='mt-0' icon={<MdLock />}>
                         <PasswordsTable />

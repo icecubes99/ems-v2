@@ -14,6 +14,9 @@ import { useUserAuditLog } from '@/hooks/use-audit-logs'
 import { useUserDocuments } from '@/hooks/use-documents'
 import { IoDocument } from 'react-icons/io5'
 import { columnsUserDocuments } from '@/app/(employee)/_components/columns-user-documents'
+import QuickActions from '@/components/quick-actions'
+import { Button } from '@/components/ui/button'
+import { ChangeUserRoleDialog } from '../../_components/change-user-role-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
@@ -21,24 +24,34 @@ const page = ({ params }: { params: { id: string } }) => {
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead>
-                <EmployeeDetailsV2 userId={params.id}>
-                    <AddressCard userId={params.id} />
-                    <EmergencyContactCard userId={params.id} />
-                </EmployeeDetailsV2>
+                <QuickActions>
+                    <div className='flex flex-row gap-2'>
+                        <Button size={"lg"} variant={"auth"}>
+                            Edit User Details
+                        </Button>
+                        <ChangeUserRoleDialog userId={params.id} />
+                    </div>
+                </QuickActions>
+                <div className='px-5 py-2 pb-4 rounded-md border '>
+                    <EmployeeDetailsV2 userId={params.id}>
+                        <AddressCard userId={params.id} />
+                        <EmergencyContactCard userId={params.id} />
+                    </EmployeeDetailsV2>
 
-                <TableWrapper title='Leave Requests History' description='View past and current leave requests' icon={<History />}>
-                    <OtherLeavesTable userId={params.id} />
-                </TableWrapper>
-
-                <div className='grid grid-cols-2 gap-2'>
-
-                    <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
-                        <DataTableTemplate columns={columnsUserAuditLogs} data={auditLogs || []} />
+                    <TableWrapper title='Leave Requests History' description='View past and current leave requests' icon={<History />}>
+                        <OtherLeavesTable userId={params.id} />
                     </TableWrapper>
 
-                    <TableWrapper title='User Documents' description="This User's Documents" icon={<IoDocument />}>
-                        <DataTableTemplate columns={columnsUserDocuments} data={documents || []} />
-                    </TableWrapper>
+                    <div className='grid grid-cols-2 gap-2'>
+
+                        <TableWrapper description='All Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
+                            <DataTableTemplate columns={columnsUserAuditLogs} data={auditLogs || []} />
+                        </TableWrapper>
+
+                        <TableWrapper title='User Documents' description="This User's Documents" icon={<IoDocument />}>
+                            <DataTableTemplate columns={columnsUserDocuments} data={documents || []} />
+                        </TableWrapper>
+                    </div>
 
 
                 </div>

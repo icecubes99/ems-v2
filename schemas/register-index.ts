@@ -58,3 +58,8 @@ export const newRegisterSchema = z.object({
 
 
 })
+
+export const ChangeUserRoleSchema = z.object({
+    userId: z.string(),
+    role: z.enum([UserRole.USER, UserRole.ADMIN, UserRole.SUPERADMIN])
+});

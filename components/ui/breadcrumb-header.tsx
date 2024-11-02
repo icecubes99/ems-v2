@@ -13,6 +13,7 @@ interface Route {
 
 // Import the routes
 import { routes } from '@/lib/constants/routes'
+import useUser from '@/hooks/use-user';
 
 // Define the findRoute function with types
 function findRoute(pathSegments: string[], routes: Route[]): Route | null {
@@ -35,6 +36,11 @@ export function Breadcrumb() {
     const pathname = usePathname()
     const pathSegments = pathname.split('/').filter(segment => segment !== '')
 
+    // Check if we're on a user detail page
+    const isUserDetailPage = pathname.match(/^\/superadministrator\/employeePanel\/user\/(.+)$/)
+    const userId = isUserDetailPage ? isUserDetailPage[1] : null
+    const { user } = userId ? useUser(userId) : { user: null }
+
     // If the current path is /homepage, return an empty breadcrumb list
     if (pathname === '/homepage') {
         return (
@@ -51,6 +57,14 @@ export function Breadcrumb() {
     const breadcrumbs = pathSegments.map((segment, index) => {
         const path = `/${pathSegments.slice(0, index + 1).join('/')}`
         const route = findRoute(pathSegments.slice(0, index + 1), routes)
+
+        // For user detail pages, replace the last segment with user's name
+        if (userId && index === pathSegments.length - 1) {
+            return {
+                path,
+                label: user?.firstName + " " + user?.lastName || 'Loading...' // Show loading state while fetching
+            }
+        }
 
         return route ? { path, label: route.label } : { path, label: segment }
     })

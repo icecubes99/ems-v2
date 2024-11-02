@@ -56,7 +56,7 @@ const EmployeeDetails = ({ children }: EmployeeDetailsProps) => {
                 </div>
             </div>
 
-            <div className='grid grid-cols-3 gap-8 pr-6'>
+            <div className='grid grid-cols-3 gap-8'>
                 <Card className=' shadow-sm'>
                     <CardHeader>
                         <CardTitle>
