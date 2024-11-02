@@ -17,6 +17,7 @@ import { AdvanceClockInForm } from '../_components/advance-clock-in-form'
 import { columnsAdvanceTimesheet } from '../_components/columns-advance-timesheet'
 import { Calendar } from 'lucide-react'
 import { useAdvanceTimesheets } from '@/hooks/use-advance-timesheets'
+import { CreateSpecialDayDialog } from '../_components/create-special-day'
 
 const page = () => {
     const { holidays, } = useHolidays()
@@ -40,7 +41,9 @@ const page = () => {
                 <QuickActions className='lg:grid-cols-3'>
                     <WorkingDaysManager classname='col-span-1' />
                     <CreateHolidayCard />
+                    <CreateSpecialDayDialog />
                     <AdvanceClockInForm />
+
                 </QuickActions>
 
                 <div className='grid grid-cols-2 gap-8'>

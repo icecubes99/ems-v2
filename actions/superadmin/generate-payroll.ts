@@ -75,7 +75,18 @@ export async function generatePayroll() {
                 date: {
                     gte: payPeriodStart,
                     lte: payPeriodEnd
-                }
+                },
+                isRequired: true
+            }
+        });
+
+        const nonRequiredWorkingDays = await prisma.workingDay.findMany({
+            where: {
+                date: {
+                    gte: payPeriodStart,
+                    lte: payPeriodEnd
+                },
+                isRequired: false
             }
         });
 
@@ -203,6 +214,9 @@ export async function generatePayroll() {
             let daysWorked = 0;
             let leaveDaysCount = 0;
 
+            let specialDayMinutes = 0;
+            let specialDayEarnings = 0;
+
             // Step 11: Process each timesheet for the employee
             for (const timesheet of timesheets) {
                 if (!timesheet.clockOut) {
@@ -229,6 +243,35 @@ export async function generatePayroll() {
                 daysWorked++;
             }
 
+            // Process timesheets for non-required working days
+            for (const timesheet of timesheets) {
+                if (!timesheet.clockOut) continue;
+
+                const workingDay = nonRequiredWorkingDays.find(day =>
+                    day.date.getTime() === timesheet.day.date.getTime()
+                );
+
+                if (workingDay) {
+                    const clockIn = new Date(timesheet.clockIn);
+                    const clockOut = new Date(timesheet.clockOut);
+
+                    // Calculate minutes worked on special day
+                    const minutesWorked = Math.min(600, Math.max(0, differenceInMinutes(clockOut, clockIn)));
+                    specialDayMinutes += minutesWorked;
+
+                    // Calculate earnings for special day (2x rate)
+                    const specialDayRate = dailyRate * 2;
+                    const specialDayMinuteRate = specialDayRate / 600;
+                    specialDayEarnings += minutesWorked * specialDayMinuteRate;
+
+                    // Add overtime if applicable (2.5x rate for special day overtime)
+                    if (timesheet.isOvertime) {
+                        const overtimeRate = minuteRate * 2.5;
+                        specialDayEarnings += timesheet.minutesOvertime * overtimeRate;
+                    }
+                }
+            }
+
             const daysNotWorked = totalWorkingDays - daysWorked;
             const minutesNotWorked = (daysNotWorked * 600) + totalLateMinutes + totalEarlyOutMinutes;
 
@@ -251,7 +294,7 @@ export async function generatePayroll() {
             const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
             totalDeductions += totalGovernmentDeductions;
 
-            let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings - totalDeductions;
+            let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings + specialDayEarnings - totalDeductions;
             netSalary = Math.max(0, netSalary);
 
             console.log(`Employee ${employee.id}:`, {
@@ -299,7 +342,9 @@ export async function generatePayroll() {
                         minutesLate: totalLateMinutes,
                         minutesOvertime: overtimeMinutes,
                         minutesEarlyOut: totalEarlyOutMinutes,
-                        daysLeave: leaveDaysCount
+                        daysLeave: leaveDaysCount,
+                        specialDayMinutes,
+                        specialDayEarnings,
                     }
                 });
 

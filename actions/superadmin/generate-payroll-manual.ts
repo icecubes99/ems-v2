@@ -156,6 +156,16 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
             }
         });
 
+        const nonRequiredWorkingDays = await db.workingDay.findMany({
+            where: {
+                date: {
+                    gte: payPeriodStart,
+                    lte: payPeriodEnd
+                },
+                isRequired: false
+            }
+        });
+
         const totalWorkingDays = workingDays.length;
 
         // Step 6.3: Get the employee details
@@ -278,6 +288,9 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
         let daysWorked = 0;
         let leaveDaysCount = 0;
 
+        let specialDayMinutes = 0;
+        let specialDayEarnings = 0;
+
         for (const timesheet of timesheets) {
             if (!timesheet.clockOut) {
                 console.warn(`Timesheet ${timesheet.id} for employee ${employee.id} has no clock out time.`);
@@ -304,6 +317,36 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
             daysWorked++;
         }
 
+        // Process timesheets for non-required working days
+        for (const timesheet of timesheets) {
+            if (!timesheet.clockOut) continue;
+
+            const workingDay = nonRequiredWorkingDays.find(day =>
+                day.date.getTime() === timesheet.day.date.getTime()
+            );
+
+            if (workingDay) {
+                const clockIn = new Date(timesheet.clockIn);
+                const clockOut = new Date(timesheet.clockOut);
+
+                // Calculate minutes worked on special day
+                const minutesWorked = Math.min(600, Math.max(0, differenceInMinutes(clockOut, clockIn)));
+                specialDayMinutes += minutesWorked;
+
+                // Calculate earnings for special day (2x rate)
+                const specialDayRate = dailyRate * 2;
+                const specialDayMinuteRate = specialDayRate / 600;
+                specialDayEarnings += minutesWorked * specialDayMinuteRate;
+
+                // Add overtime if applicable (2.5x rate for special day overtime)
+                if (timesheet.isOvertime) {
+                    const overtimeRate = minuteRate * 2.5;
+                    specialDayEarnings += timesheet.minutesOvertime * overtimeRate;
+                }
+            }
+        }
+
+
         const daysNotWorked = totalWorkingDays - daysWorked;
         const minutesNotWorked = (daysNotWorked * 600) + totalLateMinutes + totalEarlyOutMinutes;
 
@@ -325,7 +368,7 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
         const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
         totalDeductions += totalGovernmentDeductions;
 
-        let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings - totalDeductions;
+        let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings + specialDayEarnings - totalDeductions;
         netSalary = Math.max(0, netSalary);
 
         console.log(`Employee ${employee.id}:`, {
@@ -343,7 +386,8 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
             notWorkedDeduction,
             totalAdditionalEarnings,
             totalDeductions,
-            netSalary
+            netSalary,
+
         });
 
         if (isNaN(netSalary)) {
@@ -373,7 +417,9 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
                     minutesLate: totalLateMinutes,
                     minutesOvertime: overtimeMinutes,
                     minutesEarlyOut: totalEarlyOutMinutes,
-                    daysLeave: leaveDaysCount
+                    daysLeave: leaveDaysCount,
+                    specialDayMinutes,
+                    specialDayEarnings,
                 }
             });
 

@@ -164,6 +164,8 @@ export type PayrollItemWithUser = {
     daysNotWorkedArray: DaysNotWorked[];
     createdAt: Date;
     updatedAt: Date;
+    specialDayMinutes: number;
+    specialDayEarnings: number;
 }
 
 export type Timesheet = {

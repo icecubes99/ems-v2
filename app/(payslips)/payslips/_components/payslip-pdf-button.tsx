@@ -127,7 +127,14 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
         const earningsBody = [
             ['Basic Salary', payslip.daysWorked * 10, (payslip.basicSalary / (payslip.daysWorked * 10)).toFixed(2), payslip.basicSalary.toFixed(2)],
             ['Overtime Pay', (payslip.minutesOvertime / 60).toFixed(2), (payslip.overtimeSalary / (payslip.minutesOvertime / 60)).toFixed(2), payslip.overtimeSalary.toFixed(2)],
-        ]
+            [
+                'Special Day Work',
+                (Number(payslip.specialDayMinutes || 0) / 60).toFixed(2),
+                (Number(payslip.specialDayMinutes || 0) === 0 ? '0.00' :
+                    (Number(payslip.specialDayEarnings || 0) / (Number(payslip.specialDayMinutes || 0) / 60)).toFixed(2)
+                ),
+                Number(payslip.specialDayEarnings || 0).toFixed(2)
+            ],]
         earningsBody.push(['Total Additional Earnings', '-', '-', '-'])
         // Add additional earnings
         if (payslip.additionalEarningsArray && payslip.additionalEarningsArray.length > 0) {
@@ -138,7 +145,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
 
         // Add gross pay
         earningsBody.push(['', '', '', ''])
-        earningsBody.push(['GROSS PAY', '', '', (payslip.basicSalary + payslip.overtimeSalary + payslip.additionalEarnings).toFixed(2)])
+        earningsBody.push(['GROSS PAY', '', '', (payslip.basicSalary + payslip.overtimeSalary + payslip.additionalEarnings + Number(payslip.specialDayEarnings || 0)).toFixed(2)])
 
         doc.autoTable({
             startY: 100,

@@ -57,3 +57,7 @@ export const AdvanceClockInSchema = z.object({
     message: "End date cannot be before start date",
     path: ["endDate"],
 });
+
+export const SpecialDaySchema = z.object({
+    date: z.string().min(1, "Start date is required"),
+});
