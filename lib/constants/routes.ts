@@ -105,7 +105,7 @@ export const routes = [
                     },
                     {
                         path: "/superadministrator/payrollPanel/payroll",
-                        label: "Payroll"
+                        label: "Payroll Dashboard"
                     }
                 ]
             }

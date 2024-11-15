@@ -19,6 +19,7 @@ import { useState } from "react"
 import React from "react"
 import AddAdditionalEarningsFormCorrection from "./additional-earnings-form-corrections"
 import { RemoveEmployeeDialog } from "./delete-payroll-item"
+import Link from "next/link"
 
 export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
     {
@@ -112,9 +113,11 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
             const user = row.original
             return (
                 <div className="grid grid-cols-1 gap-2">
-                    <Button variant={"outline"}>
-                        <Edit className="w-4 h-4" />
-                    </Button>
+                    <Link href={`/superadministrator/payrollPanel/payroll/item/${user.id}`}>
+                        <Button variant={"outline"}>
+                            <Edit className="w-4 h-4" />
+                        </Button>
+                    </Link>
                 </div>
             )
         },
