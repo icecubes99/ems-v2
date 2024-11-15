@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, Edit, MoreHorizontal } from "lucide-react"
 import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
 import PayslipPDFButton from "@/app/(payslips)/payslips/_components/payslip-pdf-button"
@@ -95,15 +95,26 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
 
     {
         id: "Get PDF",
-        header: "Get PDF",
+        header: "Payslip PDF",
         cell: ({ row }) => {
             const user = row.original
             return (
                 <div className="grid grid-cols-1 gap-2">
-                    {/* <Button variant={"auth"} >
-                        View PDF
-                    </Button> */}
                     <PayslipPDFButton payslip={row.original} />
+                </div>
+            )
+        },
+    },
+    {
+        id: "Edit",
+        header: "Edit Details",
+        cell: ({ row }) => {
+            const user = row.original
+            return (
+                <div className="grid grid-cols-1 gap-2">
+                    <Button variant={"outline"}>
+                        <Edit className="w-4 h-4" />
+                    </Button>
                 </div>
             )
         },

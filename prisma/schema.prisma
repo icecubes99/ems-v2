@@ -522,7 +522,7 @@ model PayrollItem {
   minutesOvertime Int
 
   specialDayMinutes  Int     @default(0)
-  specialDayEarnings Decimal @default(0)
+  specialDayEarnings Float @default(0)
 
   // additional earnings and deductions
   additionalEarningsArray AdditionalEarnings[]

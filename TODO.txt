@@ -11,7 +11,9 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - double check the calculations
     - add remove employee functionality
     - solve the jobtitle problem
-
+        # Alternative start method
+    - deisgnation salary computation with gross user salary chuchu
+    
     
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
@@ -53,6 +55,7 @@ FINISHED UPDATES:
     - can edit user roles       Nov 2 2pm 
     - Add optional workingdays (workable holidays with more rate)       Nov 2 4pm
     - Added archives        Nov 2 7pm
+
         
 ====================================================================================================================
     NOVEMBER 18 FINAL DEFENSE - 2 WEEKS LEFT 

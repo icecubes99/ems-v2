@@ -393,7 +393,7 @@ Table PayrollItem {
   minutesLate Int [not null]
   minutesOvertime Int [not null]
   specialDayMinutes Int [not null, default: 0]
-  specialDayEarnings Decimal [not null, default: 0]
+  specialDayEarnings Float [not null, default: 0]
   additionalEarningsArray AdditionalEarnings [not null]
   deductions Deductions [not null]
   daysNotWorkedArray DaysNotWorked [not null]

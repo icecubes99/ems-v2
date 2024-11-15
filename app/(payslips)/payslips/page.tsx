@@ -6,6 +6,8 @@ import { DataTablePayslips } from './_components/data-table-payslips'
 import { columnsPayslips } from './_components/columns-payslips'
 import { useOwnPayslips } from '@/hooks/use-payslips'
 import PayslipCards from './_components/payslip-cards'
+import TableWrapper from '@/components/table-wrapper'
+import { PhilippinePesoIcon } from 'lucide-react'
 
 const page = () => {
     const { payslips } = useOwnPayslips()
@@ -18,18 +20,19 @@ const page = () => {
                 </div>
 
                 <PayslipCards />
-                <div className='bg-card  rounded-xl shadow  '>
-                    <div className='p-6 border-b border-border'>
-                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
-                            <FaMoneyBillWaveAlt className='h-6 w-6 text-primary' />
-                            Payslips History
-                        </h2>
-                        <p className='text-muted-foreground mt-1'>View your past and current payslips</p>
-                    </div>
-                    <div className='p-6'>
+                <div className='grid grid-cols-12 gap-4 '>
+                    <TableWrapper title='Payslips History' description='View your history of payslips' icon={<PhilippinePesoIcon />} className='col-span-9'>
                         <DataTablePayslips columns={columnsPayslips} data={payslips || []} />
+                    </TableWrapper>
+
+
+                    <div className='col-span-3 row-span-3'>
+                        <div className='border border-b p-6'>
+                            HISTORY
+                        </div>
                     </div>
                 </div>
+
 
             </div>
         </LayoutSideHead>
