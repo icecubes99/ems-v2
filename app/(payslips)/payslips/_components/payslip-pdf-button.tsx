@@ -128,7 +128,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
             [
                 'Basic Salary',
                 (payslip.minutesWorked / 60).toFixed(2), // Actual hours worked
-                (payslip.basicSalary / payslip.daysWorked).toFixed(2), // Daily rate
+                (payslip.basicSalary / (payslip.daysWorked * 10)).toFixed(2),
                 payslip.basicSalary.toFixed(2)
             ],
             ['Overtime Pay', (payslip.minutesOvertime / 60).toFixed(2), (payslip.overtimeSalary / (payslip.minutesOvertime / 60)).toFixed(2), payslip.overtimeSalary.toFixed(2)],

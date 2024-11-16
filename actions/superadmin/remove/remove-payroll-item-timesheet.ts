@@ -124,6 +124,8 @@ export async function removeTimesheetFromPayroll(timesheetId: string) {
         const governmentContributions = await calculateGovernmentContributions(payrollItem.basicSalary);
         const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
 
+        let updatedNetSalary = ((timesheet.user.userSalary?.grossSalary || basicSalary) + payrollItem.additionalEarnings + overtimeSalary + specialDayEarnings) - (lateDeduction + earlyOutDeduction + absentDeduction + totalGovernmentDeductions)
+
         // Step 9: Update the PayrollItem
         const updatedPayrollItem = await prisma.payrollItem.update({
             where: { id: payrollItemId },
@@ -141,7 +143,7 @@ export async function removeTimesheetFromPayroll(timesheetId: string) {
                 specialDayMinutes,
                 specialDayEarnings,
                 totalDeductions: lateDeduction + earlyOutDeduction + absentDeduction + totalGovernmentDeductions,
-                netSalary: (timesheet.user.userSalary?.grossSalary || basicSalary) - (lateDeduction + earlyOutDeduction + absentDeduction + totalGovernmentDeductions),
+                netSalary: updatedNetSalary
             }
         });
 

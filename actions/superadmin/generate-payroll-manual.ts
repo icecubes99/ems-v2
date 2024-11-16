@@ -384,7 +384,7 @@ export async function addEmployeeToPayrollCalculated(payrollId: string, values: 
         let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings + specialDayEarnings - totalDeductions;
         netSalary = Math.max(0, netSalary);
 
-        let updatedNetSalary = (employee.userSalary?.grossSalary || basicSalary) - totalDeductions
+        let updatedNetSalary = ((employee.userSalary?.grossSalary || basicSalary) + totalAdditionalEarnings + overtimeSalary + specialDayEarnings) - totalDeductions
 
         console.log(`Employee ${employee.id}:`, {
             totalWorkingDays,

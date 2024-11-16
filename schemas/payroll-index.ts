@@ -157,3 +157,10 @@ export const EditDesignationSalarySchema = z.object({
     designationId: z.string(),
     newSalary: z.number().positive(),
 });
+
+export const EditPayrollItemTimesheetSchema = z.object({
+    isLate: z.boolean(),
+    isOvertime: z.boolean(),
+    minutesOvertime: z.number().min(1, "Overtime minutes must be greater than 1").max(180, "Overtime minutes must be less than 180"),
+    minutesLate: z.number().min(1, "Late minutes must be greater than 1").max(540, "Late minutes must be less than 540"),
+})

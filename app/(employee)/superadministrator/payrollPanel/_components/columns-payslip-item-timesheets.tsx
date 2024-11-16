@@ -8,6 +8,7 @@ import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
 import { useWorkingDay } from "@/hooks/use-working-days"
 import { RemovePayrollItemTimesheet } from "./remove-payroll-item-timesheet"
+import EditTimesheetInPayrollItemForm from "./edit-timesheet-in-payroll-item-form"
 
 
 export const columnsPayslipItemTimesheets: ColumnDef<Timesheet>[] = [
@@ -118,7 +119,8 @@ export const columnsPayslipItemTimesheets: ColumnDef<Timesheet>[] = [
             )
         },
         cell: ({ row }) => {
-            return <Button>Edit</Button>
+            const id = row.original.id
+            return <EditTimesheetInPayrollItemForm timesheetId={id} />
         }
     },
     {
