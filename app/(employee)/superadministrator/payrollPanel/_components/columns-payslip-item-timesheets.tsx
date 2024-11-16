@@ -7,6 +7,7 @@ import { ArrowUpDown, Check, X } from "lucide-react"
 import { PayrollItemWithUser } from "@/types/types"
 import { Button } from "@/components/ui/button"
 import { useWorkingDay } from "@/hooks/use-working-days"
+import { RemovePayrollItemTimesheet } from "./remove-payroll-item-timesheet"
 
 
 export const columnsPayslipItemTimesheets: ColumnDef<Timesheet>[] = [
@@ -130,7 +131,8 @@ export const columnsPayslipItemTimesheets: ColumnDef<Timesheet>[] = [
             )
         },
         cell: ({ row }) => {
-            return <Button>Delete</Button>
+            const id = row.original.id
+            return <RemovePayrollItemTimesheet timesheetId={id} />
         }
     },
 ]

@@ -565,6 +565,7 @@ Enum ArchiveType {
   PAYROLL_ITEM
   PAYROLL
   ALLOWANCE
+  TIMESHEET
 }
 
 Ref: Account.userId > User.id [delete: Cascade]

@@ -90,7 +90,12 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
         console.error("Error generating payroll:", error);
         return { error: "Failed to generate payroll. Please check server logs for details." };
     }
-} export async function addEmployeeToPayrollCalculated(payrollId: string, values: z.infer<typeof AddEmployeeToPayrollCalculatedSchema>) {
+}
+/**
+ * Adds A Payroll Item to the Payroll
+ * @type {string[]}
+ */
+export async function addEmployeeToPayrollCalculated(payrollId: string, values: z.infer<typeof AddEmployeeToPayrollCalculatedSchema>) {
     // Step 1: Get the current user
     const user = await currentUser();
 
@@ -360,16 +365,26 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
         const allowances = employee.allowances;
         const totalAdditionalEarnings = partialAdditionalEarnings + allowances.reduce((sum, allowance) => sum + allowance.amount, 0);
 
-        let totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + notWorkedDeduction;
+        const lateDeduction = totalLateMinutes * minuteRate;
+        const earlyOutDeduction = totalEarlyOutMinutes * minuteRate;
+        const absentDeduction = (daysNotWorked * 600) * minuteRate;
 
         // Step 6.5: Calculate government contributions
         const governmentContributions = await calculateGovernmentContributions(grossSalaryForDeduction || basicSalaryForDeduction);
 
         const totalGovernmentDeductions = governmentContributions.reduce((sum, contrib) => sum + contrib.amount, 0);
-        totalDeductions += totalGovernmentDeductions;
+
+        let totalDeductions =
+            deductions.reduce((sum, deduction) => sum + deduction.amount, 0) + // Manual deductions
+            lateDeduction +                                                     // Late deductions
+            earlyOutDeduction +                                                // Early out deductions
+            absentDeduction +                                                 // Absent days deductions
+            totalGovernmentDeductions;
 
         let netSalary = basicSalary + overtimeSalary + totalAdditionalEarnings + specialDayEarnings - totalDeductions;
         netSalary = Math.max(0, netSalary);
+
+        let updatedNetSalary = (employee.userSalary?.grossSalary || basicSalary) - totalDeductions
 
         console.log(`Employee ${employee.id}:`, {
             totalWorkingDays,
@@ -402,14 +417,14 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
                 data: {
                     payrollId: payroll.id,
                     userId: employee.id,
-                    basicSalary,
+                    basicSalary: employee.userSalary?.grossSalary || basicSalary,
                     overtimeSalary,
                     dailyRate,
                     additionalEarnings: totalAdditionalEarnings,
                     lateDeductions: totalLateMinutes * minuteRate,
                     earlyClockOutDeductions: totalEarlyOutMinutes * minuteRate,
                     totalDeductions,
-                    netSalary,
+                    netSalary: updatedNetSalary,
                     daysWorked,
                     daysNotWorked,
                     minutesWorked: totalMinutesWorked,
@@ -530,7 +545,7 @@ export async function generatePayrollManual(values: z.infer<typeof PayrollFirsts
                 },
                 data: {
                     totalAmount: {
-                        increment: netSalary
+                        increment: updatedNetSalary
                     }
                 }
             })

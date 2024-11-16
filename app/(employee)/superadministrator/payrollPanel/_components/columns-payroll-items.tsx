@@ -111,9 +111,10 @@ export const columnsPayrollItems: ColumnDef<PayrollItemWithUser>[] = [
         header: "Edit Details",
         cell: ({ row }) => {
             const user = row.original
+
             return (
                 <div className="grid grid-cols-1 gap-2">
-                    <Link href={`/superadministrator/payrollPanel/payroll/item/${user.id}`}>
+                    <Link href={`/superadministrator/payrollPanel/payroll/pending/${user.payrollId}/item/${user.id}`}>
                         <Button variant={"outline"}>
                             <Edit className="w-4 h-4" />
                         </Button>

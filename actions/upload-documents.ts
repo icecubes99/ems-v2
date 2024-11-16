@@ -16,6 +16,7 @@ export async function uploadDocument(formData: FormData) {
     try {
         const blob = await put(`documents/${userId}-${file.name}`, file, {
             access: 'public',
+
         })
 
         const document = await prisma.documents.create({

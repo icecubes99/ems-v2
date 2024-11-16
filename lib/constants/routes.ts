@@ -70,6 +70,10 @@ export const routes = [
                     {
                         path: "/superadministrator/employeePanel/allowancesPanel",
                         label: "Allowances Panel",
+                    },
+                    {
+                        path: "/superadministrator/employeePanel/user",
+                        label: "User",
                     }
                 ]
             },
@@ -105,7 +109,29 @@ export const routes = [
                     },
                     {
                         path: "/superadministrator/payrollPanel/payroll",
-                        label: "Payroll Dashboard"
+                        label: "Payroll Dashboard",
+                        subRoutes: [
+                            {
+                                path: "/superadministrator/payrollPanel/payroll/pending",
+                                label: "Pending",
+                                subRoutes: [
+                                    {
+                                        path: "/superadministrator/payrollPanel/payroll/pending/[id]",
+                                        label: "Payroll",
+                                        subRoutes: [
+                                            {
+                                                path: "/superadministrator/payrollPanel/payroll/pending/[id]/item",
+                                                label: "Item",
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                path: "/superadministrator/payrollPanel/payroll/approved",
+                                label: "Approved",
+                            }
+                        ]
                     }
                 ]
             }

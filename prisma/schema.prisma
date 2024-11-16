@@ -634,6 +634,7 @@ enum ArchiveType {
   PAYROLL_ITEM
   PAYROLL
   ALLOWANCE
+  TIMESHEET
 }
 
 model Archive {

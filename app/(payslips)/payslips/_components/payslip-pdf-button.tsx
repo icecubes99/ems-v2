@@ -125,7 +125,12 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
 
         // Add earnings table
         const earningsBody = [
-            ['Basic Salary', payslip.daysWorked * 10, (payslip.basicSalary / (payslip.daysWorked * 10)).toFixed(2), payslip.basicSalary.toFixed(2)],
+            [
+                'Basic Salary',
+                (payslip.minutesWorked / 60).toFixed(2), // Actual hours worked
+                (payslip.basicSalary / payslip.daysWorked).toFixed(2), // Daily rate
+                payslip.basicSalary.toFixed(2)
+            ],
             ['Overtime Pay', (payslip.minutesOvertime / 60).toFixed(2), (payslip.overtimeSalary / (payslip.minutesOvertime / 60)).toFixed(2), payslip.overtimeSalary.toFixed(2)],
             [
                 'Special Day Work',
@@ -166,7 +171,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
             }
         });
 
-        const daysNotWorkedHours = payslip.daysNotWorked * 8
+        const daysNotWorkedHours = payslip.daysNotWorked * 10
         let additionalDeductionsAmount = 0
         // Add additional deductions
         if (payslip.deductions && payslip.deductions.length > 0) {
@@ -174,9 +179,14 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
                 additionalDeductionsAmount += deduction.amount
             })
         }
-        const daysNotWorkedDeductions = (payslip.basicSalary / (payslip.daysWorked * 8)) * daysNotWorkedHours || payslip.totalDeductions - (payslip.lateDeductions + payslip.earlyClockOutDeductions + additionalDeductionsAmount)
+
         // Add deductions table
         const finalY = (doc as any).lastAutoTable.finalY || 100;
+
+        const dailyRate = payslip.basicSalary / (payslip.daysWorked + payslip.daysNotWorked); // Use total working days
+        const minuteRate = dailyRate / 600;
+        const daysNotWorkedDeductions = (payslip.daysNotWorked * 600) * minuteRate;
+
         const deductionsBody = [
             ['Days Not Worked Deductions', daysNotWorkedDeductions.toFixed(2)],
             ['Late Deductions', payslip.lateDeductions.toFixed(2)],
@@ -422,7 +432,7 @@ export default function PayslipPDFButton({ payslip }: PayslipPDFButtonProps) {
                 .filter((wd: DaysNotWorked) => wd)
                 .map((wd) => [
                     new Date(wd.date).toLocaleDateString(),
-                    ((payslip.basicSalary / (payslip.daysWorked * 10)) * 10).toFixed(2)
+                    ((payslip.basicSalary / (payslip.daysWorked + payslip.daysNotWorked)) * 1).toFixed(2)
                 ])
         ]
 
