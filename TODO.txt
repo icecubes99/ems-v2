@@ -7,12 +7,12 @@ FUTURE UPDATES TO BE MADE:
 FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
 
     - Request early clock outs for those people who want to clock out early  *REMOVED*
-    - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details
     - double check the calculations
     - add remove employee functionality
     - solve the jobtitle problem
         # Alternative start method
     - deisgnation salary computation with gross user salary chuchu
+    - add salary history breakdown
     
     
 FINISHED UPDATES:
@@ -58,7 +58,8 @@ FINISHED UPDATES:
     ==========================================================================================
     - added timesheet view and edit and remove from payroll payrollItems    Nov 15
     - fixed some calculations sa payroll            Nov 16
-    - added change passsword
+    - added change passsword            Nov 17 3pm
+    - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details       Nov 17 5pm
 
         
 ====================================================================================================================
