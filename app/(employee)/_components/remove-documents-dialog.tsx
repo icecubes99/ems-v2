@@ -12,7 +12,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { removeAssignedUser } from "@/actions/superadmin/removeAssignedUser";
+import { removeAssignedUser } from "@/actions/superadmin/remove/removeAssignedUser";
 import { removeDocuments } from "@/actions/remove-documents";
 import { Trash } from "lucide-react";
 

@@ -3,8 +3,8 @@
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
-import { auditAction } from "../auditAction";
-import { admin } from "../admin";
+import { auditAction } from "../../auditAction";
+import { admin } from "../../admin";
 
 export const removeAssignedUser = async (assignedUserId: string) => {
     const user = await currentUser();

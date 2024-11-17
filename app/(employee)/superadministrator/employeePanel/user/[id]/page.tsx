@@ -17,6 +17,7 @@ import { columnsUserDocuments } from '@/app/(employee)/_components/columns-user-
 import QuickActions from '@/components/quick-actions'
 import { Button } from '@/components/ui/button'
 import { ChangeUserRoleDialog } from '../../_components/change-user-role-dialog'
+import { ChangeOtherPasswordForm } from '@/app/(employee)/_components/change-password'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
@@ -30,6 +31,7 @@ const page = ({ params }: { params: { id: string } }) => {
                             Edit User Details
                         </Button>
                         <ChangeUserRoleDialog userId={params.id} />
+                        <ChangeOtherPasswordForm userId={params.id} />
                     </div>
                 </QuickActions>
                 <div className='px-5 py-2 pb-4 rounded-md border '>

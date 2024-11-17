@@ -13,6 +13,7 @@ import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-templat
 import { useAuditLogs, useUserAuditLog } from '@/hooks/use-audit-logs'
 import { SearchCodeIcon } from 'lucide-react'
 import { columnsUserAuditLogs } from '../administrator/_components/columns-user-audit-logs'
+import ChangePasswordForm from '../_components/change-password'
 
 const Page = () => {
     const user = useCurrentUser();
@@ -31,6 +32,7 @@ const Page = () => {
 
             <QuickActions>
                 <UploadProfilePictureForm userId={userId} initialProfilePicture={userImage || undefined} />
+                <ChangePasswordForm />
             </QuickActions>
 
             <TableWrapper description='All Your Recent Actions' title='Audit Log' icon={<SearchCodeIcon />}>
