@@ -12,7 +12,7 @@ import { LogoutButton } from './auth/logout-button'
 import { usePathname } from 'next/navigation'
 import { IoLogOut } from "react-icons/io5"
 import { useCurrentUser } from '@/hooks/use-current-user'
-import { useUserImage } from '@/hooks/use-user-image'
+import { useUserImage } from '@/hooks/use-user-details'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 import SidebarEnhancements from './sidebar-enhancements'

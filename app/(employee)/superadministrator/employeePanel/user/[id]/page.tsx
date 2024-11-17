@@ -18,6 +18,7 @@ import QuickActions from '@/components/quick-actions'
 import { Button } from '@/components/ui/button'
 import { ChangeUserRoleDialog } from '../../_components/change-user-role-dialog'
 import { ChangeOtherPasswordForm } from '@/app/(employee)/_components/change-password'
+import { EditUserDetailsDialog } from '../../_components/edit-user-details-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
@@ -27,9 +28,7 @@ const page = ({ params }: { params: { id: string } }) => {
             <LayoutSideHead>
                 <QuickActions>
                     <div className='flex flex-row gap-2'>
-                        <Button size={"lg"} variant={"auth"}>
-                            Edit User Details
-                        </Button>
+                        <EditUserDetailsDialog userId={params.id} />
                         <ChangeUserRoleDialog userId={params.id} />
                         <ChangeOtherPasswordForm userId={params.id} />
                     </div>

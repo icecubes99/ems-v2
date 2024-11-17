@@ -63,3 +63,23 @@ export const ChangeUserRoleSchema = z.object({
     userId: z.string(),
     role: z.enum([UserRole.USER, UserRole.ADMIN, UserRole.SUPERADMIN])
 });
+
+export const EditUserDetailsSchema = z.object({
+    userId: z.string(),
+    email: z.string().email({
+        message: "Email is required",
+    }),
+    firstName: z.string().min(1, {
+        message: "First Name is required",
+    }),
+    middleName: z.string().min(1, {
+        message: "Middle Name is required",
+    }),
+    lastName: z.string().min(1, {
+        message: "Last Name is required",
+    }),
+    gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
+    birthDate: z.string().min(1, {
+        message: "Birth Date is Required"
+    }),
+})

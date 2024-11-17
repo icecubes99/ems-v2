@@ -55,7 +55,11 @@ FINISHED UPDATES:
     - can edit user roles       Nov 2 2pm 
     - Add optional workingdays (workable holidays with more rate)       Nov 2 4pm
     - Added archives        Nov 2 7pm
+    ==========================================================================================
+    - added timesheet view and edit and remove from payroll payrollItems    Nov 15
+    - fixed some calculations sa payroll            Nov 16
+    - added change passsword
 
         
 ====================================================================================================================
-    NOVEMBER 18 FINAL DEFENSE - 2 WEEKS LEFT 
+    NOVEMBER 26 or 28 FINAL DEFENSE - 2 WEEKS LEFT 

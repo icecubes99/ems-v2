@@ -6,7 +6,7 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import { cn } from '@/lib/utils'
-import { useUserImage } from '@/hooks/use-user-image'
+import { useUserImage } from '@/hooks/use-user-details'
 import { Breadcrumb } from './ui/breadcrumb-header'
 import { ThemeToggle } from "./theme-toggle"
 
