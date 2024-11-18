@@ -56,7 +56,8 @@ export const removeAssignedUser = async (assignedUserId: string) => {
                 userId,
                 basicSalary: userSalary.userSalary.basicSalary,
                 grossSalary: userSalary.userSalary.grossSalary ?? userSalary.userSalary.basicSalary,
-                startDate: new Date(userSalary.userSalary.updatedAt)
+                startDate: new Date(userSalary.userSalary.updatedAt),
+                amountIncreased: 0,
             }
         })
     }

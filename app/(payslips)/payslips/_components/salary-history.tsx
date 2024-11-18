@@ -2,7 +2,7 @@
 "use client"
 
 import { useSalaryHistory } from '@/hooks/use-salary'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { format } from 'date-fns'
 import { formatPeso } from '@/lib/format'
@@ -60,28 +60,23 @@ export function SalaryHistoryDisplay({ userId }: SalaryHistoryDisplayProps) {
             <Card>
                 <CardHeader>
                     <CardTitle>Current Salary Information</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">Basic Salary</p>
-                            <p className="text-lg font-bold">
-                                {currentSalary?.basicSalary ? formatPeso(currentSalary.basicSalary) : '—'}
-                            </p>
+                    <CardDescription>
+                        <div className="grid grid-cols-2 gap-4 pb-4 border-b">
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">Basic Salary</p>
+                                <p className="text-lg font-bold">
+                                    {currentSalary?.basicSalary ? formatPeso(currentSalary.basicSalary) : '—'}
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">Gross Salary</p>
+                                <p className="text-lg font-bold">
+                                    {currentSalary?.grossSalary ? formatPeso(currentSalary.grossSalary) : '—'}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">Gross Salary</p>
-                            <p className="text-lg font-bold">
-                                {currentSalary?.grossSalary ? formatPeso(currentSalary.grossSalary) : '—'}
-                            </p>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Salary History</CardTitle>
+                    </CardDescription>
+                    <CardTitle className='pt-4 uppercase'>Salary History</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">

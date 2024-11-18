@@ -6,7 +6,7 @@ import EmployeeDetailsV2 from '../../_components/employee-details-v2'
 import AddressCard from '@/app/(employee)/_components/_AddressComponents/AddressCard'
 import EmergencyContactCard from '@/app/(employee)/_components/_EmergencyContactComponents/EmergencyContactCard'
 import OtherLeavesTable from '../../_components/other-leaves-table'
-import { History, SearchCodeIcon } from 'lucide-react'
+import { SearchCodeIcon } from 'lucide-react'
 import TableWrapper from '@/components/table-wrapper'
 import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { columnsUserAuditLogs } from '@/app/(employee)/administrator/_components/columns-user-audit-logs'
@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button'
 import { ChangeUserRoleDialog } from '../../_components/change-user-role-dialog'
 import { ChangeOtherPasswordForm } from '@/app/(employee)/_components/change-password'
 import { EditUserDetailsDialog } from '../../_components/edit-user-details-dialog'
+import { StopwatchIcon } from '@radix-ui/react-icons'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
@@ -39,7 +40,7 @@ const page = ({ params }: { params: { id: string } }) => {
                         <EmergencyContactCard userId={params.id} />
                     </EmployeeDetailsV2>
 
-                    <TableWrapper title='Leave Requests History' description='View past and current leave requests' icon={<History />}>
+                    <TableWrapper title='Leave Requests History' description='View past and current leave requests' icon={<StopwatchIcon />}>
                         <OtherLeavesTable userId={params.id} />
                     </TableWrapper>
 

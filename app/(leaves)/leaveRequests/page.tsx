@@ -3,8 +3,8 @@ import React from 'react'
 import OwnLeavesTable from '../_components/own-leaves-table'
 import RequestLeaveButton from '@/components/request-leave-form'
 import LeavesCards from '../_components/leaves-cards'
-import { History } from 'lucide-react'
 import HeadingTitle from '@/components/heading-title'
+import { StopwatchIcon } from '@radix-ui/react-icons'
 
 
 
@@ -21,7 +21,7 @@ const page = () => {
                 <div className='bg-card  rounded-xl shadow  '>
                     <div className='p-6 border-b border-border'>
                         <h2 className='text-2xl font-semibold flex items-center gap-2'>
-                            <History className='h-6 w-6 text-primary' />
+                            <StopwatchIcon className='h-6 w-6 text-primary' />
                             Leave Requests History
                         </h2>
                         <p className='text-muted-foreground mt-1'>View your past and current leave requests</p>

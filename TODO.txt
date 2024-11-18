@@ -12,8 +12,6 @@ FUNCTIONAL UPDATES TO BE MADE !!ASAP!! :
     - solve the jobtitle problem
         # Alternative start method
     - deisgnation salary computation with gross user salary chuchu
-    - add salary history breakdown
-    
     
 FINISHED UPDATES:
     - fix the profile picture not updating      Oct-10 2:15pm
@@ -60,7 +58,8 @@ FINISHED UPDATES:
     - fixed some calculations sa payroll            Nov 16
     - added change passsword            Nov 17 3pm
     - revamp profile details especially the edit also probably the design too, and also admins should be able to edit the profile details       Nov 17 5pm
+    - add salary history breakdown      Nov 17 6pm
 
         
 ====================================================================================================================
-    NOVEMBER 26 or 28 FINAL DEFENSE - 2 WEEKS LEFT 
+    NOVEMBER 26 or 28 FINAL DEFENSE - 1 WEEK LEFT 

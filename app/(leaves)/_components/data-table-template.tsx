@@ -37,12 +37,14 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     searchValue?: string
+    searchName?: string
 }
 
 export function DataTableTemplate<TData, TValue>({
     columns,
     data,
-    searchValue
+    searchValue,
+    searchName
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -77,7 +79,7 @@ export function DataTableTemplate<TData, TValue>({
             {searchValue && (
                 <div className="flex items-center py-4">
                     <Input
-                        placeholder={`Filter by ${searchValue}...`}
+                        placeholder={`Filter by ${searchName}...`}
                         value={(table.getColumn(searchValue)?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
                             table.getColumn(searchValue)?.setFilterValue(event.target.value)

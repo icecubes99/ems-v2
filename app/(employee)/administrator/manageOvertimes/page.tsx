@@ -3,13 +3,17 @@
 import { DataTableTemplate } from '@/app/(leaves)/_components/data-table-template'
 import { RoleGate } from '@/components/auth/role-gate'
 import LayoutSideHead from '@/components/LayoutSideHead'
-import { usePendingOvertimes } from '@/hooks/use-pending-overtimes'
+import { useApprovedDeniedOvertimes, usePendingOvertimes } from '@/hooks/use-pending-overtimes'
 import React from 'react'
 import { columnsPendingOvertimes } from '../manageLeaves/columns-pending-overtimes'
-import { History } from 'lucide-react'
+import TableWrapper from '@/components/table-wrapper'
+import { columnsApprovedOvertimes } from '../_components/columns-approved-overtimes'
+import { StopwatchIcon } from '@radix-ui/react-icons'
+import { CheckSquare } from 'lucide-react'
 
 const Page = () => {
     const { overtimes, isLoading, error } = usePendingOvertimes()
+    const { overtimes: adOvertime, isLoading: adIsLoading, error: adIsError } = useApprovedDeniedOvertimes()
 
     return (
         <RoleGate allowedRoles={["ADMIN", "SUPERADMIN"]}>
@@ -26,18 +30,29 @@ const Page = () => {
                             <div></div>
                         ) : (
                             <>
-                                <div className='bg-card  rounded-xl shadow'>
-                                    <div className='p-6 border-b border-border'>
-                                        <h2 className='text-2xl font-semibold flex items-center gap-2'>
-                                            <History className='h-6 w-6 text-primary' />
-                                            Pending Overtime Requests
-                                        </h2>
-                                        <p className='text-muted-foreground mt-1'>View Pending Overtime Requests</p>
-                                    </div>
-                                    <div className='p-6'>
-                                        <DataTableTemplate columns={columnsPendingOvertimes} data={overtimes || []} />
-                                    </div>
-                                </div>
+                                <TableWrapper title='Pending Overtime Requests' description='View Pending Overtime Requests' icon={<StopwatchIcon />}>
+                                    <DataTableTemplate searchValue='userId' searchName='User' columns={columnsPendingOvertimes} data={overtimes || []} />
+                                </TableWrapper>
+
+
+                            </>
+                        )
+                    }
+                </div>
+                <div className=''>
+                    {
+                        adIsLoading ? (
+
+                            <div></div>
+                        ) : adIsError ? (
+                            <div></div>
+                        ) : (
+                            <>
+                                <TableWrapper title='Approved or Rejected ORs' description='View Overtime Requests' icon={<CheckSquare />}>
+                                    <DataTableTemplate searchValue='userId' searchName='User' columns={columnsApprovedOvertimes} data={adOvertime || []} />
+                                </TableWrapper>
+
+
                             </>
                         )
                     }
