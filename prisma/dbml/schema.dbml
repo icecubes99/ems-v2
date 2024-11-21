@@ -43,6 +43,7 @@ Table User {
   isTwoFactorEnabled Boolean [not null, default: false]
   twoFactorConfirmation TwoFactorConfirmation
   twoFactorConfirmationId String
+  isArchived Boolean [not null, default: false]
 }
 
 Table Account {

@@ -87,6 +87,9 @@ export async function fetchInactiveUsersCount() {
                         assignedDesignations: {
                             status: "INACTIVE"
                         }
+                    },
+                    {
+                        isArchived: true
                     }
                 ]
             }

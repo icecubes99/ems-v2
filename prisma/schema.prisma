@@ -105,6 +105,8 @@ model User {
   isTwoFactorEnabled      Boolean                @default(false)
   twoFactorConfirmation   TwoFactorConfirmation?
   twoFactorConfirmationId String?    
+
+  isArchived              Boolean                @default(false) 
 }
 
 

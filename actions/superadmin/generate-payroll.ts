@@ -97,7 +97,13 @@ export async function generatePayroll() {
             where: {
                 userSalary: {
                     isNot: null
-                }
+                },
+                department: {
+                    status: Status.ACTIVE
+                },
+                designation: {
+                    status: Status.ACTIVE
+                },
             },
             include: {
                 userSalary: true,

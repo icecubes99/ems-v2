@@ -4,7 +4,11 @@ import { db } from "@/lib/db";
 import { User } from "@prisma/client";
 
 export async function fetchUserList(): Promise<User[]> {
-    const allUsers = await db.user.findMany();
+    const allUsers = await db.user.findMany({
+        where: {
+            isArchived: false
+        }
+    });
 
     return allUsers.map(user => ({
         ...user,
@@ -18,7 +22,8 @@ export async function fetchDesignationHeadUserList(currentHeadId: string) {
             OR: [
                 { designation: null },
                 ...(currentHeadId ? [{ id: currentHeadId }] : [])
-            ]
+            ],
+            isArchived: false
         }
     });
     return users.map(user => ({
@@ -32,7 +37,8 @@ export async function fetchDepartmentHeadUserList(currentHeadId: string) {
             OR: [
                 { department: null },
                 ...(currentHeadId ? [{ id: currentHeadId }] : [])
-            ]
+            ],
+            isArchived: false
         }
     });
     return users.map(user => ({
