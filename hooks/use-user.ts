@@ -34,8 +34,8 @@ export const useUser = (userId: string) => {
 
     }, [userId]);
 
-    const { firstName, middleName, lastName, email, gender, jobTitle, vacationDays, incentiveDays, dateOfBirth, role } = user || {};
+    const { firstName, middleName, lastName, email, gender, jobTitle, vacationDays, incentiveDays, dateOfBirth, role, isArchived } = user || {};
 
-    return { firstName, middleName, lastName, email, gender, jobTitle, vacationDays, incentiveDays, loading, dateOfBirth, user, error, role };
+    return { firstName, middleName, lastName, email, gender, jobTitle, vacationDays, incentiveDays, loading, dateOfBirth, user, isArchived, error, role };
 };
 export default useUser;

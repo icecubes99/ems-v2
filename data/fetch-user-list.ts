@@ -15,6 +15,18 @@ export async function fetchUserList(): Promise<User[]> {
         name: `${user.firstName} ${user.lastName}`
     }));
 }
+export async function fetchArchivedUserList(): Promise<User[]> {
+    const allUsers = await db.user.findMany({
+        where: {
+            isArchived: true
+        }
+    });
+
+    return allUsers.map(user => ({
+        ...user,
+        name: `${user.firstName} ${user.lastName}`
+    }));
+}
 
 export async function fetchDesignationHeadUserList(currentHeadId: string) {
     const users = await db.user.findMany({

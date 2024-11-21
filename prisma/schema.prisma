@@ -224,8 +224,8 @@ model Department {
   departmentDescription String
   status Status
 
-  departmentHeadUserId String
-  departmentHeadUser User @relation(fields: [departmentHeadUserId], references: [id])
+  departmentHeadUserId String?
+  departmentHeadUser User? @relation(fields: [departmentHeadUserId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

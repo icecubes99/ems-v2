@@ -8,6 +8,7 @@ import HeadingCard from "@/components/heading-card"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import CreateAllowances from "../../payrollPanel/_components/create-allowances-form"
 import QuickActions from "@/components/quick-actions"
+import { ArchivedUsersDialog } from "./archived-users-dialog"
 
 const EmployeeCards = () => {
     const { userCount, error, isLoading } = useTotalUserCount()
@@ -43,6 +44,8 @@ const EmployeeCards = () => {
                         Manage Allowances
                     </Button>
                 </Link>
+
+                <ArchivedUsersDialog />
             </QuickActions>
         </>
     )

@@ -22,24 +22,31 @@ import { EditUserDetailsDialog } from '../../_components/edit-user-details-dialo
 import { StopwatchIcon } from '@radix-ui/react-icons'
 import HeadingTitle from '@/components/heading-title'
 import { ArchiveUserDialog } from '../../_components/archive-user-dialog'
+import useUser from '@/hooks/use-user'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
     const { documents } = useUserDocuments(params.id);
+    const user = useUser(params.id);
+    const isArchived = user.isArchived;
     return (
         <RoleGate allowedRoles={["SUPERADMIN"]}>
             <LayoutSideHead>
-                <QuickActions className='flex justify-between'>
-                    <div className='flex flex-row gap-2'>
-                        <EditUserDetailsDialog userId={params.id} />
-                        <ChangeUserRoleDialog userId={params.id} />
-                        <ChangeOtherPasswordForm userId={params.id} />
-                    </div>
-                    <div>
-                        <ArchiveUserDialog userId={params.id} />
-                    </div>
-                </QuickActions>
-                <div className='px-5 py-2 pb-4 rounded-md border '>
+                {isArchived ? (
+                    <HeadingTitle title='ARCHIVED USER' className='pb-6 text-red-500' />
+                ) : (
+                    <QuickActions className='flex justify-between'>
+                        <div className='flex flex-row gap-2'>
+                            <EditUserDetailsDialog userId={params.id} />
+                            <ChangeUserRoleDialog userId={params.id} />
+                            <ChangeOtherPasswordForm userId={params.id} />
+                        </div>
+                        <div>
+                            <ArchiveUserDialog userId={params.id} />
+                        </div>
+                    </QuickActions>
+                )}
+                <div className={`px-5 pt-4 py-2 pb-4 rounded-md border ${isArchived ? "border-red-500" : ""}`}>
                     <EmployeeDetailsV2 userId={params.id}>
                         <AddressCard userId={params.id} />
                         <EmergencyContactCard userId={params.id} />
