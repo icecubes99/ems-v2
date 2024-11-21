@@ -35,7 +35,7 @@ export async function removeAllowance(allowanceId: string) {
             return { error: "Allowance not found!" }
         }
 
-        await archiveEntity(ArchiveType.ALLOWANCE, allowanceId, allowance);
+        await (ArchiveType.ALLOWANCE, allowanceId, allowance);
 
         await db.allowance.delete({
             where: {
