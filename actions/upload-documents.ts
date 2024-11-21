@@ -2,6 +2,7 @@
 
 import { put, } from '@vercel/blob'
 import { prisma } from '@/lib/prisma'
+import { checkIsArchived } from './checkIsArchived'
 
 export async function uploadDocument(formData: FormData) {
     const file = formData.get('file') as File
@@ -11,6 +12,11 @@ export async function uploadDocument(formData: FormData) {
 
     if (!file) {
         return { error: 'No file provided' }
+    }
+
+    const isArchived = await checkIsArchived(userId);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     try {

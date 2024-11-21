@@ -3,6 +3,7 @@
 import { put } from '@vercel/blob'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
+import { checkIsArchived } from './checkIsArchived'
 
 export async function uploadProfilePicture(formData: FormData) {
     const file = formData.get('file') as File
@@ -10,6 +11,11 @@ export async function uploadProfilePicture(formData: FormData) {
 
     if (!file) {
         return { error: 'No file provided' }
+    }
+
+    const isArchived = await checkIsArchived(userId);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     try {

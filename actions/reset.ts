@@ -6,6 +6,7 @@ import { ResetSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import { sendPasswordResetEmail } from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
   const validatedFields = ResetSchema.safeParse(values);
@@ -20,6 +21,11 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
 
   if (!existingUser) {
     return { error: "Email not found!" };
+  }
+
+  const isArchived = await checkIsArchived(existingUser.id);
+  if (isArchived.error) {
+    return { error: isArchived.error };
   }
 
   const passwordResetToken = await generatePasswordResetToken(email);

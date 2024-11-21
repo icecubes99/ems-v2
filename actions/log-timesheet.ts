@@ -7,6 +7,7 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 import { TimesheetSchema } from '@/schemas/attendance-index';
 import { differenceInMinutes, setHours, setMinutes } from "date-fns";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const logTimesheet = async (values: z.infer<typeof TimesheetSchema> & { isClockingIn: boolean }) => {
     const user = await currentUser();
@@ -19,6 +20,11 @@ export const logTimesheet = async (values: z.infer<typeof TimesheetSchema> & { i
 
     if (!dbUser) {
         return { error: "User not found in database!" };
+    }
+
+    const isArchived = await checkIsArchived(dbUser.id);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     // Find the current working day

@@ -7,11 +7,17 @@ import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 import { Prisma } from "@prisma/client";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const requestOvertime = async (values: z.infer<typeof OvertimeSchema>) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
+    }
+
+    const isArchived = await checkIsArchived(user.id);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     const validatedFields = OvertimeSchema.safeParse(values);

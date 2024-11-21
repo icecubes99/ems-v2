@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const editAddress = async (userId: string, values: z.infer<typeof AddressSchema>) => {
     const user = await currentUser();
@@ -25,6 +26,11 @@ export const editAddress = async (userId: string, values: z.infer<typeof Address
 
     if (!dbUser) {
         return { error: "User not found in database!" };
+    }
+
+    const isArchived = await checkIsArchived(userId);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     // Check if the user already has an address

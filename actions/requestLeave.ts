@@ -7,11 +7,16 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 import { LeaveType, LeaveStatus, Prisma } from "@prisma/client";
 import { put } from '@vercel/blob'
+import { checkIsArchived } from "./checkIsArchived";
 
 export const requestLeave = async (formData: FormData) => {
     const user = await currentUser();
     if (!user) {
         return { error: "Unauthorized!" };
+    }
+    const isArchived = await checkIsArchived(user.id);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     const values = {

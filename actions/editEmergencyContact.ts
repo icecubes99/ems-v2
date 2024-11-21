@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const editEmergencyContact = async (userId: string, values: z.infer<typeof EmergencyContactSchema>) => {
     const user = await currentUser();
@@ -24,6 +25,11 @@ export const editEmergencyContact = async (userId: string, values: z.infer<typeo
 
     if (!dbUser) {
         return { error: "User not found in database!" };
+    }
+
+    const isArchived = await checkIsArchived(userId);
+    if (isArchived.error) {
+        return { error: isArchived.error };
     }
 
     // Check if the user already has an emergency contact

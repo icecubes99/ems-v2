@@ -10,6 +10,7 @@ import { db } from "@/lib/db";
 import { auditAction } from "./auditAction";
 import { currentUser } from "@/lib/auth";
 import { superAdmin } from "./superadmin/superAdmin";
+import { checkIsArchived } from "./checkIsArchived";
 
 export const newPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
@@ -70,6 +71,11 @@ export const newPasswordProfile = async (values: z.infer<typeof NewPasswordSchem
   const dbUser = await getUserById(user?.id);
   if (!dbUser) {
     return { error: "User not found in database!" };
+  }
+
+  const isArchived = await checkIsArchived(dbUser.id);
+  if (isArchived.error) {
+    return { error: isArchived.error };
   }
 
   const validatedFields = NewPasswordSchema.safeParse(values);
