@@ -93,7 +93,7 @@ export const AdvanceClockInForm = () => {
                                     name='userIds'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Departments</FormLabel>
+                                            <FormLabel>Users</FormLabel>
                                             <FormControl>
                                                 <MultiSelectUsers
                                                     onChange={field.onChange} />

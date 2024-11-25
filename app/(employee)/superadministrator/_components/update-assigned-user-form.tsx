@@ -195,7 +195,7 @@ const UpdateAssignedUserForm: React.FC<UpdateAssignedUserFormProps> = ({ assigne
                                 <FormError message={error} />
                                 <FormSucess message={success} />
                                 <Button variant={variant} disabled={isPending} type='submit' className='w-full'>
-                                    Assign User
+                                    Update Assignment
                                 </Button>
                             </form>
                         </Form>

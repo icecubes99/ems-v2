@@ -32,9 +32,9 @@ export const useDesignation = (designationId: string) => {
         fetchDesignation()
     }, [designationId]);
 
-    const { designationName, designationDescription, status, departmentId, designationHeadUserId } = designation || {};
+    const { designationName, designationDescription, status, departmentId, designationHeadUserId, designationSalary } = designation || {};
 
-    return { designationName, designationDescription, status, departmentId, designationHeadUserId, loading, error, designation }
+    return { designationName, designationDescription, status, departmentId, designationHeadUserId, loading, error, designation, designationSalary };
 }
 
 export const useDesignationList = () => {

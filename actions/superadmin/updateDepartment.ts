@@ -36,7 +36,7 @@ export const updateDepartment = async (departmentId: string, values: z.infer<typ
         where: { id: departmentId },
     });
 
-    if (!previousDepartment) {
+    if (!previousDepartment || !previousDepartment.id) {
         return { error: "Department not found!" };
     }
 
@@ -45,12 +45,12 @@ export const updateDepartment = async (departmentId: string, values: z.infer<typ
 
     // Check if the previous head user is not a super admin before updating their role
     const previousHeadUser = await db.user.findUnique({
-        where: { id: previousHeadUserId },
+        where: { id: previousHeadUserId || undefined },
     });
 
     if (previousHeadUser && previousHeadUser.role !== UserRole.SUPERADMIN) {
         await db.user.update({
-            where: { id: previousHeadUserId },
+            where: { id: previousHeadUserId || undefined },
             data: { role: UserRole.USER }
         });
     }

@@ -55,3 +55,20 @@ export const getLoneDesignation = async (designationId: string) => {
 
     return { success: "Designation found!", data: designation };
 }
+
+export const getDesignationSalary = async (designationId: string) => {
+    if (!designationId) {
+        return { error: "Invalid designation ID!" };
+    }
+
+    const designation = await db.designation.findUniqueOrThrow({
+        where: { id: designationId },
+        select: { designationSalary: true }
+    })
+
+    if (!designation) {
+        return { error: "Designation not found!" }
+    }
+
+    return { success: "Designation found!", data: designation };
+}

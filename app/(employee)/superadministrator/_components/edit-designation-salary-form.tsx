@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from 'zod'
@@ -21,6 +21,8 @@ import { Plus } from 'lucide-react'
 import { Status } from '@prisma/client'
 import SelectUser from '@/app/(employee)/_components/SelectUser'
 import Link from 'next/link'
+import { useDesignation } from '@/hooks/use-designation'
+import { formatPeso } from '@/lib/format'
 
 interface Props {
     designationId: string
@@ -31,14 +33,25 @@ export default function EditDesignationSalaryForm({ designationId }: Props) {
     const [isPending, setIsPending] = useState(false)
     const [open, setOpen] = useState(false)
     const [formattedAmount, setFormattedAmount] = useState("")
+    const { designationSalary } = useDesignation(designationId);
 
     const form = useForm<z.infer<typeof EditDesignationSalarySchema>>({
         resolver: zodResolver(EditDesignationSalarySchema),
         defaultValues: {
             designationId,
-            newSalary: 0,
+            newSalary: 0
         }
     })
+
+    useEffect(() => {
+        if (designationSalary) {
+            form.reset({
+                designationId,
+                newSalary: designationSalary
+            });
+            setFormattedAmount(formatPeso(designationSalary));
+        }
+    }, [designationSalary, form, designationId]);
 
     const onSubmit = async (values: z.infer<typeof EditDesignationSalarySchema>) => {
         setError("")
@@ -63,10 +76,6 @@ export default function EditDesignationSalaryForm({ designationId }: Props) {
             setIsPending(false)
         }
     }
-    const formatNumber = (num: number) => {
-        return "₱" + num.toLocaleString('en-US')
-    }
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -96,7 +105,7 @@ export default function EditDesignationSalaryForm({ designationId }: Props) {
                                                     onChange={(e) => {
                                                         const value = e.target.value.replace(/[^0-9]/g, '')
                                                         const numberValue = parseInt(value, 10)
-                                                        const formatted = formatNumber(numberValue || 0)
+                                                        const formatted = formatPeso(numberValue || 0)
                                                         setFormattedAmount(formatted)
                                                         field.onChange(numberValue || 0)
                                                     }}

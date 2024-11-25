@@ -4,6 +4,8 @@ import { currentUser } from "@/lib/auth";
 import { auditAction } from "./auditAction";
 import { put, del } from "@vercel/blob";
 import { checkIsArchived } from "./checkIsArchived";
+import { archiveEntity } from "./superadmin/remove/archive-entity";
+import { ArchiveType } from "@prisma/client";
 
 export async function removeDocuments(id: string) {
     const user = await currentUser()
@@ -30,6 +32,7 @@ export async function removeDocuments(id: string) {
 
     const documentName = document.documentName
 
+    await archiveEntity(ArchiveType.DOCUMENT, id, document)
     await db.documents.delete({
         where: {
             id

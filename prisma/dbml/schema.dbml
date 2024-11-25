@@ -155,8 +155,8 @@ Table Department {
   departmentName String [not null]
   departmentDescription String [not null]
   status Status [not null]
-  departmentHeadUserId String [unique, not null]
-  departmentHeadUser User [not null]
+  departmentHeadUserId String [unique]
+  departmentHeadUser User
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   createdBy String

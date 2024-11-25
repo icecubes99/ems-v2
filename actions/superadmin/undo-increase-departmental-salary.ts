@@ -71,13 +71,11 @@ export async function undoSalaryIncrease(salaryIncreaseEventId: string) {
                 throw new Error("Salary increase event is not associated with any departments or designations.");
             }
 
-            // Handle departments
+            // Handle departments with the new function
             for (const deptIncrease of salaryIncreaseEvent.departments) {
-                const department = deptIncrease.department;
-                for (const designation of department.designations) {
-                    await undoDesignationSalaryIncrease(tx, designation, salaryIncreaseEvent);
-                }
+                await undoDepartmentSalaryIncrease(tx, deptIncrease.department, salaryIncreaseEvent);
             }
+
 
             // Handle designations
             for (const desigIncrease of salaryIncreaseEvent.designations) {
@@ -151,5 +149,65 @@ async function undoDesignationSalaryIncrease(tx: any, designation: any, salaryIn
                 });
             }
         }
+    }
+}
+
+// Add new helper function
+async function undoDepartmentSalaryIncrease(tx: any, department: any, salaryIncreaseEvent: any) {
+    // Create salary history entries for department changes
+    const departmentDesignations = department.designations;
+
+    for (const designation of departmentDesignations) {
+        let previousDesignationSalary: number;
+
+        if (salaryIncreaseEvent.percentage) {
+            previousDesignationSalary = designation.designationSalary / (1 + salaryIncreaseEvent.percentage / 100);
+        } else if (salaryIncreaseEvent.amount) {
+            previousDesignationSalary = designation.designationSalary - salaryIncreaseEvent.amount;
+        } else {
+            throw new Error("Invalid salary increase event: neither percentage nor amount is set.");
+        }
+
+        // Create history entries for each employee in the department
+        for (const assignedDesignation of designation.AssignDesignation) {
+            const employee = assignedDesignation.user;
+            if (employee.userSalary) {
+                const previousSalaryHistory = await tx.salaryHistory.findFirst({
+                    where: {
+                        userId: employee.id,
+                        salaryIncreaseEventId: salaryIncreaseEvent.id
+                    },
+                    orderBy: { startDate: 'desc' },
+                });
+
+                if (previousSalaryHistory) {
+                    // Record the reversal in salary history
+                    await tx.salaryHistory.create({
+                        data: {
+                            userId: employee.id,
+                            basicSalary: employee.userSalary.basicSalary,
+                            grossSalary: employee.userSalary.grossSalary,
+                            startDate: new Date(),
+                            amountIncreased: -previousSalaryHistory.amountIncreased,
+                            salaryIncreaseEventId: salaryIncreaseEvent.id
+                        },
+                    });
+
+                    // Update the actual salary
+                    await tx.userSalary.update({
+                        where: { id: employee.userSalary.id },
+                        data: {
+                            grossSalary: employee.userSalary.grossSalary - previousSalaryHistory.amountIncreased,
+                        },
+                    });
+                }
+            }
+        }
+
+        // Update the designation salary
+        await tx.designation.update({
+            where: { id: designation.id },
+            data: { designationSalary: previousDesignationSalary },
+        });
     }
 }

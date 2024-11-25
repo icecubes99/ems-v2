@@ -59,7 +59,7 @@ export function ApproveOvertimeDialog({ overtimeId }: ApproveRejectOvertimeDialo
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you sure you want to approve this overtime?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will approve the overtime request and set the clock out time to 6:00 PM.
+                        This action cannot be undone. This will approve the overtime request
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
