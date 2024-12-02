@@ -53,7 +53,7 @@ const NewVerificationForm = () => {
       <div className="flex items-center justify-center w-full">
         {isLoading && <BeatLoader />}
         {!isLoading && success && <FormSucess message={success} />}
-        {!isLoading && error && <FormError message={error} />}
+        {/* {!isLoading && error && <FormError message={error} />} */}
       </div>
     </CardWrapper>
   );

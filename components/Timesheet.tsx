@@ -150,7 +150,7 @@ export function TimesheetDialog({ classname }: { classname: string }) {
                             </div>
                         )}
                         <FormError message={error} />
-                        <FormSucess message={success} />
+                        {/* <FormSucess message={success} /> */}
                         <Button
                             variant={"auth"}
                             disabled={isPending || status === 'CLOCKED_OUT'}

@@ -50,15 +50,39 @@ export async function generatePayroll() {
         // Step 6: Check if a payroll for the current period already exists
         const existingPayroll = await prisma.payroll.findFirst({
             where: {
-                payPeriodStart,
-                payPeriodEnd
+                OR: [
+                    // Case 1: New period falls entirely within existing period
+                    {
+                        payPeriodStart: {
+                            lte: payPeriodStart
+                        },
+                        payPeriodEnd: {
+                            gte: payPeriodEnd
+                        }
+                    },
+                    // Case 2: New period starts before but ends during existing period
+                    {
+                        payPeriodStart: {
+                            gte: payPeriodStart,
+                            lte: payPeriodEnd
+                        }
+                    },
+                    // Case 3: New period starts during but ends after existing period
+                    {
+                        payPeriodEnd: {
+                            gte: payPeriodStart,
+                            lte: payPeriodEnd
+                        }
+                    }
+                ]
             }
         });
 
         if (existingPayroll) {
-            return { error: "A payroll for this period already exists!" };
+            return {
+                error: `A payroll already exists that overlaps with this period (${existingPayroll.payPeriodStart.toLocaleDateString()} - ${existingPayroll.payPeriodEnd.toLocaleDateString()})`
+            };
         }
-
         // Step 7: Create a new payroll record
         const newPayroll = await prisma.payroll.create({
             data: {
@@ -95,15 +119,18 @@ export async function generatePayroll() {
         // Step 9: Get all employees with salary information
         const employees = await prisma.user.findMany({
             where: {
+                assignedDesignations: {
+                    status: Status.ACTIVE,
+                    designation: {
+                        status: Status.ACTIVE,
+                        department: {
+                            status: Status.ACTIVE
+                        }
+                    }
+                },
                 userSalary: {
                     isNot: null
-                },
-                department: {
-                    status: Status.ACTIVE
-                },
-                designation: {
-                    status: Status.ACTIVE
-                },
+                }
             },
             include: {
                 userSalary: true,
@@ -185,6 +212,7 @@ export async function generatePayroll() {
                 }
             }
         });
+
 
         let totalPayrollAmount = 0;
 

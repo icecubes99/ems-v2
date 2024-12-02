@@ -43,18 +43,18 @@ export const newRegisterSchema = z.object({
 
     // GovernmentId Model
 
-    sssNumber: z.string().min(1, {
+    sssNumber: z.string().min(10, {
         message: "SSS Number is required",
-    }),
-    tinNumber: z.string().min(1, {
+    }).max(10, "There should be only 10 digits in the SSS Number"),
+    tinNumber: z.string().min(9, {
         message: "TIN Number is required",
-    }),
-    philHealthNumber: z.string().min(1, {
+    }).max(12, "There must be 9-12 digits in the TIN Number"),
+    philHealthNumber: z.string().min(12, {
         message: "PhilHealth Number is required",
-    }),
-    pagIbigNumber: z.string().min(1, {
+    }).max(12, "Philhealth number is a 12 digit number"),
+    pagIbigNumber: z.string().min(12, {
         message: "Pag-Ibig Number is required",
-    }),
+    }).max(12, "Pag-Ibig number is a 12 digit number"),
 
 
 })

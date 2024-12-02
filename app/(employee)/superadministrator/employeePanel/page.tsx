@@ -18,7 +18,7 @@ const page = () => {
             <LayoutSideHead>
                 <EmployeePageContent />
                 <TableWrapper title="Employees" description='List of Employee' icon={<Users />} >
-                    <DataTableTemplate searchValue='name' columns={columnsEmployeeList} data={users} />
+                    <DataTableTemplate searchValue='name' searchName='Name' columns={columnsEmployeeList} data={users} />
                 </TableWrapper>
 
             </LayoutSideHead>

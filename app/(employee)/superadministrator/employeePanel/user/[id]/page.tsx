@@ -23,6 +23,8 @@ import { StopwatchIcon } from '@radix-ui/react-icons'
 import HeadingTitle from '@/components/heading-title'
 import { ArchiveUserDialog } from '../../_components/archive-user-dialog'
 import useUser from '@/hooks/use-user'
+import { EditUserBaseSalarySchema } from '@/schemas/payroll-index'
+import { EditBaseSalaryDialog } from '../../_components/edit-base-salary-dialog'
 
 const page = ({ params }: { params: { id: string } }) => {
     const { auditLogs } = useUserAuditLog(params.id);
@@ -40,6 +42,7 @@ const page = ({ params }: { params: { id: string } }) => {
                             <EditUserDetailsDialog userId={params.id} />
                             <ChangeUserRoleDialog userId={params.id} />
                             <ChangeOtherPasswordForm userId={params.id} />
+                            <EditBaseSalaryDialog userId={params.id} />
                         </div>
                         <div>
                             <ArchiveUserDialog userId={params.id} />

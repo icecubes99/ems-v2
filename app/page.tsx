@@ -13,11 +13,11 @@ export default function Home() {
   return (
     <main className="h-screen bg-purple-100 flex flex-row">
 
-      <div className="h-screen hidden md:flex bg-black -mr-80  items-center justify-center w-full text-white">
+      {/* <div className="h-screen hidden md:flex bg-black -mr-80  items-center justify-center w-full text-white">
         <p className="mr-80">
           Sexy Image Here
         </p>
-      </div>
+      </div> */}
 
       <div className="h-screen w-full bg-gradient-to-t from-purple-500 to-purple-700 flex flex-col gap-2 items-center justify-center">
         <div className="text-5xl text-white text-center font-bold">

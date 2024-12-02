@@ -164,3 +164,8 @@ export const EditPayrollItemTimesheetSchema = z.object({
     minutesOvertime: z.number().min(1, "Overtime minutes must be greater than 1").max(180, "Overtime minutes must be less than 180"),
     minutesLate: z.number().min(1, "Late minutes must be greater than 1").max(540, "Late minutes must be less than 540"),
 })
+
+export const EditUserBaseSalarySchema = z.object({
+    newBaseSalary: z.number().positive(),
+    userId: z.string()
+})

@@ -32,3 +32,16 @@ export async function fetchUserSalaryHistory(userId: string) {
         return { error: "Failed to fetch salary history" }
     }
 }
+
+export async function fetchUserBaseSalary(userId: string) {
+    try {
+        const baseSalary = await db.userSalary.findUnique({
+            where: { userId },
+            select: { basicSalary: true }
+        })
+        return { baseSalary }
+    } catch (error) {
+        console.error("User Base Salary not found")
+        return { error: "Failed to fetch Base Salary" }
+    }
+}

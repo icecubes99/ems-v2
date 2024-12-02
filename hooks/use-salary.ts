@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { fetchUserSalaryHistory } from '@/data/fetch-salary'
+import { fetchUserBaseSalary, fetchUserSalaryHistory } from '@/data/fetch-salary'
 import { SalaryHistory, UserSalary } from '@prisma/client'
 
 
@@ -56,4 +56,37 @@ export function useSalaryHistory(userId: string) {
     }, [userId])
 
     return { salaryHistories, currentSalary, isLoading, error }
+}
+
+
+export function useBaseSalary(userId: string) {
+    const [baseSalary, setBaseSalary] = useState<Pick<UserSalary, 'basicSalary'> | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchSalary = async () => {
+            setIsLoading(true)
+            setError(null)
+
+            try {
+                const result = await fetchUserBaseSalary(userId)
+                if (result.error) {
+                    setError(result.error)
+                    setBaseSalary(null)
+                } else {
+                    setBaseSalary(result.baseSalary || null)
+                }
+            } catch (error) {
+                setError('An error occurred while fetching base salary')
+                setBaseSalary(null)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchSalary()
+    }, [userId])
+
+    return { baseSalary, isLoading, error }
 }
