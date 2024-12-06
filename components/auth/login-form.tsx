@@ -80,7 +80,6 @@ const LoginForm = () => {
   return (
     <CardWrapper
       headerLabel="Welcome back"
-      backButtonHref="/auth/register"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

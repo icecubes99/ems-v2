@@ -57,7 +57,12 @@ const UpdateDepartmentForm: React.FC<UpdateDepartmentFormProps> = ({ departmentI
 
     useEffect(() => {
         if (department) {
-            form.reset(department);
+            form.reset({
+                departmentName: department.departmentName,
+                departmentDescription: department.departmentDescription,
+                departmentHeadUserId: department.departmentHeadUserId ?? "", // Convert null to empty string
+                status: department.status
+            });
         }
     }, [department, form]);
 

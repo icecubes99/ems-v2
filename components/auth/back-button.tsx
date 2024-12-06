@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface BackButtonProps {
   href: string;
-  label: string;
+  label: string | undefined;
 }
 
 const BackButton = ({ href, label }: BackButtonProps) => {

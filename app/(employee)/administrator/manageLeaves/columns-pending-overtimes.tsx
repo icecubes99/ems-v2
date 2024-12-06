@@ -1,15 +1,11 @@
 "use client"
 
-import { Account, AddressLine, Department, Gender, Leaves, LeaveStatus, Status, TwoFactorConfirmation, UserRole } from "@prisma/client"
+import { Account, AddressLine, Department, Gender, Leaves, LeaveStatus, OvertimeStatus, Status, TwoFactorConfirmation, UserRole } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { OvertimesWithUser } from "@/types/types"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { ApproveLeaveDialog, RejectLeaveDialog } from "@/app/(employee)/administrator/_components/update-pending-leaves-buttons"
 import { ApproveOvertimeDialog, RejectOvertimeDialog } from "../_components/update-pending-overtimes-buttons"
 
 // This type is used to define the shape of our data.
@@ -103,11 +99,11 @@ export const columnsPendingOvertimes: ColumnDef<OvertimesWithUser>[] = [
             )
         },
         cell: ({ row }) => {
-            if (row.original.status === LeaveStatus.APPROVED) {
+            if (row.original.status === OvertimeStatus.COMPLETED) {
                 return (
                     <Badge variant={"sucess"}>Approved</Badge>
                 )
-            } else if (row.original.status === LeaveStatus.REJECTED) {
+            } else if (row.original.status === OvertimeStatus.REJECTED) {
                 return <Badge variant={"destructive"}>Rejected</Badge>
             } else {
                 return <Badge variant={"outline"}>Pending</Badge>
