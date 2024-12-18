@@ -80,7 +80,7 @@ export const {
 
       token.email = existingUser.email;
       token.role = existingUser.role;
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      // token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.lastLogin = existingUser.lastLogin;
 
       return token;
