@@ -125,12 +125,13 @@ export const ArchiveUserDialog = ({ userId }: { userId: string }) => {
                                 <FormSucess message={success} />
 
                                 <Button
-                                    disabled={isPending}
+                                    // disabled={isPending}
+                                    disabled
                                     type='submit'
                                     className='w-full'
                                     variant="destructive"
                                 >
-                                    Confirm Archive
+                                    Archiving Feature Disabled
                                 </Button>
                             </form>
                         </Form>

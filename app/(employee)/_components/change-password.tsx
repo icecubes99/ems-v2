@@ -166,12 +166,13 @@ export default function ChangePasswordForm() {
                                 <FormSucess message={success} />
 
                                 <Button
-                                    disabled={isPending}
+                                    // disabled={isPending}
+                                    disabled
                                     type="submit"
                                     className="w-full"
                                     variant={"auth"}
                                 >
-                                    Change Password
+                                    Change Password (Disabled)
                                 </Button>
                             </form>
                         </Form>
@@ -286,12 +287,13 @@ export function ChangeOtherPasswordForm({ userId }: Props) {
                                 <FormSucess message={success} />
 
                                 <Button
-                                    disabled={isPending}
+                                    // disabled={isPending}
+                                    disabled
                                     type="submit"
                                     className="w-full"
                                     variant={"auth"}
                                 >
-                                    Change Password
+                                    Change Password (Disabled)
                                 </Button>
                             </form>
                         </Form>

@@ -197,8 +197,11 @@ export const EditUserDetailsDialog = ({ userId }: Props) => {
                                 />
                                 <FormError message={error} />
                                 <FormSucess message={success} />
-                                <Button variant={"superadmin"} disabled={isPending} type='submit' className='w-full'>
-                                    Edit User Details
+                                <Button variant={"superadmin"}
+                                    // disabled={isPending}
+                                    disabled
+                                    type='submit' className='w-full'>
+                                    Edit User Details (Disabled)
                                 </Button>
                             </form>
                         </Form>

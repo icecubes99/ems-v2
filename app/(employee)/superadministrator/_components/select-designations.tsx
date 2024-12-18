@@ -1,4 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSelectDesignations } from '@/hooks/use-designations';
 import { Designation } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 
@@ -8,31 +9,15 @@ interface SelectDesignationProps {
 }
 
 const SelectDesignation: React.FC<SelectDesignationProps> = ({ onUserChange, value }) => {
-    const [designations, setDesignations] = useState<Designation[]>([]);
+    const { designations, isLoading, error } = useSelectDesignations()
 
-
-    const makeApiCall = async () => {
-        const response = await fetch('/api/designations', {
-            method: 'GET',
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const designations = await response.json();
-
-        setDesignations(designations);
-    };
-
-    useEffect(() => {
-        makeApiCall();
-    }, []);
+    if (isLoading) return <div>Loading...</div>
+    if (error) return <div>Error: {error}</div>
 
     const handleChange = (value: string) => {
-        console.log(`Selected Designation: ${value}`);
-        onUserChange(value);
-    };
+        console.log(`Selected Designation: ${value}`)
+        onUserChange(value)
+    }
 
     return (
         <Select onValueChange={handleChange} value={value}>
@@ -40,8 +25,13 @@ const SelectDesignation: React.FC<SelectDesignationProps> = ({ onUserChange, val
                 <SelectValue placeholder="Pick a Designation"></SelectValue>
             </SelectTrigger>
             <SelectContent>
-                {designations.map(designations => (
-                    <SelectItem key={designations.id} value={designations.id}>{designations.designationName}</SelectItem>
+                {designations?.map(designation => (
+                    <SelectItem
+                        key={designation.id}
+                        value={designation.id}
+                    >
+                        {designation.designationName}
+                    </SelectItem>
                 ))}
             </SelectContent>
         </Select>

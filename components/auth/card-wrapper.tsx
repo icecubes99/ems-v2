@@ -36,9 +36,9 @@ const CardWrapper = ({
           <Social />
         </CardFooter>
       )}
-      <CardFooter>
+      {backButtonLabel && (<CardFooter>
         <BackButton label={backButtonLabel} href={backButtonHref} />
-      </CardFooter>
+      </CardFooter>)}
     </Card>
   );
 };

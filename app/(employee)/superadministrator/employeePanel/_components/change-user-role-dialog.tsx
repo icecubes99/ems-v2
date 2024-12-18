@@ -131,12 +131,13 @@ export const ChangeUserRoleDialog = ({ userId }: { userId: string }) => {
                                 <FormError message={error} />
                                 <FormSucess message={success} />
                                 <Button
-                                    disabled={isPending}
+                                    // disabled={isPending}
+                                    disabled
                                     type='submit'
                                     className='w-full'
                                     variant="auth"
                                 >
-                                    Change Role
+                                    Change Role (Disabled)
                                 </Button>
                             </form>
                         </Form>
