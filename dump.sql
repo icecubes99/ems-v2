@@ -16,148 +16,148 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE IF EXISTS ONLY "public?"."WorkingDay" DROP CONSTRAINT IF EXISTS "WorkingDay_monthId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."UserSalary" DROP CONSTRAINT IF EXISTS "UserSalary_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."TwoFactorConfirmation" DROP CONSTRAINT IF EXISTS "TwoFactorConfirmation_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_payrollItemId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_dayId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_salaryIncreaseEventId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_payrollId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Overtimes" DROP CONSTRAINT IF EXISTS "Overtimes_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Leaves" DROP CONSTRAINT IF EXISTS "Leaves_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."GovernmentId" DROP CONSTRAINT IF EXISTS "GovernmentId_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."EmergencyContact" DROP CONSTRAINT IF EXISTS "EmergencyContact_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Documents" DROP CONSTRAINT IF EXISTS "Documents_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Designation" DROP CONSTRAINT IF EXISTS "Designation_designationHeadUserId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Designation" DROP CONSTRAINT IF EXISTS "Designation_departmentId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_salaryIncreaseEventId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_designationId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Department" DROP CONSTRAINT IF EXISTS "Department_departmentHeadUserId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_salaryIncreaseEventId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_departmentId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_payrollItemId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_payrollItemId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AuditLog" DROP CONSTRAINT IF EXISTS "AuditLog_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_designationId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Allowance" DROP CONSTRAINT IF EXISTS "Allowance_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_advanceTimesheetId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AddressLine" DROP CONSTRAINT IF EXISTS "AddressLine_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_userId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_payrollItemId_fkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Account" DROP CONSTRAINT IF EXISTS "Account_userId_fkey";
-DROP INDEX IF EXISTS "public?"."WorkingMonth_month_year_key";
-DROP INDEX IF EXISTS "public?"."WorkingDay_date_monthId_key";
-DROP INDEX IF EXISTS "public?"."VerificationToken_token_key";
-DROP INDEX IF EXISTS "public?"."VerificationToken_email_token_key";
-DROP INDEX IF EXISTS "public?"."User_email_key";
-DROP INDEX IF EXISTS "public?"."UserSalary_userId_key";
-DROP INDEX IF EXISTS "public?"."TwoFactorToken_token_key";
-DROP INDEX IF EXISTS "public?"."TwoFactorToken_email_token_key";
-DROP INDEX IF EXISTS "public?"."TwoFactorConfirmation_userId_key";
-DROP INDEX IF EXISTS "public?"."Timesheet_userId_dayId_key";
-DROP INDEX IF EXISTS "public?"."Payroll_payPeriodStart_payPeriodEnd_key";
-DROP INDEX IF EXISTS "public?"."PayrollItem_payrollId_userId_key";
-DROP INDEX IF EXISTS "public?"."PasswordResetToken_token_key";
-DROP INDEX IF EXISTS "public?"."PasswordResetToken_email_token_key";
-DROP INDEX IF EXISTS "public?"."Overtimes_userId_createdAt_key";
-DROP INDEX IF EXISTS "public?"."Leaves_userId_startDate_endDate_key";
-DROP INDEX IF EXISTS "public?"."Holiday_date_key";
-DROP INDEX IF EXISTS "public?"."GovernmentId_userId_key";
-DROP INDEX IF EXISTS "public?"."GovernmentContribution_type_key";
-DROP INDEX IF EXISTS "public?"."EmergencyContact_userId_key";
-DROP INDEX IF EXISTS "public?"."Designation_designationHeadUserId_key";
-DROP INDEX IF EXISTS "public?"."Department_departmentHeadUserId_key";
-DROP INDEX IF EXISTS "public?"."AssignDesignation_userId_key";
-DROP INDEX IF EXISTS "public?"."Archive_archiveType_entityId_key";
-DROP INDEX IF EXISTS "public?"."AddressLine_userId_key";
-DROP INDEX IF EXISTS "public?"."Account_provider_providerAccountId_key";
-ALTER TABLE IF EXISTS ONLY "public?"."WorkingMonth" DROP CONSTRAINT IF EXISTS "WorkingMonth_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."WorkingDay" DROP CONSTRAINT IF EXISTS "WorkingDay_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."VerificationToken" DROP CONSTRAINT IF EXISTS "VerificationToken_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."User" DROP CONSTRAINT IF EXISTS "User_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."UserSalary" DROP CONSTRAINT IF EXISTS "UserSalary_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."TwoFactorToken" DROP CONSTRAINT IF EXISTS "TwoFactorToken_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."TwoFactorConfirmation" DROP CONSTRAINT IF EXISTS "TwoFactorConfirmation_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."SalaryIncreaseEvent" DROP CONSTRAINT IF EXISTS "SalaryIncreaseEvent_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Payroll" DROP CONSTRAINT IF EXISTS "Payroll_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."PasswordResetToken" DROP CONSTRAINT IF EXISTS "PasswordResetToken_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Overtimes" DROP CONSTRAINT IF EXISTS "Overtimes_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Leaves" DROP CONSTRAINT IF EXISTS "Leaves_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Holiday" DROP CONSTRAINT IF EXISTS "Holiday_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."GovernmentId" DROP CONSTRAINT IF EXISTS "GovernmentId_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."GovernmentContribution" DROP CONSTRAINT IF EXISTS "GovernmentContribution_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."EmergencyContact" DROP CONSTRAINT IF EXISTS "EmergencyContact_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Documents" DROP CONSTRAINT IF EXISTS "Documents_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Designation" DROP CONSTRAINT IF EXISTS "Designation_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Department" DROP CONSTRAINT IF EXISTS "Department_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AuditLog" DROP CONSTRAINT IF EXISTS "AuditLog_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Archive" DROP CONSTRAINT IF EXISTS "Archive_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Allowance" DROP CONSTRAINT IF EXISTS "Allowance_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdvanceTimesheet" DROP CONSTRAINT IF EXISTS "AdvanceTimesheet_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AddressLine" DROP CONSTRAINT IF EXISTS "AddressLine_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_pkey";
-ALTER TABLE IF EXISTS ONLY "public?"."Account" DROP CONSTRAINT IF EXISTS "Account_pkey";
-DROP TABLE IF EXISTS "public?"."WorkingMonth";
-DROP TABLE IF EXISTS "public?"."WorkingDay";
-DROP TABLE IF EXISTS "public?"."VerificationToken";
-DROP TABLE IF EXISTS "public?"."UserSalary";
-DROP TABLE IF EXISTS "public?"."User";
-DROP TABLE IF EXISTS "public?"."TwoFactorToken";
-DROP TABLE IF EXISTS "public?"."TwoFactorConfirmation";
-DROP TABLE IF EXISTS "public?"."Timesheet";
-DROP TABLE IF EXISTS "public?"."SalaryIncreaseEvent";
-DROP TABLE IF EXISTS "public?"."SalaryHistory";
-DROP TABLE IF EXISTS "public?"."PayrollItem";
-DROP TABLE IF EXISTS "public?"."Payroll";
-DROP TABLE IF EXISTS "public?"."PasswordResetToken";
-DROP TABLE IF EXISTS "public?"."Overtimes";
-DROP TABLE IF EXISTS "public?"."Leaves";
-DROP TABLE IF EXISTS "public?"."Holiday";
-DROP TABLE IF EXISTS "public?"."GovernmentId";
-DROP TABLE IF EXISTS "public?"."GovernmentContribution";
-DROP TABLE IF EXISTS "public?"."EmergencyContact";
-DROP TABLE IF EXISTS "public?"."Documents";
-DROP TABLE IF EXISTS "public?"."DesignationSalaryIncrease";
-DROP TABLE IF EXISTS "public?"."Designation";
-DROP TABLE IF EXISTS "public?"."DepartmentSalaryIncrease";
-DROP TABLE IF EXISTS "public?"."Department";
-DROP TABLE IF EXISTS "public?"."Deductions";
-DROP TABLE IF EXISTS "public?"."DaysNotWorked";
-DROP TABLE IF EXISTS "public?"."AuditLog";
-DROP TABLE IF EXISTS "public?"."AssignDesignation";
-DROP TABLE IF EXISTS "public?"."Archive";
-DROP TABLE IF EXISTS "public?"."Allowance";
-DROP TABLE IF EXISTS "public?"."AdvanceTimesheetUsers";
-DROP TABLE IF EXISTS "public?"."AdvanceTimesheet";
-DROP TABLE IF EXISTS "public?"."AddressLine";
-DROP TABLE IF EXISTS "public?"."AdditionalEarnings";
-DROP TABLE IF EXISTS "public?"."Account";
-DROP TYPE IF EXISTS "public?"."UserRole";
-DROP TYPE IF EXISTS "public?"."Status";
-DROP TYPE IF EXISTS "public?"."OvertimeType";
-DROP TYPE IF EXISTS "public?"."OvertimeStatus";
-DROP TYPE IF EXISTS "public?"."LeaveType";
-DROP TYPE IF EXISTS "public?"."LeaveStatus";
-DROP TYPE IF EXISTS "public?"."Gender";
-DROP TYPE IF EXISTS "public?"."EmployeeType";
-DROP TYPE IF EXISTS "public?"."ArchiveType";
-DROP SCHEMA IF EXISTS "public?";
+ALTER TABLE IF EXISTS ONLY "public"."WorkingDay" DROP CONSTRAINT IF EXISTS "WorkingDay_monthId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."UserSalary" DROP CONSTRAINT IF EXISTS "UserSalary_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."TwoFactorConfirmation" DROP CONSTRAINT IF EXISTS "TwoFactorConfirmation_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_payrollItemId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_dayId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_salaryIncreaseEventId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_payrollId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Overtimes" DROP CONSTRAINT IF EXISTS "Overtimes_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Leaves" DROP CONSTRAINT IF EXISTS "Leaves_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."GovernmentId" DROP CONSTRAINT IF EXISTS "GovernmentId_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."EmergencyContact" DROP CONSTRAINT IF EXISTS "EmergencyContact_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Documents" DROP CONSTRAINT IF EXISTS "Documents_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Designation" DROP CONSTRAINT IF EXISTS "Designation_designationHeadUserId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Designation" DROP CONSTRAINT IF EXISTS "Designation_departmentId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_salaryIncreaseEventId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_designationId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Department" DROP CONSTRAINT IF EXISTS "Department_departmentHeadUserId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_salaryIncreaseEventId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_departmentId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_payrollItemId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_payrollItemId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AuditLog" DROP CONSTRAINT IF EXISTS "AuditLog_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_designationId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Allowance" DROP CONSTRAINT IF EXISTS "Allowance_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_advanceTimesheetId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AddressLine" DROP CONSTRAINT IF EXISTS "AddressLine_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_userId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_payrollItemId_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."Account" DROP CONSTRAINT IF EXISTS "Account_userId_fkey";
+DROP INDEX IF EXISTS "public"."WorkingMonth_month_year_key";
+DROP INDEX IF EXISTS "public"."WorkingDay_date_monthId_key";
+DROP INDEX IF EXISTS "public"."VerificationToken_token_key";
+DROP INDEX IF EXISTS "public"."VerificationToken_email_token_key";
+DROP INDEX IF EXISTS "public"."User_email_key";
+DROP INDEX IF EXISTS "public"."UserSalary_userId_key";
+DROP INDEX IF EXISTS "public"."TwoFactorToken_token_key";
+DROP INDEX IF EXISTS "public"."TwoFactorToken_email_token_key";
+DROP INDEX IF EXISTS "public"."TwoFactorConfirmation_userId_key";
+DROP INDEX IF EXISTS "public"."Timesheet_userId_dayId_key";
+DROP INDEX IF EXISTS "public"."Payroll_payPeriodStart_payPeriodEnd_key";
+DROP INDEX IF EXISTS "public"."PayrollItem_payrollId_userId_key";
+DROP INDEX IF EXISTS "public"."PasswordResetToken_token_key";
+DROP INDEX IF EXISTS "public"."PasswordResetToken_email_token_key";
+DROP INDEX IF EXISTS "public"."Overtimes_userId_createdAt_key";
+DROP INDEX IF EXISTS "public"."Leaves_userId_startDate_endDate_key";
+DROP INDEX IF EXISTS "public"."Holiday_date_key";
+DROP INDEX IF EXISTS "public"."GovernmentId_userId_key";
+DROP INDEX IF EXISTS "public"."GovernmentContribution_type_key";
+DROP INDEX IF EXISTS "public"."EmergencyContact_userId_key";
+DROP INDEX IF EXISTS "public"."Designation_designationHeadUserId_key";
+DROP INDEX IF EXISTS "public"."Department_departmentHeadUserId_key";
+DROP INDEX IF EXISTS "public"."AssignDesignation_userId_key";
+DROP INDEX IF EXISTS "public"."Archive_archiveType_entityId_key";
+DROP INDEX IF EXISTS "public"."AddressLine_userId_key";
+DROP INDEX IF EXISTS "public"."Account_provider_providerAccountId_key";
+ALTER TABLE IF EXISTS ONLY "public"."WorkingMonth" DROP CONSTRAINT IF EXISTS "WorkingMonth_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."WorkingDay" DROP CONSTRAINT IF EXISTS "WorkingDay_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."VerificationToken" DROP CONSTRAINT IF EXISTS "VerificationToken_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."User" DROP CONSTRAINT IF EXISTS "User_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."UserSalary" DROP CONSTRAINT IF EXISTS "UserSalary_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."TwoFactorToken" DROP CONSTRAINT IF EXISTS "TwoFactorToken_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."TwoFactorConfirmation" DROP CONSTRAINT IF EXISTS "TwoFactorConfirmation_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Timesheet" DROP CONSTRAINT IF EXISTS "Timesheet_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."SalaryIncreaseEvent" DROP CONSTRAINT IF EXISTS "SalaryIncreaseEvent_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."SalaryHistory" DROP CONSTRAINT IF EXISTS "SalaryHistory_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Payroll" DROP CONSTRAINT IF EXISTS "Payroll_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."PayrollItem" DROP CONSTRAINT IF EXISTS "PayrollItem_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."PasswordResetToken" DROP CONSTRAINT IF EXISTS "PasswordResetToken_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Overtimes" DROP CONSTRAINT IF EXISTS "Overtimes_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Leaves" DROP CONSTRAINT IF EXISTS "Leaves_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Holiday" DROP CONSTRAINT IF EXISTS "Holiday_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."GovernmentId" DROP CONSTRAINT IF EXISTS "GovernmentId_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."GovernmentContribution" DROP CONSTRAINT IF EXISTS "GovernmentContribution_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."EmergencyContact" DROP CONSTRAINT IF EXISTS "EmergencyContact_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Documents" DROP CONSTRAINT IF EXISTS "Documents_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Designation" DROP CONSTRAINT IF EXISTS "Designation_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."DesignationSalaryIncrease" DROP CONSTRAINT IF EXISTS "DesignationSalaryIncrease_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Department" DROP CONSTRAINT IF EXISTS "Department_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."DepartmentSalaryIncrease" DROP CONSTRAINT IF EXISTS "DepartmentSalaryIncrease_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Deductions" DROP CONSTRAINT IF EXISTS "Deductions_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."DaysNotWorked" DROP CONSTRAINT IF EXISTS "DaysNotWorked_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AuditLog" DROP CONSTRAINT IF EXISTS "AuditLog_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AssignDesignation" DROP CONSTRAINT IF EXISTS "AssignDesignation_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Archive" DROP CONSTRAINT IF EXISTS "Archive_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Allowance" DROP CONSTRAINT IF EXISTS "Allowance_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdvanceTimesheet" DROP CONSTRAINT IF EXISTS "AdvanceTimesheet_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdvanceTimesheetUsers" DROP CONSTRAINT IF EXISTS "AdvanceTimesheetUsers_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AddressLine" DROP CONSTRAINT IF EXISTS "AddressLine_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."AdditionalEarnings" DROP CONSTRAINT IF EXISTS "AdditionalEarnings_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."Account" DROP CONSTRAINT IF EXISTS "Account_pkey";
+DROP TABLE IF EXISTS "public"."WorkingMonth";
+DROP TABLE IF EXISTS "public"."WorkingDay";
+DROP TABLE IF EXISTS "public"."VerificationToken";
+DROP TABLE IF EXISTS "public"."UserSalary";
+DROP TABLE IF EXISTS "public"."User";
+DROP TABLE IF EXISTS "public"."TwoFactorToken";
+DROP TABLE IF EXISTS "public"."TwoFactorConfirmation";
+DROP TABLE IF EXISTS "public"."Timesheet";
+DROP TABLE IF EXISTS "public"."SalaryIncreaseEvent";
+DROP TABLE IF EXISTS "public"."SalaryHistory";
+DROP TABLE IF EXISTS "public"."PayrollItem";
+DROP TABLE IF EXISTS "public"."Payroll";
+DROP TABLE IF EXISTS "public"."PasswordResetToken";
+DROP TABLE IF EXISTS "public"."Overtimes";
+DROP TABLE IF EXISTS "public"."Leaves";
+DROP TABLE IF EXISTS "public"."Holiday";
+DROP TABLE IF EXISTS "public"."GovernmentId";
+DROP TABLE IF EXISTS "public"."GovernmentContribution";
+DROP TABLE IF EXISTS "public"."EmergencyContact";
+DROP TABLE IF EXISTS "public"."Documents";
+DROP TABLE IF EXISTS "public"."DesignationSalaryIncrease";
+DROP TABLE IF EXISTS "public"."Designation";
+DROP TABLE IF EXISTS "public"."DepartmentSalaryIncrease";
+DROP TABLE IF EXISTS "public"."Department";
+DROP TABLE IF EXISTS "public"."Deductions";
+DROP TABLE IF EXISTS "public"."DaysNotWorked";
+DROP TABLE IF EXISTS "public"."AuditLog";
+DROP TABLE IF EXISTS "public"."AssignDesignation";
+DROP TABLE IF EXISTS "public"."Archive";
+DROP TABLE IF EXISTS "public"."Allowance";
+DROP TABLE IF EXISTS "public"."AdvanceTimesheetUsers";
+DROP TABLE IF EXISTS "public"."AdvanceTimesheet";
+DROP TABLE IF EXISTS "public"."AddressLine";
+DROP TABLE IF EXISTS "public"."AdditionalEarnings";
+DROP TABLE IF EXISTS "public"."Account";
+DROP TYPE IF EXISTS "public"."UserRole";
+DROP TYPE IF EXISTS "public"."Status";
+DROP TYPE IF EXISTS "public"."OvertimeType";
+DROP TYPE IF EXISTS "public"."OvertimeStatus";
+DROP TYPE IF EXISTS "public"."LeaveType";
+DROP TYPE IF EXISTS "public"."LeaveStatus";
+DROP TYPE IF EXISTS "public"."Gender";
+DROP TYPE IF EXISTS "public"."EmployeeType";
+DROP TYPE IF EXISTS "public"."ArchiveType";
+DROP SCHEMA IF EXISTS "public";
 --
 -- Name: SCHEMA "public"; Type: COMMENT; Schema: -; Owner: -
 --
@@ -166,17 +166,17 @@ COMMENT ON SCHEMA "public" IS 'standard public schema';
 
 
 --
--- Name: public?; Type: SCHEMA; Schema: -; Owner: -
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA "public?";
+CREATE SCHEMA "public";
 
 
 --
--- Name: ArchiveType; Type: TYPE; Schema: public?; Owner: -
+-- Name: ArchiveType; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."ArchiveType" AS ENUM (
+CREATE TYPE "public"."ArchiveType" AS ENUM (
     'USER',
     'DEPARTMENT',
     'DESIGNATION',
@@ -189,10 +189,10 @@ CREATE TYPE "public?"."ArchiveType" AS ENUM (
 
 
 --
--- Name: EmployeeType; Type: TYPE; Schema: public?; Owner: -
+-- Name: EmployeeType; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."EmployeeType" AS ENUM (
+CREATE TYPE "public"."EmployeeType" AS ENUM (
     'REGULAR',
     'CONTRACTUAL',
     'PROBATIONARY'
@@ -200,10 +200,10 @@ CREATE TYPE "public?"."EmployeeType" AS ENUM (
 
 
 --
--- Name: Gender; Type: TYPE; Schema: public?; Owner: -
+-- Name: Gender; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."Gender" AS ENUM (
+CREATE TYPE "public"."Gender" AS ENUM (
     'MALE',
     'FEMALE',
     'OTHER'
@@ -211,10 +211,10 @@ CREATE TYPE "public?"."Gender" AS ENUM (
 
 
 --
--- Name: LeaveStatus; Type: TYPE; Schema: public?; Owner: -
+-- Name: LeaveStatus; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."LeaveStatus" AS ENUM (
+CREATE TYPE "public"."LeaveStatus" AS ENUM (
     'PENDING',
     'APPROVED',
     'REJECTED'
@@ -222,10 +222,10 @@ CREATE TYPE "public?"."LeaveStatus" AS ENUM (
 
 
 --
--- Name: LeaveType; Type: TYPE; Schema: public?; Owner: -
+-- Name: LeaveType; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."LeaveType" AS ENUM (
+CREATE TYPE "public"."LeaveType" AS ENUM (
     'VACATION',
     'SICK',
     'MATERNITY',
@@ -234,10 +234,10 @@ CREATE TYPE "public?"."LeaveType" AS ENUM (
 
 
 --
--- Name: OvertimeStatus; Type: TYPE; Schema: public?; Owner: -
+-- Name: OvertimeStatus; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."OvertimeStatus" AS ENUM (
+CREATE TYPE "public"."OvertimeStatus" AS ENUM (
     'PENDING',
     'IN_PROGRESS',
     'COMPLETED',
@@ -246,10 +246,10 @@ CREATE TYPE "public?"."OvertimeStatus" AS ENUM (
 
 
 --
--- Name: OvertimeType; Type: TYPE; Schema: public?; Owner: -
+-- Name: OvertimeType; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."OvertimeType" AS ENUM (
+CREATE TYPE "public"."OvertimeType" AS ENUM (
     'REGULAR',
     'HOLIDAY',
     'MANDATORY'
@@ -257,20 +257,20 @@ CREATE TYPE "public?"."OvertimeType" AS ENUM (
 
 
 --
--- Name: Status; Type: TYPE; Schema: public?; Owner: -
+-- Name: Status; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."Status" AS ENUM (
+CREATE TYPE "public"."Status" AS ENUM (
     'ACTIVE',
     'INACTIVE'
 );
 
 
 --
--- Name: UserRole; Type: TYPE; Schema: public?; Owner: -
+-- Name: UserRole; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE "public?"."UserRole" AS ENUM (
+CREATE TYPE "public"."UserRole" AS ENUM (
     'ADMIN',
     'USER',
     'SUPERADMIN'
@@ -282,10 +282,10 @@ SET default_tablespace = '';
 SET default_table_access_method = "heap";
 
 --
--- Name: Account; Type: TABLE; Schema: public?; Owner: -
+-- Name: Account; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Account" (
+CREATE TABLE "public"."Account" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "type" "text" NOT NULL,
@@ -302,10 +302,10 @@ CREATE TABLE "public?"."Account" (
 
 
 --
--- Name: AdditionalEarnings; Type: TABLE; Schema: public?; Owner: -
+-- Name: AdditionalEarnings; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AdditionalEarnings" (
+CREATE TABLE "public"."AdditionalEarnings" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "earningType" "text" NOT NULL,
@@ -318,10 +318,10 @@ CREATE TABLE "public?"."AdditionalEarnings" (
 
 
 --
--- Name: AddressLine; Type: TABLE; Schema: public?; Owner: -
+-- Name: AddressLine; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AddressLine" (
+CREATE TABLE "public"."AddressLine" (
     "id" "text" NOT NULL,
     "street" "text",
     "barangay" "text",
@@ -336,10 +336,10 @@ CREATE TABLE "public?"."AddressLine" (
 
 
 --
--- Name: AdvanceTimesheet; Type: TABLE; Schema: public?; Owner: -
+-- Name: AdvanceTimesheet; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AdvanceTimesheet" (
+CREATE TABLE "public"."AdvanceTimesheet" (
     "id" "text" NOT NULL,
     "type" "text" NOT NULL,
     "startDate" timestamp(3) without time zone NOT NULL,
@@ -351,26 +351,26 @@ CREATE TABLE "public?"."AdvanceTimesheet" (
 
 
 --
--- Name: AdvanceTimesheetUsers; Type: TABLE; Schema: public?; Owner: -
+-- Name: AdvanceTimesheetUsers; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AdvanceTimesheetUsers" (
+CREATE TABLE "public"."AdvanceTimesheetUsers" (
     "userId" "text" NOT NULL,
     "advanceTimesheetId" "text" NOT NULL
 );
 
 
 --
--- Name: Allowance; Type: TABLE; Schema: public?; Owner: -
+-- Name: Allowance; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Allowance" (
+CREATE TABLE "public"."Allowance" (
     "id" "text" NOT NULL,
     "type" "text" NOT NULL,
     "amount" double precision NOT NULL,
     "startDate" timestamp(3) without time zone NOT NULL,
     "endDate" timestamp(3) without time zone NOT NULL,
-    "status" "public?"."Status" NOT NULL,
+    "status" "public"."Status" NOT NULL,
     "userId" "text" NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL
@@ -378,12 +378,12 @@ CREATE TABLE "public?"."Allowance" (
 
 
 --
--- Name: Archive; Type: TABLE; Schema: public?; Owner: -
+-- Name: Archive; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Archive" (
+CREATE TABLE "public"."Archive" (
     "id" "text" NOT NULL,
-    "archiveType" "public?"."ArchiveType" NOT NULL,
+    "archiveType" "public"."ArchiveType" NOT NULL,
     "entityId" "text" NOT NULL,
     "entityData" "jsonb" NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -391,13 +391,13 @@ CREATE TABLE "public?"."Archive" (
 
 
 --
--- Name: AssignDesignation; Type: TABLE; Schema: public?; Owner: -
+-- Name: AssignDesignation; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AssignDesignation" (
+CREATE TABLE "public"."AssignDesignation" (
     "id" "text" NOT NULL,
-    "employeeType" "public?"."EmployeeType" NOT NULL,
-    "status" "public?"."Status" NOT NULL,
+    "employeeType" "public"."EmployeeType" NOT NULL,
+    "status" "public"."Status" NOT NULL,
     "designationId" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -406,10 +406,10 @@ CREATE TABLE "public?"."AssignDesignation" (
 
 
 --
--- Name: AuditLog; Type: TABLE; Schema: public?; Owner: -
+-- Name: AuditLog; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."AuditLog" (
+CREATE TABLE "public"."AuditLog" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "action" "text" NOT NULL,
@@ -418,10 +418,10 @@ CREATE TABLE "public?"."AuditLog" (
 
 
 --
--- Name: DaysNotWorked; Type: TABLE; Schema: public?; Owner: -
+-- Name: DaysNotWorked; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."DaysNotWorked" (
+CREATE TABLE "public"."DaysNotWorked" (
     "id" "text" NOT NULL,
     "date" timestamp(3) without time zone NOT NULL,
     "userId" "text" NOT NULL,
@@ -432,10 +432,10 @@ CREATE TABLE "public?"."DaysNotWorked" (
 
 
 --
--- Name: Deductions; Type: TABLE; Schema: public?; Owner: -
+-- Name: Deductions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Deductions" (
+CREATE TABLE "public"."Deductions" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "deductionType" "text" NOT NULL,
@@ -448,14 +448,14 @@ CREATE TABLE "public?"."Deductions" (
 
 
 --
--- Name: Department; Type: TABLE; Schema: public?; Owner: -
+-- Name: Department; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Department" (
+CREATE TABLE "public"."Department" (
     "id" "text" NOT NULL,
     "departmentName" "text" NOT NULL,
     "departmentDescription" "text" NOT NULL,
-    "status" "public?"."Status" NOT NULL,
+    "status" "public"."Status" NOT NULL,
     "departmentHeadUserId" "text",
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
@@ -464,24 +464,24 @@ CREATE TABLE "public?"."Department" (
 
 
 --
--- Name: DepartmentSalaryIncrease; Type: TABLE; Schema: public?; Owner: -
+-- Name: DepartmentSalaryIncrease; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."DepartmentSalaryIncrease" (
+CREATE TABLE "public"."DepartmentSalaryIncrease" (
     "departmentId" "text" NOT NULL,
     "salaryIncreaseEventId" "text" NOT NULL
 );
 
 
 --
--- Name: Designation; Type: TABLE; Schema: public?; Owner: -
+-- Name: Designation; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Designation" (
+CREATE TABLE "public"."Designation" (
     "id" "text" NOT NULL,
     "designationName" "text" NOT NULL,
     "designationDescription" "text" NOT NULL,
-    "status" "public?"."Status" NOT NULL,
+    "status" "public"."Status" NOT NULL,
     "departmentId" "text" NOT NULL,
     "designationHeadUserId" "text" NOT NULL,
     "designationSalary" double precision DEFAULT 0 NOT NULL,
@@ -492,20 +492,20 @@ CREATE TABLE "public?"."Designation" (
 
 
 --
--- Name: DesignationSalaryIncrease; Type: TABLE; Schema: public?; Owner: -
+-- Name: DesignationSalaryIncrease; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."DesignationSalaryIncrease" (
+CREATE TABLE "public"."DesignationSalaryIncrease" (
     "designationId" "text" NOT NULL,
     "salaryIncreaseEventId" "text" NOT NULL
 );
 
 
 --
--- Name: Documents; Type: TABLE; Schema: public?; Owner: -
+-- Name: Documents; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Documents" (
+CREATE TABLE "public"."Documents" (
     "id" "text" NOT NULL,
     "documentName" "text" NOT NULL,
     "documentType" "text" NOT NULL,
@@ -517,10 +517,10 @@ CREATE TABLE "public?"."Documents" (
 
 
 --
--- Name: EmergencyContact; Type: TABLE; Schema: public?; Owner: -
+-- Name: EmergencyContact; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."EmergencyContact" (
+CREATE TABLE "public"."EmergencyContact" (
     "id" "text" NOT NULL,
     "firstName" "text" NOT NULL,
     "middleName" "text" NOT NULL,
@@ -533,10 +533,10 @@ CREATE TABLE "public?"."EmergencyContact" (
 
 
 --
--- Name: GovernmentContribution; Type: TABLE; Schema: public?; Owner: -
+-- Name: GovernmentContribution; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."GovernmentContribution" (
+CREATE TABLE "public"."GovernmentContribution" (
     "id" "text" NOT NULL,
     "type" "text" NOT NULL,
     "brackets" "jsonb" NOT NULL,
@@ -546,10 +546,10 @@ CREATE TABLE "public?"."GovernmentContribution" (
 
 
 --
--- Name: GovernmentId; Type: TABLE; Schema: public?; Owner: -
+-- Name: GovernmentId; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."GovernmentId" (
+CREATE TABLE "public"."GovernmentId" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "sssNumber" "text",
@@ -562,10 +562,10 @@ CREATE TABLE "public?"."GovernmentId" (
 
 
 --
--- Name: Holiday; Type: TABLE; Schema: public?; Owner: -
+-- Name: Holiday; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Holiday" (
+CREATE TABLE "public"."Holiday" (
     "id" "text" NOT NULL,
     "date" timestamp(3) without time zone NOT NULL,
     "name" "text" NOT NULL,
@@ -575,17 +575,17 @@ CREATE TABLE "public?"."Holiday" (
 
 
 --
--- Name: Leaves; Type: TABLE; Schema: public?; Owner: -
+-- Name: Leaves; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Leaves" (
+CREATE TABLE "public"."Leaves" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "startDate" timestamp(3) without time zone NOT NULL,
     "endDate" timestamp(3) without time zone NOT NULL,
-    "leaveStatus" "public?"."LeaveStatus" DEFAULT 'PENDING'::"public?"."LeaveStatus" NOT NULL,
+    "leaveStatus" "public"."LeaveStatus" DEFAULT 'PENDING'::"public"."LeaveStatus" NOT NULL,
     "reason" "text" NOT NULL,
-    "leaveType" "public?"."LeaveType" NOT NULL,
+    "leaveType" "public"."LeaveType" NOT NULL,
     "documentLink" "text" NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL
@@ -593,14 +593,14 @@ CREATE TABLE "public?"."Leaves" (
 
 
 --
--- Name: Overtimes; Type: TABLE; Schema: public?; Owner: -
+-- Name: Overtimes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Overtimes" (
+CREATE TABLE "public"."Overtimes" (
     "id" "text" NOT NULL,
     "reason" "text" NOT NULL,
-    "status" "public?"."OvertimeStatus" DEFAULT 'PENDING'::"public?"."OvertimeStatus" NOT NULL,
-    "overtimeType" "public?"."OvertimeType" NOT NULL,
+    "status" "public"."OvertimeStatus" DEFAULT 'PENDING'::"public"."OvertimeStatus" NOT NULL,
+    "overtimeType" "public"."OvertimeType" NOT NULL,
     "userId" "text" NOT NULL,
     "timeOut" timestamp(3) without time zone NOT NULL,
     "clockIn" timestamp(3) without time zone,
@@ -611,10 +611,10 @@ CREATE TABLE "public?"."Overtimes" (
 
 
 --
--- Name: PasswordResetToken; Type: TABLE; Schema: public?; Owner: -
+-- Name: PasswordResetToken; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."PasswordResetToken" (
+CREATE TABLE "public"."PasswordResetToken" (
     "id" "text" NOT NULL,
     "email" "text" NOT NULL,
     "token" "text" NOT NULL,
@@ -623,14 +623,14 @@ CREATE TABLE "public?"."PasswordResetToken" (
 
 
 --
--- Name: Payroll; Type: TABLE; Schema: public?; Owner: -
+-- Name: Payroll; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Payroll" (
+CREATE TABLE "public"."Payroll" (
     "id" "text" NOT NULL,
     "payPeriodStart" timestamp(3) without time zone NOT NULL,
     "payPeriodEnd" timestamp(3) without time zone NOT NULL,
-    "payrollStatus" "public?"."LeaveStatus" DEFAULT 'PENDING'::"public?"."LeaveStatus" NOT NULL,
+    "payrollStatus" "public"."LeaveStatus" DEFAULT 'PENDING'::"public"."LeaveStatus" NOT NULL,
     "totalAmount" double precision NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL
@@ -638,10 +638,10 @@ CREATE TABLE "public?"."Payroll" (
 
 
 --
--- Name: PayrollItem; Type: TABLE; Schema: public?; Owner: -
+-- Name: PayrollItem; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."PayrollItem" (
+CREATE TABLE "public"."PayrollItem" (
     "id" "text" NOT NULL,
     "payrollId" "text" NOT NULL,
     "userId" "text" NOT NULL,
@@ -669,10 +669,10 @@ CREATE TABLE "public?"."PayrollItem" (
 
 
 --
--- Name: SalaryHistory; Type: TABLE; Schema: public?; Owner: -
+-- Name: SalaryHistory; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."SalaryHistory" (
+CREATE TABLE "public"."SalaryHistory" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "basicSalary" double precision NOT NULL,
@@ -687,10 +687,10 @@ CREATE TABLE "public?"."SalaryHistory" (
 
 
 --
--- Name: SalaryIncreaseEvent; Type: TABLE; Schema: public?; Owner: -
+-- Name: SalaryIncreaseEvent; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."SalaryIncreaseEvent" (
+CREATE TABLE "public"."SalaryIncreaseEvent" (
     "id" "text" NOT NULL,
     "percentage" double precision,
     "amount" double precision,
@@ -703,10 +703,10 @@ CREATE TABLE "public?"."SalaryIncreaseEvent" (
 
 
 --
--- Name: Timesheet; Type: TABLE; Schema: public?; Owner: -
+-- Name: Timesheet; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."Timesheet" (
+CREATE TABLE "public"."Timesheet" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "dayId" "text" NOT NULL,
@@ -728,20 +728,20 @@ CREATE TABLE "public?"."Timesheet" (
 
 
 --
--- Name: TwoFactorConfirmation; Type: TABLE; Schema: public?; Owner: -
+-- Name: TwoFactorConfirmation; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."TwoFactorConfirmation" (
+CREATE TABLE "public"."TwoFactorConfirmation" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL
 );
 
 
 --
--- Name: TwoFactorToken; Type: TABLE; Schema: public?; Owner: -
+-- Name: TwoFactorToken; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."TwoFactorToken" (
+CREATE TABLE "public"."TwoFactorToken" (
     "id" "text" NOT NULL,
     "email" "text" NOT NULL,
     "token" "text" NOT NULL,
@@ -750,15 +750,15 @@ CREATE TABLE "public?"."TwoFactorToken" (
 
 
 --
--- Name: User; Type: TABLE; Schema: public?; Owner: -
+-- Name: User; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."User" (
+CREATE TABLE "public"."User" (
     "id" "text" NOT NULL,
     "firstName" "text",
     "middleName" "text",
     "lastName" "text",
-    "gender" "public?"."Gender",
+    "gender" "public"."Gender",
     "dateOfBirth" timestamp(3) without time zone,
     "jobTitle" "text",
     "email" "text",
@@ -770,7 +770,7 @@ CREATE TABLE "public?"."User" (
     "emailVerified" timestamp(3) without time zone,
     "image" "text",
     "password" "text",
-    "role" "public?"."UserRole" DEFAULT 'USER'::"public?"."UserRole" NOT NULL,
+    "role" "public"."UserRole" DEFAULT 'USER'::"public"."UserRole" NOT NULL,
     "isTwoFactorEnabled" boolean DEFAULT false NOT NULL,
     "twoFactorConfirmationId" "text",
     "isArchived" boolean DEFAULT false NOT NULL
@@ -778,10 +778,10 @@ CREATE TABLE "public?"."User" (
 
 
 --
--- Name: UserSalary; Type: TABLE; Schema: public?; Owner: -
+-- Name: UserSalary; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."UserSalary" (
+CREATE TABLE "public"."UserSalary" (
     "id" "text" NOT NULL,
     "userId" "text" NOT NULL,
     "basicSalary" double precision NOT NULL,
@@ -792,10 +792,10 @@ CREATE TABLE "public?"."UserSalary" (
 
 
 --
--- Name: VerificationToken; Type: TABLE; Schema: public?; Owner: -
+-- Name: VerificationToken; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."VerificationToken" (
+CREATE TABLE "public"."VerificationToken" (
     "id" "text" NOT NULL,
     "email" "text" NOT NULL,
     "token" "text" NOT NULL,
@@ -804,10 +804,10 @@ CREATE TABLE "public?"."VerificationToken" (
 
 
 --
--- Name: WorkingDay; Type: TABLE; Schema: public?; Owner: -
+-- Name: WorkingDay; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."WorkingDay" (
+CREATE TABLE "public"."WorkingDay" (
     "id" "text" NOT NULL,
     "date" timestamp(3) without time zone NOT NULL,
     "password" "text" NOT NULL,
@@ -819,10 +819,10 @@ CREATE TABLE "public?"."WorkingDay" (
 
 
 --
--- Name: WorkingMonth; Type: TABLE; Schema: public?; Owner: -
+-- Name: WorkingMonth; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "public?"."WorkingMonth" (
+CREATE TABLE "public"."WorkingMonth" (
     "id" "text" NOT NULL,
     "month" integer NOT NULL,
     "year" integer NOT NULL,
@@ -832,34 +832,34 @@ CREATE TABLE "public?"."WorkingMonth" (
 
 
 --
--- Data for Name: Account; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Account; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Account" ("id", "userId", "type", "provider", "providerAccountId", "refresh_token", "access_token", "expires_at", "token_type", "scope", "id_token", "session_state") FROM stdin;
+COPY "public"."Account" ("id", "userId", "type", "provider", "providerAccountId", "refresh_token", "access_token", "expires_at", "token_type", "scope", "id_token", "session_state") FROM stdin;
 \.
 
 
 --
--- Data for Name: AdditionalEarnings; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AdditionalEarnings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AdditionalEarnings" ("id", "userId", "earningType", "amount", "description", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."AdditionalEarnings" ("id", "userId", "earningType", "amount", "description", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
 \.
 
 
 --
--- Data for Name: AddressLine; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AddressLine; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AddressLine" ("id", "street", "barangay", "city", "province", "country", "zipCode", "createdAt", "updatedAt", "userId") FROM stdin;
+COPY "public"."AddressLine" ("id", "street", "barangay", "city", "province", "country", "zipCode", "createdAt", "updatedAt", "userId") FROM stdin;
 \.
 
 
 --
--- Data for Name: AdvanceTimesheet; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AdvanceTimesheet; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AdvanceTimesheet" ("id", "type", "startDate", "endDate", "isUndone", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."AdvanceTimesheet" ("id", "type", "startDate", "endDate", "isUndone", "createdAt", "updatedAt") FROM stdin;
 cm3slj4q000pj98xyl39tuj44	Onsite	2024-10-31 00:00:00	2024-12-01 00:00:00	f	2024-11-22 10:26:14.566	2024-11-22 10:26:14.566
 cm3srcbhr00sd98xymflwpakf	Onsite	2024-12-02 00:00:00	2024-12-07 00:00:00	t	2024-11-22 13:08:54.446	2024-11-22 13:26:52.155
 cm3xpc9yn001h7jwwd615x1bn	Onsite	2024-09-30 00:00:00	2024-12-01 00:00:00	f	2024-11-26 00:11:44.108	2024-11-26 00:11:44.108
@@ -869,10 +869,10 @@ cm3xw9y3400s67jww55cui4xv	Onsite	2024-09-01 00:00:00	2024-11-29 00:00:00	f	2024-
 
 
 --
--- Data for Name: AdvanceTimesheetUsers; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AdvanceTimesheetUsers; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AdvanceTimesheetUsers" ("userId", "advanceTimesheetId") FROM stdin;
+COPY "public"."AdvanceTimesheetUsers" ("userId", "advanceTimesheetId") FROM stdin;
 cm3sd6n7y000h98xyfpmb6any	cm3slj4q000pj98xyl39tuj44
 emman	cm3slj4q000pj98xyl39tuj44
 emman	cm3srcbhr00sd98xymflwpakf
@@ -902,19 +902,19 @@ cm3xu8bx700jn7jwwlfh8k68g	cm3xw9y3400s67jww55cui4xv
 
 
 --
--- Data for Name: Allowance; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Allowance; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Allowance" ("id", "type", "amount", "startDate", "endDate", "status", "userId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Allowance" ("id", "type", "amount", "startDate", "endDate", "status", "userId", "createdAt", "updatedAt") FROM stdin;
 cm3ww1e0x000a7jww4p2rgppe	Educational Allowance	5000	2024-11-26 00:00:00	2024-11-30 00:00:00	ACTIVE	cm3sd6n7y000h98xyfpmb6any	2024-11-25 10:31:27.297	2024-11-25 10:32:05.273
 \.
 
 
 --
--- Data for Name: Archive; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Archive; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Archive" ("id", "archiveType", "entityId", "entityData", "createdAt") FROM stdin;
+COPY "public"."Archive" ("id", "archiveType", "entityId", "entityData", "createdAt") FROM stdin;
 cm3xpm5se00ff7jwwjcgsmhuz	PAYROLL	cm3xpikqe00fc7jwwmoeug8av	{"id": "cm3xpikqe00fc7jwwmoeug8av", "createdAt": "2024-11-26T00:16:38.007Z", "updatedAt": "2024-11-26T00:16:38.032Z", "totalAmount": 0, "payPeriodEnd": "2024-11-25T15:59:59.999Z", "payrollItems": [], "payrollStatus": "PENDING", "payPeriodStart": "2024-11-10T16:00:00.000Z"}	2024-11-26 00:19:25.263
 cm3xpqps200fs7jwwlnvp8go8	PAYROLL	cm3xpm71h00fj7jww5bgnhcum	{"id": "cm3xpm71h00fj7jww5bgnhcum", "createdAt": "2024-11-26T00:19:26.886Z", "updatedAt": "2024-11-26T00:19:26.904Z", "totalAmount": 0, "payPeriodEnd": "2024-11-25T15:59:59.999Z", "payrollItems": [], "payrollStatus": "PENDING", "payPeriodStart": "2024-11-10T16:00:00.000Z"}	2024-11-26 00:22:57.794
 cm3xpr8n300fw7jwwrn8a2i4t	PAYROLL	cm3wqlsmx0010ryyffjzruayq	{"id": "cm3wqlsmx0010ryyffjzruayq", "createdAt": "2024-11-25T07:59:21.657Z", "updatedAt": "2024-11-25T11:43:58.981Z", "totalAmount": -1420, "payPeriodEnd": "2024-11-30T15:59:59.999Z", "payrollItems": [{"id": "cm3wruj5g0015ryyf3ehfxpgs", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "dailyRate": 550, "daysLeave": 0, "netSalary": -870, "payrollId": "cm3wqlsmx0010ryyffjzruayq", "updatedAt": "2024-11-25T08:34:08.882Z", "daysWorked": 0, "deductions": [{"id": "cm3wruj5y0017ryyfjhyd64x6", "amount": 495, "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "description": "SSS contribution", "deductionType": "SSS", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj5y0019ryyf6ex9sbds", "amount": 275, "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "description": "PhilHealth contribution", "deductionType": "PhilHealth", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj5y001bryyfzs4lrg1t", "amount": 100, "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "description": "PagIBIG contribution", "deductionType": "PagIBIG", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj5y001dryyf83odc6g1", "amount": 0, "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "description": "Tax contribution", "deductionType": "Tax", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}], "timesheets": [], "basicSalary": 11000, "minutesLate": 0, "daysNotWorked": [{"id": "cm3wruj69001eryyf31z458tu", "date": "2024-11-03T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001fryyfn3njjgep", "date": "2024-11-04T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001gryyfiu7exrdg", "date": "2024-11-05T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001hryyfvr22zm8d", "date": "2024-11-06T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001iryyf6i2jmkcf", "date": "2024-11-07T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001jryyf915klhrz", "date": "2024-11-10T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001kryyfdqoksvp8", "date": "2024-11-11T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001lryyf5tyrft0o", "date": "2024-11-12T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001mryyf3f0il6vy", "date": "2024-11-13T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001nryyfxo7kfmg2", "date": "2024-11-14T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001oryyfiiqth1uw", "date": "2024-11-17T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001pryyfzm6jd1ur", "date": "2024-11-18T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001qryyfdcsk4fns", "date": "2024-11-19T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001rryyf3glwpfvr", "date": "2024-11-20T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001sryyfvwi64id2", "date": "2024-11-21T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001tryyfy2z4gbf2", "date": "2024-11-24T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001uryyfd27izap9", "date": "2024-11-25T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001vryyfgr7lhb49", "date": "2024-11-26T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001wryyfyyi9psb7", "date": "2024-11-27T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001xryyfncx3oqcz", "date": "2024-11-28T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}], "minutesWorked": 0, "lateDeductions": 0, "overtimeSalary": 0, "minutesEarlyOut": 0, "minutesOvertime": 0, "totalDeductions": 11870, "minutesNotWorked": 12000, "specialDayMinutes": 0, "additionalEarnings": [], "daysNotWorkedArray": [{"id": "cm3wruj69001eryyf31z458tu", "date": "2024-11-03T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001fryyfn3njjgep", "date": "2024-11-04T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001gryyfiu7exrdg", "date": "2024-11-05T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001hryyfvr22zm8d", "date": "2024-11-06T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001iryyf6i2jmkcf", "date": "2024-11-07T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001jryyf915klhrz", "date": "2024-11-10T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001kryyfdqoksvp8", "date": "2024-11-11T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001lryyf5tyrft0o", "date": "2024-11-12T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001mryyf3f0il6vy", "date": "2024-11-13T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001nryyfxo7kfmg2", "date": "2024-11-14T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001oryyfiiqth1uw", "date": "2024-11-17T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001pryyfzm6jd1ur", "date": "2024-11-18T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001qryyfdcsk4fns", "date": "2024-11-19T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001rryyf3glwpfvr", "date": "2024-11-20T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001sryyfvwi64id2", "date": "2024-11-21T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001tryyfy2z4gbf2", "date": "2024-11-24T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001uryyfd27izap9", "date": "2024-11-25T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001vryyfgr7lhb49", "date": "2024-11-26T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001wryyfyyi9psb7", "date": "2024-11-27T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}, {"id": "cm3wruj69001xryyfncx3oqcz", "date": "2024-11-28T16:00:00.000Z", "userId": "cm3sd6n7y000h98xyfpmb6any", "createdAt": "2024-11-25T08:34:08.882Z", "updatedAt": "2024-11-25T08:34:08.882Z", "payrollItemId": "cm3wruj5g0015ryyf3ehfxpgs"}], "specialDayEarnings": 0, "additionalEarningsArray": [], "earlyClockOutDeductions": 0}, {"id": "cm3wymnt2000l7jww2m3q7205", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "dailyRate": 250, "daysLeave": 0, "netSalary": -550, "payrollId": "cm3wqlsmx0010ryyffjzruayq", "updatedAt": "2024-11-25T11:43:58.981Z", "daysWorked": 0, "deductions": [{"id": "cm3wymntr000n7jwwzwf673d9", "amount": 225, "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "description": "SSS contribution", "deductionType": "SSS", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymntr000p7jwwhdihzlxv", "amount": 225, "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "description": "PhilHealth contribution", "deductionType": "PhilHealth", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymntr000r7jwwx25al8h8", "amount": 100, "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "description": "PagIBIG contribution", "deductionType": "PagIBIG", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymntr000t7jwwf18cjvgo", "amount": 0, "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "description": "Tax contribution", "deductionType": "Tax", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}], "timesheets": [], "basicSalary": 5000, "minutesLate": 0, "daysNotWorked": [{"id": "cm3wymnu1000u7jwwzagvko4i", "date": "2024-11-03T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000v7jwwn28u7iq4", "date": "2024-11-04T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000w7jww7rpneted", "date": "2024-11-05T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000x7jwwin76wjwf", "date": "2024-11-06T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000y7jwwr42u65en", "date": "2024-11-07T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000z7jwwqz6dvkpx", "date": "2024-11-10T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100107jww5sakzrmd", "date": "2024-11-11T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100117jwwxqzgbxj9", "date": "2024-11-12T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100127jwwaim6p9r1", "date": "2024-11-13T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100137jwwpq4qvoih", "date": "2024-11-14T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100147jwwtn9dg6a9", "date": "2024-11-17T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100157jwwghdtlfg4", "date": "2024-11-18T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100167jww29r39vqq", "date": "2024-11-19T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100177jwwgksywf1d", "date": "2024-11-20T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100187jwww9ezrd2z", "date": "2024-11-21T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100197jwwdujjlep0", "date": "2024-11-24T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001a7jwwzodgo7n0", "date": "2024-11-25T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001b7jwwgibb6xma", "date": "2024-11-26T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001c7jwwi5z7p7bd", "date": "2024-11-27T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001d7jwwdmrh8lwu", "date": "2024-11-28T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}], "minutesWorked": 0, "lateDeductions": 0, "overtimeSalary": 0, "minutesEarlyOut": 0, "minutesOvertime": 0, "totalDeductions": 5550, "minutesNotWorked": 12000, "specialDayMinutes": 0, "additionalEarnings": [], "daysNotWorkedArray": [{"id": "cm3wymnu1000u7jwwzagvko4i", "date": "2024-11-03T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000v7jwwn28u7iq4", "date": "2024-11-04T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000w7jww7rpneted", "date": "2024-11-05T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000x7jwwin76wjwf", "date": "2024-11-06T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000y7jwwr42u65en", "date": "2024-11-07T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1000z7jwwqz6dvkpx", "date": "2024-11-10T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100107jww5sakzrmd", "date": "2024-11-11T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100117jwwxqzgbxj9", "date": "2024-11-12T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100127jwwaim6p9r1", "date": "2024-11-13T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100137jwwpq4qvoih", "date": "2024-11-14T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100147jwwtn9dg6a9", "date": "2024-11-17T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100157jwwghdtlfg4", "date": "2024-11-18T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100167jww29r39vqq", "date": "2024-11-19T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100177jwwgksywf1d", "date": "2024-11-20T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100187jwww9ezrd2z", "date": "2024-11-21T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu100197jwwdujjlep0", "date": "2024-11-24T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001a7jwwzodgo7n0", "date": "2024-11-25T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001b7jwwgibb6xma", "date": "2024-11-26T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001c7jwwi5z7p7bd", "date": "2024-11-27T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}, {"id": "cm3wymnu1001d7jwwdmrh8lwu", "date": "2024-11-28T16:00:00.000Z", "userId": "cm3sd5sob000698xytgsayvvu", "createdAt": "2024-11-25T11:43:58.981Z", "updatedAt": "2024-11-25T11:43:58.981Z", "payrollItemId": "cm3wymnt2000l7jww2m3q7205"}], "specialDayEarnings": 0, "additionalEarningsArray": [], "earlyClockOutDeductions": 0}], "payrollStatus": "PENDING", "payPeriodStart": "2024-10-31T16:00:00.000Z"}	2024-11-26 00:23:22.239
@@ -930,10 +930,10 @@ cm3y7y85c000v11m2uj1ecyqb	PAYROLL	cm3y0dbqv02ro7jwwr97i9mpe	{"id": "cm3y0dbqv02r
 
 
 --
--- Data for Name: AssignDesignation; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AssignDesignation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AssignDesignation" ("id", "employeeType", "status", "designationId", "userId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."AssignDesignation" ("id", "employeeType", "status", "designationId", "userId", "createdAt", "updatedAt") FROM stdin;
 cm3sd6n80000j98xyig5zzqpg	REGULAR	ACTIVE	cm3rif3dd0007uks9t239m816	cm3sd6n7y000h98xyfpmb6any	2024-11-22 06:32:35.086	2024-11-25 04:00:50.976
 cm3wbvc4w000lryyfb47hu887	REGULAR	ACTIVE	cm3rif3dd0007uks9t239m816	emman	2024-11-25 01:06:52.592	2024-11-25 04:01:20.506
 cm3xpo5f000fr7jwwvcm17s1e	REGULAR	ACTIVE	cm3rif3dd0007uks9t239m816	cm3sd5sob000698xytgsayvvu	2024-11-26 00:20:58.092	2024-11-26 00:20:58.092
@@ -954,10 +954,10 @@ cm3y84f6h006011m2ddzjomud	REGULAR	ACTIVE	cm3rif3dd0007uks9t239m816	cm3xuj38h00kk
 
 
 --
--- Data for Name: AuditLog; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: AuditLog; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."AuditLog" ("id", "userId", "action", "createdAt") FROM stdin;
+COPY "public"."AuditLog" ("id", "userId", "action", "createdAt") FROM stdin;
 cm3rienxx0001uks98mx37a1z	emman	Department Created by SuperAdmin: Emmanuel Diaz Aguado	2024-11-21 16:11:01.173
 cm3rif3d80005uks92n6wod7u	emman	Designation Created by Admin: Emmanuel Diaz Aguado	2024-11-21 16:11:21.164
 cm3rif3e0000duks9voi6z8n4	emman	User "Emmanuel Aguado" assigned to a designation by Admin: Emmanuel Diaz Aguado	2024-11-21 16:11:21.192
@@ -1138,10 +1138,10 @@ cm4cmdu7f0001z3vpfem1p5ut	emman	User Log-In	2024-12-06 10:45:30.795
 
 
 --
--- Data for Name: DaysNotWorked; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: DaysNotWorked; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."DaysNotWorked" ("id", "date", "userId", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."DaysNotWorked" ("id", "date", "userId", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
 cm3xwayrp02l47jwwt4c58d25	2024-09-25 16:00:00	cm3sd6n7y000h98xyfpmb6any	cm3xwayrk02kv7jwwfrgzrudz	2024-11-26 03:26:40.256	2024-11-26 03:26:40.256
 cm3xwayrp02l57jwwqtwk873b	2024-09-26 16:00:00	cm3sd6n7y000h98xyfpmb6any	cm3xwayrk02kv7jwwfrgzrudz	2024-11-26 03:26:40.256	2024-11-26 03:26:40.256
 cm3xwayrp02l67jwweh9do3y9	2024-09-29 16:00:00	cm3sd6n7y000h98xyfpmb6any	cm3xwayrk02kv7jwwfrgzrudz	2024-11-26 03:26:40.256	2024-11-26 03:26:40.256
@@ -1155,10 +1155,10 @@ cm3xwaysx02ly7jwwu2muyjdf	2024-09-29 16:00:00	emman	cm3xwaysh02ln7jwwbif5piag	20
 
 
 --
--- Data for Name: Deductions; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Deductions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Deductions" ("id", "userId", "deductionType", "amount", "description", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Deductions" ("id", "userId", "deductionType", "amount", "description", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
 cm3xwa9jo02657jwwcxk6uf72	cm3xu8bx700jn7jwwlfh8k68g	SSS	495	SSS contribution	cm3xwa9jl02637jwwknfdmyoi	2024-11-26 03:26:07.569	2024-11-26 03:26:07.569
 cm3xwa9jo02677jww3vxbnc66	cm3xu8bx700jn7jwwlfh8k68g	PhilHealth	275	PhilHealth contribution	cm3xwa9jl02637jwwknfdmyoi	2024-11-26 03:26:07.569	2024-11-26 03:26:07.569
 cm3xwa9jo02697jwwnptkvttr	cm3xu8bx700jn7jwwlfh8k68g	PagIBIG	100	PagIBIG contribution	cm3xwa9jl02637jwwknfdmyoi	2024-11-26 03:26:07.569	2024-11-26 03:26:07.569
@@ -1428,10 +1428,10 @@ cm3y7yd7e005k11m2ylaxqw4u	cm3xusu1p00l67jwwmm29up9j	Tax	775.0485000000002	Tax co
 
 
 --
--- Data for Name: Department; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Department; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Department" ("id", "departmentName", "departmentDescription", "status", "departmentHeadUserId", "createdAt", "updatedAt", "createdBy") FROM stdin;
+COPY "public"."Department" ("id", "departmentName", "departmentDescription", "status", "departmentHeadUserId", "createdAt", "updatedAt", "createdBy") FROM stdin;
 cm3rieny30003uks91p9xxgq4	IT Department	Handles IT	ACTIVE	emman	2024-11-21 16:11:01.179	2024-11-21 16:11:01.179	emman
 cm3w8dcka0005ryyfeugx1fjr	Security Department	Its	ACTIVE	cm3sd6n7y000h98xyfpmb6any	2024-11-24 23:28:54.49	2024-11-24 23:35:41.487	emman
 cm3xvx1lh00qf7jwwz4ykdah7	HR Department	Handles the manpower	ACTIVE	cm3xuoj8d00kv7jwwop9hwrrk	2024-11-26 03:15:50.742	2024-11-26 03:15:50.742	emman
@@ -1441,10 +1441,10 @@ cm3xvsnd000o57jwwf20l74ou	Engineering Department	Handles All the Engineering Tea
 
 
 --
--- Data for Name: DepartmentSalaryIncrease; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: DepartmentSalaryIncrease; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."DepartmentSalaryIncrease" ("departmentId", "salaryIncreaseEventId") FROM stdin;
+COPY "public"."DepartmentSalaryIncrease" ("departmentId", "salaryIncreaseEventId") FROM stdin;
 cm3rieny30003uks91p9xxgq4	cm3xxv78802ql7jwwmfx37gty
 cm3xvx1lh00qf7jwwz4ykdah7	cm3y0jnec02vr7jwwop8jdffm
 cm3xvx1lh00qf7jwwz4ykdah7	cm3y80z8a005o11m20wlrrkl4
@@ -1452,10 +1452,10 @@ cm3xvx1lh00qf7jwwz4ykdah7	cm3y80z8a005o11m20wlrrkl4
 
 
 --
--- Data for Name: Designation; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Designation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Designation" ("id", "designationName", "designationDescription", "status", "departmentId", "designationHeadUserId", "designationSalary", "createdAt", "updatedAt", "createdBy") FROM stdin;
+COPY "public"."Designation" ("id", "designationName", "designationDescription", "status", "departmentId", "designationHeadUserId", "designationSalary", "createdAt", "updatedAt", "createdBy") FROM stdin;
 cm3xvruoh00nz7jwwm2qx42s3	Monitoring Designation	Handles CCTVs	ACTIVE	cm3w8dcka0005ryyfeugx1fjr	cm3xv2tuq00ls7jwwsxzu6lcp	5000	2024-11-26 03:11:48.497	2024-11-26 03:11:48.497	emman
 cm3xvta2r00ob7jww97mmy8gv	Electrical Engineering Designation	Handles Electronics	ACTIVE	cm3xvsnd000o57jwwf20l74ou	cm3xvamu600mp7jwwmgb1kf5e	5000	2024-11-26 03:12:55.108	2024-11-26 03:12:55.108	emman
 cm3xw1yqq00rv7jwwild4i9pw	Civil Engineering Department	Civil Engineers	ACTIVE	cm3xvsnd000o57jwwf20l74ou	cm3xuoj8d00kv7jwwop9hwrrk	5000	2024-11-26 03:19:40.322	2024-11-26 03:19:40.322	emman
@@ -1466,36 +1466,36 @@ cm3xvxjtp00ql7jwwn23lxirz	HR Designation	Handles HR	ACTIVE	cm3xvx1lh00qf7jwwz4yk
 
 
 --
--- Data for Name: DesignationSalaryIncrease; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: DesignationSalaryIncrease; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."DesignationSalaryIncrease" ("designationId", "salaryIncreaseEventId") FROM stdin;
+COPY "public"."DesignationSalaryIncrease" ("designationId", "salaryIncreaseEventId") FROM stdin;
 cm3rif3dd0007uks9t239m816	cm3wmqo9x000tryyfg0rdz5a1
 \.
 
 
 --
--- Data for Name: Documents; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Documents; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Documents" ("id", "documentName", "documentType", "documentLink", "createdAt", "updatedAt", "userId") FROM stdin;
+COPY "public"."Documents" ("id", "documentName", "documentType", "documentLink", "createdAt", "updatedAt", "userId") FROM stdin;
 \.
 
 
 --
--- Data for Name: EmergencyContact; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: EmergencyContact; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."EmergencyContact" ("id", "firstName", "middleName", "lastName", "relationship", "contactNumber", "emailAddress", "userId") FROM stdin;
+COPY "public"."EmergencyContact" ("id", "firstName", "middleName", "lastName", "relationship", "contactNumber", "emailAddress", "userId") FROM stdin;
 cm3sgw687001a98xygzmwb058	Maria	Theresa	Aguado	Son	09213456789	sad@gmail.com	emman
 \.
 
 
 --
--- Data for Name: GovernmentContribution; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: GovernmentContribution; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."GovernmentContribution" ("id", "type", "brackets", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."GovernmentContribution" ("id", "type", "brackets", "createdAt", "updatedAt") FROM stdin;
 cm3rid7zh0000eghcxrvnudrc	SSS	{"table": [[1000, 3249.99, 135], [3250, 3749.99, 157.5], [3750, 4249.99, 180], [4250, 4749.99, 202.5], [4750, 5249.99, 225], [5250, 5749.99, 247.5], [5750, 6249.99, 270], [6250, 6749.99, 292.5], [6750, 7249.99, 315], [7250, 7749.99, 337.5], [7750, 8249.99, 360], [8250, 8749.99, 382.5], [8750, 9249.99, 405], [9250, 9749.99, 427.5], [9750, 10249.99, 450], [10250, 10749.99, 472.5], [10750, 11249.99, 495], [11250, 11749.99, 517.5], [11750, 12249.99, 540], [12250, 12749.99, 562.5], [12750, 13249.99, 585], [13250, 13749.99, 607.5], [13750, 14249.99, 630], [14250, 14749.99, 652.5], [14750, 15249.99, 675], [15250, 15749.99, 697.5], [15750, 16249.99, 720], [16250, 16749.99, 742.5], [16750, 17249.99, 765], [17250, 17749.99, 787.5], [17750, 18249.99, 810], [18250, 18749.99, 832.5], [18750, 19249.99, 855], [19250, 19749.99, 877.5], [19750, 20249.99, 900], [20250, 20749.99, 922.5], [20750, 21249.99, 945], [21250, 21749.99, 967.5], [21750, 22249.99, 990], [22250, 22749.99, 1012.5], [22270, 23249.99, 1035], [23250, 23749.99, 1057.5], [23750, 24249.99, 1080], [24250, 24279.99, 1102.5], [24750, 9007199254740991, 1125]]}	2024-11-21 16:09:53.837	2024-11-25 12:34:25.182
 cm3rid7zs0001eghc86ycn2ab	PhilHealth	{"rules": [{"maxSalary": 10000, "contribution": 225}, {"rate": 0.025, "maxSalary": 89999.99, "minSalary": 10000.01}, {"minSalary": 90000, "contribution": 4050}]}	2024-11-21 16:09:53.849	2024-11-26 04:18:22.75
 cm3rid7zu0002eghcnaa69jzu	PagIBIG	{"rules": [{"rate": 0.01, "maxSalary": 1500}, {"rate": 0.02, "maxSalary": 4999.99, "minSalary": 1500.01}, {"minSalary": 5000, "contribution": 100}]}	2024-11-21 16:09:53.851	2024-11-26 04:20:42.867
@@ -1504,10 +1504,10 @@ cm3rid7zw0003eghcihoh2hij	Tax	{"rules": [{"rate": 0, "deduction": 0, "minSalary"
 
 
 --
--- Data for Name: GovernmentId; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: GovernmentId; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."GovernmentId" ("id", "userId", "sssNumber", "tinNumber", "philHealthNumber", "pagIbigNumber", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."GovernmentId" ("id", "userId", "sssNumber", "tinNumber", "philHealthNumber", "pagIbigNumber", "createdAt", "updatedAt") FROM stdin;
 cm3sd5sok000c98xylli1l27s	cm3sd5sob000698xytgsayvvu	123	123	12	3123	2024-11-22 06:31:55.498	2024-11-22 06:31:55.498
 cm3sd6n83000n98xynki5xjiu	cm3sd6n7y000h98xyfpmb6any	231	123	123	123	2024-11-22 06:32:35.086	2024-11-22 06:32:35.086
 cm3xpueyn00003kkl8g9c4dhg	emman	1	12	12	12	2024-11-26 00:25:50.399	2024-11-26 00:25:38.242
@@ -1530,10 +1530,10 @@ cm3y7pz28000j11m2xyja1mma	cm3y7pz20000d11m2522rpsoa	1234567890	12345678912	12345
 
 
 --
--- Data for Name: Holiday; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Holiday; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Holiday" ("id", "date", "name", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Holiday" ("id", "date", "name", "createdAt", "updatedAt") FROM stdin;
 clropux4k00op98xycnbbl8yn	2023-12-31 16:00:00	New Year's Day	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropux4m00oq98xyiflaif0l	2024-02-24 16:00:00	EDSA People Power Revolution Anniversary	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropux4o00or98xy7hmkgliy	2024-04-08 16:00:00	Araw ng Kagitingan	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
@@ -1552,10 +1552,10 @@ cm3wvh78e00047jwwac82q6zd	2024-12-22 16:00:00	Jousheen Salac Birthday	2024-11-25
 
 
 --
--- Data for Name: Leaves; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Leaves; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Leaves" ("id", "userId", "startDate", "endDate", "leaveStatus", "reason", "leaveType", "documentLink", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Leaves" ("id", "userId", "startDate", "endDate", "leaveStatus", "reason", "leaveType", "documentLink", "createdAt", "updatedAt") FROM stdin;
 cm3sva95j00tw98xy7oq2bjp5	emman	2024-12-02 00:00:00	2024-12-12 00:00:00	REJECTED	wow	SICK	https://yff2xv1mgpf5hkyr.public.blob.vercel-storage.com/leaveRequests/emman-badzys-Sz1F3luGkyJ6hc5FnwXLBH8pVWhYWz.jpg	2024-11-22 14:59:16.567	2024-11-23 04:10:43.007
 cm3xxon2802mm7jwwoo7xsyqg	emman	2024-11-27 00:00:00	2024-11-29 00:00:00	PENDING	Fever	VACATION	https://yff2xv1mgpf5hkyr.public.blob.vercel-storage.com/leaveRequests/emman-Payslip_Tranquilan_2024-11-25-quCQTaabXp4Pi9D4HgVG6YoMtX784U.pdf	2024-11-26 04:05:17.888	2024-11-26 04:05:17.888
 cm3y7ufk6000s11m2a0b2v7sj	emman	2024-11-28 00:00:00	2024-11-30 00:00:00	PENDING	Fever	SICK	https://yff2xv1mgpf5hkyr.public.blob.vercel-storage.com/leaveRequests/emman-Payslip_Floresta_2024-11-25-cUV5ALJzC7IspnEsV2cP2kow26Yz8p.pdf	2024-11-26 08:49:44.262	2024-11-26 08:49:44.262
@@ -1563,27 +1563,27 @@ cm3y7ufk6000s11m2a0b2v7sj	emman	2024-11-28 00:00:00	2024-11-30 00:00:00	PENDING	
 
 
 --
--- Data for Name: Overtimes; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Overtimes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Overtimes" ("id", "reason", "status", "overtimeType", "userId", "timeOut", "clockIn", "clockOut", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Overtimes" ("id", "reason", "status", "overtimeType", "userId", "timeOut", "clockIn", "clockOut", "createdAt", "updatedAt") FROM stdin;
 cm3srm8vn00to98xyknrzcciu	test	PENDING	REGULAR	emman	2024-11-22 10:01:00	2024-11-22 13:16:37.619	2024-11-22 13:19:21.414	2024-11-22 13:16:37.62	2024-11-22 13:19:21.415
 \.
 
 
 --
--- Data for Name: PasswordResetToken; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: PasswordResetToken; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."PasswordResetToken" ("id", "email", "token", "expires") FROM stdin;
+COPY "public"."PasswordResetToken" ("id", "email", "token", "expires") FROM stdin;
 \.
 
 
 --
--- Data for Name: Payroll; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Payroll; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Payroll" ("id", "payPeriodStart", "payPeriodEnd", "payrollStatus", "totalAmount", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Payroll" ("id", "payPeriodStart", "payPeriodEnd", "payrollStatus", "totalAmount", "createdAt", "updatedAt") FROM stdin;
 cm3xw6h4500rw7jwwj0310gmh	2024-09-25 16:00:00	2024-10-10 15:59:59.999	APPROVED	465767.87200000003	2024-11-26 03:23:10.757	2024-11-26 07:19:15.425
 cm3xw72ka00rz7jwwuy9h7n0g	2024-10-10 16:00:00	2024-10-25 15:59:59.999	APPROVED	474767.87200000003	2024-11-26 03:23:38.555	2024-11-26 07:19:26.481
 cm3xw7hv700s27jwwb6p6npht	2024-10-25 16:00:00	2024-11-10 15:59:59.999	APPROVED	474767.87200000003	2024-11-26 03:23:58.387	2024-11-26 07:19:34.509
@@ -1593,10 +1593,10 @@ cm3y8q57t006c11m26hrsvbk3	2024-12-30 16:00:00	2024-12-31 15:59:59.999	PENDING	0	
 
 
 --
--- Data for Name: PayrollItem; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: PayrollItem; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."PayrollItem" ("id", "payrollId", "userId", "basicSalary", "overtimeSalary", "dailyRate", "additionalEarnings", "lateDeductions", "earlyClockOutDeductions", "totalDeductions", "netSalary", "daysWorked", "daysNotWorked", "daysLeave", "minutesWorked", "minutesNotWorked", "minutesEarlyOut", "minutesLate", "minutesOvertime", "specialDayMinutes", "specialDayEarnings", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."PayrollItem" ("id", "payrollId", "userId", "basicSalary", "overtimeSalary", "dailyRate", "additionalEarnings", "lateDeductions", "earlyClockOutDeductions", "totalDeductions", "netSalary", "daysWorked", "daysNotWorked", "daysLeave", "minutesWorked", "minutesNotWorked", "minutesEarlyOut", "minutesLate", "minutesOvertime", "specialDayMinutes", "specialDayEarnings", "createdAt", "updatedAt") FROM stdin;
 cm3xwa9jl02637jwwknfdmyoi	cm3xw7hv700s27jwwb6p6npht	cm3xu8bx700jn7jwwlfh8k68g	11000	0	1222.222222222222	0	0	0	870	10130	9	0	0	5400	0	0	0	0	0	0	2024-11-26 03:26:07.569	2024-11-26 03:26:07.569
 cm3xwa9k9026e7jww0sk7vhn3	cm3xw7hv700s27jwwb6p6npht	cm3xuj38h00kk7jwwnwywtik2	55000	0	6111.111111111111	0	0	0	8808.598	46191.402	9	0	0	5400	0	0	0	0	0	0	2024-11-26 03:26:07.593	2024-11-26 03:26:07.593
 cm3xwa9kq026p7jwwkcs9mpla	cm3xw7hv700s27jwwb6p6npht	cm3xud7bl00jy7jww9qzfi51c	26000	0	2888.888888888889	0	0	0	2650.0485	23349.9515	9	0	0	5400	0	0	0	0	0	0	2024-11-26 03:26:07.61	2024-11-26 03:26:07.61
@@ -1667,10 +1667,10 @@ cm3y7yd7c005c11m2sf9p2sq8	cm3y7yd35000z11m2r8n014zu	cm3xusu1p00l67jwwmm29up9j	26
 
 
 --
--- Data for Name: SalaryHistory; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: SalaryHistory; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."SalaryHistory" ("id", "userId", "basicSalary", "grossSalary", "startDate", "endDate", "amountIncreased", "salaryIncreaseEventId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."SalaryHistory" ("id", "userId", "basicSalary", "grossSalary", "startDate", "endDate", "amountIncreased", "salaryIncreaseEventId", "createdAt", "updatedAt") FROM stdin;
 cm3rif3dv000buks95n0zsm23	emman	5000	5000	2024-11-21 16:10:31.595	2024-11-21 16:11:21.188	\N	\N	2024-11-21 16:11:21.188	2024-11-21 16:11:21.188
 cm3wbut580009ryyfip0c1ox3	emman	5000	10000	2024-11-21 16:11:21.19	2024-11-25 01:06:27.98	0	\N	2024-11-25 01:06:27.98	2024-11-25 01:06:27.98
 cm3wbv571000dryyfhxto8i6p	cm3sd5sob000698xytgsayvvu	5000	10000	2024-11-22 06:31:55.498	2024-11-25 01:06:43.597	0	\N	2024-11-25 01:06:43.597	2024-11-25 01:06:43.597
@@ -1716,10 +1716,10 @@ cm3y84f5h005w11m2pdbvz9aa	cm3xuj38h00kk7jwwnwywtik2	50000	55000	2024-11-26 03:18
 
 
 --
--- Data for Name: SalaryIncreaseEvent; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: SalaryIncreaseEvent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."SalaryIncreaseEvent" ("id", "percentage", "amount", "appliedAt", "appliedBy", "isUndone", "undoneAt", "undoneBy") FROM stdin;
+COPY "public"."SalaryIncreaseEvent" ("id", "percentage", "amount", "appliedAt", "appliedBy", "isUndone", "undoneAt", "undoneBy") FROM stdin;
 cm3wmqo9x000tryyfg0rdz5a1	\N	1000	2024-11-25 06:11:10.811	emman	f	\N	\N
 cm3xxv78802ql7jwwmfx37gty	\N	5000	2024-11-26 04:10:23.96	emman	f	\N	\N
 cm3y0jnec02vr7jwwop8jdffm	\N	1000	2024-11-26 05:25:23.892	emman	f	\N	\N
@@ -1731,10 +1731,10 @@ cm3y80z8a005o11m20wlrrkl4	\N	5000	2024-11-26 08:54:49.689	emman	f	\N	\N
 
 
 --
--- Data for Name: Timesheet; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: Timesheet; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."Timesheet" ("id", "userId", "dayId", "clockIn", "clockOut", "isLate", "isOvertime", "forgotClockOut", "clockOutEarly", "isLeave", "isAdvanced", "clockOutEarlyMinutes", "minutesOvertime", "minutesLate", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."Timesheet" ("id", "userId", "dayId", "clockIn", "clockOut", "isLate", "isOvertime", "forgotClockOut", "clockOutEarly", "isLeave", "isAdvanced", "clockOutEarlyMinutes", "minutesOvertime", "minutesLate", "payrollItemId", "createdAt", "updatedAt") FROM stdin;
 cm3xpfpsk00f77jwww0udziym	emman	clropux1p00m098xyaz6rw480	2024-11-21 00:00:00	2024-11-21 10:00:00	f	f	f	f	f	t	0	0	0	cm3y7yd67003t11m22m4lcfr7	2024-11-26 00:14:24.378	2024-11-26 08:52:47.79
 cm3xw9y3j00s87jww5308s3vt	cm3xu8bx700jn7jwwlfh8k68g	clropuwwy00gk98xysca8iu4e	2024-09-02 00:00:00	2024-09-02 10:00:00	f	f	f	f	f	t	0	0	0	\N	2024-11-26 03:25:52.719	2024-11-26 03:25:52.719
 cm3xw9y3m00sa7jwwn7jdmjxo	cm3xu8bx700jn7jwwlfh8k68g	clropuwx100gn98xy4en4vxy8	2024-09-03 00:00:00	2024-09-03 10:00:00	f	f	f	f	f	t	0	0	0	\N	2024-11-26 03:25:52.719	2024-11-26 03:25:52.719
@@ -2750,26 +2750,26 @@ cm3xpfpox00b17jww5mgwel14	cm3sd6n7y000h98xyfpmb6any	clropux1r00m398xy6fxll2mn	20
 
 
 --
--- Data for Name: TwoFactorConfirmation; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: TwoFactorConfirmation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."TwoFactorConfirmation" ("id", "userId") FROM stdin;
+COPY "public"."TwoFactorConfirmation" ("id", "userId") FROM stdin;
 \.
 
 
 --
--- Data for Name: TwoFactorToken; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: TwoFactorToken; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."TwoFactorToken" ("id", "email", "token", "expires") FROM stdin;
+COPY "public"."TwoFactorToken" ("id", "email", "token", "expires") FROM stdin;
 \.
 
 
 --
--- Data for Name: User; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."User" ("id", "firstName", "middleName", "lastName", "gender", "dateOfBirth", "jobTitle", "email", "createdAt", "updatedAt", "lastLogin", "vacationDays", "incentiveDays", "emailVerified", "image", "password", "role", "isTwoFactorEnabled", "twoFactorConfirmationId", "isArchived") FROM stdin;
+COPY "public"."User" ("id", "firstName", "middleName", "lastName", "gender", "dateOfBirth", "jobTitle", "email", "createdAt", "updatedAt", "lastLogin", "vacationDays", "incentiveDays", "emailVerified", "image", "password", "role", "isTwoFactorEnabled", "twoFactorConfirmationId", "isArchived") FROM stdin;
 cm3xu8bx700jn7jwwlfh8k68g	Julian 	El	Vasquez	MALE	2024-11-13 00:00:00	Singer	jlee@gmail.com	2024-11-26 02:28:38.105	2024-11-26 03:12:11.361	2024-11-26 02:28:38.105	5	5	2024-11-26 02:28:50.615	\N	$2b$10$0ftIzInrrZgRYkqV7qyEqun.d5QInnmSe4llw3s3muW.47.7W9Bu.	ADMIN	f	\N	f
 cm3xuj38h00kk7jwwnwywtik2	Jousheen Ly	Castanares	Salac	MALE	2003-12-23 00:00:00	Gambler	jlcsalac@gmail.com	2024-11-26 02:37:00.064	2024-11-26 03:18:21.17	2024-11-26 02:37:00.064	5	5	2024-11-26 02:37:11.359	\N	$2b$10$/t1Y.um5yAABU9T0x4rp9.9hLDc/UUJslBEnNuUkx8E0O/UIBnYeC	ADMIN	f	\N	f
 cm3xud7bl00jy7jww9qzfi51c	Francis Paolo 	Vito	Echavez	MALE	2003-04-14 00:00:00	Marketing Engineer	fpvde@gmail.com	2024-11-26 02:32:25.425	2024-11-26 03:15:07.623	2024-11-26 02:32:25.425	5	5	2024-11-26 02:32:37.269	\N	$2b$10$BQNpyGXxtWNrOQrbnZMGqu3mIUF/UxaLJt68I0Cv1m1NS7sfaecxy	ADMIN	f	\N	f
@@ -2792,10 +2792,10 @@ emman	Emmanuel	Diaz	Aguado	MALE	2003-05-13 16:00:00	CEO	eaguado@addu.edu.ph	2024
 
 
 --
--- Data for Name: UserSalary; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: UserSalary; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."UserSalary" ("id", "userId", "basicSalary", "grossSalary", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."UserSalary" ("id", "userId", "basicSalary", "grossSalary", "createdAt", "updatedAt") FROM stdin;
 cm3xv2tuv00lw7jwwk1l16riv	cm3xv2tuq00ls7jwwsxzu6lcp	25000	31000	2024-11-26 02:52:21.026	2024-11-26 02:52:21.026
 cm3xvamu900mt7jwwy1yv83wg	cm3xvamu600mp7jwwmgb1kf5e	80000	86000	2024-11-26 02:58:25.182	2024-11-26 02:58:25.182
 cm3xuoj8f00kz7jwwtmytptzy	cm3xuoj8d00kv7jwwop9hwrrk	30000	35000	2024-11-26 02:41:14.077	2024-11-26 03:14:17.012
@@ -2818,19 +2818,19 @@ cm3xuj38j00ko7jwwub0mh1qx	cm3xuj38h00kk7jwwnwywtik2	50000	61000	2024-11-26 02:37
 
 
 --
--- Data for Name: VerificationToken; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: VerificationToken; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."VerificationToken" ("id", "email", "token", "expires") FROM stdin;
+COPY "public"."VerificationToken" ("id", "email", "token", "expires") FROM stdin;
 cm3y7pz2d000k11m2ra416qak	john.doe@gmail.com	3a1668c8-09bc-433f-9973-879d1feb77dd	2024-11-26 09:46:16.259
 \.
 
 
 --
--- Data for Name: WorkingDay; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: WorkingDay; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."WorkingDay" ("id", "date", "password", "monthId", "isRequired", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."WorkingDay" ("id", "date", "password", "monthId", "isRequired", "createdAt", "updatedAt") FROM stdin;
 clropuwgn001g98xyaz6stp4u	2024-01-21 16:00:00	c58276	clropuwg8001e98xy3qyr8y2d	t	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropuwgy001j98xys5pspi1m	2024-01-22 16:00:00	755c09	clropuwg8001e98xy3qyr8y2d	t	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropuwh1001m98xydmf2yibj	2024-01-23 16:00:00	b3283d	clropuwg8001e98xy3qyr8y2d	t	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
@@ -3073,10 +3073,10 @@ clropux4c00og98xyl4414sz1	2024-12-26 16:00:00	b81b42	clropux2900mm98xycdx1igtp	t
 
 
 --
--- Data for Name: WorkingMonth; Type: TABLE DATA; Schema: public?; Owner: -
+-- Data for Name: WorkingMonth; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "public?"."WorkingMonth" ("id", "month", "year", "createdAt", "updatedAt") FROM stdin;
+COPY "public"."WorkingMonth" ("id", "month", "year", "createdAt", "updatedAt") FROM stdin;
 clropuwg8001e98xy3qyr8y2d	1	2024	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropuwhm002498xys9ajiscx	2	2024	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
 clropuwk2004398xy2ee5dr5u	3	2024	2024-01-22 09:19:49.446	2024-01-22 09:19:49.446
@@ -3093,753 +3093,753 @@ clropux2900mm98xycdx1igtp	12	2024	2024-01-22 09:19:49.446	2024-01-22 09:19:49.44
 
 
 --
--- Name: Account Account_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Account Account_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Account"
+ALTER TABLE ONLY "public"."Account"
     ADD CONSTRAINT "Account_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: AdditionalEarnings AdditionalEarnings_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdditionalEarnings AdditionalEarnings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdditionalEarnings"
+ALTER TABLE ONLY "public"."AdditionalEarnings"
     ADD CONSTRAINT "AdditionalEarnings_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: AddressLine AddressLine_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AddressLine AddressLine_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AddressLine"
+ALTER TABLE ONLY "public"."AddressLine"
     ADD CONSTRAINT "AddressLine_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdvanceTimesheetUsers"
+ALTER TABLE ONLY "public"."AdvanceTimesheetUsers"
     ADD CONSTRAINT "AdvanceTimesheetUsers_pkey" PRIMARY KEY ("userId", "advanceTimesheetId");
 
 
 --
--- Name: AdvanceTimesheet AdvanceTimesheet_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdvanceTimesheet AdvanceTimesheet_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdvanceTimesheet"
+ALTER TABLE ONLY "public"."AdvanceTimesheet"
     ADD CONSTRAINT "AdvanceTimesheet_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Allowance Allowance_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Allowance Allowance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Allowance"
+ALTER TABLE ONLY "public"."Allowance"
     ADD CONSTRAINT "Allowance_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Archive Archive_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Archive Archive_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Archive"
+ALTER TABLE ONLY "public"."Archive"
     ADD CONSTRAINT "Archive_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: AssignDesignation AssignDesignation_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AssignDesignation AssignDesignation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AssignDesignation"
+ALTER TABLE ONLY "public"."AssignDesignation"
     ADD CONSTRAINT "AssignDesignation_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: AuditLog AuditLog_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: AuditLog AuditLog_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AuditLog"
+ALTER TABLE ONLY "public"."AuditLog"
     ADD CONSTRAINT "AuditLog_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: DaysNotWorked DaysNotWorked_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: DaysNotWorked DaysNotWorked_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DaysNotWorked"
+ALTER TABLE ONLY "public"."DaysNotWorked"
     ADD CONSTRAINT "DaysNotWorked_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Deductions Deductions_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Deductions Deductions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Deductions"
+ALTER TABLE ONLY "public"."Deductions"
     ADD CONSTRAINT "Deductions_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DepartmentSalaryIncrease"
+ALTER TABLE ONLY "public"."DepartmentSalaryIncrease"
     ADD CONSTRAINT "DepartmentSalaryIncrease_pkey" PRIMARY KEY ("departmentId", "salaryIncreaseEventId");
 
 
 --
--- Name: Department Department_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Department Department_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Department"
+ALTER TABLE ONLY "public"."Department"
     ADD CONSTRAINT "Department_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: DesignationSalaryIncrease DesignationSalaryIncrease_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: DesignationSalaryIncrease DesignationSalaryIncrease_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DesignationSalaryIncrease"
+ALTER TABLE ONLY "public"."DesignationSalaryIncrease"
     ADD CONSTRAINT "DesignationSalaryIncrease_pkey" PRIMARY KEY ("designationId", "salaryIncreaseEventId");
 
 
 --
--- Name: Designation Designation_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Designation Designation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Designation"
+ALTER TABLE ONLY "public"."Designation"
     ADD CONSTRAINT "Designation_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Documents Documents_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Documents Documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Documents"
+ALTER TABLE ONLY "public"."Documents"
     ADD CONSTRAINT "Documents_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: EmergencyContact EmergencyContact_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: EmergencyContact EmergencyContact_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."EmergencyContact"
+ALTER TABLE ONLY "public"."EmergencyContact"
     ADD CONSTRAINT "EmergencyContact_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: GovernmentContribution GovernmentContribution_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: GovernmentContribution GovernmentContribution_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."GovernmentContribution"
+ALTER TABLE ONLY "public"."GovernmentContribution"
     ADD CONSTRAINT "GovernmentContribution_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: GovernmentId GovernmentId_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: GovernmentId GovernmentId_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."GovernmentId"
+ALTER TABLE ONLY "public"."GovernmentId"
     ADD CONSTRAINT "GovernmentId_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Holiday Holiday_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Holiday Holiday_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Holiday"
+ALTER TABLE ONLY "public"."Holiday"
     ADD CONSTRAINT "Holiday_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Leaves Leaves_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Leaves Leaves_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Leaves"
+ALTER TABLE ONLY "public"."Leaves"
     ADD CONSTRAINT "Leaves_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Overtimes Overtimes_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Overtimes Overtimes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Overtimes"
+ALTER TABLE ONLY "public"."Overtimes"
     ADD CONSTRAINT "Overtimes_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: PasswordResetToken PasswordResetToken_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: PasswordResetToken PasswordResetToken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."PasswordResetToken"
+ALTER TABLE ONLY "public"."PasswordResetToken"
     ADD CONSTRAINT "PasswordResetToken_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: PayrollItem PayrollItem_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: PayrollItem PayrollItem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."PayrollItem"
+ALTER TABLE ONLY "public"."PayrollItem"
     ADD CONSTRAINT "PayrollItem_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Payroll Payroll_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Payroll Payroll_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Payroll"
+ALTER TABLE ONLY "public"."Payroll"
     ADD CONSTRAINT "Payroll_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: SalaryHistory SalaryHistory_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: SalaryHistory SalaryHistory_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."SalaryHistory"
+ALTER TABLE ONLY "public"."SalaryHistory"
     ADD CONSTRAINT "SalaryHistory_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: SalaryIncreaseEvent SalaryIncreaseEvent_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: SalaryIncreaseEvent SalaryIncreaseEvent_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."SalaryIncreaseEvent"
+ALTER TABLE ONLY "public"."SalaryIncreaseEvent"
     ADD CONSTRAINT "SalaryIncreaseEvent_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Timesheet Timesheet_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: Timesheet Timesheet_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Timesheet"
+ALTER TABLE ONLY "public"."Timesheet"
     ADD CONSTRAINT "Timesheet_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: TwoFactorConfirmation TwoFactorConfirmation_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: TwoFactorConfirmation TwoFactorConfirmation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."TwoFactorConfirmation"
+ALTER TABLE ONLY "public"."TwoFactorConfirmation"
     ADD CONSTRAINT "TwoFactorConfirmation_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: TwoFactorToken TwoFactorToken_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: TwoFactorToken TwoFactorToken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."TwoFactorToken"
+ALTER TABLE ONLY "public"."TwoFactorToken"
     ADD CONSTRAINT "TwoFactorToken_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: UserSalary UserSalary_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: UserSalary UserSalary_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."UserSalary"
+ALTER TABLE ONLY "public"."UserSalary"
     ADD CONSTRAINT "UserSalary_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: User User_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."User"
+ALTER TABLE ONLY "public"."User"
     ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: VerificationToken VerificationToken_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: VerificationToken VerificationToken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."VerificationToken"
+ALTER TABLE ONLY "public"."VerificationToken"
     ADD CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: WorkingDay WorkingDay_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: WorkingDay WorkingDay_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."WorkingDay"
+ALTER TABLE ONLY "public"."WorkingDay"
     ADD CONSTRAINT "WorkingDay_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: WorkingMonth WorkingMonth_pkey; Type: CONSTRAINT; Schema: public?; Owner: -
+-- Name: WorkingMonth WorkingMonth_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."WorkingMonth"
+ALTER TABLE ONLY "public"."WorkingMonth"
     ADD CONSTRAINT "WorkingMonth_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: Account_provider_providerAccountId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Account_provider_providerAccountId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "public?"."Account" USING "btree" ("provider", "providerAccountId");
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "public"."Account" USING "btree" ("provider", "providerAccountId");
 
 
 --
--- Name: AddressLine_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: AddressLine_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "AddressLine_userId_key" ON "public?"."AddressLine" USING "btree" ("userId");
+CREATE UNIQUE INDEX "AddressLine_userId_key" ON "public"."AddressLine" USING "btree" ("userId");
 
 
 --
--- Name: Archive_archiveType_entityId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Archive_archiveType_entityId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Archive_archiveType_entityId_key" ON "public?"."Archive" USING "btree" ("archiveType", "entityId");
+CREATE UNIQUE INDEX "Archive_archiveType_entityId_key" ON "public"."Archive" USING "btree" ("archiveType", "entityId");
 
 
 --
--- Name: AssignDesignation_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: AssignDesignation_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "AssignDesignation_userId_key" ON "public?"."AssignDesignation" USING "btree" ("userId");
+CREATE UNIQUE INDEX "AssignDesignation_userId_key" ON "public"."AssignDesignation" USING "btree" ("userId");
 
 
 --
--- Name: Department_departmentHeadUserId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Department_departmentHeadUserId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Department_departmentHeadUserId_key" ON "public?"."Department" USING "btree" ("departmentHeadUserId");
+CREATE UNIQUE INDEX "Department_departmentHeadUserId_key" ON "public"."Department" USING "btree" ("departmentHeadUserId");
 
 
 --
--- Name: Designation_designationHeadUserId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Designation_designationHeadUserId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Designation_designationHeadUserId_key" ON "public?"."Designation" USING "btree" ("designationHeadUserId");
+CREATE UNIQUE INDEX "Designation_designationHeadUserId_key" ON "public"."Designation" USING "btree" ("designationHeadUserId");
 
 
 --
--- Name: EmergencyContact_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: EmergencyContact_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "EmergencyContact_userId_key" ON "public?"."EmergencyContact" USING "btree" ("userId");
+CREATE UNIQUE INDEX "EmergencyContact_userId_key" ON "public"."EmergencyContact" USING "btree" ("userId");
 
 
 --
--- Name: GovernmentContribution_type_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: GovernmentContribution_type_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "GovernmentContribution_type_key" ON "public?"."GovernmentContribution" USING "btree" ("type");
+CREATE UNIQUE INDEX "GovernmentContribution_type_key" ON "public"."GovernmentContribution" USING "btree" ("type");
 
 
 --
--- Name: GovernmentId_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: GovernmentId_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "GovernmentId_userId_key" ON "public?"."GovernmentId" USING "btree" ("userId");
+CREATE UNIQUE INDEX "GovernmentId_userId_key" ON "public"."GovernmentId" USING "btree" ("userId");
 
 
 --
--- Name: Holiday_date_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Holiday_date_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Holiday_date_key" ON "public?"."Holiday" USING "btree" ("date");
+CREATE UNIQUE INDEX "Holiday_date_key" ON "public"."Holiday" USING "btree" ("date");
 
 
 --
--- Name: Leaves_userId_startDate_endDate_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Leaves_userId_startDate_endDate_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Leaves_userId_startDate_endDate_key" ON "public?"."Leaves" USING "btree" ("userId", "startDate", "endDate");
+CREATE UNIQUE INDEX "Leaves_userId_startDate_endDate_key" ON "public"."Leaves" USING "btree" ("userId", "startDate", "endDate");
 
 
 --
--- Name: Overtimes_userId_createdAt_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Overtimes_userId_createdAt_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Overtimes_userId_createdAt_key" ON "public?"."Overtimes" USING "btree" ("userId", "createdAt");
+CREATE UNIQUE INDEX "Overtimes_userId_createdAt_key" ON "public"."Overtimes" USING "btree" ("userId", "createdAt");
 
 
 --
--- Name: PasswordResetToken_email_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: PasswordResetToken_email_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "PasswordResetToken_email_token_key" ON "public?"."PasswordResetToken" USING "btree" ("email", "token");
+CREATE UNIQUE INDEX "PasswordResetToken_email_token_key" ON "public"."PasswordResetToken" USING "btree" ("email", "token");
 
 
 --
--- Name: PasswordResetToken_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: PasswordResetToken_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "PasswordResetToken_token_key" ON "public?"."PasswordResetToken" USING "btree" ("token");
+CREATE UNIQUE INDEX "PasswordResetToken_token_key" ON "public"."PasswordResetToken" USING "btree" ("token");
 
 
 --
--- Name: PayrollItem_payrollId_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: PayrollItem_payrollId_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "PayrollItem_payrollId_userId_key" ON "public?"."PayrollItem" USING "btree" ("payrollId", "userId");
+CREATE UNIQUE INDEX "PayrollItem_payrollId_userId_key" ON "public"."PayrollItem" USING "btree" ("payrollId", "userId");
 
 
 --
--- Name: Payroll_payPeriodStart_payPeriodEnd_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Payroll_payPeriodStart_payPeriodEnd_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Payroll_payPeriodStart_payPeriodEnd_key" ON "public?"."Payroll" USING "btree" ("payPeriodStart", "payPeriodEnd");
+CREATE UNIQUE INDEX "Payroll_payPeriodStart_payPeriodEnd_key" ON "public"."Payroll" USING "btree" ("payPeriodStart", "payPeriodEnd");
 
 
 --
--- Name: Timesheet_userId_dayId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: Timesheet_userId_dayId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "Timesheet_userId_dayId_key" ON "public?"."Timesheet" USING "btree" ("userId", "dayId");
+CREATE UNIQUE INDEX "Timesheet_userId_dayId_key" ON "public"."Timesheet" USING "btree" ("userId", "dayId");
 
 
 --
--- Name: TwoFactorConfirmation_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: TwoFactorConfirmation_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "TwoFactorConfirmation_userId_key" ON "public?"."TwoFactorConfirmation" USING "btree" ("userId");
+CREATE UNIQUE INDEX "TwoFactorConfirmation_userId_key" ON "public"."TwoFactorConfirmation" USING "btree" ("userId");
 
 
 --
--- Name: TwoFactorToken_email_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: TwoFactorToken_email_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "TwoFactorToken_email_token_key" ON "public?"."TwoFactorToken" USING "btree" ("email", "token");
+CREATE UNIQUE INDEX "TwoFactorToken_email_token_key" ON "public"."TwoFactorToken" USING "btree" ("email", "token");
 
 
 --
--- Name: TwoFactorToken_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: TwoFactorToken_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "TwoFactorToken_token_key" ON "public?"."TwoFactorToken" USING "btree" ("token");
+CREATE UNIQUE INDEX "TwoFactorToken_token_key" ON "public"."TwoFactorToken" USING "btree" ("token");
 
 
 --
--- Name: UserSalary_userId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: UserSalary_userId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "UserSalary_userId_key" ON "public?"."UserSalary" USING "btree" ("userId");
+CREATE UNIQUE INDEX "UserSalary_userId_key" ON "public"."UserSalary" USING "btree" ("userId");
 
 
 --
--- Name: User_email_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: User_email_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "User_email_key" ON "public?"."User" USING "btree" ("email");
+CREATE UNIQUE INDEX "User_email_key" ON "public"."User" USING "btree" ("email");
 
 
 --
--- Name: VerificationToken_email_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: VerificationToken_email_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "VerificationToken_email_token_key" ON "public?"."VerificationToken" USING "btree" ("email", "token");
+CREATE UNIQUE INDEX "VerificationToken_email_token_key" ON "public"."VerificationToken" USING "btree" ("email", "token");
 
 
 --
--- Name: VerificationToken_token_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: VerificationToken_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "VerificationToken_token_key" ON "public?"."VerificationToken" USING "btree" ("token");
+CREATE UNIQUE INDEX "VerificationToken_token_key" ON "public"."VerificationToken" USING "btree" ("token");
 
 
 --
--- Name: WorkingDay_date_monthId_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: WorkingDay_date_monthId_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "WorkingDay_date_monthId_key" ON "public?"."WorkingDay" USING "btree" ("date", "monthId");
+CREATE UNIQUE INDEX "WorkingDay_date_monthId_key" ON "public"."WorkingDay" USING "btree" ("date", "monthId");
 
 
 --
--- Name: WorkingMonth_month_year_key; Type: INDEX; Schema: public?; Owner: -
+-- Name: WorkingMonth_month_year_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX "WorkingMonth_month_year_key" ON "public?"."WorkingMonth" USING "btree" ("month", "year");
+CREATE UNIQUE INDEX "WorkingMonth_month_year_key" ON "public"."WorkingMonth" USING "btree" ("month", "year");
 
 
 --
--- Name: Account Account_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Account Account_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Account"
-    ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Account"
+    ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AdditionalEarnings AdditionalEarnings_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdditionalEarnings AdditionalEarnings_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdditionalEarnings"
-    ADD CONSTRAINT "AdditionalEarnings_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public?"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AdditionalEarnings"
+    ADD CONSTRAINT "AdditionalEarnings_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AdditionalEarnings AdditionalEarnings_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdditionalEarnings AdditionalEarnings_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdditionalEarnings"
-    ADD CONSTRAINT "AdditionalEarnings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AdditionalEarnings"
+    ADD CONSTRAINT "AdditionalEarnings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AddressLine AddressLine_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AddressLine AddressLine_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AddressLine"
-    ADD CONSTRAINT "AddressLine_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AddressLine"
+    ADD CONSTRAINT "AddressLine_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_advanceTimesheetId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_advanceTimesheetId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdvanceTimesheetUsers"
-    ADD CONSTRAINT "AdvanceTimesheetUsers_advanceTimesheetId_fkey" FOREIGN KEY ("advanceTimesheetId") REFERENCES "public?"."AdvanceTimesheet"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AdvanceTimesheetUsers"
+    ADD CONSTRAINT "AdvanceTimesheetUsers_advanceTimesheetId_fkey" FOREIGN KEY ("advanceTimesheetId") REFERENCES "public"."AdvanceTimesheet"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AdvanceTimesheetUsers AdvanceTimesheetUsers_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AdvanceTimesheetUsers"
-    ADD CONSTRAINT "AdvanceTimesheetUsers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AdvanceTimesheetUsers"
+    ADD CONSTRAINT "AdvanceTimesheetUsers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Allowance Allowance_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Allowance Allowance_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Allowance"
-    ADD CONSTRAINT "Allowance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Allowance"
+    ADD CONSTRAINT "Allowance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AssignDesignation AssignDesignation_designationId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AssignDesignation AssignDesignation_designationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AssignDesignation"
-    ADD CONSTRAINT "AssignDesignation_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "public?"."Designation"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AssignDesignation"
+    ADD CONSTRAINT "AssignDesignation_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "public"."Designation"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AssignDesignation AssignDesignation_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AssignDesignation AssignDesignation_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AssignDesignation"
-    ADD CONSTRAINT "AssignDesignation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."AssignDesignation"
+    ADD CONSTRAINT "AssignDesignation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: AuditLog AuditLog_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: AuditLog AuditLog_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."AuditLog"
-    ADD CONSTRAINT "AuditLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."AuditLog"
+    ADD CONSTRAINT "AuditLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: DaysNotWorked DaysNotWorked_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DaysNotWorked DaysNotWorked_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DaysNotWorked"
-    ADD CONSTRAINT "DaysNotWorked_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public?"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."DaysNotWorked"
+    ADD CONSTRAINT "DaysNotWorked_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: DaysNotWorked DaysNotWorked_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DaysNotWorked DaysNotWorked_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DaysNotWorked"
-    ADD CONSTRAINT "DaysNotWorked_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."DaysNotWorked"
+    ADD CONSTRAINT "DaysNotWorked_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Deductions Deductions_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Deductions Deductions_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Deductions"
-    ADD CONSTRAINT "Deductions_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public?"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Deductions"
+    ADD CONSTRAINT "Deductions_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Deductions Deductions_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Deductions Deductions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Deductions"
-    ADD CONSTRAINT "Deductions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Deductions"
+    ADD CONSTRAINT "Deductions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_departmentId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_departmentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DepartmentSalaryIncrease"
-    ADD CONSTRAINT "DepartmentSalaryIncrease_departmentId_fkey" FOREIGN KEY ("departmentId") REFERENCES "public?"."Department"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."DepartmentSalaryIncrease"
+    ADD CONSTRAINT "DepartmentSalaryIncrease_departmentId_fkey" FOREIGN KEY ("departmentId") REFERENCES "public"."Department"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DepartmentSalaryIncrease DepartmentSalaryIncrease_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DepartmentSalaryIncrease"
-    ADD CONSTRAINT "DepartmentSalaryIncrease_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public?"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."DepartmentSalaryIncrease"
+    ADD CONSTRAINT "DepartmentSalaryIncrease_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: Department Department_departmentHeadUserId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Department Department_departmentHeadUserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Department"
-    ADD CONSTRAINT "Department_departmentHeadUserId_fkey" FOREIGN KEY ("departmentHeadUserId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE SET NULL;
+ALTER TABLE ONLY "public"."Department"
+    ADD CONSTRAINT "Department_departmentHeadUserId_fkey" FOREIGN KEY ("departmentHeadUserId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
--- Name: DesignationSalaryIncrease DesignationSalaryIncrease_designationId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DesignationSalaryIncrease DesignationSalaryIncrease_designationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DesignationSalaryIncrease"
-    ADD CONSTRAINT "DesignationSalaryIncrease_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "public?"."Designation"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."DesignationSalaryIncrease"
+    ADD CONSTRAINT "DesignationSalaryIncrease_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "public"."Designation"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: DesignationSalaryIncrease DesignationSalaryIncrease_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: DesignationSalaryIncrease DesignationSalaryIncrease_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."DesignationSalaryIncrease"
-    ADD CONSTRAINT "DesignationSalaryIncrease_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public?"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."DesignationSalaryIncrease"
+    ADD CONSTRAINT "DesignationSalaryIncrease_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: Designation Designation_departmentId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Designation Designation_departmentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Designation"
-    ADD CONSTRAINT "Designation_departmentId_fkey" FOREIGN KEY ("departmentId") REFERENCES "public?"."Department"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."Designation"
+    ADD CONSTRAINT "Designation_departmentId_fkey" FOREIGN KEY ("departmentId") REFERENCES "public"."Department"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: Designation Designation_designationHeadUserId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Designation Designation_designationHeadUserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Designation"
-    ADD CONSTRAINT "Designation_designationHeadUserId_fkey" FOREIGN KEY ("designationHeadUserId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE ONLY "public"."Designation"
+    ADD CONSTRAINT "Designation_designationHeadUserId_fkey" FOREIGN KEY ("designationHeadUserId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: Documents Documents_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Documents Documents_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Documents"
-    ADD CONSTRAINT "Documents_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Documents"
+    ADD CONSTRAINT "Documents_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: EmergencyContact EmergencyContact_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: EmergencyContact EmergencyContact_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."EmergencyContact"
-    ADD CONSTRAINT "EmergencyContact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."EmergencyContact"
+    ADD CONSTRAINT "EmergencyContact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: GovernmentId GovernmentId_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: GovernmentId GovernmentId_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."GovernmentId"
-    ADD CONSTRAINT "GovernmentId_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."GovernmentId"
+    ADD CONSTRAINT "GovernmentId_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Leaves Leaves_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Leaves Leaves_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Leaves"
-    ADD CONSTRAINT "Leaves_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Leaves"
+    ADD CONSTRAINT "Leaves_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Overtimes Overtimes_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Overtimes Overtimes_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Overtimes"
-    ADD CONSTRAINT "Overtimes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Overtimes"
+    ADD CONSTRAINT "Overtimes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: PayrollItem PayrollItem_payrollId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: PayrollItem PayrollItem_payrollId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."PayrollItem"
-    ADD CONSTRAINT "PayrollItem_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "public?"."Payroll"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."PayrollItem"
+    ADD CONSTRAINT "PayrollItem_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "public"."Payroll"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: PayrollItem PayrollItem_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: PayrollItem PayrollItem_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."PayrollItem"
-    ADD CONSTRAINT "PayrollItem_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."PayrollItem"
+    ADD CONSTRAINT "PayrollItem_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: SalaryHistory SalaryHistory_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: SalaryHistory SalaryHistory_salaryIncreaseEventId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."SalaryHistory"
-    ADD CONSTRAINT "SalaryHistory_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public?"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."SalaryHistory"
+    ADD CONSTRAINT "SalaryHistory_salaryIncreaseEventId_fkey" FOREIGN KEY ("salaryIncreaseEventId") REFERENCES "public"."SalaryIncreaseEvent"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: SalaryHistory SalaryHistory_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: SalaryHistory SalaryHistory_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."SalaryHistory"
-    ADD CONSTRAINT "SalaryHistory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."SalaryHistory"
+    ADD CONSTRAINT "SalaryHistory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Timesheet Timesheet_dayId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Timesheet Timesheet_dayId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Timesheet"
-    ADD CONSTRAINT "Timesheet_dayId_fkey" FOREIGN KEY ("dayId") REFERENCES "public?"."WorkingDay"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Timesheet"
+    ADD CONSTRAINT "Timesheet_dayId_fkey" FOREIGN KEY ("dayId") REFERENCES "public"."WorkingDay"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: Timesheet Timesheet_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Timesheet Timesheet_payrollItemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Timesheet"
-    ADD CONSTRAINT "Timesheet_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public?"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE SET NULL;
+ALTER TABLE ONLY "public"."Timesheet"
+    ADD CONSTRAINT "Timesheet_payrollItemId_fkey" FOREIGN KEY ("payrollItemId") REFERENCES "public"."PayrollItem"("id") ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
--- Name: Timesheet Timesheet_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: Timesheet Timesheet_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."Timesheet"
-    ADD CONSTRAINT "Timesheet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Timesheet"
+    ADD CONSTRAINT "Timesheet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: TwoFactorConfirmation TwoFactorConfirmation_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: TwoFactorConfirmation TwoFactorConfirmation_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."TwoFactorConfirmation"
-    ADD CONSTRAINT "TwoFactorConfirmation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."TwoFactorConfirmation"
+    ADD CONSTRAINT "TwoFactorConfirmation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: UserSalary UserSalary_userId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: UserSalary UserSalary_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."UserSalary"
-    ADD CONSTRAINT "UserSalary_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public?"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."UserSalary"
+    ADD CONSTRAINT "UserSalary_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: WorkingDay WorkingDay_monthId_fkey; Type: FK CONSTRAINT; Schema: public?; Owner: -
+-- Name: WorkingDay WorkingDay_monthId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "public?"."WorkingDay"
-    ADD CONSTRAINT "WorkingDay_monthId_fkey" FOREIGN KEY ("monthId") REFERENCES "public?"."WorkingMonth"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."WorkingDay"
+    ADD CONSTRAINT "WorkingDay_monthId_fkey" FOREIGN KEY ("monthId") REFERENCES "public"."WorkingMonth"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

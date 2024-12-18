@@ -29,27 +29,8 @@ export const {
 
   callbacks: {
     async signIn({ user, account }) {
-      // Allow OAuth without email verification
-      if (account?.provider !== "credentials") return true;
-
       const existingUser = await getUserById(user.id);
-
-      // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
-
-      if (existingUser.isTwoFactorEnabled) {
-        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
-        );
-
-        // if (!twoFactorConfirmation) return false;
-
-        // // Delete two factor confirmation for next sign in
-        // await db.twoFactorConfirmation.delete({
-        //   where: { id: twoFactorConfirmation.id },
-        // });
-      }
-
       return true;
     },
     async session({ token, session }) {
@@ -62,10 +43,8 @@ export const {
       }
 
       if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.name = token.name;
         session.user.email = token.email as string;
-        session.user.isOAuth = token.isOAuth as boolean;
 
         session.user.gender = token.gender as Gender;
         session.user.birthDate = token.birthDate as Date;
@@ -73,7 +52,6 @@ export const {
         session.user.middleName = token.middleName as string;
         session.user.lastName = token.lastName as string;
         session.user.jobTitle = token.jobTitle as string;
-
         session.user.lastLogin = token.lastLogin as Date;
 
       }

@@ -3,10 +3,7 @@ import { Account, DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
-  isTwoFactorEnabled: boolean;
-  isOAuth: boolean;
   id: string;
-
   firstName: string;
   middleName: string;
   lastName: string;
@@ -14,14 +11,10 @@ export type ExtendedUser = DefaultSession["user"] & {
   birthDate: Date;
   jobTitle: string;
   lastLogin: Date;
-
   email: string;
   emailVerified: Date;
   image: string;
   password: string;
-  accounts: Account[];
-  twoFactorConfirmation: TwoFactorConfirmation;
-  twoFactorConfirmationId: string;
   address: Address;
 };
 
